@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+	ORIENTATION="LANDSCAPE"
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
+>
+	<INIT/>
+	<DOCUMENT>
+		<PHRASE>include guide1.1.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide1.1.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide1.2.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide1.2.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide1.3.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide1.3.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide1.4.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide1.4.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide1.5.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide1.5.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+<PAGEBREAK ORIENTATION="PORTRAIT"/>			
+		<PHRASE>include guide2.1.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide2.1.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide2.2.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide2.2.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide2.3.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide2.3.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide2.4.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide2.4.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+<PAGEBREAK ORIENTATION="LANDSCAPE"/>			
+		<PHRASE>include guide3.1.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide3.1.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+<PAGEBREAK ORIENTATION="PORTRAIT"/>			
+		<PHRASE>include guide4.1.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide4.1.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide4.2.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide4.2.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide4.3.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide4.3.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide4.4.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide4.4.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+		<PHRASE>include guide4.5.xml-----------------------</PHRASE>
+		<INCLUDE LINK="/chart/guide/guide4.5.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
+	</DOCUMENT>
+</GENERAL>

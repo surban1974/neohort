@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+	ORIENTATION="PORTRAIT"
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
+	>
+	<style  ID="STYLE_FOOTER"
+			FONT = "TIMES_ROMAN"
+			FONT_SIZE = "15"
+			FONT_TYPE = "BOLD"			
+			FONT_COLOR_RGB = "200,200,150"				
+			ALIGN = "LEFT"
+	/>
+	
+	<PAGE_FOOTER PAGE_N="TRUE" STYLE_ID="STYLE_FOOTER">footer</PAGE_FOOTER>
+	<INIT>
+		<style ID="STYLE_1"
+				FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT"
+		/>
+		<STYLE ID="STYLE_2"		
+			FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				BORDER = "15"
+				BORDER_COLOR = "RED"
+				ALIGN = "LEFT"
+		/>
+		<STYLE ID="STYLE_3"		
+			FONT = "HELVETICA"
+			FONT_SIZE = "15"
+			FONT_TYPE = "ITALIC"
+			FONT_STYLE = "UNDERLINE"
+			FONT_COLOR = "RED"
+			BACK_COLOR = "BLUE"
+			
+			BORDER = "7"
+			BORDER_COLOR = "PINK"
+			BORDER_WIDTH = "3"
+			PADDING = "1"
+			ALIGN = "CENTER"
+		/>
+		
+	</INIT>
+	<DOCUMENT>
+		<PAGE_HEADER>
+			<PARAGRAPH>
+				<PHRASE STYLE_ID="STYLE_1">header 1</PHRASE>	
+			</PARAGRAPH>
+			<BLOCK STYLE_ID="STYLE_2">header 2</BLOCK>
+		
+		</PAGE_HEADER>
+<PAGEBREAK/>		
+		<BLOCK 	STYLE_ID="STYLE_3">Step 1.5 - block</BLOCK>
+		<PARAGRAPH>
+			<PHRASE STYLE_ID="STYLE_2">Step 1.1 - paragraph-frase</PHRASE>	
+		</PARAGRAPH>
+
+
+	<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
+	</DOCUMENT>
+</GENERAL>
