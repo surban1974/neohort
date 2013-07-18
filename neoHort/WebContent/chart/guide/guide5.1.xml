@@ -2,7 +2,7 @@
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
-	TYPE_DOCUMENT="ATTACHMENT" 
+	TYPE_DOCUMENT="STREAM" 
 	ORIENTATION="LANDSCAPE"
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
 >

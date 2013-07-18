@@ -39,6 +39,7 @@ import jxl.format.Orientation;
 import jxl.format.UnderlineStyle;
 import jxl.format.VerticalAlignment;
 import jxl.write.Blank;
+import jxl.write.DateFormat;
 import jxl.write.DateTime;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -64,6 +65,9 @@ public abstract class element extends report_element_base  implements report_ele
 	private static HashMap fontNameCache;
 	private static HashMap alignCache;
 	private static HashMap vAlignCache;
+	
+	private WritableCellFormat defDATEFORMAT;
+	private WritableCellFormat defDATETIMEFORMAT;
 	
 
 
@@ -91,7 +95,8 @@ public Cell getCellC(Cell old,int X,int Y) {
 	WritableCellFormat format = null;
 	if(old!=null && old.getCellFormat()!=null)
 		format = new WritableCellFormat (old.getCellFormat());
-	else format =  new WritableCellFormat();
+	else 
+		format =  new WritableCellFormat();
 	
 	WritableFont font = null;
 	try{
@@ -216,15 +221,32 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}
 	
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATE")==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATETIME")==0){
 			Date ret = getCallDate(frase,internal_style.getFORMAT());
 			if(ret!=null){
 				if (isFormat) return new DateTime(X,Y,ret,format);
-				else return new DateTime(X,Y,ret);
+				else{
+					if(defDATETIMEFORMAT==null) defDATETIMEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy hh:mm"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
 			}
 		}	
 	}catch(Exception e){		
 	}
+	try{
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATE")==0){
+			Date ret = getCallDate(frase,internal_style.getFORMAT());
+			if(ret!=null){
+				if (isFormat) return new DateTime(X,Y,ret,format);
+				else{
+					if(defDATEFORMAT==null) defDATEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
+			}
+		}	
+	}catch(Exception e){		
+	}
+	
 	
 	frase = prepareContentString(internal_style.getFORMAT());
 	
@@ -552,6 +574,17 @@ public String prepareContentString(String formatSG) {
 }
 
 private java.util.Date getCallDate(String content, String formatS){
+	if (formatS.toUpperCase().indexOf("DATETIME")==0){ 
+		try{
+			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd HH:mm").getTime());
+		}catch(Exception e){
+			try{
+				return new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime());
+			}catch(Exception ex){
+			}
+		}		
+	}
+	
 	if (formatS.toUpperCase().indexOf("DATE")==0){ 
 		try{
 			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd").getTime());
@@ -587,5 +620,17 @@ public Orientation analiseOrientation(float rotation){
 	if(rotation==270) return Orientation.MINUS_90;	
 	return Orientation.HORIZONTAL;
 */		
+}
+public WritableCellFormat getDefDATEFORMAT() {
+	return defDATEFORMAT;
+}
+public void setDefDATEFORMAT(WritableCellFormat defDATEFORMAT) {
+	this.defDATEFORMAT = defDATEFORMAT;
+}
+public WritableCellFormat getDefDATETIMEFORMAT() {
+	return defDATETIMEFORMAT;
+}
+public void setDefDATETIMEFORMAT(WritableCellFormat defDATETIMEFORMAT) {
+	this.defDATETIMEFORMAT = defDATETIMEFORMAT;
 }
 }
