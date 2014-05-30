@@ -25,8 +25,6 @@
 		<INCLUDE LINK="/neoHort/chart/guide/guide2.2.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
 		<PHRASE>include guide2.3.xml-----------------------</PHRASE>
 		<INCLUDE LINK="/neoHort/chart/guide/guide2.3.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
-		<PHRASE>include guide2.4.xml-----------------------</PHRASE>
-		<INCLUDE LINK="/neoHort/chart/guide/guide2.4.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
 <PAGEBREAK ORIENTATION="LANDSCAPE"/>			
 		<PHRASE>include guide3.1.xml-----------------------</PHRASE>
 		<INCLUDE LINK="/neoHort/chart/guide/guide3.1.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
