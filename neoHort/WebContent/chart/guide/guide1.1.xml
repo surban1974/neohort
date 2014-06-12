@@ -2,7 +2,8 @@
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
 <general 
-	type_document="attachment" 
+	id="guide.1.1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
 	orientation="landscape" 
 	lib="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
 	<init/>

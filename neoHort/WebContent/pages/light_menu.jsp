@@ -27,48 +27,36 @@ boolean checkError = true;
 
 <!-- BAR GENERAL -->
 
-<script>
-	if((IE4)||(NS6)) document.write("<div id=\"bar0\" name=\"content\" style=\"position:absolute;visibility: hidden\">");
-	if(NS4) document.write("<layer name='bar0'  visibility='hide'><form>");
-</script>
+<div id="bar0" name="content" style="position:absolute;visibility: hidden">
 
 
 <table cellpadding="0" cellspacing="0" border="0" class="block_background">
 	<tr>
-		<td><script>ObjectDraw("bar0","page",1,"[actions]","f_azioni","page_section","","<%=PathImage%>");</script></td>
-		<td><script>ObjectDraw("bar0","page",2,"[report of action]","f_errori","page_section","","<%=PathImage%>");</script></td>
-		<td><script>ObjectDraw("bar0","page",3,"[find]","f_ricerca","page_section","","<%=PathImage%>");</script></td>		
+		<td><script>ObjectDraw("bar0","page",1,"Actions","f_azioni","page_section","","images/menu/","",true,24);</script></td>
+		<td><script>ObjectDraw("bar0","page",2,"Report of action","f_errori","page_section","","images/menu/","",true,24);</script></td>
 
     	</tr> 
 </table>
 
 
-<script>
-if((IE4) || (NS6)) document.write("</div>");
-if(NS4) document.write("</form></layer>");
-</script>
+</div>
 
 <!-- PAGE ERRORS -->
 
-<script>
-if((IE4)||(NS6)) document.write("<div id=\"page2\" name=\"page2\" style=\"position:absolute;visibility: hidden\">");
-if(NS4) document.write("<layer name='page2'  visibility='hide'><form>");
-</script>
+
+<div id="page2" name="page2" style="position:absolute;visibility: hidden">
+
 <table cellspacing="0" border="0"  class="block_background">
 <%if(Errori.size()==0){
 	checkError=false;
 %>
 	<tr>
-		<td><script>ObjectDraw("page2","button",21,"messages/errors...","f_errori_mess","page_section","","<%=PathImage%>");</script></td>
+		<td><script>ObjectDraw("page2","button",21,"messages/errors...","f_errori_mess","page_section","","images/menu/","",true,24);</script></td>
 	</tr>
-<!--	
-	<tr>
-		<td colspan=2 align=right><script>ObjectDraw("page2","button",23,"aprire LOG file","f_errori_log","page_section","","<%=PathImage%>");</script></td>
-    </tr>
--->    	
+   	
 <%}else{%>
 	<tr>
-		<td ><script>ObjectDraw("page2","button",21,"messaggi/errori...","f_errori_mess","page_section","","<%=PathImage%>");</script></td>
+		<td ><script>ObjectDraw("page2","button",21,"messaggi/errori...","f_errori_mess","page_section","","images/menu/","",true,24);</script></td>
 	</tr>
 
 <%	for(int i=0;i<Errori.size();i++){
@@ -96,36 +84,13 @@ Errori.clear();%>
    	
 </table>
 
-<script>
-if((IE4) || (NS6)) document.write("</div>");
-if(NS4) document.write("</form></layer>");
-</script>
+</div>
 
-<!-- PAGE FIND -->
-
-<script>
-if((IE4)||(NS6)) document.write("<div id=\"page3\" name=\"page3\" style=\"position:absolute;visibility: hidden\">");
-if(NS4) document.write("<layer name='page3'  visibility='hide'><form>");
-</script>
-<table cellspacing="0" border="0" class="block_background">
-	<tr>
-		<td><input name="button32_input" id="button32_input" type="text"></td>
-		<td><script>ObjectDraw("page3","button",31,"[find]","f_ricerca_ok","page_section","action_find.gif","<%=PathImage%>");</script></td>
-    	</tr>
-   	
-</table>
-
-<script>
-if((IE4) || (NS6)) document.write("</div>");
-if(NS4) document.write("</form></layer>");
-</script>
 
 <!-- PAGE SCORR -->
 
-<script>
-if((IE4)||(NS6)) document.write("<div id=\"p_scorr\" name=\"p_scorr\" style=\"position:absolute;visibility: hidden\">");
-if(NS4) document.write("<layer name='p_scorr'  visibility='hide'><form>");
-</script>
+<div id="p_scorr" name="p_scorr" style="position:absolute;visibility: hidden">
+
 
 <table cellspacing="0" border="0" class="block_background">
 	<tr>		
@@ -134,10 +99,7 @@ if(NS4) document.write("<layer name='p_scorr'  visibility='hide'><form>");
    	
 </table>
 
-<script>
-if((IE4) || (NS6)) document.write("</div>");
-if(NS4) document.write("</form></layer>");
-</script>
+</div>
 
 
 
@@ -168,10 +130,10 @@ variables[4]="p_scorr";
 value_variables[4]=0;
 
 check("bar0",0,0);
-check("page1",15,19);
-check("page2",15,19);
-check("page3",15,19);
-check("p_scorr",15,19);
+check("page1",15,28);
+check("page2",15,28);
+check("page3",15,28);
+check("p_scorr",15,28);
 window.onscroll=beforeCheck;
 
 </script>		
@@ -240,10 +202,10 @@ function f_fly(){
 	else{
 		frame_dynamic=true;
 		check("bar0",0,0);
-		check("page1",15,19);
-		check("page2",15,19);
-		check("page3",15,19);
-		check("p_scorr",15,19);
+		check("page1",15,28);
+		check("page2",15,28);
+		check("page3",15,28);
+		check("p_scorr",15,28);
 	}
 
 }
@@ -252,8 +214,46 @@ function beforeClick(){
 	setVar("p_scorr",1);
 	beforeCheckNew("p_scorr");
 }
-//window.setTimeout("frame_dynamic = false;",200);
+
+function showAsIFrame(action,panel_width,panel_height,scroll){
+	
+	try{
+		document.getElementById("content_body_IFrame_Popup").style.width=panel_width;
+	}catch(e){		
+	}
+	try{
+		document.getElementById("content_body_IFrame_Popup").style.height=panel_height;
+	}catch(e){		
+	}
+	
+	try{
+		if(scroll==true){
+			document.getElementById("content_body_IFrame_Popup").style.overflowY="scroll";
+		}
+	}catch(e){
+	}
+
+	document.getElementById("content_IFrame_Popup").style.top=document.body.scrollTop;
+	document.getElementById("content_IFrame_Popup").style.display="block";
+	
+	
+	
+
+
+	try{
+
+		document.getElementById('content_body_IFrame_Popup').src=action;
+		
+	}catch(e){
+
+	}
+	
+}
+
+
+
 </script>
 
+<jsp:include page="/included/iframe_popup.jsp"/>
 
 

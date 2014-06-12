@@ -2,7 +2,8 @@
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
-	TYPE_DOCUMENT="STREAM" 
+	id="guide.5.1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
 	ORIENTATION="LANDSCAPE"
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
 >

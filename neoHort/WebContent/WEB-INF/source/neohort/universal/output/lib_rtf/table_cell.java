@@ -25,16 +25,18 @@
 package neohort.universal.output.lib_rtf;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
+
 import com.lowagie.text.pdf.PdfPCell;
 
 public class table_cell extends element{
-	private static final long serialVersionUID = 7167799341234651659L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 public table_cell() {
 	super();
@@ -43,20 +45,42 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
-		int border = 15;
+
+		if(cell.getCompositeElements()==null || cell.getCompositeElements().size()==0){
+			int border = 15;
 			try{
 				border = Integer.valueOf(internal_style.getBORDER()).intValue();
 			}catch(Exception e){}
-			
-		String content=prepareContentString(internal_style.getFORMAT());
-		cell=getCellC(	content,border,_beanLibrary);
 
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+			String content=prepareContentString(internal_style.getFORMAT());
+			cell=getCellC(	content,border,_beanLibrary);	
+			Vector chain = (java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent());
+			if(chain.get(chain.size()-1) instanceof PdfPCell )
+				chain.set(chain.size()-1, cell);
+		}
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
+	}
+}
+
+public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary){
+	try{
+		
+		int border = 15;
+		try{
+			border = Integer.valueOf(internal_style.getBORDER()).intValue();
+		}catch(Exception e){}
+		
+		String content=prepareContentString(internal_style.getFORMAT());
+		cell=getCellC(	content,border,_beanLibrary);	
+		
+
+	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+	}catch(Exception e){
+		setError(e,iStub.log_ERROR);
 	}
 }
 public boolean refreshText() {

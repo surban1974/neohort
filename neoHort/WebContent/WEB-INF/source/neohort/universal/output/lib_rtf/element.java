@@ -27,7 +27,7 @@ package neohort.universal.output.lib_rtf;
 
 import java.awt.Color;
 import java.util.Hashtable;
-import java.util.List;
+
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
@@ -37,9 +37,12 @@ import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
+
+
 
 
 public abstract class element extends report_element_base implements report_element {
@@ -204,7 +207,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 		}
 			
 		cell.setBorder(border);
-		if(!internal_style.getBORDER_WIDTH_TOP().equals("")){	
+		if(!internal_style.getPADDING().equals("")){	
 			float padding = 0;
 			try{
 				padding = Float.valueOf(internal_style.getPADDING()).floatValue();
@@ -321,6 +324,23 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 			}catch(Exception e){
 			}
 		}
+		
+		if(!internal_style.getROW_SPAN().equals("")){	
+			int rowspan = 0;
+			try{
+				rowspan = Float.valueOf(internal_style.getROW_SPAN()).intValue();
+				if(rowspan!=0) cell.setRowspan(rowspan);
+			}catch(Exception e){}
+		}
+		
+		if(!internal_style.getCOL_SPAN().equals("")){	
+			int colspan = 0;
+			try{
+				colspan = Float.valueOf(internal_style.getCOL_SPAN()).intValue();
+				if(colspan!=0) cell.setColspan(colspan);
+			}catch(Exception e){}
+		}		
+
 
 		return cell;
 	}catch(Exception e){
@@ -344,9 +364,10 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 		}
 		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-		Object current_Element = canvas.lastElement();
-			canvas.removeElement(canvas.lastElement());
-		Object content_Element = canvas.lastElement();
+		Object current_Element = canvas.get(canvas.size()-1);
+			canvas.remove(canvas.size()-1);
+//			canvas.removeElement(canvas.lastElement());
+		Object content_Element = canvas.get(canvas.size()-1);
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||
@@ -362,6 +383,13 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
 			if(((bean)content_Element).getID().equals("PageHeader_"))
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+			
+			if(((bean)content_Element).getID().equals("TableBlock")){
+				if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
+					((bean)content_Element).setContent(current_Element);
+				}
+			}
+
 			return;
 		}
 		if(current_Element instanceof text){
@@ -373,16 +401,24 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			return;
 		}
 		
-		if(content_Element instanceof List){
+		if(content_Element instanceof Vector){
+			if(	current_Element instanceof bean &&
+				((bean)current_Element).getID().equals("TableBlock") &&
+				((bean)current_Element).getContent()!=null){
+				
+				PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.pdf.PdfPTable)((bean)current_Element).getContent());
+				((Vector)content_Element).add(cell);
+				return;
+			}
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.pdf.PdfPTable)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
-				((List)content_Element).add(cell);
+				((Vector)content_Element).add(cell);
 				return;
 			}
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPCell){
-				((List)content_Element).add((com.lowagie.text.pdf.PdfPCell)current_Element);
+				((Vector)content_Element).add((com.lowagie.text.pdf.PdfPCell)current_Element);
 				return;
 			}
 			
@@ -390,17 +426,35 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Phrase)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
-				((List)content_Element).add(cell);
+				((Vector)content_Element).add(cell);
 				return;
 			}
+			if(current_Element instanceof com.lowagie.text.Paragraph){
+				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Paragraph)current_Element);
+				cell.setBorder(_sys_border);
+				cell.setHorizontalAlignment(_sys_align);
+				((Vector)content_Element).add(cell);
+				return;
+			}			
 			if(current_Element instanceof com.lowagie.text.Image){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Image)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
-				((List)content_Element).add(cell);
+				((Vector)content_Element).add(cell);
 				return;
 			}
 		}
+		
+		if(content_Element instanceof com.lowagie.text.pdf.PdfPCell){
+			try{
+				((com.lowagie.text.pdf.PdfPCell)content_Element).addElement((Element)current_Element);
+			}catch(Exception e){
+			}
+			return;
+		}
+		
+
+
 				
 		if(content_Element instanceof com.lowagie.text.pdf.PdfPTable){
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
@@ -435,7 +489,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		if(content_Element instanceof com.lowagie.text.Document){
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
-				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)current_Element);
+				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.pdf.PdfPTable)current_Element);
 				return;
 			}
 			if(current_Element instanceof bean){

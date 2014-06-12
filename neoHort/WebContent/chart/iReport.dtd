@@ -52,7 +52,7 @@
 <!ATTLIST STYLE
 	ID CDATA #IMPLIED
 	LINK CDATA #IMPLIED
-	FONT (COURIER | HELVETICA | TIMES_NEW_ROMAN | SYMBOL | ZAPFDINGBATS | courier | helvetica | times_new_roman | symbol | zapfdingbats) #IMPLIED
+	FONT (COURIER | HELVETICA | TIMES_NEW_ROMAN | TIMES_ROMAN | SYMBOL | ZAPFDINGBATS | courier | helvetica | times_new_roman | times_roman | symbol | zapfdingbats) #IMPLIED
 	FONT_SIZE CDATA #IMPLIED
 	FONT_TYPE (NORMAL | BOLD | ITALIC | BOLDITALIC | STRIKETHRU | UNDERLINE | normal | bold | italic | boloditalic | strikethru | underline) #IMPLIED
 	FONT_COLOR (BLACK | BLUE | CYAN | DARKGRAY | GRAY | GREEN | LIGHTGRAY | MAGENTA | ORANGE | PINK | RED | WHITE | YELLOW | black | blue | cyan | darkGray | gray | green | lightGray | magenta | orange | pink | red | white | yellow) #IMPLIED

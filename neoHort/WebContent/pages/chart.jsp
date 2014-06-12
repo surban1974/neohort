@@ -10,7 +10,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Chart Example 1</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/chart0.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/chart0.xml&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>	
 		<a href="javascript:void(startURL('/neoHort/chart/chart0.xml'));">		
@@ -29,7 +29,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Chart Example 2</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/chart1.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/chart1.xml&$type=stream',900,500));">
 		<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>	
 		
@@ -42,7 +42,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Chart Example 3</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/chart2.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/chart2.xml&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>		
 		<a href="javascript:void(startURL('/neoHort/chart/chart2.xml'));">
@@ -61,7 +61,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Chart Example 4</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/chart3.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/chart3.xml&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>			
 		
@@ -74,7 +74,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Chart Example 5</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/chart4.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/chart4.xml&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>	
 		

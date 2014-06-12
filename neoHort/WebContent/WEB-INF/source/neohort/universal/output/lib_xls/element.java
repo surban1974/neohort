@@ -24,6 +24,10 @@
 
 package neohort.universal.output.lib_xls;
 
+
+
+
+
 import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,6 +92,8 @@ public void reimposta(){
 }
 
 public Cell getCellC(Cell old,int X,int Y) {
+
+	
 	boolean isFormat=false;
 	String frase = "";
 	if(getContent()!=null) frase = (String)getContent();
@@ -281,9 +287,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
 
-		Object current_Element = canvas.lastElement();
-			canvas.removeElement(canvas.lastElement());
-		Object content_Element = canvas.lastElement();
+		Object current_Element = canvas.get(canvas.size()-1);
+			canvas.remove(canvas.size()-1);
+		Object content_Element = canvas.get(canvas.size()-1);
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||

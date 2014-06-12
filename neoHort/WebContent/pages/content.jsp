@@ -11,12 +11,15 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 1.1. Create the document with simple text block.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=pdf'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>
@@ -25,14 +28,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 1.2. Make pagelayout as portrait.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -41,14 +46,16 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 1.3. Make document as stream.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml&$lib=xls&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -57,14 +64,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 1.4. Change margins.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.4.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -73,12 +82,15 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 1.5 Add format for text.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>			
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.5.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">					
 		</a>	
@@ -90,14 +102,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 2.1. Create the document header (# 1).</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -106,14 +120,16 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 2.2. Create the document footer (# 1).</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -122,14 +138,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 2.3. Create the document header (# 2).</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
@@ -138,14 +156,16 @@
 		<span class="page_section">
 			<span class="page_section_text">Step 2.4. Create the document footer (# 2).</span>
 			<br>
-			<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml'));">
+			<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml&$lib=pdf&$type=stream',900,500));">
 				<img src="../images/pdf.gif" border="0" alt="[Pdf version]">				
 			</a>
 			
-			<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml&$lib=xls'));">
+			<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml&$lib=xls&$type=attachment'));">
 				<img src="../images/xls.gif" border="0" alt="[Excel version]">				
 			</a>
-			
+			<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml&$lib=rtf&$type=attachment'));">
+				<img src="../images/rtf.gif" border="0" alt="[RTF version]">				
+			</a>			
 			<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.4.xml'));">
 				<img src="../images/txt.gif" border="0" alt="[Source]">				
 			</a>	
@@ -160,14 +180,16 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 3.1. Create the document styles.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">			
 		</a>
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide3.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
@@ -176,7 +198,7 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 3.2. Create the simple example with barcode.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.2.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.2.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide3.2.xml'));">
@@ -194,15 +216,17 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 4.1. Create the simple table.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>
-		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.1.xml'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
+		</a>		
+		<a href="javascript:void(location.replace('/neoHort//chart/guide/guide4.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/chart/jsp/guide4.1.jsp'));">
@@ -217,12 +241,15 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 4.2. Create the simple table with dynamical count of row.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">	
 		</a>		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">	
+		</a>			
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
@@ -231,14 +258,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 4.3. Create the simple table with condition.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>	
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>		
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
+		</a>			
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
@@ -247,14 +276,16 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 4.4. Create the simple table with images.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>		
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
+		</a>			
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.4.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
@@ -264,14 +295,16 @@
 	<td width=250 align=center class="page_section">
 		<span class="page_section_text">Step 4.5. Create the complex table with images.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>		
 		
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>		
-		
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
+		</a>		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.5.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
@@ -283,15 +316,14 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 5.1. Create the complex document with included another xml as part of code.</span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide5.1.xml&$lib=pdf'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide5.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">
 		</a>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide5.1.xml&$lib=html_xls'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide5.1.xml&$lib=html_xls&$type=attachment'));">
 			<img src="../images/xls_html.gif" border="0" alt="[html/xls version]">
 		</a>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/neoHort/chart/guide/guide5.1.xml&$lib=xls'));">
-			<img src="../images/xls.gif" border="0" alt="[Excel version]">
-		</a>
+
+		
 		<a href="javascript:void(startURL('/neoHort//chart/guide/guide5.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	

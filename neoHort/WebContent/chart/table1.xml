@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
-<GENERAL TYPE_DOCUMENT="ATTACHMENT" ORIENTATION="LANDSCAPE"  LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
+<GENERAL 
+	id="table1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+ 
+	ORIENTATION="LANDSCAPE"  
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
 	<INIT>
 		<BEAN ID="mreport" TYPE="it.Management_Report" CLASS="it.Management_Report" SCOPE="SESSION"/>
 		<OBJECT_JAVA ID="tabella1" TYPE="java.util.Vector" CLASS="java.util.Vector" SOURCE="man_report" METHOD="service_find(java.lang.String:'01';java.lang.String:'130001').getDates().get(java.lang.String:'vettore')"/>		

@@ -27,7 +27,7 @@ package neohort.universal.output.lib_rtf;
 
 import java.io.OutputStream;
 import java.util.Hashtable;
-import java.util.Vector;
+
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -61,8 +61,8 @@ public class general extends element{
 		this.writer = writer;
 	}
 	private static final long serialVersionUID = 1772526932083369013L;
-	Document document;
-	RtfWriter2 writer;
+	private Document document;
+	private RtfWriter2 writer;
 	public Hashtable _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
@@ -210,7 +210,7 @@ public String getTYPE_DOCUMENT() {
 }
 public void reimposta() {
 	setName("GENERAL");
-	TYPE_DOCUMENT = "";
+	TYPE_DOCUMENT = "attachment";
 	SOURCE_DOCUMENT = "";
 	SOURCE_BEFORE_FIXED ="";
 	SOURCE_AFTER_FIXED ="";
@@ -270,7 +270,9 @@ public void setSOURCE_ERROR_FIXED(String newSOURCE_ERROR_FIXED) {
 	SOURCE_ERROR_FIXED = newSOURCE_ERROR_FIXED;
 }
 public void setTYPE_DOCUMENT(String newTYPE_DOCUMENT) {
-	TYPE_DOCUMENT = newTYPE_DOCUMENT;
+	if(newTYPE_DOCUMENT!=null && !newTYPE_DOCUMENT.trim().equals(""))
+		TYPE_DOCUMENT = newTYPE_DOCUMENT;
+
 }
 
 public String getLIB() {

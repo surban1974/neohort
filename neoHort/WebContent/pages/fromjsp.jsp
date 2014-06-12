@@ -27,28 +27,22 @@ The parameter ReportPrivider is obligated.
 &lt;/filter-mapping&gt;			
 		)</font></span>
 		<br>
-		<a href="javascript:void(startURL('/neoHort/chart/jsp/log_view.jsp?ReportProvider=neoHort&$lib=pdf'));">
+		<a href="javascript:void(showAsIFrame('/neoHort/chart/jsp/log_view.jsp?ReportProvider=neoHort&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf_jsp.gif" border="0" alt="[from JSP - Pdf version]">			
 		</a>
-		<a href="javascript:void(startURL('/neoHort/chart/jsp/log_view.jsp?ReportProvider=neoHort&$lib=xls'));">
+		<a href="javascript:void(location.replace('/neoHort/chart/jsp/log_view.jsp?ReportProvider=neoHort&$lib=xls&$type=attachment'));">
 			<img src="../images/xls_jsp.gif" border="0" alt="[from JSP - Excel version]">
 		</a>
-		<a href="javascript:void(startURL('/neoHort//chart/jsp/log_view.jsp'));">
+		<a href="javascript:void(location.replace('/neoHort/chart/jsp/log_view.jsp?ReportProvider=neoHort&$lib=rtf&$type=attachment'));">
+			<img src="../images/rtf.gif" border="0" alt="[from JSP - RTF version]">
+		</a>		
+		<a href="javascript:void(startURL('/neoHort//chart/jsp/log_view.txt'));">
 			<img src="../images/txt.gif" border="0" alt="[Source (compilated jsp)]">
 		</a>	
 		
 		
 	</td>	
-	<td width=250 align=center class="page_section">
-		<span class="page_section_text"><font color="red"><b>(In construction)</b></font> Prepare report in normal mode with $source=/*/*/file.jsp (this JSP must generate xml-template as result).</span>
-		<br>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/chart/jsp/log_view.jsp&$lib=pdf'));">
-			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">
-		</a>
-		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/chart/jsp/log_view.jsp&$lib=xls'));">
-			<img src="../images/xls.gif" border="0" alt="[html/xls version]">
-		</a>
-	</td>
+
 	
 </tr>	
 

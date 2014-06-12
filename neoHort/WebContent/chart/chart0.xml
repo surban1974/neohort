@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
-<GENERAL TYPE_DOCUMENT="ATTACHMENT" ORIENTATION="LANDSCAPE">
+<GENERAL 
+	id="chart0"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+
+	ORIENTATION="LANDSCAPE">
 	<INIT/>
 	<DOCUMENT>
 		<BLOCK FONT="HELVETICA" FONT_SIZE="10" FONT_COLOR="BLUE" FONT_TYPE="NORMAL">Chart Example1</BLOCK>

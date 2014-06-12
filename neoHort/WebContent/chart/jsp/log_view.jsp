@@ -32,7 +32,8 @@
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
-	TYPE_DOCUMENT="ATTACHMENT" 
+	ID="example.jsp.integrated"
+	TYPE_DOCUMENT="<%=request.getParameter("$type")%>"
 	ORIENTATION="PORTRAIT"
 	LIB="<%=request.getParameter("$lib")%>"
 	>

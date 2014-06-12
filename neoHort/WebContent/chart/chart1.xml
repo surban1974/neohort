@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
-<GENERAL TYPE_DOCUMENT="ATTACHMENT" ORIENTATION="LANDSCAPE">
+<GENERAL 
+		id="chart1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+
+	ORIENTATION="LANDSCAPE">
 	<INIT>
 		<BEAN ID="org_bci" TYPE="it.bci.sra.org.organigramma" CLASS="it.bci.sra.org.organigramma" SCOPE="SESSION"/>
 		<BEAN ID="BU_FOUNDED" TYPE="it.bci.sra.elWST00001" CLASS="it.bci.sra.elWST00001" SCOPE="SESSION"/>

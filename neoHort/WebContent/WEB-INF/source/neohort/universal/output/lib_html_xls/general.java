@@ -276,7 +276,7 @@ public void prepareComment(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 }
 public void reimposta() {
 	setName("GENERAL");
-	TYPE_DOCUMENT = "";
+	TYPE_DOCUMENT = "attachment";
 	SOURCE_DOCUMENT = "";
 	ORIENTATION = "";
 	TYPE_RESPONSE = "";
@@ -333,7 +333,9 @@ public void setSOURCE_ERROR_FIXED(java.lang.String newSOURCE_ERROR_FIXED) {
 	SOURCE_ERROR_FIXED = newSOURCE_ERROR_FIXED;
 }
 public void setTYPE_DOCUMENT(java.lang.String newTYPE_DOCUMENT) {
-	TYPE_DOCUMENT = newTYPE_DOCUMENT;
+	if(newTYPE_DOCUMENT!=null && !newTYPE_DOCUMENT.trim().equals(""))
+		TYPE_DOCUMENT = newTYPE_DOCUMENT;
+
 }
 public void setTYPE_RESPONSE(java.lang.String newTYPE_RESPONSE) {
 	TYPE_RESPONSE = newTYPE_RESPONSE;

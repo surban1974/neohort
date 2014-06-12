@@ -28,6 +28,7 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPTable;
 
 import neohort.log.stubs.iStub;
@@ -84,6 +85,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				else{
 					table.setTotalWidth(new Float(internal_style.getWIDTH()).floatValue());
 					table.setLockedWidth(true); 
+					table.setWidthPercentage(100);
 				}
 							
 			}catch(Exception e){
@@ -91,23 +93,25 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}
 		}else table.setWidthPercentage(100);	
 
-		StringTokenizer st = new StringTokenizer(replace(getCOLLS_DIMENTION(),"%",""), ",");
-		Vector width = new Vector();
-		float delta = 100/col;
-		for(int i=0;i<col;i++) width.add(new Float(delta).toString());
-		int k=0;
-		while (st.hasMoreTokens()){
-			try{
-				width.set(k,st.nextToken());
-				k++;
-			}catch(Exception e){	 
-			}
-		}
-	
-		float[] dim = new float[width.size()];
-		for (int i=0;i<width.size();i++) dim[i]=Float.valueOf((String)width.elementAt(i)).floatValue();
-		table.setWidths(dim);
 
+			StringTokenizer st = new StringTokenizer(replace(getCOLLS_DIMENTION(),"%",""), ",");
+			Vector width = new Vector();
+			float delta = 100/col;
+			for(int i=0;i<col;i++) width.add(new Float(delta).toString());
+			int k=0;
+			while (st.hasMoreTokens()){
+				try{
+					width.set(k,st.nextToken());
+					k++;
+				}catch(Exception e){	 
+				}
+			}
+		
+			float[] dim = new float[width.size()];
+			for (int i=0;i<width.size();i++) dim[i]=Float.valueOf((String)width.elementAt(i)).floatValue();
+			table.setWidths(dim);
+
+		
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
@@ -115,6 +119,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+	
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

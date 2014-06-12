@@ -2,7 +2,8 @@
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
-	TYPE_DOCUMENT="ATTACHMENT" 
+	id="guide.4.4"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
 	ORIENTATION="PORTRAIT"
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
 	>

@@ -620,6 +620,17 @@ private void tagFactory(Node node, report_element_base element_parent) {
 		element = objectFactory(node, element_parent);
 		if(element!=null){
 			_tagLibrary.put(node.getNodeName()+":"+element.getID()+"_ids_"+this.hashCode(),element);
+			if(node.getNodeName().equalsIgnoreCase("general")){
+				try{
+					bean _sysPdfParseJava = new bean();
+					_sysPdfParseJava.setName("SYSTEM");
+					_sysPdfParseJava.setID(iConst.iHORT_SYSTEM_ParseJava);
+					_sysPdfParseJava.setContent(element.getPARSER_JAVA());
+					_beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_ParseJava, _sysPdfParseJava);
+				}catch(Exception e){
+				}
+			}
+			
 			element_current = element;
 		}else element_current = null;		
 	} catch (Exception e) {

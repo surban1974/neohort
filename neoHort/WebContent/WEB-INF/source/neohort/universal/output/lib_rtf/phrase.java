@@ -55,7 +55,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		
 //		String content=(String)this.getContent();
 		
-		String content=prepareContentString(internal_style.getFORMAT());
+		String content=prepareContentString(internal_style.getFORMAT()); if(content==null) content="";
 
 		com.lowagie.text.Font font = new com.lowagie.text.Font(_f_name, _f_size, _f_type);
 		font.setColor(_fColor);

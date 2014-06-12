@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
 <GENERAL 
-	TYPE_DOCUMENT="ATTACHMENT" 
+	id="table0"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+
 	ORIENTATION="LANDSCAPE" 
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
 	TEMPLATE="/neoHort/doc/template.xls"

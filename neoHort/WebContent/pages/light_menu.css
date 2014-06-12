@@ -52,9 +52,15 @@
 
 
 .page_section_text {
-	color: #2D4F6C;
-	font: smaller monospace;
-	text-align: left;
+	font-family:'verdana', serif;
+	color: #658CC8;
+	vertical-align: middle;
+	border: outset 1px white;
+	border-left: none;
+	border-bottom:none;
+	border-right:none;
+	border-top:none;
+	font-size:14px;
 }
 
 .error_section_warnings {
@@ -69,14 +75,12 @@
 }
 
 .block_background_old{
-	border: thin outset #C1C1C1;
-	background: #f0b80f;
+	border: solid 1px silver;
+
 }
 .block_background{
-	background: #EFCC9C;
-	border-color: #C1C1C1;
-	border-width: thin;
-	border-style: groove;
+	background: #F6F6F6;
+	border: none;
 }
 .block_{
 	border: thin ;

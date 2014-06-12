@@ -24,12 +24,16 @@
 
 package neohort.universal.output.lib_rtf;
 
+
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Vector;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
+
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
@@ -39,13 +43,13 @@ import com.lowagie.text.pdf.PdfPRow;
 public class table_row extends element{
 	private static final long serialVersionUID = -532623496974995818L;
 	PdfPRow row;
-	List cells; 
+	Vector cells; 
 public table_row() {
 	super();
 }
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
-		cells = new ArrayList();
+		cells = new Vector();
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
@@ -57,9 +61,22 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	while (parentC!=null && !parentC.getName().equalsIgnoreCase("TABLE"))
 		parentC=(report_element_base)parentC.getParent();
 	parentT = (table)parentC;
+	
+	int col=parentT.getTable().getNumberOfColumns();
 
-	PdfPCell[] pcells = new PdfPCell[cells.size()];
-	for(int i=0;i<cells.size();i++) pcells[i]=(PdfPCell)cells.get(i);
+	PdfPCell[] pcells = new PdfPCell[col];
+	for(int i=0;i<cells.size();i++){ 
+		if(i<col){
+			if(cells.get(i) instanceof PdfPCell)
+				pcells[i]=(PdfPCell)cells.get(i);
+			else 
+				pcells[i]=new PdfPCell();
+		}
+	}
+	if(col>cells.size()){
+		for(int i=0;i<col-cells.size();i++)
+			pcells[i]=new PdfPCell();			
+	}
 	
 	parentT.getTable().getRows().add(new PdfPRow(pcells));
 
@@ -101,7 +118,7 @@ public void setRow(PdfPRow row) {
 public List getCells() {
 	return cells;
 }
-public void setCells(List cells) {
+public void setCells(Vector cells) {
 	this.cells = cells;
 }
 }

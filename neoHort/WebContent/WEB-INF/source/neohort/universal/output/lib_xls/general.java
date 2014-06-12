@@ -267,7 +267,7 @@ public String getTYPE_DOCUMENT() {
 }
 public void reimposta() {
 	setName("GENERAL");
-	TYPE_DOCUMENT = "";
+	TYPE_DOCUMENT = "attachment";
 	SOURCE_DOCUMENT = "";
 	SOURCE_BEFORE_FIXED ="";
 	SOURCE_AFTER_FIXED ="";
@@ -331,7 +331,9 @@ public void setSOURCE_ERROR_FIXED(String newSOURCE_ERROR_FIXED) {
 	SOURCE_ERROR_FIXED = newSOURCE_ERROR_FIXED;
 }
 public void setTYPE_DOCUMENT(String newTYPE_DOCUMENT) {
-	TYPE_DOCUMENT = newTYPE_DOCUMENT;
+	if(newTYPE_DOCUMENT!=null && !newTYPE_DOCUMENT.trim().equals(""))
+		TYPE_DOCUMENT = newTYPE_DOCUMENT;
+
 }
 
 public String getLIB() {
