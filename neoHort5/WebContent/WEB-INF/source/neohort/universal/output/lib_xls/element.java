@@ -24,13 +24,11 @@
 
 package neohort.universal.output.lib_xls;
 
-
+import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
-
-import com.itextpdf.text.BaseColor;
 
 import jxl.Cell;
 import jxl.format.Alignment;
@@ -41,6 +39,7 @@ import jxl.format.Orientation;
 import jxl.format.UnderlineStyle;
 import jxl.format.VerticalAlignment;
 import jxl.write.Blank;
+import jxl.write.DateFormat;
 import jxl.write.DateTime;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -54,18 +53,22 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
+import neohort.universal.output.lib.report_element_baseawt;
 import neohort.universal.output.lib.style;
 import neohort.util.util_format;
 
 
 
-public abstract class element extends report_element_base  implements report_element {
+public abstract class element extends report_element_baseawt  implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	private static HashMap colorsCache;
 	private static HashMap fontNameCache;
 	private static HashMap alignCache;
 	private static HashMap vAlignCache;
+	
+	private WritableCellFormat defDATEFORMAT;
+	private WritableCellFormat defDATETIMEFORMAT;
 	
 
 
@@ -147,7 +150,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 		try{
 			
 			
-			font.setColour(getNearestColour(getField_ColorAsColor(internal_style.getFONT_COLOR(),BaseColor.BLACK)));
+			font.setColour(getNearestColour(getField_ColorAsColor(internal_style.getFONT_COLOR(),Color.black)));
 			isFormat=true;
 		}catch(Exception e){			
 		}
@@ -168,7 +171,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 	
 	if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
 		try{
-			format.setBackground(getNearestColour(getField_ColorAsColor(internal_style.getBACK_COLOR(),BaseColor.WHITE)));
+			format.setBackground(getNearestColour(getField_ColorAsColor(internal_style.getBACK_COLOR(),Color.white)));
 			isFormat=true;
 		}catch(Exception e){	
 		}
@@ -218,11 +221,27 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}
 	
 	try{
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATETIME")==0){
+			Date ret = getCallDate(frase,internal_style.getFORMAT());
+			if(ret!=null){
+				if (isFormat) return new DateTime(X,Y,ret,format);
+				else{
+					if(defDATETIMEFORMAT==null) defDATETIMEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy hh:mm"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
+			}
+		}	
+	}catch(Exception e){		
+	}
+	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATE")==0){
 			Date ret = getCallDate(frase,internal_style.getFORMAT());
 			if(ret!=null){
 				if (isFormat) return new DateTime(X,Y,ret,format);
-				else return new DateTime(X,Y,ret);
+				else{
+					if(defDATEFORMAT==null) defDATEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
 			}
 		}	
 	}catch(Exception e){		
@@ -343,7 +362,7 @@ public WritableFont.FontName analizeFontName(String name){
 	return fontName;
 }
 
-private static Colour getNearestColour(BaseColor awtColor){
+private static Colour getNearestColour(Color awtColor){
 	if(colorsCache==null) colorsCache=new HashMap();
     Colour color = (Colour) colorsCache.get(awtColor);
     
@@ -512,24 +531,24 @@ public Vector[] analiseBorder_Colour(style internal_style){
 	}	
 	for(int i=0;i<borders.size();i++){
 		Border local = (Border)borders.get(i);
-		Colour local_colour = getNearestColour(BaseColor.BLACK);
+		Colour local_colour = getNearestColour(Color.black);
 		if(!internal_style.getBORDER_COLOR().equals(""))
-			local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR(),BaseColor.BLACK));
+			local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR(),Color.black));
 		if(local.equals(Border.TOP)){			
 			if(!internal_style.getBORDER_COLOR_TOP().equals(""))
-				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_TOP(),BaseColor.BLACK));
+				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_TOP(),Color.black));
 		}		
 		if(local.equals(Border.BOTTOM)){
 			if(!internal_style.getBORDER_COLOR_BOTTOM().equals(""))
-				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_BOTTOM(),BaseColor.BLACK));
+				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_BOTTOM(),Color.black));
 		}
 		if(local.equals(Border.LEFT)){		
 			if(!internal_style.getBORDER_COLOR_LEFT().equals(""))
-				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_LEFT(),BaseColor.BLACK));
+				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_LEFT(),Color.black));
 		}
 		if(local.equals(Border.RIGHT)){		
 			if(!internal_style.getBORDER_COLOR_RIGHT().equals(""))
-				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_RIGHT(),BaseColor.BLACK));
+				local_colour = getNearestColour(getField_ColorAsColor(internal_style.getBORDER_COLOR_RIGHT(),Color.black));
 				
 		}
 		colours.add(local_colour);
@@ -554,6 +573,17 @@ public String prepareContentString(String formatSG) {
 }
 
 private java.util.Date getCallDate(String content, String formatS){
+	if (formatS.toUpperCase().indexOf("DATETIME")==0){ 
+		try{
+			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd HH:mm").getTime());
+		}catch(Exception e){
+			try{
+				return new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime());
+			}catch(Exception ex){
+			}
+		}		
+	}
+	
 	if (formatS.toUpperCase().indexOf("DATE")==0){ 
 		try{
 			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd").getTime());
@@ -566,6 +596,7 @@ private java.util.Date getCallDate(String content, String formatS){
 	}
 	return null;
 }
+
 public Orientation analiseOrientation(float rotation){
 	if(rotation==0) return null;
 	int ang = (int)rotation;
@@ -589,5 +620,17 @@ public Orientation analiseOrientation(float rotation){
 	if(rotation==270) return Orientation.MINUS_90;	
 	return Orientation.HORIZONTAL;
 */		
+}
+public WritableCellFormat getDefDATEFORMAT() {
+	return defDATEFORMAT;
+}
+public void setDefDATEFORMAT(WritableCellFormat defDATEFORMAT) {
+	this.defDATEFORMAT = defDATEFORMAT;
+}
+public WritableCellFormat getDefDATETIMEFORMAT() {
+	return defDATETIMEFORMAT;
+}
+public void setDefDATETIMEFORMAT(WritableCellFormat defDATETIMEFORMAT) {
+	this.defDATETIMEFORMAT = defDATETIMEFORMAT;
 }
 }

@@ -27,9 +27,9 @@ package neohort.universal.output.lib_pln;
 import java.util.Hashtable;
 
 import neohort.universal.output.lib.report_element;
-import neohort.universal.output.lib.report_element_base;
+import neohort.universal.output.lib.report_element_baseawt;
 
-public abstract class element extends report_element_base implements report_element {
+public abstract class element extends report_element_baseawt implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	public String _content = "";

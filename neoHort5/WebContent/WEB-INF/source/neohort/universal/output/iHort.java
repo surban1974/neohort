@@ -211,9 +211,11 @@ public OutputStream transformXMLtoReport(InputStream xml, OutputStream report){
 }
 
 public void initXML(String fname) {
-	if(isReimposta) reimposta(); 
+	if(isReimposta) reimposta();
 	
 	pathXML = analisePath(fname);
+	setError(null,"XML Source: "+pathXML,iStub.log_INFO);
+
 	try {
 		documentXML = util_xml.readXML(pathXML,false);
 	}catch (Exception ex) {

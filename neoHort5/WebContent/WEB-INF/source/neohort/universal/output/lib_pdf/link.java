@@ -35,11 +35,10 @@ import neohort.universal.output.lib.style;
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfAction;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class link extends element{
 	private static final long serialVersionUID = -7049525715279807345L;
@@ -56,24 +55,15 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
 
 		int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
-		int _f_size = 10;
-			try{
-				_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-			}catch(Exception e){}
-		FontFamily _f_name = FontFamily.COURIER;
-			try{
-				_f_name = Font.getFamily(internal_style.getFONT().toUpperCase());
-			}catch(Exception e){			
-			}
-		int _f_type = getField_Int(new com.itextpdf.text.Font().getClass(),internal_style.getFONT_TYPE(),com.itextpdf.text.Font.NORMAL);
-		BaseColor _fColor =getField_Color(internal_style.getFONT_COLOR(),BaseColor.BLACK);
+		
+		com.itextpdf.text.Font font = getFont();
+		
+
 		BaseColor _bColor = getField_Color(internal_style.getBACK_COLOR(),BaseColor.WHITE);
 		String content=prepareContentString(internal_style.getFORMAT());
 
-		com.itextpdf.text.Font font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
-		font.setColor(_fColor);
-		if(getStyle()!=null && !getStyle().getFONT_STYLE().equals(""))
-			font.setStyle(getStyle().getFONT_STYLE().toLowerCase());
+
+
 
 
 		Object canvas_prev = null;
@@ -103,6 +93,11 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			cell.setBorder(border);
 			cell.setBackgroundColor(_bColor);
 			if(padding!=0) cell.setPadding(padding);
+			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+				if(cell!=null)
+					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+			}
+
 
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
 		}else{

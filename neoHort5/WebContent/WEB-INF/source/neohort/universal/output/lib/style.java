@@ -34,6 +34,7 @@ public class style extends report_element_base{
 	private String FONT_SIZE;
 	private String FONT_TYPE;
 	private String FONT_ENCODED;
+	private String FONT_EMBEDDED;
 	
 	private String FONT_COLOR;
 	private String FONT_COLOR_RGB;
@@ -84,6 +85,10 @@ public class style extends report_element_base{
 	private String BORDER_WIDTH_RIGHT;
 	
 	private String LEADING;
+	
+	private String EXTRA_FONT;
+	private String DIRECTION;
+	
 	
 	
 	public static String PROPERTYS = ";TEXT_ALIGN_H;TEXT_ALIGN_V;FONT;FONT_SIZE;FONT_TYPE;FONT_ENCODED;FONT_COLOR;FONT_COLOR_RGB;DIMENTION_H;DIMENTION_V;ALIGN;BACK_COLOR;BACK_COLOR_RGB;BORDER_COLOR;BORDER_COLOR_RGB;BORDER;BORDER_WIDTH;PADDING;FORMAT;FONT_STYLE;COL_SPAN;ROW_SPAN;BAR_COLOR_RGB;BAR_COLOR;ABSOLUTE_X;ABSOLUTE_Y;WIDTH;HEIGHT;BORDER_COLOR_TOP;BORDER_COLOR_TOP_RGB;BORDER_COLOR_BOTTOM;BORDER_COLOR_BOTTOM_RGB;BORDER_COLOR_LEFT;BORDER_COLOR_LEFT_RGB;BORDER_COLOR_RIGHT;BORDER_COLOR_RIGHT_RGB;BORDER_WIDTH_TOP;BORDER_WIDTH_BOTTOM;BORDER_WIDTH_LEFT;BORDER_WIDTH_RIGHT;TEXT_ROTATION_DEGREE;LEADING;";
@@ -182,6 +187,10 @@ public void reimposta() {
 	BORDER_WIDTH_RIGHT="";
 	
 	LEADING="";
+	
+	EXTRA_FONT="";
+	FONT_EMBEDDED="";
+	DIRECTION="";
 }
 public void reStyle(style style_new) {
 	if(style_new==null) return;
@@ -232,6 +241,10 @@ public void reStyle(style style_new) {
 	if(style_new.getBORDER_WIDTH_LEFT()!=null && this.getBORDER_WIDTH_LEFT().trim().equals("")) this.setBORDER_WIDTH_LEFT(style_new.getBORDER_WIDTH_LEFT());
 	if(style_new.getBORDER_WIDTH_RIGHT()!=null && this.getBORDER_WIDTH_RIGHT().trim().equals("")) this.setBORDER_WIDTH_RIGHT(style_new.getBORDER_WIDTH_RIGHT());
 	
+	if(style_new.getEXTRA_FONT()!=null && this.getEXTRA_FONT().trim().equals("")) this.setEXTRA_FONT(style_new.getEXTRA_FONT());
+	if(style_new.getFONT_EMBEDDED()!=null && this.getFONT_EMBEDDED().trim().equals("")) this.setFONT_EMBEDDED(style_new.getFONT_EMBEDDED());
+	if(style_new.getDIRECTION()!=null && this.getDIRECTION().trim().equals("")) this.setDIRECTION(style_new.getDIRECTION());
+
 }
 
 public void setALIGN(String newALIGN) {
@@ -491,6 +504,25 @@ public void setWIDTH(String string) {
 	}
 	public void setLEADING(String leading) {
 		LEADING = leading;
+	}
+
+	public String getEXTRA_FONT() {
+		return EXTRA_FONT;
+	}
+	public void setEXTRA_FONT(String eXTRAFONT) {
+		EXTRA_FONT = eXTRAFONT;
+	}
+	public String getFONT_EMBEDDED() {
+		return FONT_EMBEDDED;
+	}
+	public void setFONT_EMBEDDED(String fONTEMBEDDED) {
+		FONT_EMBEDDED = fONTEMBEDDED;
+	}
+	public String getDIRECTION() {
+		return DIRECTION;
+	}
+	public void setDIRECTION(String dIRECTION) {
+		DIRECTION = dIRECTION;
 	}
 
 }

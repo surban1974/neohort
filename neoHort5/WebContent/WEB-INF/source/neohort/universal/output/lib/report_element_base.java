@@ -40,7 +40,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import com.itextpdf.text.BaseColor;
+//import com.itextpdf.text.BaseColor;
 
 public abstract class report_element_base implements report_element {
 	private static final long serialVersionUID = 370688978693756518L;
@@ -78,6 +78,7 @@ public abstract void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary);
 public Object getContent() {
 	return content;
 }
+/*
 public BaseColor getField_Color( String name, BaseColor d_value) {
 	BaseColor result = d_value;
 	if(name.indexOf(",")>-1){
@@ -141,6 +142,7 @@ public BaseColor getField_ColorAsColor(String name, BaseColor d_value) {
 	}	
 	return result;
 }
+*/
 public int getField_Int(Class cl, String name, int d_value) {
 	int result = d_value;
 	try{

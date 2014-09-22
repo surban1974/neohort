@@ -102,6 +102,9 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 				body._beanLibrary = _beanLibrary;
 				general.PageEvent_0 pev = body.new PageEvent_0();
 				body.getWriter().setPageEvent(pev);
+				if(!body.getDIRECTION().equals("") && body.getDIRECTION().equalsIgnoreCase("RTL")){
+					body.getWriter().setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+				}
 			}
 
 			bean _sysDocument = new bean();

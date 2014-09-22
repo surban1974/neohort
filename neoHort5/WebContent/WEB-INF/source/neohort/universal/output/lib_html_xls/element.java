@@ -26,9 +26,12 @@ package neohort.universal.output.lib_html_xls;
 
 import java.util.Hashtable;
 
-import neohort.universal.output.lib.*;
+import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_baseawt;
 
-public abstract class element extends report_element_base  implements report_element {
+
+
+public abstract class element extends report_element_baseawt  implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	public String _header = "";
@@ -40,7 +43,7 @@ public element() {
 	Parameters.addElement("ID");
 	reimposta();
 }
-public void add(report_element_base child) {}
+public void add(report_element_baseawt child) {}
 public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
 public Object execute(Hashtable _beanLibrary) {
 	return null;

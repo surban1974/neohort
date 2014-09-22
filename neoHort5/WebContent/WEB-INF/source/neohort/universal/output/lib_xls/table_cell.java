@@ -26,6 +26,8 @@ package neohort.universal.output.lib_xls;
 
 import java.util.Hashtable;
 
+import jxl.write.DateFormat;
+import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 
 import neohort.log.stubs.iStub;
@@ -61,6 +63,26 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		
 		WritableSheet document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 		
+		bean _defDatetimeformat = (bean)_beanLibrary.get("SYSTEM:DEFDATETIMEFORMAT");
+		
+		if(_defDatetimeformat!=null && _defDatetimeformat.getContent()!=null) setDefDATETIMEFORMAT((WritableCellFormat)_defDatetimeformat.getContent());
+		else{
+			_defDatetimeformat = new bean();
+			_defDatetimeformat.setContent(new WritableCellFormat (new DateFormat("dd/MM/yyyy hh:mm")));
+			_defDatetimeformat.setID("DEFDATETIMEFORMAT");
+			_beanLibrary.put("SYSTEM:DEFDATETIMEFORMAT",_defDatetimeformat);
+			setDefDATETIMEFORMAT((WritableCellFormat)_defDatetimeformat.getContent());
+		}
+		
+		bean _defDateformat = (bean)_beanLibrary.get("SYSTEM:DEFDATEFORMAT");
+		if(_defDateformat!=null && _defDateformat.getContent()!=null) setDefDATEFORMAT((WritableCellFormat)_defDateformat.getContent());
+		else{
+			_defDateformat = new bean();
+			_defDateformat.setContent(new WritableCellFormat (new DateFormat("dd/MM/yyyy")));
+			_defDatetimeformat.setID("DEFDATEFORMAT");
+			_beanLibrary.put("SYSTEM:DEFDATEFORMAT",_defDateformat);
+			setDefDATEFORMAT((WritableCellFormat)_defDateformat.getContent());
+		}
 
 		
 		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y));
