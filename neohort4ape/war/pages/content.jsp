@@ -158,7 +158,7 @@
 <tr> 
 	<td width=250 align=center class="block_background">
 	<span class="page_section">
-		<span class="page_section_text">Step 3.1. Create the document styles.</span>
+		<span class="page_section_text">Step 3.1. Create the document styles. Asian fonts.</span>
 		<br>
 		<a href="javascript:void(showAsIFrame('/report_creator?$source=/chart/guide/guide3.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			

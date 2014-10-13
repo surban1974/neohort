@@ -42,7 +42,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
-
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -71,6 +70,7 @@ public class general extends element{
 	private String SOURCE_BEFORE_FIXED;
 	private String SOURCE_ERROR_FIXED;
 	private String LIB;
+	private String DIRECTION;
 
 	public class PageEvent_0 extends  PdfPageEventHelper{
 		private int cur_page = 0;
@@ -161,8 +161,11 @@ public class general extends element{
                     	isError=false;
 						initCanvas(null, _beanLibrary);
 					}
+					 
+
 				}catch(Exception e){
 				}
+
 			}
 	  	}
 
@@ -188,6 +191,8 @@ public general() {
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
+
+		
 	}
 
 
@@ -226,6 +231,8 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				if (getTYPE_DOCUMENT()!=null && !getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && !getSOURCE_DOCUMENT().equals("")){
 					if(!noGenerate.booleanValue())
 						writer = PdfWriter.getInstance(document, new java.io.FileOutputStream(getSOURCE_DOCUMENT()));
+
+
 				}
 */
 
@@ -236,6 +243,10 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					this._beanLibrary = _beanLibrary;
 					PageEvent_0 pev = new PageEvent_0();
 					writer.setPageEvent(pev);
+					if(!getDIRECTION().equals("") && getDIRECTION().equalsIgnoreCase("RTL")){
+						writer.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+					}
+					
 				}
 
 				bean _sysDocument = new bean();
@@ -325,6 +336,7 @@ public void reimposta() {
 	ORIENTATION = "";
 	MARGINS = "";
 	LIB="pdf";
+	DIRECTION="";
 }
 public void setError(Exception e) {
 	if(motore instanceof OutputRunTime){
@@ -385,5 +397,11 @@ public String getLIB() {
 }
 public void setLIB(String newLIB) {
 	LIB = newLIB;
+}
+public String getDIRECTION() {
+	return DIRECTION;
+}
+public void setDIRECTION(String dIRECTION) {
+	DIRECTION = dIRECTION;
 }
 }

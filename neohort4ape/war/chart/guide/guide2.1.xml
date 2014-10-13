@@ -50,7 +50,7 @@
 			FONT_TYPE = "BOLDITALIC"			
 			FONT_COLOR_RGB = "200,100,50"
 			FONT_STYLE = "STRIKETHRU"
-			ALIGN = "LEFT">Step 1.1 - paragraph-frase</PHRASE>	
+			ALIGN = "LEFT">Step 1.1 - paragraph-phrase</PHRASE>	
 		</PARAGRAPH>
 
 <IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>

@@ -32,10 +32,9 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Font.FontFamily;
+
 
 public class phrase extends element{
 	private static final long serialVersionUID = -9191296089484347050L;
@@ -47,28 +46,15 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
 
-		int _f_size = 10;
-			try{
-				_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-			}catch(Exception e){}
 
-		FontFamily _f_name = FontFamily.COURIER;
-		try{
-			_f_name = Font.getFamily(internal_style.getFONT().toUpperCase());
-		}catch(Exception e){			
-		}
-			
-		int _f_type = getField_Int(new com.itextpdf.text.Font().getClass(),internal_style.getFONT_TYPE(),com.itextpdf.text.Font.NORMAL);
-		BaseColor _fColor =getField_Color(internal_style.getFONT_COLOR(),BaseColor.BLACK);
 
-//		String content=(String)this.getContent();
 
 		String content=prepareContentString(internal_style.getFORMAT());
 
-		com.itextpdf.text.Font font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
-		font.setColor(_fColor);
-		if(getStyle()!=null && !getStyle().getFONT_STYLE().equals(""))
-			font.setStyle(getStyle().getFONT_STYLE().toLowerCase());
+		
+		
+		Font font = getFont();
+
 
 		Phrase phrase = null;
 		int _f_leading = -1;

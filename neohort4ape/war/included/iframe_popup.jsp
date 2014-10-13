@@ -38,3 +38,8 @@ style="z-index: -1; position: absolute; top: 0; left: 0; width: 50%; height: 50%
 ></div>
 </div>
 </center>
+<script>
+
+ajustPanel();
+window.onresize = function() {ajustPanel();}
+</script>

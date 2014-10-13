@@ -24,13 +24,10 @@
 
 package neohort.universal.output.lib_xls;
 
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
-
-import com.itextpdf.text.BaseColor;
 
 import jxl.Cell;
 import jxl.format.Alignment;
@@ -41,6 +38,7 @@ import jxl.format.Orientation;
 import jxl.format.UnderlineStyle;
 import jxl.format.VerticalAlignment;
 import jxl.write.Blank;
+import jxl.write.DateFormat;
 import jxl.write.DateTime;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -54,18 +52,24 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
+import neohort.universal.output.lib.report_element_baseawt;
 import neohort.universal.output.lib.style;
 import neohort.util.util_format;
 
+import com.itextpdf.text.BaseColor;
 
 
-public abstract class element extends report_element_base  implements report_element {
+
+public abstract class element extends report_element_baseawt  implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	private static HashMap colorsCache;
 	private static HashMap fontNameCache;
 	private static HashMap alignCache;
 	private static HashMap vAlignCache;
+	
+	private WritableCellFormat defDATEFORMAT;
+	private WritableCellFormat defDATETIMEFORMAT;
 	
 
 
@@ -218,11 +222,27 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}
 	
 	try{
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATETIME")==0){
+			Date ret = getCallDate(frase,internal_style.getFORMAT());
+			if(ret!=null){
+				if (isFormat) return new DateTime(X,Y,ret,format);
+				else{
+					if(defDATETIMEFORMAT==null) defDATETIMEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy hh:mm"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
+			}
+		}	
+	}catch(Exception e){		
+	}
+	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATE")==0){
 			Date ret = getCallDate(frase,internal_style.getFORMAT());
 			if(ret!=null){
 				if (isFormat) return new DateTime(X,Y,ret,format);
-				else return new DateTime(X,Y,ret);
+				else{
+					if(defDATEFORMAT==null) defDATEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy"));
+					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+				}
 			}
 		}	
 	}catch(Exception e){		
@@ -380,6 +400,7 @@ private static Colour getNearestColour(BaseColor awtColor){
     
     return color;
 }
+
 /*
 public Colour analiseColour(Color color){
 	Vector clrs = new Vector();
@@ -554,6 +575,17 @@ public String prepareContentString(String formatSG) {
 }
 
 private java.util.Date getCallDate(String content, String formatS){
+	if (formatS.toUpperCase().indexOf("DATETIME")==0){ 
+		try{
+			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd HH:mm").getTime());
+		}catch(Exception e){
+			try{
+				return new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime());
+			}catch(Exception ex){
+			}
+		}		
+	}
+	
 	if (formatS.toUpperCase().indexOf("DATE")==0){ 
 		try{
 			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd").getTime());
@@ -566,6 +598,7 @@ private java.util.Date getCallDate(String content, String formatS){
 	}
 	return null;
 }
+
 public Orientation analiseOrientation(float rotation){
 	if(rotation==0) return null;
 	int ang = (int)rotation;
@@ -589,5 +622,17 @@ public Orientation analiseOrientation(float rotation){
 	if(rotation==270) return Orientation.MINUS_90;	
 	return Orientation.HORIZONTAL;
 */		
+}
+public WritableCellFormat getDefDATEFORMAT() {
+	return defDATEFORMAT;
+}
+public void setDefDATEFORMAT(WritableCellFormat defDATEFORMAT) {
+	this.defDATEFORMAT = defDATEFORMAT;
+}
+public WritableCellFormat getDefDATETIMEFORMAT() {
+	return defDATETIMEFORMAT;
+}
+public void setDefDATETIMEFORMAT(WritableCellFormat defDATETIMEFORMAT) {
+	this.defDATETIMEFORMAT = defDATETIMEFORMAT;
 }
 }

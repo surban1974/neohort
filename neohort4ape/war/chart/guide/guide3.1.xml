@@ -16,6 +16,38 @@
 	
 	<PAGE_FOOTER PAGE_N="TRUE" STYLE_ID="STYLE_FOOTER">footer</PAGE_FOOTER>
 	<INIT>
+	
+	<style ID="STYLE_JA"
+				EXTRA_FONT = "KozMinPro-Regular"
+				FONT_ENCODED= "UniJIS-UCS2-H"
+				FONT_EMBEDDED="NOT_EMBEDDED"
+				
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT"
+		/>
+	
+	<style ID="STYLE_KO"	
+				EXTRA_FONT = "HYGoThic-Medium"
+				FONT_ENCODED= "UniKS-UCS2-H"
+				FONT_EMBEDDED="NOT_EMBEDDED"
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT"
+		/>
+	<style ID="STYLE_CH"	
+				EXTRA_FONT = "STSong-Light"
+				FONT_ENCODED= "UniGB-UCS2-H"
+				FONT_EMBEDDED="NOT_EMBEDDED"
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT"
+		/>		
+				
+				
 		<style ID="STYLE_1"
 				FONT = "HELVETICA"
 				FONT_SIZE = "15"
@@ -49,15 +81,28 @@
 	<DOCUMENT>
 		<PAGE_HEADER>
 			<PARAGRAPH>
-				<PHRASE STYLE_ID="STYLE_1">header 1</PHRASE>	
+				<PHRASE STYLE_ID="STYLE_1">English step 1.1 - paragraph-phrase</PHRASE>	
 			</PARAGRAPH>
-			<BLOCK STYLE_ID="STYLE_2">header 2</BLOCK>
+			
+			<PARAGRAPH>
+				<PHRASE STYLE_ID="STYLE_JA"> Japan &#12473;&#12486;&#12483;&#12503; &#27573;&#33853;&#12501;&#12524;&#12540;&#12474;</PHRASE>	
+			</PARAGRAPH>
+
+			
+			<PARAGRAPH>
+				<PHRASE STYLE_ID="STYLE_KO">KOREAN &#45800;&#44228; &#47928;&#44396;</PHRASE>	
+			</PARAGRAPH>
+
+			<PARAGRAPH>
+				<PHRASE STYLE_ID="STYLE_CH">CHINA &#39588;&#31532;&#30701;&#35821;</PHRASE>	
+			</PARAGRAPH>
+
 		
 		</PAGE_HEADER>
 <PAGEBREAK/>		
 		<BLOCK 	STYLE_ID="STYLE_3">Step 1.5 - block</BLOCK>
 		<PARAGRAPH>
-			<PHRASE STYLE_ID="STYLE_2">Step 1.1 - paragraph-frase</PHRASE>	
+			<PHRASE STYLE_ID="STYLE_2">Step 1.1 - paragraph-phrase</PHRASE>	
 		</PARAGRAPH>
 
 

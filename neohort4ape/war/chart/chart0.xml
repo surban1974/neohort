@@ -19,7 +19,7 @@
 						</TABLE_ROW>			
 						<TABLE_ROW>			
 						<CHART ID="First_Chart" 
-							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_CURVEB_MULTI_XY" 
 							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
 							CHART_DATA_X="	-;-;
 									2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;

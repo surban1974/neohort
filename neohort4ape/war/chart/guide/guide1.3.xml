@@ -9,7 +9,7 @@ LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
 	<DOCUMENT>
 		<BLOCK>Step 1.1 - block</BLOCK>
 		<PARAGRAPH>
-			<PHRASE>Step 1.1 - paragraph-frase
+			<PHRASE>Step 1.1 - paragraph-phrase
 			</PHRASE>	
 		</PARAGRAPH>
 

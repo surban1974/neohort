@@ -35,9 +35,9 @@
 	<td>&nbsp;&nbsp;</td>
 	<td width=750  class="page_section" style="border-top: solid 1px silver">
 		<span class="page_section_text">			
-			neoHort: <b><font color="red">5.2.1.api</font></b><br>
-			JDK 1.6<br>
-			iText: <b><font color="red">Full compatibility 5.2.1 </font></b><br>
+			neoHort: <b><font color="red">5.2.5.api</font></b><br>
+			JDK 1.7<br>
+			iText: <b><font color="red">Full compatibility 5.5.3 </font></b><br>
 			JExcelApi: 2.6.12
 		</span>	
 	</td>

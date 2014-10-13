@@ -33,6 +33,7 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
+import neohort.universal.output.lib.report_element_baseNawt;
 import neohort.universal.output.lib.style;
 
 import com.itextpdf.text.BaseColor;
@@ -46,7 +47,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public abstract class element extends report_element_base implements report_element {
+public abstract class element extends report_element_baseNawt implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	int _sys_border = 0;
@@ -60,6 +61,86 @@ public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
 public Object execute(Hashtable _beanLibrary) {
 	return null;
 }
+
+
+public com.itextpdf.text.Font getFont(){
+	
+//	com.itextpdf.text.Font font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
+	
+
+//	com.itextpdf.text.Font font = FontFactory.getFont("MSung-Light",
+//                "UniCNS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
+	
+//	com.itextpdf.text.Font font = FontFactory.getFont("HYSMyeongJoStd-Medium",
+//            "UniKS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
+	
+//	com.itextpdf.text.Font font = new Font(BaseFont.createFont("resources/arialuni.ttf",
+//            BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
+
+//	com.itextpdf.text.Font font = new Font(BaseFont.createFont("HYSMyeongJoStd-Medium",
+//			"UniKS-UCS2-H", BaseFont.NOT_EMBEDDED),_f_size, _f_type);	
+	
+	com.itextpdf.text.Font font = new com.itextpdf.text.Font();
+	try{
+
+		int _f_size = 10;
+		try{
+			_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
+		}catch(Exception e){}
+		
+		int _f_type = getField_Int(new com.itextpdf.text.Font().getClass(),internal_style.getFONT_TYPE(),com.itextpdf.text.Font.NORMAL);
+
+
+		
+
+
+
+			
+		try{
+			if(getStyle()!=null && !getStyle().getEXTRA_FONT().equals("")){
+				if(!getStyle().getFONT_ENCODED().equals("")){
+					if(!getStyle().getFONT_EMBEDDED().equals("")){
+						if(getStyle().getFONT_EMBEDDED().equalsIgnoreCase("EMBEDDED"))
+							font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED),_f_size, _f_type);
+						else
+							font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.NOT_EMBEDDED),_f_size, _f_type);
+					}else{
+						font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED),_f_size, _f_type);
+					}
+				}else
+					font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
+				
+			}else{
+				FontFamily _f_name = FontFamily.COURIER;
+				try{
+					_f_name = Font.getFamily(internal_style.getFONT().toUpperCase());
+				}catch(Exception e){			
+				}
+				font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
+			}
+
+		}catch(Exception e){
+			setError(e,iStub.log_WARN);
+		}
+		
+		if(!internal_style.getFONT_COLOR().equals("")){
+			try{
+				BaseColor fontColor = getField_Color(internal_style.getFONT_COLOR(),BaseColor.BLACK);
+				font.setColor(fontColor);
+			}catch(Exception e){}
+		}
+
+		if(getStyle()!=null && !getStyle().getFONT_STYLE().equals(""))
+			font.setStyle(getStyle().getFONT_STYLE().toLowerCase());
+
+
+	}catch(Exception e){
+		setError(e,iStub.log_WARN);
+	}
+	
+	return font;
+}
+
 public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 	try{
 
@@ -78,44 +159,9 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 		}
 
 		if(rotation==0){
-			int fontDim = 0;
-			FontFamily fontType = FontFamily.COURIER;
-			int fontStyle = 0;
 
 
-			if(!internal_style.getFONT_SIZE().equals("")){
-				try{
-					fontDim = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-				}catch(Exception e){}
-			}
-			if(fontDim == 0) fontDim = 8;
-
-			if(!internal_style.getFONT().equals("")){
-				try{
-					fontType = Font.getFamily(internal_style.getFONT().toUpperCase());
-				}catch(Exception e){
-				}
-			}
-
-			if(!internal_style.getFONT_TYPE().equals("")){
-				try{
-					fontStyle = getField_Int(new com.itextpdf.text.Font().getClass(),internal_style.getFONT_TYPE(),com.itextpdf.text.Font.NORMAL);
-				}catch(Exception e){
-				}
-			}
-
-			if(fontStyle == 0) fontStyle = com.itextpdf.text.Font.NORMAL;
-			Font font = new Font(fontType, fontDim, fontStyle);
-
-			if(!internal_style.getFONT_COLOR().equals("")){
-				try{
-					BaseColor fontColor = getField_Color(internal_style.getFONT_COLOR(),BaseColor.BLACK);
-					font.setColor(fontColor);
-				}catch(Exception e){}
-			}
-
-			if(!internal_style.getFONT_STYLE().equals(""))
-				font.setStyle(internal_style.getFONT_STYLE().toLowerCase());
+			Font font = getFont();
 
 			cell = null;
 			int _f_leading = -1;
@@ -144,16 +190,42 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 					if(bs_name.indexOf("_")==-1) bs_name+="-"+adaptAttrName(internal_style.getFONT_STYLE());
 					else bs_name+=adaptAttrName(internal_style.getFONT_STYLE());
 				}
+				String bs_code = "Cp1252";
+				if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
+					bs_code = internal_style.getFONT_ENCODED();
+				}
+				try{
+					bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
+				}catch(Exception e){
+					bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+				}
+			}else if(internal_style.getEXTRA_FONT()!=null && !internal_style.getEXTRA_FONT().equals("")){
+				if(!getStyle().getFONT_ENCODED().equals("")){
+					if(!getStyle().getFONT_EMBEDDED().equals("")){
+						if(getStyle().getFONT_EMBEDDED().equalsIgnoreCase("EMBEDDED"))
+							bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED);
+						else
+							bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.NOT_EMBEDDED);
+					}else{
+						bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED);
+					}
+				}else
+					bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+			}else{
+				String bs_code = "Cp1252";
+				if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
+					bs_code = internal_style.getFONT_ENCODED();
+				}
+				try{
+					bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
+				}catch(Exception e){
+					bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+				}
 			}
-			String bs_code = "Cp1252";
-			if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
-				bs_code = internal_style.getFONT_ENCODED();
-			}
-			try{
-				bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
-			}catch(Exception e){
-				bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
-			}
+			
+			
+
 
 			float height_check=-1;
 			if(!internal_style.getHEIGHT().equals("")){
@@ -206,7 +278,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 		}
 
 		cell.setBorder(border);
-		if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
+		if(!internal_style.getPADDING().equals("")){
 			float padding = 0;
 			try{
 				padding = Float.valueOf(internal_style.getPADDING()).floatValue();
@@ -323,7 +395,10 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 			}catch(Exception e){
 			}
 		}
-
+		if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+			if(cell!=null)
+				cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+		}
 		return cell;
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
@@ -386,6 +461,11 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell((com.itextpdf.text.pdf.PdfPTable)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
+				if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+					if(cell!=null)
+						cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+				}
+
 				((com.itextpdf.text.pdf.PdfPTable)content_Element).addCell(cell);
 				return;
 			}
@@ -397,6 +477,11 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell((com.itextpdf.text.Phrase)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
+				if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+					if(cell!=null)
+						cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+				}
+
 				((com.itextpdf.text.pdf.PdfPTable)content_Element).addCell(cell);
 				return;
 			}
@@ -404,6 +489,11 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell((com.itextpdf.text.Image)current_Element);
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
+				if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+					if(cell!=null)
+						cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+				}
+
 				((com.itextpdf.text.pdf.PdfPTable)content_Element).addCell(cell);
 				return;
 			}
@@ -445,7 +535,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 							added=true;
 						}
 
-						if(!added) ((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
+						if(!added)
+							((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
 					}
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
