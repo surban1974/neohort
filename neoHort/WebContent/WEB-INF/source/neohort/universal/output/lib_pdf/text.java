@@ -33,8 +33,12 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
+import com.lowagie.text.Font;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -117,16 +121,41 @@ public void drawDirect(Hashtable _beanLibrary){
 				if(bs_name.indexOf("_")==-1) bs_name+="-"+adaptAttrName(internal_style.getFONT_STYLE());
 				else bs_name+=adaptAttrName(internal_style.getFONT_STYLE());
 			}
+		
+			String bs_code = "Cp1252";
+			if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
+				bs_code = internal_style.getFONT_ENCODED();
+			}	
+			try{
+				bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
+			}catch(Exception e){
+				bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+			}
+		}else if(internal_style.getEXTRA_FONT()!=null && !internal_style.getEXTRA_FONT().equals("")){
+			if(!getStyle().getFONT_ENCODED().equals("")){
+				if(!getStyle().getFONT_EMBEDDED().equals("")){
+					if(getStyle().getFONT_EMBEDDED().equalsIgnoreCase("EMBEDDED"))
+						bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED);
+					else
+						bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.NOT_EMBEDDED);
+				}else{
+					bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED);
+				}
+			}else
+				bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+		}else{
+			String bs_code = "Cp1252";
+			if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
+				bs_code = internal_style.getFONT_ENCODED();
+			}
+			try{
+				bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
+			}catch(Exception e){
+				bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+			}
 		}
-		String bs_code = "Cp1252";
-		if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
-			bs_code = internal_style.getFONT_ENCODED();
-		}	
-		try{
-			bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
-		}catch(Exception e){
-			bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
-		}
+			
 		
 
 		String content = prepareContentString(internal_style.getFORMAT());
@@ -164,7 +193,8 @@ public void drawDirect(Hashtable _beanLibrary){
 				else template.showTextAligned(PdfContentByte.ALIGN_LEFT, content, 0, 0, rotation);
 				template.endText();
 			}	
-		}else{					
+		}else{	
+/*			
 			cb.beginText();
 			cb.setFontAndSize(bs,_f_size);
 			cb.setColorFill(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black));
@@ -175,8 +205,24 @@ public void drawDirect(Hashtable _beanLibrary){
 				cb.showTextAligned(PdfContentByte.ALIGN_LEFT, content, absolute_x, absolute_y, rotation);
 			}				
 			cb.endText();
+*/			
+			Font font = getFont();
+			Phrase phrase = null;
+			int _f_leading = -1;
+			try{
+				_f_leading = Integer.valueOf(internal_style.getLEADING()).intValue();
+			}catch(Exception e){}
+			if(_f_leading==-1) phrase = new Phrase(content,font);
+			else phrase = new Phrase(_f_leading,content,font);
+			int align_h = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
+			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL"))
+				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation,PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
+			else 
+				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation);
 		}
-		cb.saveState();
+			
+
+//		cb.saveState();
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

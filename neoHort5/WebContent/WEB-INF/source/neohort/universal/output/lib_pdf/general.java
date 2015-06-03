@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
 
+
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.iHort;
@@ -76,18 +77,27 @@ public class general extends element{
 		private int cur_page = 0;
 
 		public void onOpenDocument(PdfWriter _writer, Document _document){
-        try {
-            com.itextpdf.text.pdf.PdfPTable PdfPageHeader = ((com.itextpdf.text.pdf.PdfPTable) (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader)).getContent()));
-			((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader);
-			isError=false;
-   	        initCanvas(null, _beanLibrary);
-        } catch (Exception e) {}
-        try {
-        	report_element_base PdfPageHeader_ = (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader_)));
-			((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
-			isError=false;
-			initCanvas(null, _beanLibrary);
-        } catch (Exception e) {}
+	        try {
+	            com.itextpdf.text.pdf.PdfPTable PdfPageHeader = ((com.itextpdf.text.pdf.PdfPTable) (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader)).getContent()));
+				((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader);
+				isError=false;
+	   	        initCanvas(null, _beanLibrary);
+	        } catch (Exception e) {}
+			try {
+				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+				bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+				_sysPdfPH.setContent(new Float(0));
+			} catch (Exception e) {}	        
+	        try {
+	        	report_element_base PdfPageHeader_ = (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader_)));
+				if(PdfPageHeader_.getNodeCurrent()!=null){
+					motore.recompileProfile(PdfPageHeader_.getNodeCurrent(), PdfPageHeader_);
+				}else{
+	                ((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
+					isError=false;
+	                initCanvas(null, _beanLibrary);
+				}
+	        } catch (Exception e) {}
 		}
 
 		public void onCloseDocument(PdfWriter _writer, Document _document){
@@ -105,10 +115,15 @@ public class general extends element{
 	        } catch (Exception e) {}
 	        try {
 	        	report_element_base PdfPageHeader_ = (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader_)));
-				((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
-				isError=false;
-	            initCanvas(null, _beanLibrary);
+				if(PdfPageHeader_.getNodeCurrent()!=null){
+					motore.recompileProfile(PdfPageHeader_.getNodeCurrent(), PdfPageHeader_);
+				}else{
+	                ((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
+					isError=false;
+	                initCanvas(null, _beanLibrary);
+				}
 	        } catch (Exception e) {}
+
 	        try{
 	        	Hashtable container = (Hashtable)((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent();
 	        	Vector list = new Vector(container.values());
@@ -128,11 +143,16 @@ public class general extends element{
 		public void onStartPage(PdfWriter _writer, Document _document) {
 
 		    try {
-			        try {
-			            if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber,new bean());
-						bean _sysPdfPN = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber);
-			            _sysPdfPN.setContent(new Integer(_document.getPageNumber()));
-			        } catch (Exception e) {}
+			    try {
+			        if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber,new bean());
+					bean _sysPdfPN = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document_PageNumber);
+			        _sysPdfPN.setContent(new Integer(_document.getPageNumber()));
+			    } catch (Exception e) {}
+				try {
+					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+					bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+					_sysPdfPH.setContent(new Float(0));
+				} catch (Exception e) {}			    
 
 		        try {
 		            com.itextpdf.text.pdf.PdfPTable PdfPageHeader = ((com.itextpdf.text.pdf.PdfPTable) (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader)).getContent()));
@@ -142,9 +162,13 @@ public class general extends element{
 		        } catch (Exception e) {}
 		        try {
 		        	report_element_base PdfPageHeader_ = (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader_)));
-	                ((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
-					isError=false;
-	                initCanvas(null, _beanLibrary);
+					if(PdfPageHeader_.getNodeCurrent()!=null){
+						motore.recompileProfile(PdfPageHeader_.getNodeCurrent(), PdfPageHeader_);
+					}else{
+		                ((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageHeader_);
+						isError=false;
+		                initCanvas(null, _beanLibrary);
+					}
 		        } catch (Exception e) {}
 		    } catch (Exception e) {
 		    }
@@ -157,12 +181,14 @@ public class general extends element{
 					cur_page = _document.getPageNumber();
 					report_element_base PdfPageFooter_ = ((((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageFooter_))));
 					if(PdfPageFooter_!=null){
-                    	((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageFooter_);
-                    	isError=false;
-						initCanvas(null, _beanLibrary);
+						if(PdfPageFooter_.getNodeCurrent()!=null){
+							motore.recompileProfile(PdfPageFooter_.getNodeCurrent(), PdfPageFooter_);
+						}else{
+	                    	((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageFooter_);
+	                    	isError=false;
+							initCanvas(null, _beanLibrary);						
+						}
 					}
-					 
-
 				}catch(Exception e){
 				}
 

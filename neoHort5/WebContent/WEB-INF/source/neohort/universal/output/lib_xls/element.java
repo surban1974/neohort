@@ -41,6 +41,7 @@ import jxl.format.VerticalAlignment;
 import jxl.write.Blank;
 import jxl.write.DateFormat;
 import jxl.write.DateTime;
+import jxl.write.Formula;
 import jxl.write.Label;
 import jxl.write.Number;
 import jxl.write.WritableCellFormat;
@@ -69,6 +70,11 @@ public abstract class element extends report_element_baseawt  implements report_
 	
 	private WritableCellFormat defDATEFORMAT;
 	private WritableCellFormat defDATETIMEFORMAT;
+	
+	private static final String format_NUMBER="NUMBER";
+	private static final String format_FORMULA="FORMULA";
+	private static final String format_DATETIME="DATETIME";
+	private static final String format_DATE="DATE";
 	
 
 
@@ -213,7 +219,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}
 	
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("NUMBER")==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)==0){
 			if (isFormat) return new Number(X,Y,new Double(frase).doubleValue(),format);
 			else return new Number(X,Y,new Double(frase).doubleValue());
 		}	
@@ -221,7 +227,14 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}
 	
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATETIME")==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_FORMULA)==0){
+			return new Formula(X, Y, frase);
+		}	
+	}catch(Exception e){		
+	}	
+	
+	try{
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==0){
 			Date ret = getCallDate(frase,internal_style.getFORMAT());
 			if(ret!=null){
 				if (isFormat) return new DateTime(X,Y,ret,format);
@@ -234,7 +247,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 	}catch(Exception e){		
 	}
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf("DATE")==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==0){
 			Date ret = getCallDate(frase,internal_style.getFORMAT());
 			if(ret!=null){
 				if (isFormat) return new DateTime(X,Y,ret,format);
@@ -320,6 +333,10 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				((WritableSheet)content_Element).addCell((DateTime)current_Element);
 				return;
 			}
+			if(current_Element instanceof Formula){
+				((WritableSheet)content_Element).addCell((Formula)current_Element);
+				return;
+			}			
 			if(current_Element instanceof jxl.write.Boolean){
 				((WritableSheet)content_Element).addCell((jxl.write.Boolean)current_Element);
 				return;

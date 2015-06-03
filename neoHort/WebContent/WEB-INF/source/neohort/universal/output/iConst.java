@@ -56,6 +56,7 @@ public interface iConst {
 	public static String iHORT_SYSTEM_TableBlock = "TableBlock";
 	public static String iHORT_SYSTEM_ParseJava = "ParseJava";
 	public static String iHORT_SYSTEM_Document_PageNumber = "Document_PageNumber";
+	public static String iHORT_SYSTEM_Page_TablesHeight = "Page_TablesHeight";
 	public static String iHORT_SYSTEM_Templates = "Templates";
 	public static String iHORT_SYSTEM_CurrentROW = "CurrentROW";
 	public static String iHORT_SYSTEM_CurrentCELL = "CurrentCELL";

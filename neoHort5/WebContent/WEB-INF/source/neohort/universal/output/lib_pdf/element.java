@@ -428,8 +428,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		Object content_Element = canvas.lastElement();
 
 		if(	initProcess.booleanValue() &&
-			(	((bean)current_Element).getID().indexOf("PageFooter")==0 ||
-				((bean)current_Element).getID().indexOf("PageHeader")==0)
+			(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0 ||
+				((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)
 			){
 			return;
 		}
@@ -437,9 +437,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 
 		if(content_Element instanceof bean){
-			if(((bean)content_Element).getID().indexOf("PageFooter")==0)
+			if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0)
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-			if(((bean)content_Element).getID().indexOf("PageHeader")==0)
+			if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
 			return;
 		}
@@ -448,9 +448,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			if(content_Element instanceof Document){
 				
 			}else{
-				if(((bean)content_Element).getID().indexOf("PageFooter")==0)
+				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0)
 					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-				if(((bean)content_Element).getID().indexOf("PageHeader")==0)
+				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)
 					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
 			}
 			return;
@@ -498,9 +498,33 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				return;
 			}
 		}
+		
+		if(content_Element instanceof com.itextpdf.text.pdf.PdfPCell){
+			try{
+				((com.itextpdf.text.pdf.PdfPCell)content_Element).addElement((com.itextpdf.text.Element)current_Element);
+			}catch(Exception e){
+			}
+			return;
+		}		
+
+		
+
+		
+		
 		if(content_Element instanceof com.itextpdf.text.Document){
+			if(current_Element instanceof com.itextpdf.text.pdf.PdfPTable){
+				((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.pdf.PdfPTable)current_Element);
+				float curr_height = ((com.itextpdf.text.pdf.PdfPTable)current_Element).calculateHeights();
+				try {
+					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+					bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+					_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
+				} catch (Exception e) {}
+				return;
+			}
+			
 			if(current_Element instanceof bean){
-				if(	((bean)current_Element).getID().indexOf("PageHeader")==0){
+				if(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
 						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
 						for(int i=0;i<buf.size();i++){
@@ -514,30 +538,31 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 								added=true;
 							}
 
-							if(!added) ((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
+							if(!added) 
+								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
 						}
 
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
 					return;
 				}
-				if(	((bean)current_Element).getID().indexOf("PageFooter")==0){
+				if(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
 						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
-					for(int i=0;i<buf.size();i++){
-						boolean added=false;
-						if(buf.get(i) instanceof text){
-							((text)buf.get(i)).drawDirect(_beanLibrary);
-							added=true;
+						for(int i=0;i<buf.size();i++){
+							boolean added=false;
+							if(buf.get(i) instanceof text){
+								((text)buf.get(i)).drawDirect(_beanLibrary);
+								added=true;
+							}
+							if(buf.get(i) instanceof rectangle){
+								((rectangle)buf.get(i)).drawDirect(_beanLibrary);
+								added=true;
+							}
+	
+							if(!added)
+								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
 						}
-						if(buf.get(i) instanceof rectangle){
-							((rectangle)buf.get(i)).drawDirect(_beanLibrary);
-							added=true;
-						}
-
-						if(!added)
-							((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
-					}
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
 					return;
@@ -575,6 +600,14 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 
 			((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)current_Element);
+			if(current_Element instanceof com.itextpdf.text.pdf.PdfPTable){
+				float curr_height = ((com.itextpdf.text.pdf.PdfPTable)current_Element).calculateHeights();
+				try {
+					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+					bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+					_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
+				} catch (Exception e) {}				
+			}
 			return;
 		}
 		if(content_Element instanceof com.itextpdf.text.Paragraph){

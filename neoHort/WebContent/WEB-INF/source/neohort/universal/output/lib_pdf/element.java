@@ -36,6 +36,7 @@ import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
+
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
@@ -59,6 +60,84 @@ public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
 public Object execute(Hashtable _beanLibrary) {
 	return null;
 }
+
+public com.lowagie.text.Font getFont(){
+	
+//	com.itextpdf.text.Font font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
+	
+
+//	com.itextpdf.text.Font font = FontFactory.getFont("MSung-Light",
+//                "UniCNS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
+	
+//	com.itextpdf.text.Font font = FontFactory.getFont("HYSMyeongJoStd-Medium",
+//            "UniKS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
+	
+//	com.itextpdf.text.Font font = new Font(BaseFont.createFont("resources/arialuni.ttf",
+//            BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
+
+//	com.itextpdf.text.Font font = new Font(BaseFont.createFont("HYSMyeongJoStd-Medium",
+//			"UniKS-UCS2-H", BaseFont.NOT_EMBEDDED),_f_size, _f_type);	
+	
+	com.lowagie.text.Font font = new com.lowagie.text.Font();
+	try{
+
+		int _f_size = 10;
+		try{
+			_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
+		}catch(Exception e){}
+		
+		int _f_type = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT_TYPE(),com.lowagie.text.Font.NORMAL);
+
+
+		
+
+
+
+			
+		try{
+			if(getStyle()!=null && !getStyle().getEXTRA_FONT().equals("")){
+				if(!getStyle().getFONT_ENCODED().equals("")){
+					if(!getStyle().getFONT_EMBEDDED().equals("")){
+						if(getStyle().getFONT_EMBEDDED().equalsIgnoreCase("EMBEDDED"))
+							font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED),_f_size, _f_type);
+						else
+							font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.NOT_EMBEDDED),_f_size, _f_type);
+					}else{
+						font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), getStyle().getFONT_ENCODED(), BaseFont.EMBEDDED),_f_size, _f_type);
+					}
+				}else
+					font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
+				
+			}else{
+				
+				int _f_name = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER);					
+				font =new com.lowagie.text.Font(_f_name, _f_size, _f_type);
+				
+			}
+
+		}catch(Exception e){
+			setError(e,iStub.log_WARN);
+		}
+		
+		if(!internal_style.getFONT_COLOR().equals("")){
+			try{
+				Color fontColor = getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.BLACK);
+				font.setColor(fontColor);
+			}catch(Exception e){}
+		}
+
+		if(getStyle()!=null && !getStyle().getFONT_STYLE().equals(""))
+			font.setStyle(getStyle().getFONT_STYLE().toLowerCase());
+
+
+	}catch(Exception e){
+		setError(e,iStub.log_WARN);
+	}
+	
+	return font;
+}
+
+
 public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 	try{
 		
@@ -485,6 +564,14 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		if(content_Element instanceof com.lowagie.text.Document){
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.pdf.PdfPTable)current_Element);
+				if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
+					float curr_height = ((com.lowagie.text.pdf.PdfPTable)current_Element).calculateHeights(true);
+					try {
+						if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+						bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+						_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
+					} catch (Exception e) {}				
+				}
 				return;
 			}
 			if(current_Element instanceof bean){
@@ -562,6 +649,15 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 			
 			((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)current_Element);
+			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
+				float curr_height = ((com.lowagie.text.pdf.PdfPTable)current_Element).calculateHeights(true);
+				try {
+					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
+					bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
+					_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
+				} catch (Exception e) {}				
+			}
+
 			return;
 		}
 		if(content_Element instanceof com.lowagie.text.Paragraph){
