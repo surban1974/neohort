@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+	ORIENTATION="PORTRAIT"
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
+	>
+	<INIT/>
+	<DOCUMENT>
+		<PAGE_HEADER>
+			<PARAGRAPH>
+				<PHRASE
+				FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT">header 1</PHRASE>	
+			</PARAGRAPH>
+			<BLOCK 	FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				BORDER = "15"
+				BORDER_COLOR = "RED"
+				ALIGN = "LEFT"
+			>header 2</BLOCK>
+		
+		</PAGE_HEADER>
+<PAGEBREAK/>		
+		<BLOCK 	FONT = "HELVETICA"
+			FONT_SIZE = "15"
+			FONT_TYPE = "ITALIC"
+			FONT_STYLE = "UNDERLINE"
+			FONT_COLOR = "RED"
+			BACK_COLOR = "BLUE"
+			
+			BORDER = "7"
+			BORDER_COLOR = "PINK"
+			BORDER_WIDTH = "3"
+			PADDING = "1"
+			ALIGN = "CENTER"
+			
+			
+			
+
+			>Step 1.5 - block</BLOCK>
+		<PARAGRAPH>
+			<PHRASE
+			FONT = "COURIER"
+			FONT_SIZE = "25"
+			FONT_TYPE = "BOLDITALIC"			
+			FONT_COLOR_RGB = "200,100,50"
+			FONT_STYLE = "STRIKETHRU"
+			ALIGN = "LEFT">Step 1.1 - paragraph-frase</PHRASE>	
+		</PARAGRAPH>
+
+<IMAGE IMAGE_SOURCE="/neoHort5/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>
+	</DOCUMENT>
+</GENERAL>
