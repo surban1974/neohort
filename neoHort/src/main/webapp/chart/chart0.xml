@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	id="chart0"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+
+	ORIENTATION="LANDSCAPE">
+	<INIT/>
+	<DOCUMENT>
+		<BLOCK FONT="HELVETICA" FONT_SIZE="10" FONT_COLOR="BLUE" FONT_TYPE="NORMAL">Chart Example1</BLOCK>
+		<TABLE COL="2" COLLS_DIMENTION="50,50">
+			<TABLE_ROW>
+				<TABLE_BLOCK>
+					<TABLE COL="1" COLLS_DIMENTION="100">
+						<TABLE_ROW>			
+							<TABLE_CELL BORDER="0">			
+							
+							
+							
+							
+							</TABLE_CELL>			
+						</TABLE_ROW>			
+						<TABLE_ROW>			
+						<CHART ID="First_Chart" 
+							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							CHART_DATA_X="	-;-;
+									2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;" 
+							CHART_DATA_Y="	-;-;
+									10;10;10;9;9;|;
+									5;-2;7;4;1;|;
+									7;-2;11;3;|;
+									8;-1;13;6;|;
+									8;1;13;7;|;
+									10;4;15;10;|;
+									12;5;17;12;|;
+									15;11;19;12;|;
+									21;14;21;15;|;" 
+							CHART_DATA_Z="	1;0;" 
+							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							SHOW_SCALE_XYZ="true;true;;" 
+							GR_SCALE_XYZ="90;0;;" 
+							FONT_SCALE_XYZ="Helvetica;;;" 
+							FONT_SCALE_COLOR_XYZ="blue;black;;" 
+							FONT_SCALE_SIZE_XYZ="7;7;;" 
+							MAXELEMENT_LABEL_XYZ="7;7;;" 
+							GR_LABEL_XYZ="0;0;;" 
+							ALIGN_LABEL_XYZ="CENTER;;;" 
+							FONT_LABEL_XYZ="Helvetica;;;" 
+							FONT_LABEL_COLOR_XYZ="RED;;;" 
+							FONT_LABEL_SIZE_XYZ="10;;;" 
+							LABEL_X="" 
+							LABEL_TOP="	Rating SP;
+									E-TELECOM-E20;
+									E-TELECOM-E30;
+									E-TELECOM-E40;
+									E-TELECOM-E50;
+									E-TELECOM-E60;
+									E-TELECOM-E70;
+									E-TELECOM-E80;
+									E-TELECOM-E90;" 
+							FONT_LABEL_TOP="Helvetica" 
+							FONT_LABEL_COLOR_TOP="blue" 
+							FONT_LABEL_SIZE_TOP="8" 
+							ALIGN_LABEL_TOP="LEFT" 
+							ELEMENT_COLOR_3D="red;blue;black;" 
+							DIMENTION_V="350" 
+							DIMENTION_H="400" 
+							BORDER="0" 
+							ALIGN="CENTER" 
+							LABEL_Y=""/>
+						</TABLE_ROW>
+					</TABLE>
+				</TABLE_BLOCK>
+				<TABLE_BLOCK>
+					<TABLE COL="1" COLLS_DIMENTION="100">
+						<TABLE_ROW>
+							<CHART ID="First_Chart_2" 
+							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" 
+							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							SHOW_SCALE_XYZ="true;true;;" 
+							GR_SCALE_XYZ="90;0;;" 
+							FONT_SCALE_XYZ="Helvetica;;;" 
+							FONT_SCALE_COLOR_XYZ="blue;black;;" 
+							FONT_SCALE_SIZE_XYZ="7;7;;" 
+							MAXELEMENT_LABEL_XYZ="7;7;;" 
+							GR_LABEL_XYZ="0;0;;" 
+							ALIGN_LABEL_XYZ="CENTER;;;" 
+							FONT_LABEL_XYZ="Helvetica;;;" 
+							FONT_LABEL_COLOR_XYZ="RED;;;" 
+							FONT_LABEL_SIZE_XYZ="8;;;" 
+							LABEL_X="" 
+							LABEL_TOP="	Rating SP;
+									E-TELECOM-E20;" 
+							FONT_LABEL_TOP="Helvetica" 
+							FONT_LABEL_COLOR_TOP="blue" 
+							FONT_LABEL_SIZE_TOP="8" 
+							ALIGN_LABEL_TOP="LEFT" 
+							ELEMENT_COLOR_3D="red;blue;black;" 
+							DIMENTION_V="160" 
+							DIMENTION_H="315" 
+							BORDER="0" 
+							ALIGN="CENTER" 
+							LABEL_Y=""/>
+						</TABLE_ROW>
+						<TABLE_ROW>
+							<CHART ID="First_Chart_3" 
+							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" 
+									
+							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							SHOW_SCALE_XYZ="true;true;;" 
+							GR_SCALE_XYZ="90;0;;" 
+							FONT_SCALE_XYZ="Helvetica;;;" 
+							FONT_SCALE_COLOR_XYZ="blue;black;;" 
+							FONT_SCALE_SIZE_XYZ="7;7;;" 
+							MAXELEMENT_LABEL_XYZ="7;7;;" 
+							GR_LABEL_XYZ="0;0;;" 
+							ALIGN_LABEL_XYZ="CENTER;;;" 
+							FONT_LABEL_XYZ="Helvetica;;;" 
+							FONT_LABEL_COLOR_XYZ="RED;;;" 
+							FONT_LABEL_SIZE_XYZ="8;;;" 
+							LABEL_X="" 
+							LABEL_TOP="	Rating SP;
+										E-TELECOM-E20;" 
+							FONT_LABEL_TOP="Helvetica"
+							FONT_LABEL_COLOR_TOP="blue" 
+							FONT_LABEL_SIZE_TOP="8" 
+							ALIGN_LABEL_TOP="LEFT" 
+							ELEMENT_COLOR_3D="red;blue;black;" 
+							DIMENTION_V="160" 
+							DIMENTION_H="315" 
+							BORDER="0" 
+							ALIGN="CENTER" 
+							LABEL_Y=""/>
+
+						</TABLE_ROW>
+						<TABLE_ROW>
+							<CHART ID="First_Chart_4" CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" 
+							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							SHOW_SCALE_XYZ="true;true;;" 
+							GR_SCALE_XYZ="90;0;;" 
+							FONT_SCALE_XYZ="Helvetica;;;" 
+							FONT_SCALE_COLOR_XYZ="blue;black;;" 
+							FONT_SCALE_SIZE_XYZ="7;7;;" 
+							MAXELEMENT_LABEL_XYZ="7;7;;" 
+							GR_LABEL_XYZ="0;0;;" 
+							ALIGN_LABEL_XYZ="CENTER;;;" 
+							FONT_LABEL_XYZ="Helvetica;;;" 
+							FONT_LABEL_COLOR_XYZ="RED;;;" 
+							FONT_LABEL_SIZE_XYZ="8;;;" 
+							LABEL_X="" LABEL_TOP="	Rating SP;
+										E-TELECOM-E20;" 
+							FONT_LABEL_TOP="Helvetica" 
+							FONT_LABEL_COLOR_TOP="blue" 
+							FONT_LABEL_SIZE_TOP="8" 
+							ALIGN_LABEL_TOP="LEFT" 
+							ELEMENT_COLOR_3D="red;blue;black;" 
+							DIMENTION_V="160" 
+							DIMENTION_H="315" 
+							BORDER="0" 
+							ALIGN="CENTER" 
+							LABEL_Y=""/>
+
+						</TABLE_ROW>
+					</TABLE>
+				</TABLE_BLOCK>
+			</TABLE_ROW>
+		</TABLE>
+	</DOCUMENT>
+</GENERAL>

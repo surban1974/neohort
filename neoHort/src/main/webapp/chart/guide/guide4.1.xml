@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	id="guide.4.1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+	ORIENTATION="PORTRAIT"
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
+	>
+	<STYLE  ID="STYLE_FOOTER"
+			FONT = "HELVETICA"
+			FONT_SIZE = "15"
+			FONT_TYPE = "BOLD"			
+			FONT_COLOR_RGB = "200,200,150"				
+			ALIGN = "LEFT"
+	/>
+	
+	<PAGE_FOOTER PAGE_N="TRUE" STYLE_ID="STYLE_FOOTER">footer</PAGE_FOOTER>
+	<INIT>
+		<STYLE ID="STYLE_1"
+				FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				FONT_TYPE = "BOLD"			
+				FONT_COLOR_RGB = "200,200,150"				
+				ALIGN = "LEFT"
+		/>
+		<STYLE ID="STYLE_2"		
+			FONT = "HELVETICA"
+				FONT_SIZE = "15"
+				BORDER = "15"
+				BORDER_COLOR = "RED"
+				ALIGN = "LEFT"
+		/>
+		<STYLE ID="STYLE_3"		
+			FONT = "HELVETICA"
+			FONT_SIZE = "15"
+			FONT_TYPE = "ITALIC"
+			FONT_STYLE = "UNDERLINE"
+			FONT_COLOR = "RED"
+			BACK_COLOR = "BLUE"
+			
+			BORDER = "7"
+			BORDER_COLOR = "PINK"
+			BORDER_WIDTH = "3"
+			PADDING = "1"
+			ALIGN = "CENTER"
+		/>
+		
+		<STYLE ID="ST_CELL_H" 
+			FONT="HELVETICA" 
+			FONT_SIZE="10" 
+			BORDER="15" 
+			ALIGN="CENTER" 
+			BORDER_COLOR_RGB="250,10,170"
+			FONT_COLOR="RED"
+			TEXT_ROTATION_DEGREE="90" 
+			/>
+		
+	</INIT>
+	<DOCUMENT>
+		<PAGE_HEADER>
+			<PARAGRAPH>
+				<PHRASE STYLE_ID="STYLE_1">header 1</PHRASE>	
+			</PARAGRAPH>
+			<BLOCK STYLE_ID="STYLE_2">header 2</BLOCK>
+		
+		</PAGE_HEADER>
+	
+		<BLOCK 	STYLE_ID="STYLE_3">Step 1.5 - block</BLOCK>
+		<PARAGRAPH>
+			<PHRASE STYLE_ID="STYLE_2">Step 1.1 - paragraph-frase</PHRASE>	
+		</PARAGRAPH>
+		
+<PHRASE >--------------------------</PHRASE>		
+		
+		<TABLE COL="4" COLLS_DIMENTION="25,25,25,25">
+			<TABLE_ROW>
+				<TABLE_CELL 
+					STYLE_ID="ST_CELL_H" 
+					BORDER="1" 
+					FONT_COLOR="RED"
+					BACK_COLOR="BLUE"
+					
+					>rotation cell 1 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">cell 2 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4">cell 4 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" >cell 5 row 1</TABLE_CELL>
+			</TABLE_ROW>
+		</TABLE>		
+		
+<PHRASE >--------------------------</PHRASE>	
+
+		<TABLE COL="4" COLLS_DIMENTION="25,25,25,25">
+			<TABLE_ROW>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1">cell 1 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">cell 2 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4">cell 4 row 1</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" >cell 5 row 1</TABLE_CELL>
+			</TABLE_ROW>
+			<TABLE_ROW>
+				<TABLE_CELL STYLE_ID="ST_CELL_H">cell 1 row 2</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H">cell 2 row 2</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H">cell 4 row 2</TABLE_CELL>
+				<TABLE_CELL STYLE_ID="ST_CELL_H">cell 5 row 2</TABLE_CELL>
+			</TABLE_ROW>
+		</TABLE>
+
+<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>				
+	</DOCUMENT>
+</GENERAL>
