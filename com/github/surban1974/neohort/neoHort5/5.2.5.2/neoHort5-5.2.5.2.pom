@@ -3,8 +3,8 @@
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neoHort5</artifactId>
   <version>5.2.5.2</version>
-  <name>neoHort5</name>
-  <description>Java PDF&amp;XLS runtime builder-based iText&amp;JExcelAPI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText 5.*.</description>
+  <name>neoHort5 java 1.6</name>
+  <description>Java PDF&amp;XLS runtime builder-based iText&amp;JExcelAPI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText 5.*. Java 1.6 compilation.</description>
   <url>https://github.com/surban1974/neohort</url>
  
  
@@ -42,8 +42,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.3</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.6</source>
+          <target>1.6</target>
         </configuration>
       </plugin>
 	  <plugin>
@@ -73,7 +73,9 @@
                 <includes><include>**/*</include></includes>
                 <repositoryName>neohort</repositoryName>      <!-- github repo name -->
                 <repositoryOwner>surban1974</repositoryOwner>    <!-- github username  -->
-                <merge>true</merge>
+                
+<merge>true</merge>	<!-- AVOID REWRITING !!!  -->
+                
             </configuration>
             <executions>
               <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
