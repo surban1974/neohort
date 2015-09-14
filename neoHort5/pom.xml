@@ -4,7 +4,7 @@
   <artifactId>neoHort5</artifactId>
   <version>5.2.5.2</version>
   <name>neoHort5</name>
-  <description>Java PDF&amp;XLS runtime builder-based iText&amp;JExcelAPI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText 5.*.</description>
+  <description>Java PDF&amp;XLS runtime builder-based iText&amp;JExcelAPI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText 5.*. Java 1.6 compilation.</description>
   <url>https://github.com/surban1974/neohort</url>
  
  
@@ -42,10 +42,29 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.3</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.6</source>
+          <target>1.6</target>
         </configuration>
       </plugin>
+ 
+ 		<plugin>
+		  	<groupId>org.apache.maven.plugins</groupId>
+		  	<artifactId>maven-source-plugin</artifactId>
+		  	<executions>
+		    	<execution>
+		      		<id>attach-sources</id>
+		      		<goals>
+		        		<goal>jar</goal>
+		      		</goals>
+		    	</execution>
+		  	</executions>
+ 			<configuration>
+				<includes>
+					<include>neohort/**/*.java</include>
+				</includes>        
+			</configuration>		  	
+		</plugin>	           
+      
 	  <plugin>
 	    <groupId>org.apache.maven.plugins</groupId>
 	    <artifactId>maven-install-plugin</artifactId>
