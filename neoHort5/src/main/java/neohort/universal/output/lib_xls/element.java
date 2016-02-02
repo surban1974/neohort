@@ -253,7 +253,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 				if (isFormat) return new DateTime(X,Y,ret,format);
 				else{
 					if(defDATEFORMAT==null) defDATEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy"));
-					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
+					return new DateTime(X,Y,ret,defDATEFORMAT);
 				}
 			}
 		}	
