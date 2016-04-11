@@ -24,6 +24,8 @@
 
 package neohort.universal.output.lib_pdf;
 
+import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.Hashtable;
 
 import neohort.log.stubs.iStub;
@@ -33,9 +35,11 @@ import neohort.universal.output.lib.style;
 import neohort.util.util_reflect;
 import neohort.util.util_web;
 
+
 import com.lowagie.text.Image;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfWriter;
 
 public class image extends element{
 	private static final long serialVersionUID = -667432326013798264L;
@@ -82,29 +86,57 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					loader = Class.forName(IMAGE_LOADER).newInstance();
 					util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
 					byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
-					chartIm = Image.getInstance(imgBytes);
-				}catch(Exception e){	
+//					chartIm = Image.getInstance(imgBytes);
+					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
+					chartIm = Image.getInstance(awtImage,null);
+					
+				}catch(Exception e){
 					chartIm=null;
 					setError(e,iStub.log_ERROR);
 				}
 			}
 			if(IMAGE_LOADER.equals("") || chartIm==null){
-				 
-				
+
+
 				try{
-					if(pathImg.trim().indexOf("http:")==0) chartIm = Image.getInstance(new java.net.URL(pathImg));
-					else chartIm = Image.getInstance(pathImg);
+					if(pathImg.trim().indexOf("http:")==0){
+//						chartIm = Image.getInstance(new java.net.URL(pathImg));
+						
+						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(new java.net.URL(pathImg));
+						chartIm = Image.getInstance(awtImage,null);
+					}
+					else{
+//						chartIm = Image.getInstance(pathImg);
+						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(pathImg);
+						chartIm = Image.getInstance(awtImage,null);
+
+					}
 				}catch(Exception e){}
 			}
+
 			int _d_h = 0;
 			int _d_v = 0;
 			try{
 				_d_h = Integer.valueOf(internal_style.getDIMENTION_H()).intValue();
+			}catch(Exception e){
+			}
+			if(_d_h==0){
+				try{
+					_d_h = Integer.valueOf(internal_style.getWIDTH()).intValue();
+				}catch(Exception e){
+				}			
+			}
+			try{
 				_d_v = Integer.valueOf(internal_style.getDIMENTION_V()).intValue();
 			}catch(Exception e){
-				_d_h = 0;
-				_d_v = 0;
+			}	
+			if(_d_v==0){
+				try{
+					_d_v = Integer.valueOf(internal_style.getHEIGHT()).intValue();
+				}catch(Exception e){
+				}			
 			}
+
 			
 			float rotation = 0;
 			try{
@@ -145,6 +177,87 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				cell.setHorizontalAlignment(_align);
 				cell.setBorder(border);
 			if(padding!=0) cell.setPadding(padding);
+			if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
+				try{
+					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_TOP()).floatValue();
+					cell.setUseVariableBorders(true);
+					cell.setBorderWidthTop(localborderWidth);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_WIDTH_BOTTOM().equals("")){
+				try{
+					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_BOTTOM()).floatValue();
+					cell.setUseVariableBorders(true);
+					cell.setBorderWidthBottom(localborderWidth);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_WIDTH_LEFT().equals("")){
+				try{
+					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_LEFT()).floatValue();
+					cell.setBorderWidthLeft(localborderWidth);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_WIDTH_RIGHT().equals("")){
+				try{
+					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_RIGHT()).floatValue();
+					cell.setUseVariableBorders(true);
+					cell.setBorderWidthRight(localborderWidth);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_COLOR().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black);
+					cell.setBorderColor(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_COLOR_TOP().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.BLACK);
+					cell.setUseVariableBorders(true);
+					cell.setBorderColorTop(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_COLOR_BOTTOM().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.BLACK);
+					cell.setUseVariableBorders(true);
+					cell.setBorderColorBottom(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_COLOR_LEFT().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.BLACK);
+					cell.setUseVariableBorders(true);
+					cell.setBorderColorLeft(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_COLOR_RIGHT().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.BLACK);
+					cell.setUseVariableBorders(true);
+					cell.setBorderColorRight(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBACK_COLOR().equals("")){
+				try{
+					Color color = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.BLACK);
+					cell.setUseVariableBorders(false);
+					cell.setBackgroundColor(color);
+				}catch(Exception e){}
+			}
+			if(!internal_style.getBORDER_WIDTH().equals("")){
+				try{
+					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH()).floatValue();
+
+					cell.setBorderWidth(localborderWidth);
+				}catch(Exception e){}
+			}
+			
+			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+				if(cell!=null)
+					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+			}
+
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
 
 

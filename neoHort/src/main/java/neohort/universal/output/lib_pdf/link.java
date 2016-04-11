@@ -37,6 +37,7 @@ import com.lowagie.text.Chunk;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfWriter;
 
 public class link extends element{
 	private static final long serialVersionUID = -7049525715279807345L;
@@ -96,6 +97,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			cell.setBorder(border);
 			cell.setBackgroundColor(_bColor);
 			if(padding!=0) cell.setPadding(padding);
+			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+				if(cell!=null)
+					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+			}
 
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
 		}else{

@@ -144,7 +144,13 @@ public static String service_adaptPath(String path, String currentPath, HttpServ
 		}	
 	if(	path.trim().toLowerCase().indexOf("/")==0 ||
 		path.trim().toLowerCase().indexOf("\\")==0){
-			if(currentRequest!=null) return "http://"+currentRequest.getServerName()+":"+currentRequest.getServerPort()+path.trim();
+			if(currentRequest!=null){
+				String contextPath = currentRequest.getContextPath();
+				if(path.toLowerCase().indexOf(contextPath.toLowerCase())>-1)
+					return "http://"+currentRequest.getServerName()+":"+currentRequest.getServerPort()+path.trim();
+				else 
+					return "http://"+currentRequest.getServerName()+":"+currentRequest.getServerPort()+contextPath+path.trim();
+			}
 			else return path;
 		}
 				

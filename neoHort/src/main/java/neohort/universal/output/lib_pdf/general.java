@@ -71,6 +71,8 @@ public class general extends element{
 	private String SOURCE_BEFORE_FIXED;
 	private String SOURCE_ERROR_FIXED;
 	private String LIB;
+	private String DIRECTION;
+
 	private boolean documentClosed=false;
 	private int cur_page = 0;
 	
@@ -304,6 +306,9 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					this._beanLibrary = _beanLibrary;
 					PageEvent_0 pev = new PageEvent_0();
 					writer.setPageEvent(pev);
+					if(!getDIRECTION().equals("") && getDIRECTION().equalsIgnoreCase("RTL")){
+						writer.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+					}
 				}
 		
 				bean _sysDocument = new bean();
@@ -393,6 +398,7 @@ public void reimposta() {
 	ORIENTATION = "";
 	MARGINS = "";
 	LIB="pdf";
+	DIRECTION="";
 }
 public void setError(Exception e) {
 	if(motore instanceof OutputRunTime){
@@ -463,5 +469,11 @@ public void setDocumentClosed(boolean documentClosed) {
 }
 public int getCur_page() {
 	return cur_page;
+}
+public String getDIRECTION() {
+	return DIRECTION;
+}
+public void setDIRECTION(String dIRECTION) {
+	DIRECTION = dIRECTION;
 }
 }

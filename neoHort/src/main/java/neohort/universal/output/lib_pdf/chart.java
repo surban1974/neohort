@@ -193,6 +193,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			cell.setHorizontalAlignment(_align);
 			cell.setBorder(border);
 			if(padding!=0) cell.setPadding(padding);
+			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
+				if(cell!=null)
+					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+			}
 
 		
 			
