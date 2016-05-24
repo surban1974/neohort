@@ -9,18 +9,18 @@
 <tr> 
 	<td width=250 align=center class="block_background">	
 	<span class="page_section">
-		<span class="page_section_text">Step 1.1. Create the document with simple text block.</span>
+		<span class="page_section_text">Step 1.1. Create the document with simple text block. . .</span>
 		<br>
-		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=pdf&$type=stream',900,500));">
+		<a href="javascript:void(showAsIFrame('../report_creator?$source=/chart/guide/guide1.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
-		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=xls&$type=attachment'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/chart/guide/guide1.1.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/xls.gif" border="0" alt="[Excel version]">
 		</a>
-		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.1.xml&$lib=rtf&$type=attachment'));">
+		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/chart/guide/guide1.1.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.1.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide1.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>
 	</span>		
@@ -38,7 +38,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.2.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.2.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide1.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</td>
@@ -56,7 +56,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.3.xml&$lib=xls&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.3.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide1.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</span>		
@@ -74,7 +74,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.4.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.4.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide1.4.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</td>
@@ -91,7 +91,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide1.5.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>			
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide1.5.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide1.5.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">					
 		</a>	
 	</span>		
@@ -112,7 +112,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.1.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.1.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide2.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</td>
@@ -130,7 +130,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.2.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.2.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide2.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</span>		
@@ -148,7 +148,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.3.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.3.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide2.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">			
 		</a>	
 	</td>
@@ -166,7 +166,7 @@
 			<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide2.4.xml&$lib=rtf&$type=attachment'));">
 				<img src="../images/rtf.gif" border="0" alt="[RTF version]">				
 			</a>			
-			<a href="javascript:void(startURL('/neoHort//chart/guide/guide2.4.xml'));">
+			<a href="javascript:void(startURL('/neoHort/chart/guide/guide2.4.xml'));">
 				<img src="../images/txt.gif" border="0" alt="[Source]">				
 			</a>	
 		</span>		
@@ -190,7 +190,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.1.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">			
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide3.1.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide3.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</span>		
@@ -201,7 +201,7 @@
 		<a href="javascript:void(showAsIFrame('/neoHort/report_creator?$source=/neoHort/chart/guide/guide3.2.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide3.2.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide3.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</td>
@@ -226,7 +226,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.1.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
 		</a>		
-		<a href="javascript:void(location.replace('/neoHort//chart/guide/guide4.1.xml'));">
+		<a href="javascript:void(location.replace('/neoHort/chart/guide/guide4.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 		<a href="javascript:void(startURL('/neoHort/report_creator?$source=/chart/jsp/guide4.1.jsp'));">
@@ -250,7 +250,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.2.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">	
 		</a>			
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.2.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide4.2.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</span>		
@@ -268,7 +268,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.3.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
 		</a>			
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.3.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide4.3.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</td>
@@ -286,7 +286,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.4.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
 		</a>			
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.4.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide4.4.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</span>		
@@ -305,7 +305,7 @@
 		<a href="javascript:void(location.replace('/neoHort/report_creator?$source=/neoHort/chart/guide/guide4.5.xml&$lib=rtf&$type=attachment'));">
 			<img src="../images/rtf.gif" border="0" alt="[RTF version]">
 		</a>		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide4.5.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide4.5.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</td>
@@ -324,7 +324,7 @@
 		</a>
 
 		
-		<a href="javascript:void(startURL('/neoHort//chart/guide/guide5.1.xml'));">
+		<a href="javascript:void(startURL('/neoHort/chart/guide/guide5.1.xml'));">
 			<img src="../images/txt.gif" border="0" alt="[Source]">
 		</a>	
 	</span>	
