@@ -11,7 +11,7 @@
 	<span class="page_section">
 		<span class="page_section_text">Step 1.1. Create the document with simple text block.</span>
 		<br>
-		<a href="javascript:void(showAsIFrame('/neoHort5/report_creator?$source=/neoHort5/chart/guide/guide1.1.xml&$lib=pdf&$type=stream',900,500));">
+		<a href="javascript:void(showAsIFrame('../report_creator?$source=chart/guide/guide1.1.xml&$lib=pdf&$type=stream',900,500));">
 			<img src="../images/pdf.gif" border="0" alt="[Pdf version]">			
 		</a>
 		<a href="javascript:void(location.replace('/neoHort5/report_creator?$source=/neoHort5/chart/guide/guide1.1.xml&$lib=xls&$type=attachment'));">

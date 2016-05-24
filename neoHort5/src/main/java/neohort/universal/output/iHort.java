@@ -219,11 +219,37 @@ public void initXML(String fname) {
 	try {
 		documentXML = util_xml.readXML(pathXML,false);
 	}catch (Exception ex) {
-		setError(ex,iStub.log_FATAL);
+				
 		try{
-			response.getWriter().print(ex.toString());
-		}catch(Exception exp){				
+			String path = pathXML;
+			if(request!=null){
+				String contextPath = request.getContextPath();
+				if(contextPath!=null){
+					contextPath=contextPath.replace("/", "");
+					if(!contextPath.equals("")){
+						if(path.indexOf("/"+contextPath)!=0)
+							path = "/"+contextPath+"/"+path;
+					}
+				}
+				path = "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+			}
+			if(!path.equals(pathXML))
+				documentXML = util_xml.readXML(path,false);
+			else{
+				setError(ex,iStub.log_FATAL);
+				try{
+					response.getWriter().print(ex.toString());
+				}catch(Exception exp){				
+				}				
+			}
+		}catch(Exception e){
+			setError(e,iStub.log_FATAL);
+			try{
+				response.getWriter().print(e.toString());
+			}catch(Exception exp){				
+			}
 		}
+
 	}
 
 	
@@ -771,8 +797,17 @@ private String analisePath(String path) {
 				parts.add(st.nextToken());
 			nameXML=(String)parts.elementAt(parts.size()-1);			
 			if(saveAs!=null) saveAsName = saveAs+nameXML;				
-			if(request!=null)	
+			if(request!=null){
+				String contextPath = request.getContextPath();
+				if(contextPath!=null){
+					contextPath=contextPath.replace("/", "");
+					if(!contextPath.equals("")){
+						if(path.indexOf("/"+contextPath)!=0)
+							path = "/"+contextPath+path;
+					}
+				}
 				return "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+			}
 			else return path;
 		}
 			
@@ -781,12 +816,14 @@ private String analisePath(String path) {
 		Vector parts = new Vector();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
-		nameXML=(String)parts.elementAt(parts.size()-1);
-		if(saveAs!=null) saveAsName = saveAs+path.trim().substring(3,path.trim().length());		
-		return returnR+path.trim().substring(3,path.trim().length());	
+		if(parts.size()>0){
+			String returnR="";
+			for(int i=0;i<parts.size()-2;i++)
+				returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
+			nameXML=(String)parts.elementAt(parts.size()-1);
+			if(saveAs!=null) saveAsName = saveAs+path.trim().substring(3,path.trim().length());		
+			return returnR+path.trim().substring(3,path.trim().length());	
+		}
 		
 	}	
 	if(	path.trim().toLowerCase().indexOf("..\\")==0){
@@ -794,12 +831,14 @@ private String analisePath(String path) {
 		Vector parts = new Vector();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+"\\";
-		nameXML=(String)parts.elementAt(parts.size()-1);
-		if(saveAs!=null) saveAsName = saveAs+path.trim().substring(3,path.trim().length());
-		return returnR+path.trim().substring(3,path.trim().length());	
+		if(parts.size()>0){
+			String returnR="";
+			for(int i=0;i<parts.size()-2;i++)
+				returnR+=(String)parts.elementAt(i)+"\\";
+			nameXML=(String)parts.elementAt(parts.size()-1);
+			if(saveAs!=null) saveAsName = saveAs+path.trim().substring(3,path.trim().length());
+			return returnR+path.trim().substring(3,path.trim().length());	
+		}
 	}
 	if(	fullPath.trim().toLowerCase().indexOf("http://")==0 ||
 		fullPath.trim().toLowerCase().indexOf("http:\\\\")==0){
@@ -807,25 +846,30 @@ private String analisePath(String path) {
 		Vector parts = new Vector();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-1;i++)
-			returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
-		nameXML=(String)parts.elementAt(parts.size()-1);
-		if(saveAs!=null) saveAsName = saveAs+path.trim();		
-		return returnR+path.trim();	
+		if(parts.size()>0){
+			String returnR="";
+			for(int i=0;i<parts.size()-1;i++)
+				returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
+			nameXML=(String)parts.elementAt(parts.size()-1);
+			if(saveAs!=null) saveAsName = saveAs+path.trim();		
+			return returnR+path.trim();	
+		}
 	}else{
 		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "\\");
 		Vector parts = new Vector();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-1;i++)
-			returnR+=(String)parts.elementAt(i)+"\\";
-		nameXML=(String)parts.elementAt(parts.size()-1);
-		if(saveAs!=null) saveAsName = saveAs+path.trim();	
-		return returnR+path.trim();	
+		if(parts.size()>0){
+			String returnR="";
+			for(int i=0;i<parts.size()-1;i++)
+				returnR+=(String)parts.elementAt(i)+"\\";
+			nameXML=(String)parts.elementAt(parts.size()-1);
+			if(saveAs!=null) saveAsName = saveAs+path.trim();	
+			return returnR+path.trim();	
+		}
 	}
 
+	return path;
 		
 }
 }
