@@ -1,0 +1,138 @@
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .navbar {
+        margin-bottom: 20px;
+      }
+      
+      .btn-border{
+		border-radius: 100%;
+		-moz-box-shadow: 1px 1px 6px silver;
+		-webkit-box-shadow: 1px 1px 6px silver;
+		box-shadow: 1px 1px 6px silver;      
+      }
+      
+      div.canvas{
+
+      }      
+      
+      div.neuron{
+      	color: white;
+		background-color: #87C5F0;
+		border-color: #15699d;
+		padding: 4px;
+		-moz-box-shadow: 1px 1px 2px silver;
+		-webkit-box-shadow: 1px 1px 2px silver;
+		box-shadow: 1px 1px 2px silver;
+		border-radius: 50%;	
+		height:25px;
+		width: 25px;
+		cursor: pointer;
+		z-index: 10;
+		position: relative;
+		background: radial-gradient(circle at 7px 7px, #d2eaf9, #15699d);
+      }
+      
+      
+      
+      div.neuron-expand{
+      	color: white;
+		background-color: #F5F5F5;
+		border-color: #808080;
+		padding: 4px;
+		-moz-box-shadow: 1px 1px 2px silver;
+		-webkit-box-shadow: 1px 1px 2px silver;
+		box-shadow: 1px 1px 2px silver;
+		border-radius: 50%;	
+		height:40px;
+		width: 40px;
+		cursor: pointer;
+		z-index: 10;
+		position: relative;
+		background: radial-gradient(circle at 12px 12px, #F5F5F5, #808080);
+      }   
+      
+      div.synapse-line{
+      	border: 1px solid silver;
+    	opacity: 0.5; 
+    	filter: alpha(opacity=50); 
+    	z-index: 1px;
+    	position: absolute;
+    	cursor: pointer;
+      }   
+      
+       div.synapse-line:hover{
+      	border: 1px solid #87C5F0;
+    	opacity: 1; 
+    	filter: alpha(opacity=100); 
+    	-moz-box-shadow_: 1px 1px 2px gray; 
+    	-webkit-box-shadow_: 1px 1px 2px gray; 
+    	box-shadow_: 1px 1px 2px gray;       	
+      }  
+      
+      div.synapse{
+		position: absolute;
+		color: black;
+		max-width:120px;
+		text-align: center;
+		display: none;
+		min-width: 50px;
+		cursor: pointer;
+      }  
+      
+      div.synapse:hover{
+      	background-color: #87C5F0;
+      	color: white;
+      	z-index_: 10 !important;
+	  } 
+      
+      div.synapse-hover{
+      	background-color: #87C5F0;
+      	color: white;
+      	z-index: 10 !important;
+	  }     
+      
+	  td.neuron_place{
+	  	height: 50px;
+	  	min-height: 50px;
+	  	min-width: 50px;
+		vertical-align: middle;
+      }
+      
+      td.label_datas{
+      	padding: 5px;
+      	vertical-align: middle;
+      }
+      
+      td.separator{
+		width: 1px;
+		
+      }
+      
+
+      
+      table.progressbar{
+      	width: 100%;
+      	border_: 1px solid silver;
+      	border-radius_: 4px;
+      }
+      
+      
+      table.progressbar  td.progress-left{
+        -moz-box-shadow: 1px 1px 6px gray;
+		-webkit-box-shadow: 1px 1px 6px gray;
+      	box-shadow: 1px 1px 6px gray;
+      	padding:4px;
+      	color:white;
+      	background-color:#5BC0DE; 
+      	border: 1px solid #5BC0DE;  
+      }
+      
+      table.progressbar  td.progress-right{
+
+      	border: 1px solid #F5F5F5;    	
+      	padding:4px;
+      	background-color:white; 
+      }      

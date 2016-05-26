@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
 	id="guide.4.3"
@@ -80,6 +80,6 @@
 	</CYCLE>	
 		</TABLE>	
 
-<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>	
+		<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>	
 	</DOCUMENT>
 </GENERAL>

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Home Page</title> 
+<title>NEOHORT</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -11,12 +11,7 @@
   ga('create', 'UA-76738519-1', 'auto');
   ga('send', 'pageview');
 
+  location.replace('view/content.jsp');
 </script>
 </head>
-<frameset rows="53,*" border="0">
-	<FRAME name="FrameO"  scrolling="no" noresize src="pages/frameO.htm" marginwidth="0" marginheight="0" >
-	<FRAME name="FrameMain" scrolling="auto" noresize src="pages/about.jsp" marginwidth="0" marginheight="0">
-</FRAMESET>
-<noframes>
-</noframes>
 </html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
 	id="guide.4.4"
@@ -66,7 +66,7 @@
 				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER_COLOR="BLUE" BACK_COLOR="GRAY">cell 1 index cycle = %EXECUTETAG.CONDITION_FOR:condition1.RETURN.INDEX%</TABLE_CELL>
 				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER_COLOR="BLUE">cell 2 counter +2 = %EXECUTEBEAN.counter.toString()% </TABLE_CELL>
 				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER_COLOR="BLUE">cell 3 counter +4 = %EXECUTEBEAN.counter.toString()% </TABLE_CELL>
-				<IMAGE IMAGE_SOURCE="/neoHort/images/logo.gif" DIMENTION_H="60" DIMENTION_V="20" ALIGN="CENTER"/>
+				<IMAGE IMAGE_SOURCE="/images/logo.gif" DIMENTION_H="60" DIMENTION_V="20" ALIGN="CENTER"/>
 
 			</TABLE_ROW>	
 		</CONDITION_IF>	
@@ -81,6 +81,6 @@
 	</CYCLE>	
 		</TABLE>	
 	
-<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>	
+	<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>	
 	</DOCUMENT>
 </GENERAL>

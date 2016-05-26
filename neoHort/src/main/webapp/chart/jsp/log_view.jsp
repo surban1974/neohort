@@ -106,6 +106,6 @@
 		</TABLE>		
 		
 
-<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>				
+<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>				
 	</DOCUMENT>
 </GENERAL>

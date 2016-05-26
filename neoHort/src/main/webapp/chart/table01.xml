@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
 <GENERAL 
 	id="table01"
 	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
@@ -29,7 +29,7 @@
 					</TABLE_CELL>
 					<TABLE_CELL STYLE_ID="ST_HEADER_1" BORDER="13" BACK_COLOR_RGB="250,240,200">Label 2
 					</TABLE_CELL>
-					<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="5" />
+					<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="5" />
 					<TABLE_BLOCK>
 						<TABLE COL="3" COLLS_DIMENTION="6,58,36">					
 							<TABLE_ROW>

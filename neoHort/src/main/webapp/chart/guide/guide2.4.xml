@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
 	id="guide.2.4"
@@ -13,7 +13,7 @@
  			<PARAGRAPH>
   				<PHRASE FONT="HELVETICA" FONT_SIZE="15" FONT_TYPE="BOLD" FONT_COLOR_RGB="200,200,150" ALIGN="LEFT">header 1</PHRASE> 
   			</PARAGRAPH>
-			<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="50" ABSOLUTE_Y="20"/>
+			<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="50" ABSOLUTE_Y="20"/>
 			<TEXT 
 				ABSOLUTE_X="150" 
 				ABSOLUTE_Y="20"
@@ -73,6 +73,6 @@
 			ALIGN = "LEFT">Step 2.4 - </PHRASE>	
 		</PARAGRAPH>
 
-<!--<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>-->
+
 	</DOCUMENT>
 </GENERAL>

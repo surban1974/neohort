@@ -36,6 +36,6 @@
 			ALIGN = "LEFT">Step 1.1 - paragraph-frase</PHRASE>	
 		</PARAGRAPH>
 		
-<IMAGE IMAGE_SOURCE="/neoHort/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
+		<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
 	</DOCUMENT>
 </GENERAL>

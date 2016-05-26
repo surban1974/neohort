@@ -1,0 +1,10 @@
+<filter>
+	<filter-name>filter_jsp</filter-name>
+	<display-name>filter_jsp</display-name>
+	<description></description>
+	<filter-class>neohort.service.filter.filter_jsp</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>filter_jsp</filter-name>
+	<url-pattern>*.jsp</url-pattern>
+</filter-mapping>	
