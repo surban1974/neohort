@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
 
 <GENERAL 
 	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
@@ -73,7 +73,7 @@
 				ALIGN = "LEFT"
 		/>		
 		<STYLE ID="STYLE_2AR"		
-				EXTRA_FONT = "neohort/resouces/arabtype.ttf"
+				EXTRA_FONT = "neohort/resources/arabtype.ttf"
 				FONT_ENCODED= "Identity-H"
 				FONT_EMBEDDED="EMBEDDED"
 				FONT_SIZE = "15"
@@ -110,6 +110,6 @@
 		
 				
 
-	<IMAGE IMAGE_SOURCE="/neoHort5/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
+	<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
 	</DOCUMENT>
 </GENERAL>

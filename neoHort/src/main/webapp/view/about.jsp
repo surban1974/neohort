@@ -86,7 +86,7 @@
     <script src="../js/bootstrap-native.patched.js"></script>
 	
 	<!--  ClassHidra Ajax JavaScript -->
-	<script src='../js/classhidra-ajax.js'></script>  	 
+	<script src='../js/clAjax.js'></script>  	 
 	
 	
 	<script>

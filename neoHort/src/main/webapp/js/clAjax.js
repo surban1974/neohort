@@ -1,3 +1,9 @@
+/**
+* Name: clAjax.js
+* Version: 1.0.3 
+* Creation date: (07/06/2016)
+* @author: Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com
+*/
 (function(factory){
 
 	// CommonJS/RequireJS and "native" compatibility
@@ -19,52 +25,90 @@
 
 	var clajax = function(prot){
 		
-		this.form = 			(prot)?prot.form:null;
-		this.action = 			(prot)?prot.action:null;
-		this.method = 			(prot)?prot.method:null;
-		this.url = 				(prot)?prot.url:null;
-		this.json = 			(prot)?prot.json:null;
-		this.xml = 				(prot)?prot.xml:null;
-		this.mpart = 			(prot)?prot.mpart:null;
-		this.target = 			(prot)?prot.target:null;
-		this.responseType = 	(prot)?prot.responseType:null;
-		this.asynchronous = 	(prot)?prot.asynchronous:true;
-		this.rel = 				(prot)?prot.rel:null;
-		this.media = 			(prot)?prot.media:null;
-		this.contentEncoding = 	(prot)?prot.contentEncoding:null;
-		this.contentType = 		(prot)?prot.contentType:null;
-		this.progressWait = 	(prot)?prot.progressWait:null;
-		this.mimeType = 		(prot)?prot.mimeType:null;
+		this.id =					-1;
+		this.form = 				(prot)?prot.form:null;
+		this.action = 				(prot)?prot.action:null;
+		this.method = 				(prot)?prot.method:null;
+		this.url = 					(prot)?prot.url:null;
+		this.json = 				(prot)?prot.json:null;
+		this.xml = 					(prot)?prot.xml:null;
+		this.mpart = 				(prot)?prot.mpart:null;
+		this.target = 				(prot)?prot.target:null;
+		this.responseType = 		(prot)?prot.responseType:null;
+		this.asynchronous = 		(prot)?prot.asynchronous:true;
+		this.rel = 					(prot)?prot.rel:null;
+		this.media = 				(prot)?prot.media:null;
+		this.contentEncoding = 		(prot)?prot.contentEncoding:null;
+		this.contentType = 			(prot)?prot.contentType:null;
+		this.progressWait = 		(prot)?prot.progressWait:null;
+		this.mimeType = 			(prot)?prot.mimeType:null;
 		
-		this.start = 			(prot)?prot.start:null;
+		this.start = 				(prot)?prot.start:null;
 		
-		this.success = 			(prot)?prot.success:null;
-		this.ready = 			(prot)?prot.ready:null;
-		this.fail = 			(prot)?prot.fail:null;
-		this.error =			(prot)?prot.error:null;
-		this.finish = 			(prot)?prot.finish:null;
+		this.success = 				(prot)?prot.success:null;
+		this.ready = 				(prot)?prot.ready:null;
+		this.fail = 				(prot)?prot.fail:null;
+		this.error =				(prot)?prot.error:null;
+		this.finish = 				(prot)?prot.finish:null;
+		this.timeout = 				(prot)?prot.timeout:null;
 		
 		
-		this.base64 = 			(prot)?((prot.base64)?prot.base64:false):false;
-		this.asJson = 			(prot)?((prot.asJson)?prot.asJson:false):false;
-		this.asXml = 			(prot)?((prot.asXml)?prot.asXml:false):false;
-		this.asMpart = 			(prot)?((prot.asMpart)?prot.asMpart:false):false;
-		this.asScript = 		(prot)?((prot.asScript)?prot.asScript:false):false;
-		this.asCss = 			(prot)?((prot.asCss)?prot.asCss:false):false;
+		this.base64 = 				(prot)?((prot.base64)?prot.base64:false):false;
+		this.asJson = 				(prot)?((prot.asJson)?prot.asJson:false):false;
+		this.asXml = 				(prot)?((prot.asXml)?prot.asXml:false):false;
+		this.asMpart = 				(prot)?((prot.asMpart)?prot.asMpart:false):false;
+		this.asScript = 			(prot)?((prot.asScript)?prot.asScript:false):false;
+		this.asCss = 				(prot)?((prot.asCss)?prot.asCss:false):false;
+		this.opened = 				(prot)?((prot.opened)?prot.opened:false):false;
+		this.http = 				null;
 		
-		this.acceptableStatus = (prot)
-								?
-									prot.acceptableStatus
-								:
-									[
-/*									 
-									 {
-										status:200,
-										success:null,
-										ready:null
-									}
-*/									
-									 ];
+		this.acceptableStatus = 	(prot)
+									?
+										prot.acceptableStatus
+									:
+										[
+/*										 
+										{
+											status:		200,
+										 	success:	null,
+										 	ready:		null
+										}
+*/
+										];
+		
+		this.acceptableReadyState = (prot)
+									?
+										prot.acceptableReadyState
+									:
+										[
+/*										 
+										{
+											readyState:			3,
+											acceptableStatus: 	[
+															 	{
+															 		status:		200,
+															 		success:	null,
+															 		ready:		null
+															 	}
+															 	]
+										}
+*/										
+										];
+		
+		this.requestHeaders	=		(prot)
+									?
+										prot.requestHeaders
+									:
+										[
+/*										 
+										{
+											name:	'Content-Encoding',
+											value:	'iso-8859-1'
+
+										}
+*/
+										];
+		this.extention =			(prot)?((prot.extention)?prot.extention:{}):{};
 		
 	}
 	
@@ -93,8 +137,9 @@
 				this.success=null;
 				this.ready=null;
 				this.fail=null;
-				this.error;
-				this.finish;
+				this.error=null;
+				this.finish=null;
+				this.timeout=null;
 				
 				this.base64 = false;
 				this.asJson = false;
@@ -102,7 +147,11 @@
 				this.asMpart = false;
 				this.asScript = false;
 				this.asCss = false;
+				this.opened = false;
 				this.acceptableStatus = [];
+				this.acceptableReadyState = [];
+				this.requestHeaders = [];
+				this.extention = {};
 				return this;
 			},
 	
@@ -211,6 +260,11 @@
 				return this;
 			},	
 			
+			setTimeout : function(_timeout){
+				this.timeout = _timeout;
+				return this;
+			},			
+			
 			setBase64 : function(_base64){
 				this.base64 = _base64;
 				return this;
@@ -239,15 +293,65 @@
 			setAsCss : function(_asCss){
 				this.asCss = _asCss;
 				return this;
-			},		
+			},
+			
+			setOpened : function(_opened){
+				this.opened = _opened;
+				return this;
+			},
 			
 			setAcceptableStatus : function(_acceptableStatus){
 				this.acceptableStatus = _acceptableStatus;
 				return this;
 			},
+			
+			setAcceptableReadyState : function(_acceptableReadyState){
+				this.acceptableReadyState = _acceptableReadyState;
+				return this;
+			},
+			
+			setRequestHeaders : function(_requestHeaders){
+				this.requestHeaders = _requestHeaders;
+				return this;
+			},
+			
+			setExtention : function(_extention){
+				this.extention = _extention;
+				return this;
+			},
+			
+			setId : function(_id){
+				this.id = _id;
+				return this;
+			},
 	
+			extend: function(props) {
+			    for(var prop in props) {
+			        if(props.hasOwnProperty(prop)) {
+			            this[prop] = props[prop];
+			        }
+			    }
+			    return this;
+			},	
+			
+			instance: function(){
+				if(this.extention){
+					var inst = Object.create(this).extend(this.extention);
+					return inst.setId(new Date().getTime());
+				}else{
+					return this;
+				}
+			},
 
 			clone : function(){
+				if(this.extention){
+					var cloned = Object.create(this._clone()).extend(this.extention);
+					return cloned.setId(new Date().getTime());;
+				}
+				return this._clone().setId(new Date().getTime());;
+			},
+			
+			_clone : function(){
 				
 				var result = new clajax()
 				.setForm(this.form)
@@ -271,26 +375,50 @@
 				.setFail(this.fail)
 				.setError(this.error)
 				.setFinish(this.finish)
+				.setTimeout(this.timeout)
 				.setBase64(this.base64)
 				.setAsJson(this.asJson)
 				.setAsXml(this.asXml)
 				.setAsMpart(this.asMpart)
 				.setAsScript(this.asScript)
 				.setAsCss(this.asCss)
-				.setAcceptableStatus(this.acceptableStatus);
+				.setOpened(this.opened)
+				.setAcceptableStatus(this.acceptableStatus)
+				.setAcceptableReadyState(this.acceptableReadyState)
+				.setRequestHeaders(this.requestHeaders)
+				.setExtention(this.extention)
+				;
 				
 				return result;
 		
 			},
 	
-			load : function(){
-				if(this.asScript){
+			exception : function(e){
+				  var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+			      .replace(/^\s+at\s+/gm, '')
+			      .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+			      .split('\n');
+			  console.log(stack);
+//				console.log(e);
+			},
+			
+			load : function(_url){
+				if(_url){
+					this.url = _url;
+				}
+				if(this.asScript==false && this.asCss==false && this.url){
+					if(this.url.lastIndexOf('.js')==this.url.length-3 || this.url.indexOf('.js?')>-1)
+						this.asScript=true;
+					else if(this.url.lastIndexOf('.css')==this.url.length-4 || this.url.indexOf('.css?')>-1)
+						this.asCss=true;
+				}
+				if(this.url && this.asScript){
 					var e = document.createElement('script');
 			
 					if(this.base64){
 						var parameters = this.getParametersAsUrl(null,this.url);
 						if(this.url.indexOf('?')>-1)
-							e.src = url.substring(0,this.url.indexOf('?'))+parameters;
+							e.src = this.url.substring(0,this.url.indexOf('?'))+parameters;
 						else
 							e.src = this.url+parameters;
 					}else
@@ -307,7 +435,7 @@
 					if(this.contentEncoding && this.contentEncoding!='')
 						e.charset=this.contentEncoding;
 					
-					var instance  = this;
+					var instance  = this.clone();
 					try{
 						if(instance.success && instance.success!=''){
 							if (typeof instance.success === 'function') {
@@ -332,13 +460,15 @@
 							}
 						}
 					}catch(e){
+						this.exception(e);
 					}
 					try{
 						document.getElementsByTagName('head')[0].appendChild(e);
 					}catch(e){
+						this.exception(e);
 					}
 				}
-				if(this.asCss){
+				if(this.url && this.asCss){
 					var e = document.createElement('link');
 		
 					if(this.base64){
@@ -367,7 +497,7 @@
 					if(this.contentEncoding && this.contentEncoding!='') 
 						e.charset=this.contentEncoding;
 					
-					var instance  = this;
+					var instance  = this.clone();
 					try{
 						if(instance.success && instance.success!=''){
 							if (typeof instance.success === 'function') {
@@ -392,10 +522,12 @@
 							}
 						}
 					}catch(e){
+						this.exception(e);
 					}
 					try{
 						document.getElementsByTagName('head')[0].appendChild(e);
 					}catch(e){
+						this.exception(e);
 					}			
 				}
 				
@@ -521,9 +653,9 @@
 		
 				if(this.start && this.start!=''){
 		    		if (typeof this.start === 'function') {
-		    			this.start();
+		    			this.start(this);
 		    		}else{
-		    			eval(this.start + '()');
+		    			eval(this.start + '(this)');
 		    		}
 		    	}
 		
@@ -532,6 +664,7 @@
 						if(this.progressWait && this.progressWait!='')
 							this.target.innerHTML=this.progressWait;
 					}catch(e){
+						this.exception(e);
 					}
 				}
 		
@@ -540,37 +673,43 @@
 		
 		
 		
-		
-			    if (window.ActiveXObject) { // IE
-			       try {
-		
-			          http_request = new ActiveXObject('Msxml2.XMLHTTP');
-			       } catch (e) {
-			          try {
-			             http_request = new ActiveXObject('Microsoft.XMLHTTP');
-		
-			          } catch (e) {}
-			       }
-			    }
-			    if (window.XMLHttpRequest) { 
-				       http_request = new XMLHttpRequest();
-				       
-				       if(this.responseType && this.responseType!=''){
-				    	   try{
-				    		   http_request.responseType = this.responseType;
-				    		   setResponseType=true;
-				    	   }catch(e){
-				    	   }
-				       }else{   
-					       if (http_request.overrideMimeType) {
-					    	   if(this.mimeType && this.mimeType!='')
-					    		   http_request.overrideMimeType(this.mimeType);
-					    	   else
-					    		   http_request.overrideMimeType('text/html');
-					       }
+				if(this.http){
+					http_request = this.http;
+					this.opened = true;
+				}else{
+				    if (window.ActiveXObject) { // IE
+				       try {
+			
+				          http_request = new ActiveXObject('Msxml2.XMLHTTP');
+				       } catch (e) {
+				          try {
+				             http_request = new ActiveXObject('Microsoft.XMLHTTP');
+			
+				          } catch (e) {}
 				       }
-		
-			    }
+				    }
+				    if (window.XMLHttpRequest) { 
+					       http_request = new XMLHttpRequest();
+					       
+					       if(this.responseType && this.responseType!=''){
+					    	   try{
+					    		   http_request.responseType = this.responseType;
+					    		   setResponseType=true;
+					    	   }catch(e){
+					    		   this.exception(e);
+					    	   }
+					       }else{   
+						       if (http_request.overrideMimeType) {
+						    	   if(this.mimeType && this.mimeType!='')
+						    		   http_request.overrideMimeType(this.mimeType);
+						    	   else
+						    		   http_request.overrideMimeType('text/html');
+						       }
+					       }
+			
+				    }
+				    this.http = http_request;
+				}
 			    if (!http_request) {
 			    	if(instance.error && instance.error!=''){
 		        		if (typeof instance.error === 'function') {
@@ -582,121 +721,239 @@
 		        		alert('Cannot create XMLHTTP instance');
 			       return;
 			    }
+			    
+			    
 		
 			    var instance  = this.clone();
+		    
+//onreadystatechange			    
 			    http_request.onreadystatechange = function() {
-			    	try{
-				    	if (http_request.readyState == 4) {
-				    		
-				    		var statusAccepted = false;				    		
-				    		var _fready;
-				    		var _fsuccess;
-				    		
-				    		if (http_request.status == 200 ) {
-				    			statusAccepted = true;
-				    			if(instance.ready && instance.ready!='')
-			            			_fready = instance.ready;
-				    			if(instance.success && instance.success!='')
-			            			_fsuccess = instance.success;
+				    	try{
+				    		var readyStateAccepted = false;
+				    		var _facceptableStatus;
+				    		if (http_request.readyState == 4) {
+				    			readyStateAccepted = true;
 				    		}
-				    		if(statusAccepted==false && instance.acceptableStatus && instance.acceptableStatus.length>0){
+				    		if(instance.acceptableReadyState && instance.acceptableReadyState.length>0){
 				    			var acceptable = null;
 			            		var i=0;
-			            		while(!acceptable && i<instance.acceptableStatus.length){
-			            			if(instance.acceptableStatus[i].status == http_request.status)
-			            				acceptable = instance.acceptableStatus[i];
+			            		while(!acceptable && i<instance.acceptableReadyState.length){
+			            			if(instance.acceptableReadyState[i].readyState == http_request.readyState)
+			            				acceptable = instance.acceptableReadyState[i];
 			            			i++;				            			
 			            		}
-				            	if(acceptable){
-				            		statusAccepted = true;
-				            		if(acceptable.ready && acceptable.ready!='')
-				            			_fready = acceptable.ready;
-				            		else if(instance.ready && instance.ready!='')
-				            			_fready = instance.ready;
-				            		if(acceptable.success && acceptable.success!='')
-				            			_fsuccess = acceptable.success;
-				            		else if(instance.success && instance.success!='')
-				            			_fsuccess = instance.success;
-				            	
-				            	}				            	
+			            		if(acceptable){
+			            			readyStateAccepted = true;
+			            			_facceptableStatus = acceptable.acceptableStatus;
+			            		}		            		
 				    		}
-				    		if(statusAccepted==true){
-				            	if(_fready){
-				            		if (typeof _fready === 'function') {
-				            			_fready(http_request);
-				            		}else{
-				            			eval(_fready + '(http_request)');
+				    		
+				    		
+					    	if (readyStateAccepted) {
+					    		
+					    		var statusAccepted = false;				    		
+					    		var _fready;
+					    		var _fsuccess;
+					    		var _ffail;
+					    		var _ffinish;
+					    		var _ferror;
+					    		
+					    		if (http_request.status == 200 ) {
+					    			statusAccepted = true;
+					    			if(instance.ready && instance.ready!='')
+				            			_fready = instance.ready;
+					    			if(instance.success && instance.success!='')
+				            			_fsuccess = instance.success;
+					    			if(instance.fail && instance.fail!='')
+				            			_ffail = instance.fail;
+					    			if(instance.finish && instance.finish!='')
+				            			_ffinish = instance.finish;
+					    			if(instance.error && instance.error!='')
+				            			_ferror = instance.error;
+					    			
+					    		}
+					    		if(_facceptableStatus && _facceptableStatus.length>0){
+					    			
+					    		}else if(instance.acceptableStatus && instance.acceptableStatus.length>0){
+					    			_facceptableStatus = instance.acceptableStatus;
+					    		}
+					    		if(_facceptableStatus && _facceptableStatus.length>0){
+					    			var acceptable = null;
+				            		var i=0;
+				            		while(!acceptable && i<_facceptableStatus.length){
+				            			if(_facceptableStatus[i].status == http_request.status)
+				            				acceptable = _facceptableStatus[i];
+				            			i++;				            			
 				            		}
-				            	}else{
-				            		if(instance.target)
-				            			instance.target.innerHTML=http_request.responseText;
-				            	}
-				            	if(_fsuccess){
-				            		if (typeof _fsuccess === 'function') {
-				            			_fsuccess(http_request);
+				            		if(!acceptable && i<_facceptableStatus.length){
+					            		i=0;
+					            		while(!acceptable && i<_facceptableStatus.length){
+					            			if(_facceptableStatus[i].status == -1)
+					            				acceptable = _facceptableStatus[i];
+					            			i++;				            			
+					            		}				            			
 				            		}
-				            		else
-				            			eval(_fsuccess + '(http_request)');				            		
-				            	}				    			
-				    		}else{
-				            	if(instance.fail && instance.fail!=''){
-				            		if (typeof instance.fail === 'function') {
-				            			instance.fail(http_request);
-				            		}else{
-				            			eval(instance.fail + '(http_request)');
-				            		}
-				            	}		            	
-				            }
-
-			            
-				            try{
-				            	http_request.close();
-				            }catch(e){
-				            }
-				        }
-			    	}catch(e){
-			    		if(instance.error && instance.error!=''){
-		            		if (typeof instance.error === 'function') {
-		            			instance.error(http_request, e, e.toString());
-		            		}else{
-		            			eval(instance.error + '(http_request, e, e.toString())');
-		            		}
-		            	}else
-		            		alert('There was a generic problem with callback_function():'+e.toString());
-			    	}
-			    	
-			    	if(instance.finish && instance.finish!=''){
-		        		if (typeof instance.finish === 'function') {
-		        			instance.finish(http_request);
-		        		}else{
-		        			eval(instance.finish + '(http_request)');
-		        		}
-		        	}
-		
+					            	if(acceptable){
+					            		statusAccepted = true;
+					            		if(acceptable.ready && acceptable.ready!='')
+					            			_fready = acceptable.ready;
+					            		else if(instance.ready && instance.ready!='')
+					            			_fready = instance.ready;
+					            		if(acceptable.success && acceptable.success!='')
+					            			_fsuccess = acceptable.success;
+					            		else if(instance.success && instance.success!='')
+					            			_fsuccess = instance.success;
+					            		if(acceptable.fail && acceptable.fail!='')
+					            			_ffail = acceptable.fail;
+					            		else if(instance.fail && instance.fail!='')
+					            			_ffail = instance.fail;
+					            		if(acceptable.finish && acceptable.finish!='')
+					            			_ffinish = acceptable.finish;
+					            		else if(instance.finish && instance.finish!='')
+					            			_ffinish = instance.finish;
+					            		if(acceptable.error && acceptable.error!='')
+					            			_ferror = acceptable.finish;
+					            		else if(instance.error && instance.error!='')
+					            			_ferror = instance.error;
+					            	
+					            	}				            	
+					    		}
+					    		try{
+						    		if(statusAccepted==true){
+						            	if(_fready){
+						            		if (typeof _fready === 'function') {
+						            			_fready(http_request,instance);
+						            		}else{
+						            			eval(_fready + '(http_request,instance)');
+						            		}
+						            	}else{
+						            		if(instance.target)
+						            			instance.target.innerHTML=http_request.responseText;
+						            	}
+						            	if(_fsuccess){
+						            		if (typeof _fsuccess === 'function') {
+						            			_fsuccess(http_request,instance);
+						            		}
+						            		else
+						            			eval(_fsuccess + '(http_request,instance)');				            		
+						            	}				    			
+						    		}else{
+						            	if(_ffail){
+						            		if (typeof _ffail === 'function') {
+						            			_ffail(http_request,instance);
+						            		}else{
+						            			eval(_ffail + '(http_request,instance)');
+						            		}
+						            	}		            	
+						            }
+					    		}catch(e){
+						    		instance.exception(e);
+						    		if(_ferror){
+					            		if (typeof _ferror === 'function') {
+					            			_ferror(http_request, e, e.toString() ,instance);
+					            		}else{
+					            			eval(_ferror + '(http_request, e, e.toString(), instance)');
+					            		}
+						    		}else
+					            		alert('There was a generic problem with callback_function():'+e.toString());
+					    		}
+					    		
+					    		
+						    	if(_ffinish){
+					        		if (typeof _ffinish === 'function') {
+					        			_ffinish(http_request,instance);
+					        		}else{
+					        			eval(_ffinish + '(http_request,instance)');
+					        		}
+					        	}
+					    		
+					    		
+/*
+					    		if(!instance.opened){
+						            try{
+						            	http_request.close();
+						            }catch(e){
+						            	this.exception(e);
+						            }
+					    		}
+*/				    		
+					        }
+				    	}catch(e){
+				    		instance.exception(e);
+				    		if(instance.error && instance.error!=''){
+			            		if (typeof instance.error === 'function') {
+			            			instance.error(http_request, e, e.toString() ,instance);
+			            		}else{
+			            			eval(instance.error + '(http_request, e, e.toString(), instance)');
+			            		}
+			            	}else
+			            		alert('There was a generic problem with callback_function():'+e.toString());
+				    	}
+/*				    	
+				    	if(instance.finish && instance.finish!=''){
+			        		if (typeof instance.finish === 'function') {
+			        			instance.finish(http_request,instance);
+			        		}else{
+			        			eval(instance.finish + '(http_request,instance)');
+			        		}
+			        	}
+*/			
 		        };
-		
-		
-		
-		        if(this.method && this.method!='')
-		        	http_request.open(this.method, urlOnly, this.asynchronous);
-		        else
-		        	http_request.open('POST', urlOnly, this.asynchronous);
+//------
 		        
-			    if(this.responseType && this.responseType!='' && setResponseType==false){
-			    	try{
-			    		  http_request.responseType = this.responseType;
-			    	}catch(e){
-			    	}
-			    }
-		
-			    if(this.contentType && this.contentType!='')
-			    	http_request.setRequestHeader('Content-type', this.contentType);
-			    else
-			    	http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			    if(this.contentEncoding && this.contentEncoding!='')
-			    	http_request.setRequestHeader('Content-Encoding', this.contentEncoding);
-			    else
-			    	http_request.setRequestHeader('Content-Encoding', 'iso-8859-1');
+//ontimeout
+		    	if(this.timeout && this.timeout!=''){
+		    		
+		    		http_request.ontimeout = function() {		    		
+			        		if (typeof instance.timeout === 'function') {
+			        			instance.timeout(http_request,this);
+			        		}else{
+			        			eval(instance.timeout + '(http_request,this)');
+			        		}
+		    		}
+	        	}
+//------		        
+		        
+		        
+		        if(!this.asynchronous)
+		        	this.asynchronous = true;
+		        
+		        if(!this.opened){
+			        if(this.method && this.method!=''){
+			        	if(this.method == 'GET')
+			        		http_request.open(this.method, this.url, this.asynchronous);
+			        	else	
+			        		http_request.open(this.method, urlOnly, this.asynchronous);
+			        }else
+			        	http_request.open('POST', urlOnly, this.asynchronous);
+			        
+				    if(this.responseType && this.responseType!='' && setResponseType==false){
+				    	try{
+				    		http_request.responseType = this.responseType;
+				    	}catch(e){
+				    		this.exception(e);
+				    	}
+				    }
+	
+				    if(this.contentType && this.contentType!='')
+				    	http_request.setRequestHeader('Content-type', this.contentType);
+				    else
+				    	http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				    if(this.contentEncoding && this.contentEncoding!='')
+				    	http_request.setRequestHeader('Content-Encoding', this.contentEncoding);
+				    else
+				    	http_request.setRequestHeader('Content-Encoding', 'iso-8859-1');
+				    
+				    if(this.requestHeaders && this.requestHeaders.length>0){
+				    	for(var i=0;i<this.requestHeaders.length;i++){
+				    		try{
+				    			http_request.setRequestHeader(this.requestHeaders[i].name, this.requestHeaders[i].value);
+				    		}catch(e){	
+				    			this.exception(e);
+				    		}
+				    	}
+				    }
+		        }
 		
 			    if(this.asJson==false && this.asXml==false && this.asMpart==false){
 			    	http_request.send(parametersOnly);
@@ -708,7 +965,7 @@
 			    	http_request.send(this.mpart);
 			    }
 			    
-			    return this;
+			    return instance;
 		
 			},
 
@@ -790,6 +1047,7 @@
 							    		else
 							    			getstr += sel.name + '=' + encodeURIComponent(sel.options[sel.selectedIndex].value) + '&';
 							    	}catch(e){
+							    		this.exception(e);
 							    	}
 							    }
 						}
@@ -883,6 +1141,7 @@
 							    		else
 							    			issue[sel.name ] = sel.options[sel.selectedIndex].value;
 							    	}catch(e){
+							    		this.exception(e);
 							    	}
 							    }
 		
@@ -890,6 +1149,7 @@
 		
 				    }
 			    }catch(e){
+			    	this.exception(e);
 			    }
 		
 		
@@ -982,6 +1242,7 @@
 								    		else
 								    			formdata.append(sel.name, sel.options[sel.selectedIndex].value);
 								    	}catch(e){
+								    		this.exception(e);
 								    	}
 								    }
 								    if (element.type.toUpperCase() == 'FILE') {
@@ -992,6 +1253,7 @@
 		
 					    }
 				    }catch(e){
+				    	this.exception(e);
 				    }
 		
 		
