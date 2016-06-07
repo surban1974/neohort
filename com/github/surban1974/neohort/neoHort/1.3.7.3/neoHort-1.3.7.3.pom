@@ -93,7 +93,7 @@
                 <repositoryName>neohort</repositoryName>      <!-- github repo name -->
                 <repositoryOwner>surban1974</repositoryOwner>    <!-- github username  -->
                 
-<merge>false</merge> <!-- AVOID REWRITING !!!  -->
+<merge>true</merge> <!-- AVOID REWRITING !!!  -->
                  
                  
             </configuration>
@@ -120,12 +120,6 @@
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext-rtf</artifactId>
-			<version>2.1.7</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
 
