@@ -326,17 +326,12 @@
 					    <li class="pull-right">
 							<table style="width:100%" >
 						 		<tr>
-						 			<td style="width:200px;height: 25px;" align="center">
+						 			<td style="width:200px;height: 25px;" align="left">
 						  				<div class="btn-group" role="group" aria-label="...">      	
 						  					<button type="button" class="btn btn-default"
 						  						onclick="showPdf('../report_creator?$source=/chart/guide/guide3.2.xml&$lib=pdf&$type=stream')"
 						  					>PDF</button>
-						  					<button type="button" class="btn btn-default" 
-						  						onclick="location.replace('../report_creator?$source=/chart/guide/guide3.2.xml&$lib=xls&$type=attachment')"
-						  					>XLS</button>
-						  					<button type="button" class="btn btn-default"
-						  						onclick="location.replace('../report_creator?$source=/chart/guide/guide3.2.xml&$lib=rtf&$type=attachment')"
-						  					>RTF</button>
+						  					
 										</div>
 						 			</td>
 						 		</tr>

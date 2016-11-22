@@ -56,24 +56,11 @@ function showPdf(action){
 			target: document.getElementById('tmp_container'),
 			success: function(){ 
 				new Modal(document.getElementById('modalpopup')).open();
-/*				
-				var modal = new Modal(
-						document.getElementById('modalpopup'), 
-						{
-							content: ''
-						}
-				);
-				
-				modal.open();	
-*/				
 				try{
 					document.getElementById('content_body_IFrame_Popup').src=action;
 				}catch(e){
 				}
 			}
 		}).request('GET');
-		
 }
-
-
 

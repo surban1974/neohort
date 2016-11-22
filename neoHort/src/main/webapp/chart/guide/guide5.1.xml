@@ -38,7 +38,5 @@
 		<INCLUDE LINK="/chart/guide/guide4.3.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
 		<PHRASE>include guide4.4.xml-----------------------</PHRASE>
 		<INCLUDE LINK="/chart/guide/guide4.4.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
-		<PHRASE>include guide4.5.xml-----------------------</PHRASE>
-		<INCLUDE LINK="/chart/guide/guide4.5.xml?$lib=%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"/>
 	</DOCUMENT>
 </GENERAL>

@@ -1,7 +1,7 @@
 /**
 * Name: clAjax.js
-* Version: 1.0.3 
-* Creation date: (07/06/2016)
+* Version: 1.0.4 
+* Creation date: (08/06/2016)
 * @author: Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com
 */
 (function(factory){
@@ -579,7 +579,7 @@
 				var parametersOnly='';
 				var sendJson;
 		
-				if(this.asJson==false && this.json && this.json.length>0)
+				if(this.asJson==false && this.json && (this.json.length>0 || typeof this.json === 'object'))
 					this.asJson=true;
 				else if(this.asXml==false && this.xml && this.xml.length>0)
 					this.asXml=true;
@@ -603,8 +603,10 @@
 						parametersOnly+='&js4ajax=true';
 					
 				}else if(this.asJson){	
-					
-					sendJson = JSON.parse(this.json);
+					if(typeof this.json === 'object')
+						sendJson = this.json;
+					else
+						sendJson = JSON.parse(this.json);
 					if(this.url){
 						if(this.url.indexOf('?')>-1){		
 							var pos = this.url.indexOf('?');
@@ -742,6 +744,14 @@
 			            				acceptable = instance.acceptableReadyState[i];
 			            			i++;				            			
 			            		}
+			            		if(!acceptable){
+				            		i=0;
+				            		while(!acceptable && i<instance.acceptableReadyState.length){
+				            			if(instance.acceptableReadyState[i].readyState == -1)
+				            				acceptable = instance.acceptableReadyState[i];
+				            			i++;				            			
+				            		}
+			            		}
 			            		if(acceptable){
 			            			readyStateAccepted = true;
 			            			_facceptableStatus = acceptable.acceptableStatus;
@@ -785,7 +795,7 @@
 				            				acceptable = _facceptableStatus[i];
 				            			i++;				            			
 				            		}
-				            		if(!acceptable && i<_facceptableStatus.length){
+				            		if(!acceptable){
 					            		i=0;
 					            		while(!acceptable && i<_facceptableStatus.length){
 					            			if(_facceptableStatus[i].status == -1)
@@ -937,8 +947,15 @@
 	
 				    if(this.contentType && this.contentType!='')
 				    	http_request.setRequestHeader('Content-type', this.contentType);
-				    else
-				    	http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				    else{
+				    	if(this.asJson)
+				    		http_request.setRequestHeader('Content-type', 'application/json');
+				    	else if(this.asXml)
+				    		http_request.setRequestHeader('Content-type', 'application/xml');
+				    	else	
+				    		http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				    }
+				    
 				    if(this.contentEncoding && this.contentEncoding!='')
 				    	http_request.setRequestHeader('Content-Encoding', this.contentEncoding);
 				    else
@@ -961,7 +978,7 @@
 			    	http_request.send(JSON.stringify(sendJson));
 			    }else if(this.asXml){
 			    	http_request.send(this.xml);
-			    }if(this.asMpart){
+			    }else if(this.asMpart){
 			    	http_request.send(this.mpart);
 			    }
 			    
@@ -1059,9 +1076,12 @@
 			getParametersAsJson : function(frm,_url) {
 			    var issue;
 			    
-			    if(this.json)
-			    	issue = JSON.parse(this.json);
-			    else
+			    if(this.json){
+			    	if(typeof this.json === 'object')
+			    		issue = this.json;
+			    	else
+			    		issue = JSON.parse(this.json);
+			    }else
 			    	issue = {};
 		
 			    if(this.base64)
