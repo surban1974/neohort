@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neoHort</artifactId>
-  <version>1.3.7.3</version>
+  <version>1.3.8</version>
   <name>neoHort</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based iText&amp;JExcelAPI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText before 5.*. Java 1.6 compilation.</description>
   <url>https://github.com/surban1974/neohort</url>

@@ -45,6 +45,7 @@ import neohort.universal.output.iHort;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_xls.general_util.general_j2ee;
+import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
 
@@ -56,6 +57,7 @@ public class general extends element{
 	public Hashtable _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
+	private String CLASS_STREAM_WRAPPER;
 	private String ORIENTATION;
 	private String MARGINS;
 	private String SOURCE_AFTER_FIXED;
@@ -83,6 +85,18 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			OutputStream oStream = null;
 			if(included!=null && included.booleanValue()==true){}
 			else{
+				
+				I_StreamWrapper iStreamWrapper = null;
+				if(getSOURCE_DOCUMENT()==null) setSOURCE_DOCUMENT("");
+				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
+				else{
+					try{
+						iStreamWrapper = (I_StreamWrapper)Class.forName(getCLASS_STREAM_WRAPPER()).newInstance();
+					}catch(Exception e){
+						setError(e);
+					}
+				}
+				
 
 				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
 					oStream = (OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent());
@@ -117,8 +131,12 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 								if(settings==null) writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),workbook);
 								else writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),workbook,settings);
 							}
-						}	
-						else{
+						}else if (getTYPE_DOCUMENT()!=null && iStreamWrapper!=null){
+							if(!noGenerate.booleanValue()){
+								if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook);
+								else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook,settings);
+							}
+						}else{
 							if(!noGenerate.booleanValue()){
 								if(settings==null) writer = Workbook.createWorkbook(oStream,workbook); 
 								else writer = Workbook.createWorkbook(oStream,workbook,settings); 
@@ -135,8 +153,12 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 								if(settings==null) writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()));
 								else writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),settings);
 							}	
-						}	
-						else{
+						}else if (getTYPE_DOCUMENT()!=null && iStreamWrapper!=null){
+							if(!noGenerate.booleanValue()){
+								if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
+								else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),settings);
+							}	
+						}else{
 							if(!noGenerate.booleanValue()){
 								if(settings==null) writer = Workbook.createWorkbook(oStream);
 								else writer = Workbook.createWorkbook(oStream,settings); 
@@ -201,8 +223,14 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
 		
-		
-		
+						
+				if(iStreamWrapper!=null){
+					bean _sysSW = new bean();
+					_sysSW.setContent(iStreamWrapper);
+					_sysSW.setName("SYSTEM");
+					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				}		
 			}
 		}catch(Exception e){
 			setError(e);
@@ -269,6 +297,7 @@ public void reimposta() {
 	setName("GENERAL");
 	TYPE_DOCUMENT = "attachment";
 	SOURCE_DOCUMENT = "";
+	CLASS_STREAM_WRAPPER = "";
 	SOURCE_BEFORE_FIXED ="";
 	SOURCE_AFTER_FIXED ="";
 	SOURCE_ERROR_FIXED ="";
@@ -356,6 +385,12 @@ public String getENCODED() {
 
 public void setENCODED(String string) {
 	ENCODED = string;
+}
+public String getCLASS_STREAM_WRAPPER() {
+	return CLASS_STREAM_WRAPPER;
+}
+public void setCLASS_STREAM_WRAPPER(String cLASS_STREAM_WRAPPER) {
+	CLASS_STREAM_WRAPPER = cLASS_STREAM_WRAPPER;
 }
 
 }

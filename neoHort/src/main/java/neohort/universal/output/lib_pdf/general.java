@@ -35,6 +35,7 @@ import neohort.universal.output.iHort;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_pdf.general_util.general_j2ee;
+import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
 
@@ -65,6 +66,7 @@ public class general extends element{
 	public Hashtable _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
+	private String CLASS_STREAM_WRAPPER;
 	private String ORIENTATION;
 	private String MARGINS;
 	private String SOURCE_AFTER_FIXED;
@@ -267,7 +269,17 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	
 			if(included!=null && included.booleanValue()==true){}
 			else{
+				I_StreamWrapper iStreamWrapper = null;
 				if(getSOURCE_DOCUMENT()==null) setSOURCE_DOCUMENT("");
+				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
+				else{
+					try{
+						iStreamWrapper = (I_StreamWrapper)Class.forName(getCLASS_STREAM_WRAPPER()).newInstance();
+					}catch(Exception e){
+						setError(e);
+					}
+				}
+
 				if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("LANDSCAPE"))
 					document = new Document(PageSize.A4.rotate());
 				else document = new Document(PageSize.A4);
@@ -285,22 +297,30 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				}catch(Exception e){
 					document.setMargins(30, 30, 30, 30);
 				}
-				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && !getSOURCE_DOCUMENT().equals("")){
-					if(!noGenerate.booleanValue())
-						writer = PdfWriter.getInstance(document, new java.io.FileOutputStream(getSOURCE_DOCUMENT()));
-
-		
-				}
-				if (getTYPE_DOCUMENT()!=null && !getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && !getSOURCE_DOCUMENT().equals("")){
-					if(!noGenerate.booleanValue())
-						writer = PdfWriter.getInstance(document, new java.io.FileOutputStream(getSOURCE_DOCUMENT()));
-
-		
+				if(!getSOURCE_DOCUMENT().equals("")){
+					if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
+						if(!noGenerate.booleanValue())
+							writer = PdfWriter.getInstance(document, new java.io.FileOutputStream(getSOURCE_DOCUMENT()));		
+					}
+					if (getTYPE_DOCUMENT()!=null && !getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
+						if(!noGenerate.booleanValue())
+							writer = PdfWriter.getInstance(document, new java.io.FileOutputStream(getSOURCE_DOCUMENT()));		
+					}
+				}else if(iStreamWrapper!=null){
+					if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
+						if(!noGenerate.booleanValue())
+							writer = PdfWriter.getInstance(document, iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));		
+					}
+					if (getTYPE_DOCUMENT()!=null && !getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
+						if(!noGenerate.booleanValue())
+							writer = PdfWriter.getInstance(document, iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));		
+					}
+					
 				}
 				
 
-					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
-						if(!noGenerate.booleanValue()) writer = PdfWriter.getInstance(document,(OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
+				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
+					if(!noGenerate.booleanValue()) writer = PdfWriter.getInstance(document,(OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
 				
 				if(writer!=null){
 					this._beanLibrary = _beanLibrary;
@@ -328,6 +348,14 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						_sysPdfPN.setName("SYSTEM");
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
+						
+				if(iStreamWrapper!=null){
+					bean _sysSW = new bean();
+					_sysSW.setContent(iStreamWrapper);
+					_sysSW.setName("SYSTEM");
+					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				}						
 		
 			}
 		}catch(Exception e){
@@ -347,7 +375,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
 		
 			if(included!=null && included.booleanValue()==true){}
-			else{
+			else{				
 				if(!noGenerate.booleanValue()) ((PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).flush();
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 					if(!noGenerate.booleanValue()) ((PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
@@ -392,6 +420,7 @@ public void reimposta() {
 	setName("GENERAL");
 	TYPE_DOCUMENT = "attachment";
 	SOURCE_DOCUMENT = "";
+	CLASS_STREAM_WRAPPER = "";
 	SOURCE_BEFORE_FIXED ="";
 	SOURCE_AFTER_FIXED ="";
 	SOURCE_ERROR_FIXED ="";
@@ -475,5 +504,11 @@ public String getDIRECTION() {
 }
 public void setDIRECTION(String dIRECTION) {
 	DIRECTION = dIRECTION;
+}
+public String getCLASS_STREAM_WRAPPER() {
+	return CLASS_STREAM_WRAPPER;
+}
+public void setCLASS_STREAM_WRAPPER(String cLASS_STREAM_WRAPPER) {
+	CLASS_STREAM_WRAPPER = cLASS_STREAM_WRAPPER;
 }
 }

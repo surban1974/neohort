@@ -4,7 +4,8 @@
 	id="guide.1.1"
 	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
 	orientation="landscape" 
-	lib="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
+	lib="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
+	class_stream_wrapper="neohort.universal.output.util.ByteStreamWrapper">
 	<init/>
 	<document>
 		<block>step 1.1 - block</block>
