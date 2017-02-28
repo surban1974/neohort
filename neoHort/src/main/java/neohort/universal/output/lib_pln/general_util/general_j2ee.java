@@ -35,6 +35,7 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_pln.document;
 import neohort.universal.output.lib_pln.general;
+import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 
 public class general_j2ee{
@@ -45,6 +46,19 @@ try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	if(included!=null && included.booleanValue()==true){}
 	else{
+		
+		I_StreamWrapper iStreamWrapper = null;
+		if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
+		if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
+		else{
+			try{
+				iStreamWrapper = (I_StreamWrapper)Class.forName(body.getCLASS_STREAM_WRAPPER()).newInstance();
+			}catch(Exception e){
+				body.setError(e);
+			}
+		}
+
+		
 		javax.servlet.http.HttpServletResponse response = null;
 		try{
 			response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
@@ -102,7 +116,17 @@ try{
 				_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 				_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
 
-				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes("");
+		if(iStreamWrapper==null)
+			((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes("");
+		else{
+			iStreamWrapper.createOutputStream("".getBytes(), _tagLibrary, _beanLibrary);
+
+			bean _sysSW = new bean();
+			_sysSW.setContent(iStreamWrapper);
+			_sysSW.setName("SYSTEM");
+			_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
+			_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+		}
 
 	}
 }catch(Exception e){
@@ -114,18 +138,37 @@ try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	if(included!=null && included.booleanValue()==true){}
 	else{
+		I_StreamWrapper iStreamWrapper = null;
+
+		if(body.getCLASS_STREAM_WRAPPER()!=null && !body.getCLASS_STREAM_WRAPPER().equals("")){
+			try{
+				iStreamWrapper = (I_StreamWrapper)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_STREAM_WRITER)).getContent();
+			}catch(Exception e){
+				body.setError(e);
+			}
+		}
+
 		if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("STREAM")){
 
 			javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 			if (response!=null){
-				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._content);
+				if(iStreamWrapper==null)
+					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._content);
+				else
+					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				
 			}
 		_tagLibrary = new Hashtable();
 		_beanLibrary = new Hashtable();
 		}
 		if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
-			((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._content);
-			((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
+			if(iStreamWrapper==null){
+				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._content);
+				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
+			}else{
+				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
+			}
 			if(!body.getSOURCE_AFTER_FIXED().equals("")){
 				javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 				javax.servlet.http.HttpServletRequest request = (javax.servlet.http.HttpServletRequest)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());

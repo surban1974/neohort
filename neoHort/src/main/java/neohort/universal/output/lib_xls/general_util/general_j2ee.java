@@ -161,7 +161,7 @@ try{
 				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals(""))
 					body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
 				else if (body.getTYPE_DOCUMENT()!=null && iStreamWrapper!=null)
-					Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
+					body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
 				else
 					body.writer = Workbook.createWorkbook(oStream);	
 			}

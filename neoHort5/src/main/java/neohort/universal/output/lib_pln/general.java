@@ -35,6 +35,7 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_pln.general_util.general_j2ee;
+import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
 
@@ -45,6 +46,7 @@ public class general extends element{
 	public Hashtable _beanLibrary;
 	private java.lang.String TYPE_DOCUMENT;
 	private java.lang.String SOURCE_DOCUMENT;
+	private java.lang.String CLASS_STREAM_WRAPPER;
 	private java.lang.String SOURCE_AFTER_FIXED;
 	private java.lang.String SOURCE_BEFORE_FIXED;
 	private java.lang.String SOURCE_ERROR_FIXED;
@@ -68,6 +70,17 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
+				
+				I_StreamWrapper iStreamWrapper = null;
+
+				if(getCLASS_STREAM_WRAPPER()!=null && !getCLASS_STREAM_WRAPPER().equals("")){
+					try{
+						iStreamWrapper = (I_StreamWrapper)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_STREAM_WRITER)).getContent();
+					}catch(Exception e){
+						setError(e);
+					}
+				}
+
 		
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && getSOURCE_DOCUMENT()!=null){
 						writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(getSOURCE_DOCUMENT(),false)));
@@ -100,7 +113,17 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
 		
-						((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes("");
+				if(iStreamWrapper==null)
+					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes("");
+				else{
+					iStreamWrapper.createOutputStream("".getBytes(), _tagLibrary, _beanLibrary);
+
+					bean _sysSW = new bean();
+					_sysSW.setContent(iStreamWrapper);
+					_sysSW.setName("SYSTEM");
+					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				}
 		
 			}
 		}catch(Exception e){
@@ -121,8 +144,22 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
-				((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(this._content.getBytes());
+				I_StreamWrapper iStreamWrapper = null;
 
+				if(getCLASS_STREAM_WRAPPER()!=null && !getCLASS_STREAM_WRAPPER().equals("")){
+					try{
+						iStreamWrapper = (I_StreamWrapper)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_STREAM_WRITER)).getContent();
+					}catch(Exception e){
+						setError(e);
+					}
+				}
+				
+				if(iStreamWrapper==null)
+					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(this._content.getBytes());
+				else
+					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				
+				
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 					if(!noGenerate.booleanValue()) ((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
 					if (this.motore.getClass().getName().indexOf("PLNRunThread") > -1) {
@@ -169,6 +206,7 @@ public void reimposta() {
 	setName("GENERAL");
 	TYPE_DOCUMENT = "";
 	SOURCE_DOCUMENT = "";
+	CLASS_STREAM_WRAPPER = "";
 	SOURCE_BEFORE_FIXED ="";
 	SOURCE_AFTER_FIXED ="";
 	SOURCE_ERROR_FIXED ="";
@@ -239,6 +277,12 @@ public void setTYPE_DOCUMENT(java.lang.String newTYPE_DOCUMENT) {
 
 	public void setLIB(java.lang.String string) {
 		LIB = string;
+	}
+	public java.lang.String getCLASS_STREAM_WRAPPER() {
+		return CLASS_STREAM_WRAPPER;
+	}
+	public void setCLASS_STREAM_WRAPPER(java.lang.String cLASS_STREAM_WRAPPER) {
+		CLASS_STREAM_WRAPPER = cLASS_STREAM_WRAPPER;
 	}
 
 }

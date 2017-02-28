@@ -35,6 +35,7 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_html.general_util.general_j2ee;
+import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
 
@@ -46,6 +47,7 @@ public class general extends element{
 	public document document;
 	private java.lang.String TYPE_DOCUMENT;
 	private java.lang.String SOURCE_DOCUMENT;
+	private java.lang.String CLASS_STREAM_WRAPPER;
 	private java.lang.String ORIENTATION;
 	private java.lang.String TYPE_RESPONSE;
 	private java.lang.String SOURCE_AFTER_FIXED;
@@ -72,41 +74,62 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
+				
+				I_StreamWrapper iStreamWrapper = null;
+				if(getSOURCE_DOCUMENT()==null) setSOURCE_DOCUMENT("");
+				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
+				else{
+					try{
+						iStreamWrapper = (I_StreamWrapper)Class.forName(getCLASS_STREAM_WRAPPER()).newInstance();
+					}catch(Exception e){
+						setError(e);
+					}
+				}
 
 	
-			if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && getSOURCE_DOCUMENT()!=null){
-				writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(getSOURCE_DOCUMENT(),false)));
-			}
-			
-			if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
-				if(!noGenerate.booleanValue()) writer = new java.io.DataOutputStream((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
+				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && getSOURCE_DOCUMENT()!=null){
+					writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(getSOURCE_DOCUMENT(),false)));
+				}
+				
+				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
+					if(!noGenerate.booleanValue()) writer = new java.io.DataOutputStream((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
+	
+				this.document = new document();
+		
+				if(writer!=null){
+					this._beanLibrary = _beanLibrary;
+				}
+		
+		
+				bean _sysPdfWriter = new bean();
+					_sysPdfWriter.setContent(writer);
+					_sysPdfWriter.setName("SYSTEM");
+					_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
+					_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
+		
+				bean _sysDocument = new bean();
+					_sysDocument.setContent(document);
+					_sysDocument.setName("SYSTEM");
+					_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
+					_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
+		
+				this._header = "<HTML>"+_separator();
+				this._header+="<HEAD>"+_separator();
+				this._header+=_meta();
+				this._header+="</HEAD>"+_separator()+"<BODY>"+_separator();
+		
+		
+				if(iStreamWrapper==null)		
+					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(this._header);
+				else{
+					iStreamWrapper.createOutputStream(_header.getBytes(), _tagLibrary, _beanLibrary);
 
-			this.document = new document();
-	
-			if(writer!=null){
-				this._beanLibrary = _beanLibrary;
-			}
-	
-	
-			bean _sysPdfWriter = new bean();
-				_sysPdfWriter.setContent(writer);
-				_sysPdfWriter.setName("SYSTEM");
-				_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
-				_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
-	
-			bean _sysDocument = new bean();
-				_sysDocument.setContent(document);
-				_sysDocument.setName("SYSTEM");
-				_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
-				_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-	
-			this._header = "<HTML>"+_separator();
-			this._header+="<HEAD>"+_separator();
-			this._header+=_meta();
-			this._header+="</HEAD>"+_separator()+"<BODY>"+_separator();
-	
-	
-			((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(this._header);
+					bean _sysSW = new bean();
+					_sysSW.setContent(iStreamWrapper);
+					_sysSW.setName("SYSTEM");
+					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				}
 	
 			}
 		}catch(Exception e){
@@ -122,6 +145,17 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	
 	if(motore instanceof OutputRunTimeService){		
 		try{
+			
+			I_StreamWrapper iStreamWrapper = null;
+
+			if(getCLASS_STREAM_WRAPPER()!=null && !getCLASS_STREAM_WRAPPER().equals("")){
+				try{
+					iStreamWrapper = (I_StreamWrapper)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_STREAM_WRITER)).getContent();
+				}catch(Exception e){
+					setError(e);
+				}
+			}
+			
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
 
@@ -130,7 +164,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				this._footer = "</BODY>"+_separator()+"</HTML>"+_separator();
 				document = (document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 				prepareComment(_tagLibrary,_beanLibrary);
-				((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write((this._comment+this._content+this._footer).getBytes());
+				if(iStreamWrapper==null)
+					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write((this._comment+this._content+this._footer).getBytes());
+				else
+					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
 
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 					if(!noGenerate.booleanValue()) ((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
@@ -180,8 +217,9 @@ public void prepareComment(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 }
 public void reimposta() {
 	setName("GENERAL");
-	TYPE_DOCUMENT = "attachment";
+	TYPE_DOCUMENT = "";
 	SOURCE_DOCUMENT = "";
+	CLASS_STREAM_WRAPPER = "";
 	ORIENTATION = "";
 	TYPE_RESPONSE = "";
 	SOURCE_BEFORE_FIXED ="";
@@ -237,9 +275,7 @@ public void setSOURCE_ERROR_FIXED(java.lang.String newSOURCE_ERROR_FIXED) {
 	SOURCE_ERROR_FIXED = newSOURCE_ERROR_FIXED;
 }
 public void setTYPE_DOCUMENT(java.lang.String newTYPE_DOCUMENT) {
-	if(newTYPE_DOCUMENT!=null && !newTYPE_DOCUMENT.trim().equals(""))
-		TYPE_DOCUMENT = newTYPE_DOCUMENT;
-
+	TYPE_DOCUMENT = newTYPE_DOCUMENT;
 }
 public void setTYPE_RESPONSE(java.lang.String newTYPE_RESPONSE) {
 	TYPE_RESPONSE = newTYPE_RESPONSE;
@@ -250,6 +286,12 @@ public void setTYPE_RESPONSE(java.lang.String newTYPE_RESPONSE) {
 
 	public void setLIB(java.lang.String string) {
 		LIB = string;
+	}
+	public java.lang.String getCLASS_STREAM_WRAPPER() {
+		return CLASS_STREAM_WRAPPER;
+	}
+	public void setCLASS_STREAM_WRAPPER(java.lang.String cLASS_STREAM_WRAPPER) {
+		CLASS_STREAM_WRAPPER = cLASS_STREAM_WRAPPER;
 	}
 
 }
