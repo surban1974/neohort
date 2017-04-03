@@ -52,8 +52,7 @@ import neohort.universal.output.util.OutputRunTimeService;
 
 public class general extends element{
 	private static final long serialVersionUID = 3788220213800261200L;
-	public WritableSheet document;
-	public WritableWorkbook writer;
+
 	public Hashtable _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
@@ -66,12 +65,19 @@ public class general extends element{
 	private String TEMPLATE;
 	private String LIB;
 	private String ENCODED;
+	private String TEMPORARYFILEDURINGWRITE;
+	private String TEMPORARYFILEDURINGWRITEDIRECTORY;
+	private String ARRAYGROWSIZE;
 	
 
 public general() {
 	super();
 }
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+	WritableSheet document = null;
+	WritableWorkbook writer = null;	
+	WorkbookSettings settings = null;
+	
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
 	}
@@ -85,9 +91,11 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			OutputStream oStream = null;
 			if(included!=null && included.booleanValue()==true){}
 			else{
-				
+				Workbook workbook = null;
 				I_StreamWrapper iStreamWrapper = null;
 				if(getSOURCE_DOCUMENT()==null) setSOURCE_DOCUMENT("");
+				if(getARRAYGROWSIZE()==null) setARRAYGROWSIZE("");
+				if(getTEMPORARYFILEDURINGWRITE()==null) setTEMPORARYFILEDURINGWRITE("");
 				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
 				else{
 					try{
@@ -102,8 +110,26 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					oStream = (OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent());
 
 
+				if(getTEMPORARYFILEDURINGWRITE()!=null && !getTEMPORARYFILEDURINGWRITE().equalsIgnoreCase("true")){
+					if(settings==null)
+						settings = new WorkbookSettings();
+					settings.setUseTemporaryFileDuringWrite(true);
+					if(getTEMPORARYFILEDURINGWRITEDIRECTORY()!=null && !getTEMPORARYFILEDURINGWRITEDIRECTORY().equals(""))
+						settings.setTemporaryFileDuringWriteDirectory(new File(getTEMPORARYFILEDURINGWRITEDIRECTORY()));
+				}
+				if(getARRAYGROWSIZE()!=null && !getARRAYGROWSIZE().equals("")){
+					if(settings==null)
+						settings = new WorkbookSettings();
+					try{
+						settings.setArrayGrowSize(Integer.valueOf(getARRAYGROWSIZE()));
+					}catch(Exception e){
+						
+					}
+				}				
+				
+				
 				if(getTEMPLATE()!=null && !getTEMPLATE().equals("")){
-					Workbook workbook = null;
+					
 					
 					String path = getTEMPLATE();
 					try{
@@ -118,9 +144,10 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 							setError(e,iStub.log_ERROR);
 						}
 					}
-					WorkbookSettings settings = null;
+					
 					if(ENCODED!=null){
-						settings = new WorkbookSettings();
+						if(settings==null)
+							settings = new WorkbookSettings();
 						settings.setEncoding(ENCODED);
 		
 					}
@@ -175,9 +202,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				}
 				else{
 					if(!noGenerate.booleanValue()){
-						if (getTYPE_DOCUMENT()!=null && !getSOURCE_DOCUMENT().equals(""))
-							writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()));
-						else writer = Workbook.createWorkbook(oStream);	
+						if (getTYPE_DOCUMENT()!=null && !getSOURCE_DOCUMENT().equals("")){
+							if(settings==null) writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()));
+							else writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),settings);
+						}else{
+							if(settings==null) writer = Workbook.createWorkbook(oStream);	
+							else  writer = Workbook.createWorkbook(oStream,settings);	
+						}
 					}
 					document = writer.createSheet("Sheet 0", 0);
 					
@@ -205,6 +236,12 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					
 				}
 		
+				bean _sysPdfWorkbook = new bean();
+					_sysPdfWorkbook.setContent(workbook);
+					_sysPdfWorkbook.setName("SYSTEM");
+					_sysPdfWorkbook.setID(iConst.iHORT_SYSTEM_Workbook);
+					_beanLibrary.put(_sysPdfWorkbook.getName()+":"+_sysPdfWorkbook.getID(),_sysPdfWorkbook);				
+				
 				bean _sysPdfWriter = new bean();
 						_sysPdfWriter.setContent(writer);
 						_sysPdfWriter.setName("SYSTEM");
@@ -263,6 +300,15 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}
 				}
 				
+				
+				try{
+					Workbook workbook = (Workbook)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Workbook)).getContent());
+					if(workbook!=null)
+						workbook.close();
+				}catch(Exception e){
+					e.toString();
+				}				
+				
 				_tagLibrary = new Hashtable();
 				_beanLibrary = new Hashtable();
 		
@@ -306,6 +352,9 @@ public void reimposta() {
 	LIB="xls";
 	TEMPLATE="";
 	ENCODED="";
+	TEMPORARYFILEDURINGWRITE="";
+	TEMPORARYFILEDURINGWRITEDIRECTORY="";
+	ARRAYGROWSIZE="";	
 }
 public void setError(Exception e) {
 	if(motore instanceof OutputRunTime){
@@ -391,6 +440,24 @@ public String getCLASS_STREAM_WRAPPER() {
 }
 public void setCLASS_STREAM_WRAPPER(String cLASS_STREAM_WRAPPER) {
 	CLASS_STREAM_WRAPPER = cLASS_STREAM_WRAPPER;
+}
+public String getTEMPORARYFILEDURINGWRITE() {
+	return TEMPORARYFILEDURINGWRITE;
+}
+public void setTEMPORARYFILEDURINGWRITE(String tEMPORARYFILEDURINGWRITE) {
+	TEMPORARYFILEDURINGWRITE = tEMPORARYFILEDURINGWRITE;
+}
+public String getARRAYGROWSIZE() {
+	return ARRAYGROWSIZE;
+}
+public void setARRAYGROWSIZE(String aRRAYGROWSIZE) {
+	ARRAYGROWSIZE = aRRAYGROWSIZE;
+}
+public String getTEMPORARYFILEDURINGWRITEDIRECTORY() {
+	return TEMPORARYFILEDURINGWRITEDIRECTORY;
+}
+public void setTEMPORARYFILEDURINGWRITEDIRECTORY(String tEMPORARYFILEDURINGWRITEDIRECTORY) {
+	TEMPORARYFILEDURINGWRITEDIRECTORY = tEMPORARYFILEDURINGWRITEDIRECTORY;
 }
 
 }

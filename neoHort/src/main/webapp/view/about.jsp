@@ -64,7 +64,7 @@
 		       		</li>	
 		       		<li><h4>Providers:</h4>
 		       		    <ul>
-		       				<li><h4>neoHort: 1.3.8</h4></li>
+		       				<li><h4>neoHort: 1.3.8.1</h4></li>
 		       				<li><h4>iText: 2.1.7</h4></li>
 		       				<li><h4>iText-rtf: 2.1.7</h4></li>
 		       				<li><h4>JExcelApi: 2.6.12</h4></li>

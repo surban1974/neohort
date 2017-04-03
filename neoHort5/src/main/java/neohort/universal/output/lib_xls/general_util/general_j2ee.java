@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.PageOrientation;
+import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -31,12 +32,19 @@ public class general_j2ee {
 
 public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
 try{
+	
+	WritableSheet document = null;
+	WritableWorkbook writer = null;	
+	
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
 
 	OutputStream oStream = null;
 	if(included!=null && included.booleanValue()==true){}
 	else{
+		Workbook workbook = null;
+		WorkbookSettings settings = null;
+		
 		I_StreamWrapper iStreamWrapper = null;
 		if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
 		if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
@@ -81,8 +89,27 @@ try{
 				response.setHeader("Content-Type","Application/xls");
 			}
 		}
+		
+		if(body.getTEMPORARYFILEDURINGWRITE()!=null && body.getTEMPORARYFILEDURINGWRITE().equalsIgnoreCase("true")){
+			if(settings==null)
+				settings = new WorkbookSettings();
+			settings.setUseTemporaryFileDuringWrite(true);
+			if(body.getTEMPORARYFILEDURINGWRITEDIRECTORY()!=null && !body.getTEMPORARYFILEDURINGWRITEDIRECTORY().equals(""))
+				settings.setTemporaryFileDuringWriteDirectory(new File(body.getTEMPORARYFILEDURINGWRITEDIRECTORY()));
+
+		}
+		if(body.getARRAYGROWSIZE()!=null && !body.getARRAYGROWSIZE().equals("")){
+			if(settings==null)
+				settings = new WorkbookSettings();
+			try{
+				settings.setArrayGrowSize(Integer.valueOf(body.getARRAYGROWSIZE()));
+			}catch(Exception e){
+				
+			}
+		}
+		
 		if(body.getTEMPLATE()!=null && !body.getTEMPLATE().equals("")){
-			Workbook workbook = null;
+			
 			HttpServletRequest request = null;
 			try{
 				request = (HttpServletRequest)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());
@@ -101,9 +128,10 @@ try{
 					body.setError(e,iStub.log_ERROR);
 				}
 			}
-			WorkbookSettings settings = null;
+			
 			if(body.getENCODED()!=null){
-				settings = new WorkbookSettings();
+				if(settings==null)
+					settings = new WorkbookSettings();
 				settings.setEncoding(body.getENCODED());
 
 			}
@@ -111,44 +139,44 @@ try{
 			if(workbook!=null){
 				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals("")){
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),workbook);
-						else body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),workbook,settings);
+						if(settings==null) writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),workbook);
+						else writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),workbook,settings);
 					}
 				}else if(iStreamWrapper!=null){
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook);
-						else body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook,settings);
+						if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook);
+						else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook,settings);
 					}
 				}else{
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(oStream,workbook); 
-						else body.writer = Workbook.createWorkbook(oStream,workbook,settings); 
+						if(settings==null) writer = Workbook.createWorkbook(oStream,workbook); 
+						else writer = Workbook.createWorkbook(oStream,workbook,settings); 
 					}
 				}
 				try{
-					body.document = body.writer.getSheet(0);
+					document = writer.getSheet(0);
 				}catch(Exception e){	
-					body.document = body.writer.createSheet("Sheet 0", 0);
+					document = writer.createSheet("Sheet 0", 0);
 				}
 			}else{
 				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals("")){
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
-						else body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),settings);
+						if(settings==null) writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
+						else writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),settings);
 					}	
 				}else if(iStreamWrapper!=null){
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
-						else body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),settings);
+						if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
+						else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),settings);
 					}	
 				}else{
 					if(!noGenerate.booleanValue()){
-						if(settings==null) body.writer = Workbook.createWorkbook(oStream);
-						else body.writer = Workbook.createWorkbook(oStream,settings); 
+						if(settings==null) writer = Workbook.createWorkbook(oStream);
+						else writer = Workbook.createWorkbook(oStream,settings); 
 					}
 				}
 								 
-				body.document = body.writer.createSheet("Sheet 0", 0);
+				document = writer.createSheet("Sheet 0", 0);
 			}
 			bean _sysXlsT = new bean();
 				_sysXlsT.setContent(new Boolean(true));
@@ -158,27 +186,31 @@ try{
 		}
 		else{
 			if(!noGenerate.booleanValue()){
-				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals(""))
-					body.writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
-				else if (body.getTYPE_DOCUMENT()!=null && iStreamWrapper!=null)
-					body.writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
-				else
-					body.writer = Workbook.createWorkbook(oStream);	
+				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals("")){
+					if(settings==null) writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
+					else writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()), settings);	
+				}else if (body.getTYPE_DOCUMENT()!=null && iStreamWrapper!=null){
+					if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
+					else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary), settings);	
+				}else{
+					if(settings==null) writer = Workbook.createWorkbook(oStream);	
+					else writer = Workbook.createWorkbook(oStream, settings);	
+				}
 			}
-			body.document = body.writer.createSheet("Sheet 0", 0);
+			document = writer.createSheet("Sheet 0", 0);
 			
 			if(body.getORIENTATION()!=null && body.getORIENTATION().trim().equalsIgnoreCase("LANDSCAPE"))
-				body.document.getSettings().setOrientation(PageOrientation.LANDSCAPE);
-			else body.document.getSettings().setOrientation(PageOrientation.PORTRAIT);
+				document.getSettings().setOrientation(PageOrientation.LANDSCAPE);
+			else document.getSettings().setOrientation(PageOrientation.PORTRAIT);
 			
 			
 			try{
 				java.util.StringTokenizer st = new java.util.StringTokenizer(body.getMARGINS(), ",");
 
-				body.document.getSettings().setLeftMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
-				body.document.getSettings().setRightMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
-				body.document.getSettings().setTopMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
-				body.document.getSettings().setBottomMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
+				document.getSettings().setLeftMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
+				document.getSettings().setRightMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
+				document.getSettings().setTopMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
+				document.getSettings().setBottomMargin(Double.valueOf(st.nextToken()).doubleValue()/96);
 				
 	
 			}catch(Exception e){
@@ -190,15 +222,21 @@ try{
 				_beanLibrary.put(_sysXlsT.getName()+":"+_sysXlsT.getID(),_sysXlsT);
 			
 		}
+		
+		bean _sysPdfWorkbook = new bean();
+				_sysPdfWorkbook.setContent(workbook);
+				_sysPdfWorkbook.setName("SYSTEM");
+				_sysPdfWorkbook.setID(iConst.iHORT_SYSTEM_Workbook);
+				_beanLibrary.put(_sysPdfWorkbook.getName()+":"+_sysPdfWorkbook.getID(),_sysPdfWorkbook);		
 
 		bean _sysPdfWriter = new bean();
-				_sysPdfWriter.setContent(body.writer);
+				_sysPdfWriter.setContent(writer);
 				_sysPdfWriter.setName("SYSTEM");
 				_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
 				_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
 
 		bean _sysDocument = new bean();
-				_sysDocument.setContent(body.document);
+				_sysDocument.setContent(document);
 				_sysDocument.setName("SYSTEM");
 				_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 				_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
@@ -241,8 +279,13 @@ try{
 		
 		
 		if(!noGenerate.booleanValue()){
-			((WritableWorkbook)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write();
-			((WritableWorkbook)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
+			WritableWorkbook wrworkbook = (WritableWorkbook)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent();
+			if(wrworkbook!=null){
+				wrworkbook.write();
+				wrworkbook.close();
+				wrworkbook = null;
+				((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).setContent(wrworkbook);
+			}
 		}
 		if (body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 			if(!body.getSOURCE_AFTER_FIXED().equals("")){
@@ -275,11 +318,22 @@ try{
 			try{
 				response = (HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 				response.getOutputStream().write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				iStreamWrapper.close();
 				response.flushBuffer();
 
 			}catch(Exception e){
 			}
 			
+		}
+		
+		try{
+			Workbook workbook = (Workbook)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Workbook)).getContent());
+			if(workbook!=null){
+				workbook.close();
+				workbook = null;
+			}
+		}catch(Exception e){
+			e.toString();
 		}
 		
 		_tagLibrary = new Hashtable();
@@ -298,14 +352,19 @@ public static void setError(general body, Exception e) {
 			if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 				if(!body.getSOURCE_ERROR_FIXED().equals("")){
 					try{						
-						((WritableWorkbook)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write();
-						((WritableWorkbook)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
+						WritableWorkbook wrworkbook = (WritableWorkbook)((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent();
+						if(wrworkbook!=null){
+							wrworkbook.write();
+							wrworkbook.close();
+							wrworkbook = null;
+							((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).setContent(wrworkbook);
+						}
 					}catch (Exception ex) {}
-					javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
-					javax.servlet.http.HttpServletRequest request = (javax.servlet.http.HttpServletRequest)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());
-					if(request!=null && request.getParameter("source")!=null){
-						if(body.motore!=null && ((OutputRunTime)body.motore).getAnotherServletConfig()!=null)
-							((OutputRunTime)body.motore).getAnotherServletConfig().getServletContext().getRequestDispatcher(body.getSOURCE_ERROR_FIXED()).include(request,response);
+						javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
+						javax.servlet.http.HttpServletRequest request = (javax.servlet.http.HttpServletRequest)(((report_element_base)body._beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());
+						if(request!=null && request.getParameter("source")!=null){
+							if(body.motore!=null && ((OutputRunTime)body.motore).getAnotherServletConfig()!=null)
+								((OutputRunTime)body.motore).getAnotherServletConfig().getServletContext().getRequestDispatcher(body.getSOURCE_ERROR_FIXED()).include(request,response);
 					}
 				}
 				if (body.motore.getClass().getName().indexOf("RunThread") > -1) {

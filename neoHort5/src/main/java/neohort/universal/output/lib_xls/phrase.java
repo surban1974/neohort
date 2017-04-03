@@ -32,23 +32,45 @@ import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
+
 public class phrase extends element{
 	private static final long serialVersionUID = 2964905806769494821L;
+	private boolean permitCanvas=true;
 public phrase() {
 	super();
 }
 public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
-	initCanvas(_tagLibrary,_beanLibrary);
+	if(permitCanvas)
+		initCanvas(_tagLibrary,_beanLibrary);
 }
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
+		
+		table_cell parentCell = null;
+		report_element_base parentC = (report_element_base)getParent();
+		while (parentC!=null && !parentC.getName().equalsIgnoreCase("TABLE_CELL"))
+			parentC=(report_element_base)parentC.getParent();
+		if(parentC!=null && parentC.getName().equalsIgnoreCase("TABLE_CELL"))
+			parentCell = (table_cell)parentC;
+		if(parentCell!=null){
+			if(parentCell.getContent()==null) parentCell.setContent(this.getContent());
+			else  parentCell.setContent(parentCell.getContent()+" "+this.getContent());
+			permitCanvas=false;
+			return;
+		}		
+		
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
 		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
 		
 		int X = 0;
 		int Y = 0;
+		try{
+			X = ((Integer)_sysPdfCC.getContent()).intValue();
+		}catch(Exception e){
+		}
+		
 		try{
 			Y = ((Integer)_sysPdfCR.getContent()).intValue();
 		}catch(Exception e){

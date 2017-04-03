@@ -249,6 +249,7 @@ try{
 				response.setHeader("Content-Transfer-Encoding","base64");
 				response.setContentType("Application/pdf");
 				response.getOutputStream().write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				iStreamWrapper.close();
 				response.flushBuffer();
 			}
 			if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("STREAM")){
@@ -256,6 +257,7 @@ try{
 				javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 				response.setHeader("Content-Type","Application/pdf");
 				response.getOutputStream().write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
+				iStreamWrapper.close();
 				response.flushBuffer();
 			}		
 		}

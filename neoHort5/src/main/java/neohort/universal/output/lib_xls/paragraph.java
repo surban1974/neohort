@@ -29,15 +29,31 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
+import neohort.universal.output.lib.report_element_base;
 
 public class paragraph extends element{
 	private static final long serialVersionUID = 8484044846528927986L;
+	private table_cell parentCell = null;
+
+
 public paragraph() {
 	super();	
 }
 
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
+		
+
+		report_element_base parentC = (report_element_base)getParent();
+		while (parentC!=null && !parentC.getName().equalsIgnoreCase("TABLE_CELL"))
+			parentC=(report_element_base)parentC.getParent();
+		if(parentC!=null && parentC.getName().equalsIgnoreCase("TABLE_CELL"))
+			parentCell = (table_cell)parentC;
+
+		if(parentCell!=null)
+			return;
+
+		
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
 		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
 		
@@ -62,7 +78,15 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+
 	try{
+		
+
+		if(parentCell!=null){
+			return;
+		}		
+
+		
 		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
 		
 

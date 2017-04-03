@@ -491,13 +491,18 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 
 		if(content_Element instanceof bean){
-			if(((bean)content_Element).getID().equals("PageFooter_"))
+			if(((bean)content_Element).getID().equals("PageFooter_")){
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-			if(((bean)content_Element).getID().equals("PageHeader_"))
+				current_Element=null;
+			}
+			if(((bean)content_Element).getID().equals("PageHeader_")){
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				current_Element=null;
+			}
 			if(((bean)content_Element).getID().equals("TableBlock")){
 				if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 					((bean)content_Element).setContent(current_Element);
+					current_Element=null;
 				}
 			}			
 			
@@ -505,10 +510,14 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		if(current_Element instanceof text){
 			((text)current_Element).drawDirect(_beanLibrary);
-			if(((bean)content_Element).getID().equals("PageFooter_"))
+			if(((bean)content_Element).getID().equals("PageFooter_")){
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-			if(((bean)content_Element).getID().equals("PageHeader_"))
+				current_Element=null;
+			}
+			if(((bean)content_Element).getID().equals("PageHeader_")){
 				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				current_Element=null;
+			}
 			return;
 		}
 		
@@ -559,6 +568,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		if(content_Element instanceof com.lowagie.text.pdf.PdfPCell){
 				try{
 					((com.lowagie.text.pdf.PdfPCell)content_Element).addElement((Element)current_Element);
+					current_Element=null;
 				}catch(Exception e){
 				}
 				return;
@@ -575,10 +585,12 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}
 
 				((com.lowagie.text.pdf.PdfPTable)content_Element).addCell(cell);
+				cell=null;
 				return;
 			}
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPCell){
 				((com.lowagie.text.pdf.PdfPTable)content_Element).addCell((com.lowagie.text.pdf.PdfPCell)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof com.lowagie.text.Phrase){
@@ -591,6 +603,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}
 
 				((com.lowagie.text.pdf.PdfPTable)content_Element).addCell(cell);
+				cell=null;
 				return;
 			}
 			if(current_Element instanceof com.lowagie.text.Paragraph){
@@ -598,6 +611,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				cell.setBorder(_sys_border);
 				cell.setHorizontalAlignment(_sys_align);
 				((com.lowagie.text.pdf.PdfPTable)content_Element).addCell(cell);
+				cell=null;
 				return;
 			}
 			
@@ -611,6 +625,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}
 
 				((com.lowagie.text.pdf.PdfPTable)content_Element).addCell(cell);
+				cell=null;
 				return;
 			}
 		}
@@ -625,6 +640,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 						_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
 					} catch (Exception e) {}				
 				}
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof bean){
@@ -686,7 +702,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				_table.setHorizontalAlignment(50);
 				_table.setWidthPercentage(100);
 				_table.addCell((com.lowagie.text.pdf.PdfPCell)current_Element);
+				current_Element=null;
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)_table);
+				_table=null;
 				return;
 			}
 /*			
@@ -697,6 +715,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 */			
 			if(current_Element instanceof com.lowagie.text.Image){
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Image)current_Element);
+				current_Element=null;
 				return;
 			}
 
@@ -718,6 +737,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 //				((com.lowagie.text.Paragraph)content_Element).add((com.lowagie.text.Watermark)current_Element);
 //			else 
 				((com.lowagie.text.Paragraph)content_Element).add((com.lowagie.text.Element)current_Element);
+				current_Element=null;
 			return;
 		}
 	}catch(Exception e){

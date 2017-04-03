@@ -39,4 +39,15 @@ public class ByteStreamWrapper implements I_StreamWrapper {
 		return null;
 	}
 
+	@Override
+	public void close() {
+		try{
+			if(bos!=null)
+				bos.close();
+		}catch(Exception e){
+			
+		}
+		
+	}
+
 }

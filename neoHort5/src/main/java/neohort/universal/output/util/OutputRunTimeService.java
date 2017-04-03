@@ -106,5 +106,23 @@ public void setLIB(String lib) {
 public void setLOG_INTERCEPTOR(String string) {
 	LOG_INTERCEPTOR = string;
 }
+public void clear(){
+	if(documentXML!=null)
+		documentXML=null;
 
+
+	if(_tagLibrary!=null){
+		_tagLibrary.clear();
+		_tagLibrary=null;
+	}
+	if(_beanLibrary!=null){
+		_beanLibrary.clear();
+		_beanLibrary=null;
+	}
+	if(_styleLibrary!=null){
+		_styleLibrary.clear();
+		_styleLibrary=null;
+	}
+
+}
 }

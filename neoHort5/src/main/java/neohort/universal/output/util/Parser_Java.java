@@ -31,7 +31,10 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
+import neohort.universal.output.iConst;
+import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
 import neohort.util.util_format;
 
 public class Parser_Java {
@@ -71,7 +74,11 @@ private String adaptResult(Object value, String className) {
 	}	
 }
 public String checkAttribute(String value, Hashtable _tagLibrary, Hashtable _beanLibrary) { 
-	String result=value;  
+	String result=value; 
+	if(_beanLibrary!=null){		
+		bean _sysPdfParseJava = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_ParseJava);
+		if(_sysPdfParseJava!=null && _sysPdfParseJava.getContent()!=null && ((String)_sysPdfParseJava.getContent()).equalsIgnoreCase("false")) return result;
+	}
 	if(value.toUpperCase().indexOf("%EXECUTE")==-1) return result;
 	try{
 		if(value.toUpperCase().indexOf("%EXECUTEBEAN.")>-1){
@@ -99,7 +106,10 @@ public String checkAttribute(String value, Hashtable _tagLibrary, Hashtable _bea
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 		return value;
-	}	
+	}catch(Throwable t){
+//		setError(t,iStub.log_ERROR);
+		return value;
+	}		
 	return value;
 	
 }

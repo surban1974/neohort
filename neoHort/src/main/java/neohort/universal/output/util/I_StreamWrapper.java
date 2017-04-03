@@ -8,4 +8,5 @@ public interface I_StreamWrapper {
 	OutputStream createOutputStream(byte[] input, Hashtable _tagLibrary, Hashtable _beanLibrary);
 	OutputStream getOutputStream(Hashtable _tagLibrary, Hashtable _beanLibrary);
 	byte[] getByteFromStream(Hashtable _tagLibrary, Hashtable _beanLibrary);
+	void close();
 }

@@ -57,6 +57,7 @@ public abstract class report_element_base implements report_element {
 	public Node nodeCurrent;
 	public String SYSATTR = "";
 	public String STYLE_ID = "";
+	public String PARSER_JAVA = "true";
 	public style internal_style;	
 	public HashMap external_parameters;
 	
@@ -554,4 +555,10 @@ public static String replace (String target, String from, String to) {
 	return buffer.toString();
 }
 public void add(report_element_base child) {}
+public String getPARSER_JAVA() {
+	return PARSER_JAVA;
+}
+public void setPARSER_JAVA(String pARSER_JAVA) {
+	PARSER_JAVA = pARSER_JAVA;
+}
 }

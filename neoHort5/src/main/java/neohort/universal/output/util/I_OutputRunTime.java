@@ -29,17 +29,18 @@ import org.w3c.dom.Node;
 import neohort.universal.output.lib.report_element;
 
 public interface I_OutputRunTime{	
-public void _notify();
-public void _wait();
-//public ServletConfig getAnotherServletConfig();
-public String getID();
-public String getSaveAs();
-public int getStatus();
-public void recompileProfile();
-public void recompileProfile(report_element children, report_element parent);
-public void recompileProfile(Node node, report_element parent);
-public void reimposta();
-public void setError(Exception e, String des, String level);
-public void setLIB(String lib); 
-public String getNamePac();
+	public void _notify();
+	public void _wait();
+	//public ServletConfig getAnotherServletConfig();
+	public String getID();
+	public String getSaveAs();
+	public int getStatus();
+	public void recompileProfile();
+	public void recompileProfile(report_element children, report_element parent);
+	public void recompileProfile(Node node, report_element parent);
+	public void reimposta();
+	public void setError(Exception e, String des, String level);
+	public void setLIB(String lib); 
+	public String getNamePac();
+	public void clear();
 }

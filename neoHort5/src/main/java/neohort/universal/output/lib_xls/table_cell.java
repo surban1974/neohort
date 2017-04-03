@@ -63,6 +63,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		
 		WritableSheet document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 		
+
 		bean _defDatetimeformat = (bean)_beanLibrary.get("SYSTEM:DEFDATETIMEFORMAT");
 		
 		if(_defDatetimeformat!=null && _defDatetimeformat.getContent()!=null) setDefDATETIMEFORMAT((WritableCellFormat)_defDatetimeformat.getContent());
@@ -83,9 +84,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			_beanLibrary.put("SYSTEM:DEFDATEFORMAT",_defDateformat);
 			setDefDATEFORMAT((WritableCellFormat)_defDateformat.getContent());
 		}
-
 		
 		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y));
+		
 		
 
 		try{

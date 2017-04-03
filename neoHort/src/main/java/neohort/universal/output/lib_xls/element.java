@@ -325,40 +325,49 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 			if(current_Element instanceof Blank){
 				((WritableSheet)content_Element).addCell((Blank)current_Element);
+				current_Element=null;
 				return;
 			}
 
 			if(current_Element instanceof Label){
 				((WritableSheet)content_Element).addCell((Label)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof Number){
 				((WritableSheet)content_Element).addCell((Number)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof Formula){
 				((WritableSheet)content_Element).addCell((Formula)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof DateTime){
 				((WritableSheet)content_Element).addCell((DateTime)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof jxl.write.Boolean){
 				((WritableSheet)content_Element).addCell((jxl.write.Boolean)current_Element);
+				current_Element=null;
 				return;
 			}
 
 			if(current_Element instanceof WritableImage){
 				((WritableSheet)content_Element).addImage((WritableImage)current_Element);
+				current_Element=null;
 				return;
 			}
 			if(current_Element instanceof WritableHyperlink){
 				((WritableSheet)content_Element).addHyperlink((WritableHyperlink)current_Element);
+				current_Element=null;
 				return;
 			}
 
 			((WritableSheet)content_Element).addCell((Label)current_Element);
+			current_Element=null;
 			return;
 		}
 	}catch(Exception e){
