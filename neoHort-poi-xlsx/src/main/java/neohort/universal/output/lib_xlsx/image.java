@@ -24,6 +24,7 @@
 
 package neohort.universal.output.lib_xlsx;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -180,8 +181,11 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				}
 				if(_d_h==0 && _d_v==0)
 					pict.resize();
-				else
-					pict.resize(_d_v,_d_h);
+				else{
+					Dimension dim = pict.getImageDimension();					
+					pict.resize(_d_v/dim.getHeight(),_d_h/dim.getWidth());
+				}
+					
 
 							
 			}

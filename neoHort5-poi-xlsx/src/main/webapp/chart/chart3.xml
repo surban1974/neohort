@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych surban@bigmir.net  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL TYPE_DOCUMENT="STREAM" ORIENTATION="PORTRAIT">
+	<INIT/>
+	<DOCUMENT>
+		<BLOCK FONT="HELVETICA" FONT_SIZE="10" FONT_COLOR="BLUE" FONT_TYPE="NORMAL">Chart Example 3</BLOCK>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First"
+					CHART_TYPE="COLUMN_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;"
+					CHART_DATA_Y="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;-4500;0;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="45;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="20;20;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP="- Example -"
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="15"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="BAR_XY" 
+					FORMAT_CHART_INPUT_DATA="NUMBER;DATE:yyyy-MM-dd;;"
+					CHART_DATA_Y="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2035-05-01;"
+					CHART_DATA_X="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;450;15;"					
+					FORMAT_SCALE_XYZ="NUMBER:###,##0;DATE:dd/MM/yyyy;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="45;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="20;20;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP=""
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					
+					ELEMENT_COLOR_3D="BLUE;lightGray;black;"
+					
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="0"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="POINT_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;"
+					CHART_DATA_Y="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;-4500;0;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="45;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="20;20;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP="- Example -"
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="15"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="LINE_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;"
+					CHART_DATA_Y="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;-4500;0;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="45;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="20;20;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP="- Example -"
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="15"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="CURVE_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;"
+					CHART_DATA_Y="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;-4500;0;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="45;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="20;20;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP="- Example -"
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;blue;black;"
+					
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="15"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="RADAR" 
+					FORMAT_CHART_INPUT_DATA="NUMBER:###,##0;NUMBER;;"
+					CHART_DATA_X="800;0;950;50;-1150;450;10;1;10;1150;135;50;98;980;150;-4500;0;"
+					FORMAT_SCALE_XYZ="NUMBER:###,##0;;;"
+					SHOW_SCALE_XYZ="true;;;"
+					GR_SCALE_XYZ="0;0;;"
+					FONT_SCALE_XYZ="Helvetica;;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;;;"
+					FONT_SCALE_SIZE_XYZ="8;;;"
+					MAXELEMENT_LABEL_XYZ="20;;;"
+					
+					LABEL_TOP="- Example -"
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					DIMENTION_H="370"
+					DIMENTION_V="370"
+					BORDER="15"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>			
+		</TABLE>
+	</DOCUMENT>
+</GENERAL>
