@@ -389,7 +389,7 @@ public WritableFont.FontName analizeFontName(String name){
 		if(name.equalsIgnoreCase("TIMES_NEW_ROMAN")) fontName = WritableFont.TIMES;
 		if(name.equalsIgnoreCase("TAHOMA")) fontName = WritableFont.TAHOMA;
 		if(fontName==null) fontName = WritableFont.COURIER;
-		colorsCache.put(name, fontName);
+		fontNameCache.put(name, fontName);
 	}
 
 	return fontName;
