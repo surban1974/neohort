@@ -44,6 +44,8 @@ public interface report_element extends Serializable{
 		
 void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary);
 void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary);
+void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary);
+void reimposta();
 Object getContent();
 String getID();
 String getName();
