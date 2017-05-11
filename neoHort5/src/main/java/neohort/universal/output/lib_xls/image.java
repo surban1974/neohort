@@ -104,18 +104,29 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		BufferedImage input = null;
 //		if(path!=null && path.toUpperCase().indexOf(".PNG")>-1){
 		if(template!=null && template.booleanValue()==false){
+
+			Exception ex=null;
 			try{
-				input = ImageIO.read(new File(path));
+				input = ImageIO.read(new File(getIMAGE_SOURCE()));
 			}catch(Exception e){
-				setError(e,iStub.log_WARN);
+				ex=e;
+			}
+			if(input==null){
+				try{
+					input = ImageIO.read(getClass().getResource(getIMAGE_SOURCE()));
+				}catch(Exception e){
+					ex=e;
+				}
 			}
 			if(input==null){
 				try{
 					input = ImageIO.read(new URL(path));
 				}catch(Exception e){
-					setError(e,iStub.log_ERROR);
+					ex=e;
 				}
 			}
+			if(input==null && ex!=null)
+				setError(ex,iStub.log_ERROR);
 			if(input!=null){
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(input, "PNG", baos);

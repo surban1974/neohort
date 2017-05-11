@@ -138,6 +138,18 @@ public static String service_adaptPath(String path, String currentPath, HttpServ
 		path.trim().toLowerCase().indexOf("http:\\\\")==0){
 		return path.trim();
 	}	
+	if(	path.trim().toLowerCase().indexOf("https://")==0 ||
+		path.trim().toLowerCase().indexOf("https:\\\\")==0){
+		return path.trim();
+	}
+	if(	path.trim().toLowerCase().indexOf("ftp://")==0 ||
+		path.trim().toLowerCase().indexOf("ftp:\\\\")==0){
+		return path.trim();
+	}
+	if(	path.trim().toLowerCase().indexOf("ftps://")==0 ||
+		path.trim().toLowerCase().indexOf("ftps:\\\\")==0){
+		return path.trim();
+	}	
 	if(	path.trim().toLowerCase().indexOf("file://")==0 ||
 		path.trim().toLowerCase().indexOf("file:\\\\")==0){
 		return path.trim().substring(7,path.trim().length());

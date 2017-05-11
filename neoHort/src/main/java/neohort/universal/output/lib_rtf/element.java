@@ -36,6 +36,7 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
+import neohort.universal.output.lib_pdf.text;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -394,13 +395,15 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		if(current_Element instanceof text){
 			((text)current_Element).drawDirect(_beanLibrary);
-			if(((bean)content_Element).getID().equals("PageFooter_")){
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-				current_Element=null;
-			}
-			if(((bean)content_Element).getID().equals("PageHeader_")){
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-				current_Element=null;
+			if(content_Element instanceof bean){
+				if(((bean)content_Element).getID().equals("PageFooter_")){
+					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					current_Element=null;
+				}
+				if(((bean)content_Element).getID().equals("PageHeader_")){
+					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					current_Element=null;
+				}
 			}
 			return;
 		}

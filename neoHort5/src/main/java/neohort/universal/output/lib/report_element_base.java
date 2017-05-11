@@ -506,7 +506,7 @@ public Object init_element(Node node, report_element_base element_parent,Hashtab
 
 		if (getID()==null || getID().trim().length()==0) setID(String.valueOf(new java.util.Date().getTime()));
 		parent = element_parent;
-		if(styleID.length()>0){
+		if(styleID.length()>0 && _styleLibrary!=null){
 			style external_style = (style)_styleLibrary.get("STYLE:"+styleID+"_ids_"+motore.hashCode());
 			reStyle(external_style);
 		}else{

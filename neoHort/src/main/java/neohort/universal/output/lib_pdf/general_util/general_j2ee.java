@@ -36,7 +36,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 			I_StreamWrapper iStreamWrapper = null;
 			if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
 			if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
-			else{
+			else if(!body.getCLASS_STREAM_WRAPPER().equals("")){
 				try{
 					iStreamWrapper = (I_StreamWrapper)Class.forName(body.getCLASS_STREAM_WRAPPER()).newInstance();
 				}catch(Exception e){

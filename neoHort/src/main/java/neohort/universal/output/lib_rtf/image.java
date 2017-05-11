@@ -24,7 +24,14 @@
 
 package neohort.universal.output.lib_rtf;
 
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URL;
 import java.util.Hashtable;
+
+import javax.imageio.ImageIO;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -92,8 +99,45 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				 
 				
 				try{
-					if(pathImg.trim().indexOf("http:")==0) chartIm = Image.getInstance(new java.net.URL(pathImg));
-					else chartIm = Image.getInstance(pathImg);
+					BufferedImage input = null;
+					Exception ex=null;
+					try{
+						input = ImageIO.read(new File(getIMAGE_SOURCE()));
+					}catch(Exception e){
+						ex=e;
+					}
+					if(input==null){
+						try{
+							input = ImageIO.read(getClass().getResource(getIMAGE_SOURCE()));
+						}catch(Exception e){
+							ex=e;
+						}
+					}
+					if(input==null){
+						try{
+							input = ImageIO.read(new URL(pathImg));
+						}catch(Exception e){
+							ex=e;
+						}
+					}
+					if(input==null && ex!=null)
+						setError(ex,iStub.log_ERROR);
+					if(input!=null){
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						ImageIO.write(input, "PNG", baos);
+						chartIm = Image.getInstance(baos.toByteArray());
+					}					
+/*						
+					if(pathImg.trim().indexOf("http:")==0 || pathImg.trim().indexOf("https:")==0){
+						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(new java.net.URL(pathImg));
+						chartIm = Image.getInstance(awtImage,null);
+					}
+					else{
+						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(pathImg);
+						chartIm = Image.getInstance(awtImage,null);
+						chartIm = Image.getInstance(ImageIO.read(new File(pathImg)),null);
+					}
+*/					
 				}catch(Exception e){}
 			}
 			int _d_h = 0;

@@ -41,6 +41,27 @@
 		                </sources>
 		            </configuration>
 		        </execution>
+				<execution>
+					<id>add-resource</id>
+					<phase>generate-resources</phase>
+					<goals>
+						<goal>add-resource</goal>
+					</goals>
+					<configuration>
+						<resources>
+							<resource>
+								<directory>C:/svyatoslav.urbanovych/workspace.GITHUB.copy/classhidra/neohort/neoHort/src/main/java</directory>
+								<includes>
+									<include>neohort/**/*.ttf</include>
+									<include>neohort/**/*.dtd</include>
+									<include>neohort/**/*.properties</include>
+								</includes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+
+		        
 		    </executions>
 		</plugin>    
     
@@ -68,6 +89,9 @@
  			<configuration>
 				<includes>
 					<include>neohort/**/*.java</include>
+					<include>neohort/**/*.ttf</include>
+					<include>neohort/**/*.dtd</include>
+					<include>neohort/**/*.properties</include>
 				</includes>        
 			</configuration>		  	
 		</plugin>	      

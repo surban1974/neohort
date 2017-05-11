@@ -445,9 +445,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		if(current_Element instanceof text){
 			((text)current_Element).drawDirect(_beanLibrary);
-			if(content_Element instanceof Document){
-				
-			}else{
+			if(content_Element instanceof bean){
 				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0)
 					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
 				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)

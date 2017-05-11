@@ -461,6 +461,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 	}
 }
 public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+	boolean documentClosed=false;
 	try{
 		Boolean initProcess = new Boolean(false);
 		try{
@@ -510,13 +511,15 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		if(current_Element instanceof text){
 			((text)current_Element).drawDirect(_beanLibrary);
-			if(((bean)content_Element).getID().equals("PageFooter_")){
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-				current_Element=null;
-			}
-			if(((bean)content_Element).getID().equals("PageHeader_")){
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
-				current_Element=null;
+			if(content_Element instanceof bean){
+				if(((bean)content_Element).getID().equals("PageFooter_")){
+					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					current_Element=null;
+				}
+				if(((bean)content_Element).getID().equals("PageHeader_")){
+					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					current_Element=null;
+				}
 			}
 			return;
 		}
@@ -630,6 +633,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			}
 		}
 		if(content_Element instanceof com.lowagie.text.Document){
+			if(!((com.lowagie.text.Document)content_Element).isOpen())
+				documentClosed=true;
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.pdf.PdfPTable)current_Element);
 				if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
@@ -741,7 +746,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			return;
 		}
 	}catch(Exception e){
-		setError(e,iStub.log_WARN);
+		if(!documentClosed)
+			setError(e,iStub.log_WARN);
 	}
 
 }
