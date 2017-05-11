@@ -28,7 +28,16 @@
     </repository>
 </distributionManagement> 
   <build>
- 
+     <resources>
+        <resource>
+            <directory>src/main/java</directory>
+			<includes>
+				<include>neohort/**/*.ttf</include>
+				<include>neohort/**/*.dtd</include>
+				<include>neohort/**/*.properties</include>
+			</includes> 
+        </resource>
+    </resources>
     <plugins>
 	   <plugin>
 	        <artifactId>maven-deploy-plugin</artifactId>
@@ -61,6 +70,9 @@
  			<configuration>
 				<includes>
 					<include>neohort/**/*.java</include>
+					<include>neohort/**/*.ttf</include>
+					<include>neohort/**/*.dtd</include>
+					<include>neohort/**/*.properties</include>
 				</includes>        
 			</configuration>		  	
 		</plugin>	      
