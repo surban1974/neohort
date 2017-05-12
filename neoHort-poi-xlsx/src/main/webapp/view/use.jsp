@@ -92,7 +92,7 @@
 				       				<li><h4><a href="https://sourceforge.net/projects/itext/files/5.5.9/">iText 5.5.*</a></h4></li>
 				       			</ul>
 							</li>	
-							<li><h4>Excel provided library <a href="https://sourceforge.net/projects/jexcelapi/files/jexcelapi/2.6.12/">jExcel API</a></h4></li>						
+							<li><h4>Excel provided library <a href="https://poi.apache.org/download.html">Apache POI 3.16</a></h4></li>						
 							<li><h4>The source code of NEOHORT can be found into the <a href="https://github.com/surban1974/neohort"> GitHub repository </a></h4></li>
 						</ul>		       					      			
 		      			

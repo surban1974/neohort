@@ -38,7 +38,7 @@
 			neoHort: <b><font color="red">5.2.8</font></b><br>
 			JDK 1.7<br>
 			iText: <b><font color="red">Full compatibility 5.2.10 </font></b><br>
-			Apache POI: 3.15
+			Apache POI: 3.16
 		</span>	
 	</td>
 </tr>
