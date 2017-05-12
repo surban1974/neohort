@@ -33,7 +33,7 @@
 	</td>
 	<td width=750 align=center class="page_section">
 		<span class="page_section_text">
-			neoHort: 1.3.8<br>
+			neoHort: 1.3.10<br>
 			iText: 2.1.7<br>
 			iText-rtf: 2.1.7<br>
 			JExcelApi: 2.6.12

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neoHort5-poi-xlsx-7</artifactId>
-  <version>1.3.9</version>
+  <version>5.2.8</version>
   <name>neoHort-poi-excel (Java 1.7 Compilation)</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based iText&amp;Apache POI (excel support) library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText before 5.*. Java 1.6 compilation.</description>
   <url>https://github.com/surban1974/neohort</url>

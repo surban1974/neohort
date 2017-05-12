@@ -35,10 +35,10 @@
 	<td>&nbsp;&nbsp;</td>
 	<td width=750  class="page_section" style="border-top: solid 1px silver">
 		<span class="page_section_text">			
-			neoHort: <b><font color="red">5.2.6</font></b><br>
+			neoHort: <b><font color="red">5.2.8</font></b><br>
 			JDK 1.7<br>
 			iText: <b><font color="red">Full compatibility 5.2.10 </font></b><br>
-			JExcelApi: 2.6.12
+			Apache POI: 3.15
 		</span>	
 	</td>
 </tr>

@@ -64,10 +64,10 @@
 		       		</li>	
 		       		<li><h4>Providers:</h4>
 		       		    <ul>
-		       				<li><h4>neoHort: 1.3.8.1</h4></li>
+		       				<li><h4>neoHort: 1.3.10</h4></li>
 		       				<li><h4>iText: 2.1.7</h4></li>
 		       				<li><h4>iText-rtf: 2.1.7</h4></li>
-		       				<li><h4>JExcelApi: 2.6.12</h4></li>
+		       				<li><h4>Apache POI: 3.15</h4></li>
 		       			</ul>
 		       		</li>
 		      		<li><h4>Author: <a href="http://it.linkedin.com/pub/svyatoslav-urbanovych/2/241/754">Svyatoslav Urbanovych</a></h4></li>

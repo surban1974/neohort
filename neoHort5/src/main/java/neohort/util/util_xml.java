@@ -40,9 +40,12 @@ public util_xml() {
 public static Document readXML(String uriXML, boolean valid) throws Exception{
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	dbf.setValidating(valid);
-	if(uriXML.toUpperCase().trim().indexOf("HTTP:")==-1){
+	if(	uriXML.toUpperCase().trim().indexOf("HTTP:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("HTTPS:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("FTP:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("FTPS:")==-1)
 		return  dbf.newDocumentBuilder().parse(new File(uriXML));
-	}else return  DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(uriXML);
+	else return  DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(uriXML);
 }
 public static Document readXMLData(String dataXML, boolean valid) throws Exception{
 	if(dataXML==null) return null;
@@ -55,9 +58,12 @@ public static Document readXMLData(String dataXML, boolean valid) throws Excepti
 public static Document readXML(String uriXML) throws Exception{
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	dbf.setValidating(false);
-	if(uriXML.toUpperCase().trim().indexOf("HTTP:")==-1){
+	if(	uriXML.toUpperCase().trim().indexOf("HTTP:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("HTTPS:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("FTP:")==-1 &&
+		uriXML.toUpperCase().trim().indexOf("FTPS:")==-1)
 		return  dbf.newDocumentBuilder().parse(new File(uriXML));
-	}else return  DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(uriXML);
+	else return  DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(uriXML);
 }
 public static Document readXMLData(String dataXML) throws Exception{
 	if(dataXML==null) return null;
