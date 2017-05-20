@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
-<general 
-	id="guide.1.1"
+<!-- Created by  Svyatoslav Urbanovych  svyatoslav.urbanovych@gmail.com-->
+
+<GENERAL 
+	id="guide.1.2"
 	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
-	orientation="landscape" 
-	lib="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
-	class_stream_wrapper="neohort.universal.output.util.ByteStreamWrapper">
-	<init/>
-	<document>
-		<block>step 1.1 - block</block>
-		<paragraph>
-			<phrase>step 1.1 - paragraph-frase
-			</phrase>	
-		</paragraph>
-		<image image_source="/images/logo_small.gif" absolute_x="20" absolute_y="20"/>		
-	</document>
-</general>
+	ORIENTATION="LANDSCAPE"
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
+	<INIT/>
+	<DOCUMENT>
+		<BLOCK>Step 1.1 - block. Orientation landscape</BLOCK>
+		<PARAGRAPH>
+			<PHRASE>Step 1.1 - paragraph-frase
+			</PHRASE>	
+		</PARAGRAPH>
+
+		<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
+	</DOCUMENT>
+</GENERAL>

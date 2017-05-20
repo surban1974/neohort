@@ -8,7 +8,7 @@
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
 	<INIT/>
 	<DOCUMENT>
-		<BLOCK>Step 1.2 - block</BLOCK>
+		<BLOCK>Step 1.2 - block. Orientation portrait</BLOCK>
 		<PARAGRAPH>
 			<PHRASE>Step 1.2 - paragraph-frase
 			</PHRASE>	

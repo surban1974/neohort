@@ -37,11 +37,12 @@ import org.w3c.dom.Text;
 import java.io.BufferedOutputStream;
 import java.io.CharArrayWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -211,45 +212,83 @@ public OutputStream transformXMLtoReport(InputStream xml, OutputStream report){
 }
 
 public void initXML(String fname) {
-	if(isReimposta) reimposta(); 
+	if(isReimposta) 
+		reimposta(); 
 	
 	pathXML = analisePath(fname);
-	setError(null,"XML Source: "+pathXML,iStub.log_INFO);
-
-	try {
-		documentXML = util_xml.readXML(pathXML,false);
-	}catch (Exception ex) {
-				
+	
+	InputStream is=null;
+	if(is==null){
 		try{
-			String path = pathXML;
-			if(request!=null){
-				String contextPath = request.getContextPath();
-				if(contextPath!=null){
-					contextPath=contextPath.replace("/", "");
-					if(!contextPath.equals("")){
-						if(path.indexOf("/"+contextPath)!=0)
-							path = "/"+contextPath+"/"+path;
-					}
-				}
-				path = "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
-			}
-			if(!path.equals(pathXML))
-				documentXML = util_xml.readXML(path,false);
-			else{
-				setError(ex,iStub.log_FATAL);
-				try{
-					response.getWriter().print(ex.toString());
-				}catch(Exception exp){				
-				}				
-			}
-		}catch(Exception e){
-			setError(e,iStub.log_FATAL);
+			is = new FileInputStream(new File(pathXML));
+		}catch(Exception e){		
+		}
+	}
+	if(is==null){
+		try{
+			is = getClass().getResourceAsStream(fname);
+		}catch(Exception e){		
+		}
+	}
+	if(is==null){
+		try{
+			is = new URL(pathXML).openStream();
+		}catch(Exception e){		
+		}		
+	}
+	
+	if(is!=null){
+		try{
+			documentXML = util_xml.readXMLData(is);
+		}catch(Exception e){			
+		}finally {
 			try{
-				response.getWriter().print(e.toString());
-			}catch(Exception exp){				
+				if(is!=null)
+					is.close();
+			}catch(Exception e){				
 			}
 		}
-
+	}
+	
+	if(documentXML==null){
+		
+		setError(null,"XML Source: "+pathXML,iStub.log_INFO);
+	
+		try {
+			documentXML = util_xml.readXML(pathXML,false);
+		}catch (Exception ex) {
+					
+			try{
+				String path = pathXML;
+				if(request!=null){
+					String contextPath = request.getContextPath();
+					if(contextPath!=null){
+						contextPath=contextPath.replace("/", "");
+						if(!contextPath.equals("")){
+							if(path.indexOf("/"+contextPath)!=0)
+								path = "/"+contextPath+"/"+path;
+						}
+					}
+					path = "http"+((request.isSecure())?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+				}
+				if(!path.equals(pathXML))
+					documentXML = util_xml.readXML(path,false);
+				else{
+					setError(ex,iStub.log_FATAL);
+					try{
+						response.getWriter().print(ex.toString());
+					}catch(Exception exp){				
+					}				
+				}
+			}catch(Exception e){
+				setError(e,iStub.log_FATAL);
+				try{
+					response.getWriter().print(e.toString());
+				}catch(Exception exp){				
+				}
+			}
+	
+		}
 	}
 
 
@@ -781,8 +820,8 @@ private String analisePath(String path) {
 		(String) (((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_pathXML)).getContent());		
 	}catch(Exception e){}
 	if(path==null) return "";
-	if(	path.trim().toLowerCase().indexOf("http://")==0 ||
-		path.trim().toLowerCase().indexOf("http:\\\\")==0){
+	if(	path.trim().toLowerCase().indexOf("http://")==0 || path.trim().toLowerCase().indexOf("https://")==0 ||
+		path.trim().toLowerCase().indexOf("http:\\\\")==0 || path.trim().toLowerCase().indexOf("https:\\\\")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(path.replace('\\','/'), "/");
 		Vector parts = new Vector();
 		while (st.hasMoreTokens())
@@ -818,7 +857,8 @@ private String analisePath(String path) {
 							path = "/"+contextPath+path;
 					}
 				}
-				return "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+				
+				return "http"+((request.isSecure())?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
 			}
 			else return path;
 		}
