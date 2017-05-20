@@ -64,8 +64,8 @@
   			<div class="panel-body"><h4>Download and install</h4>
 		      	<ul class="nav nav-tabs" >
 		  			<li role="template00" class="active">	<a href="#template00" id="template00-tab" role="template00" data-toggle="tab" aria-controls="template00" aria-expanded="true">Direct download</a></li>
-		  			<li role="template01" >					<a href="#template01" id="template01-tab" role="template01" data-toggle="tab" aria-controls="template01" aria-expanded="true">Maven integration 1.3.7.*</a></li>
-		  			<li role="template02" >					<a href="#template02" id="template02-tab" role="template02" data-toggle="tab" aria-controls="template02" aria-expanded="true">Maven integration 5.2.5.*</a></li>
+		  			<li role="template01" >					<a href="#template01" id="template01-tab" role="template01" data-toggle="tab" aria-controls="template01" aria-expanded="true">Maven integration 1.3.10</a></li>
+		  			<li role="template02" >					<a href="#template02" id="template02-tab" role="template02" data-toggle="tab" aria-controls="template02" aria-expanded="true">Maven integration 5.2.8</a></li>
 		  		</ul>	
 		  		<div id="networkTabContent" class="tab-content" >
 					
@@ -74,8 +74,8 @@
 			       			<li>
 								<h4>The latest version of NEOHORT library is available for download from:</h4>
 				       			<ul>
-									<li><h4><a href="https://sourceforge.net/projects/neohort/files/neoHort1.3/neoHort.1.3.7.3/">SorceForge repository (support iText 2.1.7)</a></h4></li>
-									<li><h4><a href="https://sourceforge.net/projects/neohort5/files/neoHort5/5.2.5.3/">SorceForge repository (support iText 5.2.5)</a></h4></li>
+									<li><h4><a href="https://sourceforge.net/projects/neohort/files/neoHort1.3/neoHort.1.3.10/">SorceForge repository (support iText 2.1.7)</a></h4></li>
+									<li><h4><a href="https://sourceforge.net/projects/neohort5/files/neoHort5/5.2.8/">SorceForge repository (support iText 5.2.5)</a></h4></li>
 				       			</ul>
 				       		</li>
 				       		<li>	
@@ -114,7 +114,7 @@
 <dependency>
 	<groupId>com.github.surban1974.neohort</groupId>
 	<artifactId>neoHort</artifactId>
-	<version>1.3.7.3</version>
+	<version>1.3.10</version>
 </dependency></xmp></pre>
 		      		</div>
 
@@ -133,7 +133,7 @@
 <dependency>
 	<groupId>com.github.surban1974.neohort</groupId>
 	<artifactId>neoHort5</artifactId>
-	<version>5.2.5.3</version>
+	<version>5.2.8</version>
 </dependency></xmp></pre>
 		      		</div>
 		      	</div>			      			      			

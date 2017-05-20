@@ -300,9 +300,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
 
-		Object current_Element = canvas.get(canvas.size()-1);
-			canvas.remove(canvas.size()-1);
-		Object content_Element = canvas.get(canvas.size()-1);
+		Object current_Element = canvas.lastElement();
+			canvas.removeElement(canvas.lastElement());
+		Object content_Element = canvas.lastElement();
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||

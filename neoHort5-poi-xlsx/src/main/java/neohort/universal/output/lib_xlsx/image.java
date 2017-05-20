@@ -61,15 +61,6 @@ public image() {
 	super();
 }
 public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
-	Boolean template = null;
-	try{
-		template = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Excel_template_present)).getContent());
-	}catch(Exception e){	
-	}
-	if(template!=null && template.booleanValue()==false)
-		initCanvas(_tagLibrary,_beanLibrary);
-//	if(path!=null && path.toUpperCase().indexOf(".PNG")>-1)
-		
 }
 public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 }
@@ -148,6 +139,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				}
 				if(input==null && ex!=null)
 					setError(ex,iStub.log_ERROR);
+
 				if(input!=null){
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					ImageIO.write(input, "PNG", baos);

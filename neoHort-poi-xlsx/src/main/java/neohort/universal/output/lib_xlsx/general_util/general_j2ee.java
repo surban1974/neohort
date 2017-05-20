@@ -47,7 +47,7 @@ try{
 		I_StreamWrapper iStreamWrapper = null;
 		if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
 		if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
-		else{
+		else if(!body.getCLASS_STREAM_WRAPPER().equals("")){
 			try{
 				iStreamWrapper = (I_StreamWrapper)Class.forName(body.getCLASS_STREAM_WRAPPER()).newInstance();
 			}catch(Exception e){
@@ -285,7 +285,7 @@ try{
 				}
 				workbook.close();
 				workbook = null;
-				((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).setContent(workbook);
+//				((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).setContent(workbook);
 			}
 		}
 		if (body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){

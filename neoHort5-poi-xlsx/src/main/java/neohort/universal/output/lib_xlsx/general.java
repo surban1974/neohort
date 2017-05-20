@@ -98,7 +98,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				I_StreamWrapper iStreamWrapper = null;
 				if(getSOURCE_DOCUMENT()==null) setSOURCE_DOCUMENT("");
 				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
-				else{
+				else if(!getCLASS_STREAM_WRAPPER().equals("")){
 					try{
 						iStreamWrapper = (I_StreamWrapper)Class.forName(getCLASS_STREAM_WRAPPER()).newInstance();
 					}catch(Exception e){
