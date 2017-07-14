@@ -8,9 +8,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Sheet;
@@ -26,6 +24,7 @@ import neohort.universal.output.lib_xlsx.general;
 import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.util.util_file;
+import neohort.util.util_web;
 
 
 public class general_j2ee {
@@ -86,44 +85,39 @@ try{
 
 		
 		if(body.getTEMPLATE()!=null && !body.getTEMPLATE().equals("")){
-			
-			HttpServletRequest request = null;
+			Exception ex=null;
+			String path = util_web.adaptPath(body.getTEMPLATE(),_beanLibrary);
 			try{
-				request = (HttpServletRequest)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());
-			}catch(Exception e){}
-			
-			String path = normalizeURIPath(body.getTEMPLATE(),request);
-			try{
-				workbook = body.wrapSXSSF(new XSSFWorkbook(new File(path)));
+				workbook = body.wrapSXSSF(new XSSFWorkbook(body.getTEMPLATE()));
 			}catch(Exception e){
-				body.setError(e,iStub.log_WARN);
+				ex=e;
+			}
+			if(workbook==null){
+				try{
+					workbook = body.wrapSXSSF(new XSSFWorkbook(general_j2ee.class.getResource(body.getTEMPLATE()).openStream()));
+				}catch(Exception e){
+					ex=e;
+				}
 			}
 			if(workbook==null){
 				try{
 					workbook = body.wrapSXSSF(new XSSFWorkbook(new URL(path).openStream()));
 				}catch(Exception e){
-					body.setError(e,iStub.log_ERROR);
+					ex=e;
 				}
 			}
-			
+			if(workbook==null){
+				try{
+					workbook = body.wrapSXSSF(new XSSFWorkbook(new URL(body.getTEMPLATE()).openStream()));
+				}catch(Exception e){
+					ex=e;
+				}
+			}
+			if(workbook==null && ex!=null)
+				body.setError(ex,iStub.log_ERROR);			
 
 			
 			if(workbook!=null){
-//				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals("")){
-//					if(!noGenerate.booleanValue()){
-//						workbook = new XSSFWorkbook(new File(body.getSOURCE_DOCUMENT()));
-//					}
-//				}else if(iStreamWrapper!=null){
-//					if(!noGenerate.booleanValue()){
-//						if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook);
-//						else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),workbook,settings);
-//					}
-//				}else{
-//					if(!noGenerate.booleanValue()){
-//						if(settings==null) writer = Workbook.createWorkbook(oStream,workbook); 
-//						else writer = Workbook.createWorkbook(oStream,workbook,settings); 
-//					}
-//				}
 				try{
 					document = workbook.getSheetAt(0);
 				}catch(Exception e){	
@@ -131,23 +125,6 @@ try{
 				}
 			}else{
 				workbook = body.wrapSXSSF(new XSSFWorkbook());
-//				if (body.getTYPE_DOCUMENT()!=null && !body.getSOURCE_DOCUMENT().equals("")){
-//					if(!noGenerate.booleanValue()){
-//						if(settings==null) writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()));
-//						else writer = Workbook.createWorkbook(new File(body.getSOURCE_DOCUMENT()),settings);
-//					}	
-//				}else if(iStreamWrapper!=null){
-//					if(!noGenerate.booleanValue()){
-//						if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
-//						else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),settings);
-//					}	
-//				}else{
-//					if(!noGenerate.booleanValue()){
-//						if(settings==null) writer = Workbook.createWorkbook(oStream);
-//						else writer = Workbook.createWorkbook(oStream,settings); 
-//					}
-//				}
-								 
 				document = workbook.createSheet("Sheet 0");
 			}
 			bean _sysXlsT = new bean();
@@ -376,46 +353,5 @@ public static void setError(general body, Exception e) {
 		ex.toString();
 	}
 }
-public static String normalizeURIPath(String path, HttpServletRequest request) {
-	
-	String fullPath="";
-	if(path==null) return "";
-	if(	path.trim().toLowerCase().indexOf("http://")==0 ||
-		path.trim().toLowerCase().indexOf("http:\\\\")==0){
-		return path.trim();
-	}	
-	if(	path.trim().toLowerCase().indexOf("file://")==0 ||
-		path.trim().toLowerCase().indexOf("file:\\\\")==0){
-		return path.trim().substring(7,path.trim().length());
-		}	
-	if(	path.trim().toLowerCase().indexOf("/")==0 ||
-		path.trim().toLowerCase().indexOf("\\")==0){
-		if(request!=null)	
-			return "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
-		else return path;
-	}
-			
-	if(	path.trim().toLowerCase().indexOf("../")==0){
-		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "/");
-		Vector parts = new Vector();
-		while (st.hasMoreTokens())
-			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
-		return returnR+path.trim().substring(3,path.trim().length());	
-		
-	}	
-	if(	path.trim().toLowerCase().indexOf("..\\")==0){
-		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "\\");
-		Vector parts = new Vector();
-		while (st.hasMoreTokens())
-			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+"\\";
-		return returnR+path.trim().substring(3,path.trim().length());	
-	}
-	return path;		
-}
+
 }

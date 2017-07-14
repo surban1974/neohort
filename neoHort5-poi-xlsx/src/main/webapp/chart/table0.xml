@@ -4,7 +4,7 @@
 	TYPE_DOCUMENT="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
 	ORIENTATION="LANDSCAPE" 
 	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%"
-	TEMPLATE="/neoHort5/doc/template.xls"
+	TEMPLATE="/doc/template.xlsx"
 	>
 	
 	

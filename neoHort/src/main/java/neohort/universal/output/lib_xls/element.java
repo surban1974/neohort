@@ -279,7 +279,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 		if (isFormat) cell = new Label(X,Y,frase,format);
 		else cell = new Label(X,Y,frase);
 	}
-
+	frase = null;
 	return cell;
 }
 

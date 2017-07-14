@@ -7,9 +7,9 @@ import java.io.File;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
+
+
 import javax.servlet.http.HttpServletResponse;
 
 import jxl.Workbook;
@@ -23,9 +23,11 @@ import neohort.universal.output.iHort;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib_xls.general;
+
 import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.util.util_file;
+import neohort.util.util_web;
 
 
 public class general_j2ee {
@@ -110,24 +112,39 @@ try{
 		
 		if(body.getTEMPLATE()!=null && !body.getTEMPLATE().equals("")){
 			
-			HttpServletRequest request = null;
-			try{
-				request = (HttpServletRequest)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Request)).getContent());
-			}catch(Exception e){}
 			
-			String path = normalizeURIPath(body.getTEMPLATE(),request);
+			Exception ex=null;
+			String path = util_web.adaptPath(body.getTEMPLATE(),_beanLibrary);
 			try{
-				workbook = Workbook.getWorkbook(new File(path));
+				workbook = Workbook.getWorkbook(new File(body.getTEMPLATE()));
 			}catch(Exception e){
-				body.setError(e,iStub.log_WARN);
+				ex=e;
+			}
+			if(workbook==null){
+				try{
+					workbook = Workbook.getWorkbook(general_j2ee.class.getResource(body.getTEMPLATE()).openStream());
+				}catch(Exception e){
+					ex=e;
+				}
 			}
 			if(workbook==null){
 				try{
 					workbook = Workbook.getWorkbook(new URL(path).openStream());
 				}catch(Exception e){
-					body.setError(e,iStub.log_ERROR);
+					ex=e;
 				}
 			}
+			if(workbook==null){
+				try{
+					workbook = Workbook.getWorkbook(new URL(body.getTEMPLATE()).openStream());
+				}catch(Exception e){
+					ex=e;
+				}
+			}
+			if(workbook==null && ex!=null)
+				body.setError(ex,iStub.log_ERROR);			
+			
+			
 			
 			if(body.getENCODED()!=null){
 				if(settings==null)
@@ -382,46 +399,5 @@ public static void setError(general body, Exception e) {
 		ex.toString();
 	}
 }
-public static String normalizeURIPath(String path, HttpServletRequest request) {
-	
-	String fullPath="";
-	if(path==null) return "";
-	if(	path.trim().toLowerCase().indexOf("http://")==0 ||
-		path.trim().toLowerCase().indexOf("http:\\\\")==0){
-		return path.trim();
-	}	
-	if(	path.trim().toLowerCase().indexOf("file://")==0 ||
-		path.trim().toLowerCase().indexOf("file:\\\\")==0){
-		return path.trim().substring(7,path.trim().length());
-		}	
-	if(	path.trim().toLowerCase().indexOf("/")==0 ||
-		path.trim().toLowerCase().indexOf("\\")==0){
-		if(request!=null)	
-			return "http://"+request.getServerName()+":"+request.getServerPort()+path.trim();
-		else return path;
-	}
-			
-	if(	path.trim().toLowerCase().indexOf("../")==0){
-		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "/");
-		Vector parts = new Vector();
-		while (st.hasMoreTokens())
-			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+((i==0)?"//":"/");
-		return returnR+path.trim().substring(3,path.trim().length());	
-		
-	}	
-	if(	path.trim().toLowerCase().indexOf("..\\")==0){
-		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "\\");
-		Vector parts = new Vector();
-		while (st.hasMoreTokens())
-			parts.add(st.nextToken());
-		String returnR="";
-		for(int i=0;i<parts.size()-2;i++)
-			returnR+=(String)parts.elementAt(i)+"\\";
-		return returnR+path.trim().substring(3,path.trim().length());	
-	}
-	return path;		
-}
+
 }

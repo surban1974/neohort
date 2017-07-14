@@ -139,11 +139,12 @@ public iHort(HttpServletRequest req, HttpServletResponse res, ServletConfig sCon
 		if (request.getParameter(iConst.iHORT_INPUT_$log)!=null)
 			setLOG_INTERCEPTOR(request.getParameter(iConst.iHORT_INPUT_$log));
 		if (request.getParameter(iConst.iHORT_INPUT_$source_stream)!=null){
-			initXML(request.getParameter(iConst.iHORT_INPUT_$source_stream),false);
+			initXML(request.getParameter(iConst.iHORT_INPUT_$source_stream),false);			
 			return;				
 		}
 		if (request.getAttribute(iConst.iHORT_INPUT_$source_stream)!=null){
 			initXML(request.getAttribute(iConst.iHORT_INPUT_$source_stream),false);
+			request.removeAttribute(iConst.iHORT_INPUT_$source_stream);
 			return;				
 		}
 		
@@ -294,7 +295,7 @@ public void initXML(String fname) {
 
 	
 	if(isReimposta){ 
-		setError(null,"Report povered by [neoHort:)-... Visit http://sourceforge.net/projects/neohort; Copyright (C) 2005 Svyatoslav Urbanovych surban@bigmir.net svyatoslav.urbanovych@gmail.com. General Public License.",iStub.log_INFO);
+		setError(null,"Report povered by [neoHort:)-... Visit http://sourceforge.net/projects/neohort; Copyright (C) 2005 Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com. General Public License.",iStub.log_INFO);
 		try{
 			((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_pathXML)).setContent(pathXML);		
 		}catch(Exception e){}

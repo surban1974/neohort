@@ -48,6 +48,7 @@ import neohort.universal.output.lib_xls.general_util.general_j2ee;
 import neohort.universal.output.util.I_StreamWrapper;
 import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
+import neohort.util.util_web;
 
 
 public class general extends element{
@@ -97,7 +98,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				if(getARRAYGROWSIZE()==null) setARRAYGROWSIZE("");
 				if(getTEMPORARYFILEDURINGWRITE()==null) setTEMPORARYFILEDURINGWRITE("");
 				if(getCLASS_STREAM_WRAPPER()==null) setCLASS_STREAM_WRAPPER("");
-				else{
+				else if(!getCLASS_STREAM_WRAPPER().equals("")){
 					try{
 						iStreamWrapper = (I_StreamWrapper)Class.forName(getCLASS_STREAM_WRAPPER()).newInstance();
 					}catch(Exception e){
@@ -129,21 +130,36 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 
 				if(getTEMPLATE()!=null && !getTEMPLATE().equals("")){
-
-
-					String path = getTEMPLATE();
+					Exception ex=null;
+					String path = util_web.adaptPath(getTEMPLATE(),_beanLibrary);
 					try{
-						workbook = Workbook.getWorkbook(new File(path));
+						workbook = Workbook.getWorkbook(new File(getTEMPLATE()));
 					}catch(Exception e){
-						setError(e,iStub.log_WARN);
+						ex=e;
+					}
+					if(workbook==null){
+						try{
+							workbook = Workbook.getWorkbook(general_j2ee.class.getResource(getTEMPLATE()).openStream());
+						}catch(Exception e){
+							ex=e;
+						}
 					}
 					if(workbook==null){
 						try{
 							workbook = Workbook.getWorkbook(new URL(path).openStream());
 						}catch(Exception e){
-							setError(e,iStub.log_ERROR);
+							ex=e;
 						}
 					}
+					if(workbook==null){
+						try{
+							workbook = Workbook.getWorkbook(new URL(getTEMPLATE()).openStream());
+						}catch(Exception e){
+							ex=e;
+						}
+					}
+					if(workbook==null && ex!=null)
+						setError(ex,iStub.log_ERROR);		
 
 					if(ENCODED!=null){
 						if(settings==null)
