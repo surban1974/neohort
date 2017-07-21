@@ -403,8 +403,8 @@ public void recompileProfile(Node node, report_element _parent) {
 					}	
 				}	
 				if(element_current!=null){
-					if (element_current.isPreActive())	recompileProfile(nList.item(i),element_current);
-					if (element_current.isActive()){
+					if (element_current.isPreActive(_tagLibrary,_beanLibrary,_styleLibrary))	recompileProfile(nList.item(i),element_current);
+					if (element_current.isActive(_tagLibrary,_beanLibrary,_styleLibrary)){
 						i=i-1;
 						is_cycle=true;
 					}else{ 	

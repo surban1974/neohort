@@ -32,7 +32,7 @@ import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
-
+import java.util.StringTokenizer;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -67,21 +67,22 @@ import neohort.util.util_format;
 public abstract class element extends report_element_baseawt  implements report_element {
 
 	private static final long serialVersionUID = 1L;
-	private static HashMap colorsCache;
-	private static HashMap fontNameCache;
-	private static HashMap alignCache;
-	private static HashMap vAlignCache;
-	private static HashMap hAlignCache;
+	protected static HashMap colorsCache;
+	protected static HashMap fontNameCache;
+	protected static HashMap alignCache;
+	protected static HashMap vAlignCache;
+	protected static HashMap hAlignCache;
 
-	private short defDATEFORMAT;
-	private short defDATETIMEFORMAT;
+	protected short defDATEFORMAT;
+	protected short defDATETIMEFORMAT;
 
-	private static final String format_NUMBER="NUMBER";
-	private static final String format_FORMULA="FORMULA";
-	private static final String format_DATETIME="DATETIME";
-	private static final String format_DATE="DATE";
+	public static final String format_NUMBER="NUMBER";
+	public static final String format_FORMULA="FORMULA";
+	public static final String format_DATETIME="DATETIME";
+	public static final String format_DATE="DATE";
+	public static final String format_splitter="|";
 
-	private Hyperlink hyperlink = null;
+	protected Hyperlink hyperlink = null;
 
 
 public element() {
@@ -235,11 +236,29 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 	
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
+			String formatNumber = getFormat(format_NUMBER, internal_style.getFORMAT());
+			if(!formatNumber.equals("")){
+				if(!isFormat)
+					format =  workbook.createCellStyle();
+				format.setDataFormat(workbook.createDataFormat().getFormat(formatNumber));
+				isFormat=true;
+			}
+			
 			if (isFormat) 
 				cell.setCellStyle(format);
 
-			cell.setCellValue(new Double(frase).doubleValue());
+			Double dvalue = null;
+			try{
+				dvalue = new Double(frase.trim());
+			}catch(Exception e){
+				try{
+					dvalue = new Double(frase.trim().replace(',', '.'));
+				}catch(Exception ex){					
+				}
+			}
+			if(dvalue!=null)
+				cell.setCellValue(dvalue.doubleValue());
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -249,7 +268,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 	}
 
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_FORMULA)==0){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_FORMULA)>-1){
 			if (isFormat) 
 				cell.setCellStyle(format);
 
@@ -263,16 +282,27 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 	}
 
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==0){
-			Date ret = getCallDate(frase,internal_style.getFORMAT());
-			if(defDATETIMEFORMAT==0){
-				CreationHelper createHelper = workbook.getCreationHelper();
-				defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
+			
+			String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
+			if(!formatDate.equals("")){
+				if(!isFormat)
+					format =  workbook.createCellStyle();
+				format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
+				isFormat=true;
+			}else{
+				if(defDATETIMEFORMAT==0){
+					CreationHelper createHelper = workbook.getCreationHelper();
+					defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
+				}
+				format.setDataFormat(defDATETIMEFORMAT);
+				isFormat=true;
 			}
-			format.setDataFormat(defDATETIMEFORMAT);
+			Date ret = getCallDate(frase,format_DATETIME,formatDate);
 			cell.setCellStyle(format);
 
-			cell.setCellValue(ret);
+			if(ret!=null)
+				cell.setCellValue(ret);
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -281,16 +311,27 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 	}catch(Exception e){
 	}
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==0){
-			Date ret = getCallDate(frase,internal_style.getFORMAT());
-			if(defDATEFORMAT==0){
-				CreationHelper createHelper = workbook.getCreationHelper();
-				defDATEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy");
-			}
-			format.setDataFormat(defDATEFORMAT);
-			cell.setCellStyle(format);
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
 			
-			cell.setCellValue(ret);
+			String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
+			if(!formatDate.equals("")){
+				if(!isFormat)
+					format =  workbook.createCellStyle();
+				format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
+				isFormat=true;
+			}else{
+				if(defDATEFORMAT==0){
+					CreationHelper createHelper = workbook.getCreationHelper();
+					defDATEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy");
+				}
+				format.setDataFormat(defDATEFORMAT);
+				isFormat=true;
+			}
+			Date ret = getCallDate(frase,format_DATE,formatDate);
+			cell.setCellStyle(format);
+
+			if(ret!=null)
+				cell.setCellValue(ret);
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -343,9 +384,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		}
 		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
 
-		Object current_Element = canvas.get(canvas.size()-1);
-			canvas.remove(canvas.size()-1);
-		Object content_Element = canvas.get(canvas.size()-1);
+		Object current_Element = canvas.lastElement();
+			canvas.removeElement(canvas.lastElement());
+		Object content_Element = canvas.lastElement();
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||
@@ -408,7 +449,7 @@ public String analizeFontName(String name){
 	return fontName;
 }
 
-private static XSSFColor getNearestColour(Color awtColor){
+public static XSSFColor getNearestColour(Color awtColor){
 	if(colorsCache==null) colorsCache=new HashMap();
 	
 
@@ -603,19 +644,37 @@ public String prepareContentString(String formatSG) {
 	return super.prepareContentString(formatSG);
 }
 
-private java.util.Date getCallDate(String content, String formatS){
-	if (formatS.toUpperCase().indexOf("DATETIME")==0){
+public java.util.Date getCallDate(String content, String format_id, String format){
+	if (format_id.equalsIgnoreCase("DATETIME")){
+		if(format!=null && !format.equals("")){
+			try{
+				return new java.util.Date(util_format.stringToData(content,format).getTime());
+			}catch(Exception e){
+				
+			}
+		}
 		try{
 			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd HH:mm").getTime());
 		}catch(Exception e){
 			try{
-				return new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime());
+				return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd HH:mm:ss.SSS").getTime());
 			}catch(Exception ex){
+				try{
+					return new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime());
+				}catch(Exception exe){
+				}
 			}
 		}
 	}
 
-	if (formatS.toUpperCase().indexOf("DATE")==0){
+	if (format_id.equalsIgnoreCase("DATE")){
+		if(format!=null && !format.equals("")){
+			try{
+				return new java.util.Date(util_format.stringToData(content,format).getTime());
+			}catch(Exception e){
+				
+			}
+		}
 		try{
 			return new java.util.Date(util_format.stringToData(content,"yyyy-MM-dd").getTime());
 		}catch(Exception e){
@@ -646,5 +705,25 @@ public Hyperlink getHyperlink() {
 }
 public void setHyperlink(Hyperlink hyperlink) {
 	this.hyperlink = hyperlink;
+}
+public static String getFormat(String format_id, String format_string){
+	if(format_id==null || format_string==null || format_string.toUpperCase().indexOf(format_id.toUpperCase())==-1)
+		return "";
+	StringTokenizer st = new StringTokenizer(format_string, format_splitter);
+	while(st.hasMoreTokens()){
+		String mixed = st.nextToken();
+		String firstpart = "";
+		String secondpart = "";
+		int sep = mixed.indexOf(":");
+		if(sep>-1){
+			firstpart = mixed.substring(0,sep);
+			secondpart = mixed.substring(sep+1);
+		}
+			
+
+		if(!firstpart.equals("") && firstpart.equalsIgnoreCase(format_id))
+			return secondpart;
+	}
+	return "";
 }
 }

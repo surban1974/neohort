@@ -184,11 +184,17 @@ public java.lang.String getSYSATTR() {
 public Object getValue(String nome){
 	return new Parser_Java(this.name,this.motore).getValue(nome);	
 }
+public boolean isActive(Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+	return isActive();
+}
 public boolean isActive() {
 	return false;
 }
 public boolean isActiveCycle() {
 	return false;
+}
+public boolean isPreActive(Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+	return isPreActive();
 }
 public boolean isPreActive() {
 	return true;
