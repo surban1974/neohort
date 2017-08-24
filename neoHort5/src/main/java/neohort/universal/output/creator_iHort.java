@@ -25,6 +25,7 @@
 package neohort.universal.output;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,24 +38,40 @@ public class creator_iHort extends HttpServlet{
 	private static final long serialVersionUID = -9213982084116715558L;
 public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	I_OutputRunTime ort = null;
+	WeakReference ref = null;
+	boolean gc = (req.getParameter("gc")!=null && req.getParameter("gc").equals("true"))?true:false;
 	try {
 		ort = new iHort(req,res,getServletConfig());
+		if(gc)
+			ref = new WeakReference(ort);			
 	} catch (Exception exc) {
 	} finally {
 		if(ort!=null)
 			ort.clear();
 		ort=null;
+		if(gc){
+			while(ref.get()!=null)
+		        System.gc();
+		}		
 	}
 }
 public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	I_OutputRunTime ort = null;
+	WeakReference ref = null;
+	boolean gc = (req.getParameter("gc")!=null && req.getParameter("gc").equals("true"))?true:false;
 	try {
 		ort = new iHort(req,res,getServletConfig());
+		if(gc)
+			ref = new WeakReference(ort);			
 	} catch (Exception exc) {
 	} finally {
 		if(ort!=null)
 			ort.clear();
 		ort=null;
+		if(gc){
+			while(ref.get()!=null)
+		        System.gc();
+		}		
 	}
 }
 }
