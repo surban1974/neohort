@@ -925,6 +925,10 @@ private String analisePath(String path) {
 	return path;
 		
 }
+public void clear() {
+	element_current=null;
+	super.clear();
+}
 }
 
 

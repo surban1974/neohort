@@ -110,7 +110,6 @@ public void clear(){
 	if(documentXML!=null)
 		documentXML=null;
 
-
 	if(_tagLibrary!=null){
 		_tagLibrary.clear();
 		_tagLibrary=null;

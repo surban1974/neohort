@@ -36,6 +36,7 @@ import neohort.universal.output.util.I_OutputRunTime;
 
 public class creator_iHort extends HttpServlet{
 	private static final long serialVersionUID = -9213982084116715558L;
+/*	
 public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	I_OutputRunTime ort = null;
 	WeakReference ref = null;
@@ -74,4 +75,78 @@ public void doPost(HttpServletRequest req, HttpServletResponse res) throws Servl
 		}		
 	}
 }
+*/
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		I_OutputRunTime ort = null;
+		boolean gc = (req.getParameter("gc")!=null && req.getParameter("gc").equals("true"))?true:false;
+		try {
+			ort = new iHort(req,res,getServletConfig());
+		} catch (Exception exc) {
+		} finally {
+			if(gc){
+				final WeakReference ref = new WeakReference(ort);
+				if(ort!=null)
+					ort.clear();
+				ort=null;
+				
+				new Thread(
+					new Runnable() {							
+						@Override
+						public void run() {		
+							int count=0;
+							while(ref.get()!=null && count<10){
+								System.gc();
+								count++;
+								try {
+									Thread.sleep(1000);											
+								} catch (InterruptedException e) {
+								}
+							}
+						}
+					}						
+				).start();
+			}else{
+				if(ort!=null)
+					ort.clear();
+				ort=null;
+			}
+			
+		}
+	}
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		I_OutputRunTime ort = null;
+		boolean gc = (req.getParameter("gc")!=null && req.getParameter("gc").equals("true"))?true:false;
+		try {
+			ort = new iHort(req,res,getServletConfig());
+		} catch (Exception exc) {
+		} finally {
+			if(gc){
+				final WeakReference ref = new WeakReference(ort);
+				if(ort!=null)
+					ort.clear();
+				ort=null;
+				
+				new Thread(
+					new Runnable() {							
+						@Override
+						public void run() {		
+							int count=0;
+							while(ref.get()!=null && count<10){
+								System.gc();
+								count++;
+								try {
+									Thread.sleep(1000);											
+								} catch (InterruptedException e) {
+								}
+							}
+						}
+					}						
+				).start();
+			}else{
+				if(ort!=null)
+					ort.clear();
+				ort=null;
+			}
+		}
+	}	
 }

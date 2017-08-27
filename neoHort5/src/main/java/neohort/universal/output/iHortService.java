@@ -437,5 +437,12 @@ public Vector getInfo_warning_error(String type) {
 	}
 	return result;
 }
+public void clear() {
+	element_current=null;
+	if(info_warning_error!=null)
+		info_warning_error.clear();
+	info_warning_error=null;
+	super.clear();
+}
 }
 
