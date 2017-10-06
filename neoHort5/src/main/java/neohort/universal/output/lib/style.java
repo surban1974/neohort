@@ -100,6 +100,71 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 }
+
+
+public String getCashKey(){
+	return
+			TEXT_ALIGN_H+"|"+
+			TEXT_ALIGN_V+"|"+
+			FONT+"|"+
+			FONT_SIZE+"|"+
+			FONT_TYPE+"|"+
+			FONT_ENCODED+"|"+
+			FONT_EMBEDDED+"|"+
+			
+			FONT_COLOR+"|"+
+			FONT_COLOR_RGB+"|"+
+			
+			DIMENTION_H+"|"+
+			DIMENTION_V+"|"+
+			ALIGN+"|"+
+			
+			BACK_COLOR+"|"+
+			BACK_COLOR_RGB+"|"+
+			
+			BORDER_COLOR+"|"+
+			BORDER_COLOR_RGB+"|"+
+			
+			
+			BORDER+"|"+
+			BORDER_WIDTH+"|"+
+			
+			PADDING+"|"+
+			
+			FORMAT+"|"+
+			FONT_STYLE+"|"+
+			COL_SPAN+"|"+
+			ROW_SPAN+"|"+	
+			
+			BAR_COLOR_RGB+"|"+
+			BAR_COLOR+"|"+
+			
+			ABSOLUTE_X+"|"+
+			ABSOLUTE_Y+"|"+
+			TEXT_ROTATION_DEGREE+"|"+
+			
+			WIDTH+"|"+
+			HEIGHT+"|"+
+			
+			BORDER_COLOR_TOP+"|"+
+			BORDER_COLOR_TOP_RGB+"|"+
+			BORDER_COLOR_BOTTOM+"|"+
+			BORDER_COLOR_BOTTOM_RGB+"|"+
+			BORDER_COLOR_LEFT+"|"+
+			BORDER_COLOR_LEFT_RGB+"|"+
+			BORDER_COLOR_RIGHT+"|"+
+			BORDER_COLOR_RIGHT_RGB+"|"+
+			
+			BORDER_WIDTH_TOP+"|"+
+			BORDER_WIDTH_BOTTOM+"|"+
+			BORDER_WIDTH_LEFT+"|"+
+			BORDER_WIDTH_RIGHT+"|"+
+			
+			LEADING+"|"+
+			
+			EXTRA_FONT+"|"+
+			DIRECTION+"|";
+	}
 public String getALIGN() {
 	return ALIGN;
 }
