@@ -232,6 +232,18 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		}catch(Exception e){
 		}
 	}
+	
+	if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
+		try{
+			format.setWrapText(true);
+		}catch(Exception e){
+		}
+	}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
+		try{
+			format.setWrapText(false);
+		}catch(Exception e){
+		}			
+	}
 
 	
 	try{

@@ -297,6 +297,18 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}
 		}
 		
+		if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
+			try{
+				format.setWrap(true);
+			}catch(Exception e){
+			}
+		}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
+			try{
+				format.setWrap(false);
+			}catch(Exception e){
+			}			
+		}		
+		
 		if(isFormat)
 			wcfCash.put(internal_style.getCashKey()+"",format);
 	

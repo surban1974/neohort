@@ -453,7 +453,13 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 				colspan = Float.valueOf(internal_style.getCOL_SPAN()).intValue();
 				if(colspan!=0) cell.setColspan(colspan);
 			}catch(Exception e){}
-		}	
+		}
+		if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
+			try{
+				cell.setNoWrap(true);
+			}catch(Exception e){
+			}
+		}
 		return cell;
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
