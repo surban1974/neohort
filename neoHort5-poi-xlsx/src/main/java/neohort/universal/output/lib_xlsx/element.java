@@ -120,9 +120,19 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		frase = (String)getContent();
 
 	CellStyle format = null;
-	if(old!=null && old.getCellStyle()!=null)
+	if(old!=null && old.getCellStyle()!=null){
+		if(	internal_style.getFORMAT()!=null &&
+				(
+						internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==-1 &&
+						internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==-1
+				)		
+			)
 		format = (XSSFCellStyle)old.getCellStyle();
+	}
 	else
+		format =  workbook.createCellStyle();
+	
+	if(format==null)
 		format =  workbook.createCellStyle();
 
 	Font font = null;
@@ -307,6 +317,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 					CreationHelper createHelper = workbook.getCreationHelper();
 					defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
 				}
+				if(!isFormat)
+					format =  workbook.createCellStyle();		
 				format.setDataFormat(defDATETIMEFORMAT);
 				isFormat=true;
 			}
@@ -336,6 +348,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 					CreationHelper createHelper = workbook.getCreationHelper();
 					defDATEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy");
 				}
+				if(!isFormat)
+					format =  workbook.createCellStyle();		
 				format.setDataFormat(defDATEFORMAT);
 				isFormat=true;
 			}

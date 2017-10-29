@@ -149,9 +149,16 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 	}
 	if(format==null){
 	
-		if(old!=null && old.getCellFormat()!=null)
+		if(old!=null && old.getCellFormat()!=null){
+			if(	internal_style.getFORMAT()!=null &&
+					(
+							internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==-1 &&
+							internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==-1
+					)		
+				)
 			format = new WritableCellFormat (old.getCellFormat());
-		else{
+		
+		}else{
 	
 			
 			
@@ -170,22 +177,23 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 					}else
 						format =  new WritableCellFormat();				
 				}
+				boolean isDatatime = false;
 				if(!isFormat && internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
 					String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
 					if(!formatDate.equals("")){
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat();					
-					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy HH:mm"));					
+					isDatatime=true;
 				}
-				if(!isFormat && internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
+				if(!isFormat && !isDatatime && internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
 					String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
 					if(!formatDate.equals("")){
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat();					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy"));					
 				}
 				
 			}else
@@ -351,7 +359,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 		}
 	}catch(Exception e){
 	}
-
+	boolean isDatatime = false;
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
 			String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
@@ -364,11 +372,12 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 					return new DateTime(X,Y,ret,defDATETIMEFORMAT);
 				}
 			}
+			isDatatime = true;
 		}
 	}catch(Exception e){
 	}
 	try{
-		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
+		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1 && !isDatatime){
 			String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
 			Date ret = getCallDate(frase,format_DATE,formatDate);
 			if(ret!=null){

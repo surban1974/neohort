@@ -141,9 +141,16 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 	}
 	if(format==null){	
 	
-		if(old!=null && old.getCellFormat()!=null)
+		if(old!=null && old.getCellFormat()!=null){
+			if(	internal_style.getFORMAT()!=null &&
+					(
+							internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==-1 &&
+							internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==-1
+					)		
+				)
 			format = new WritableCellFormat (old.getCellFormat());
-		else{
+
+		}else{
 			if(	internal_style.getFORMAT()!=null &&
 				(
 						internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1 ||
@@ -165,7 +172,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat();					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy HH:mm"));					
 					
 				}
 				if(!isFormat && internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
@@ -174,7 +181,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat();					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy"));					
 				}
 				
 			}else

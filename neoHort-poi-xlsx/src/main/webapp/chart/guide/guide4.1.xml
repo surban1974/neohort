@@ -81,8 +81,8 @@
 					FONT_COLOR="RED"
 					BACK_COLOR="BLUE"
 					
-					>rotation cell 1 row 1</TABLE_CELL>
-				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">cell 2 row 1</TABLE_CELL>
+					>rotation cell 1 row 1</TABLE_CELL> 
+				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" format="date">2017-01-13</TABLE_CELL>
 				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4">cell 4 row 1</TABLE_CELL>
 				<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" >cell 5 row 1</TABLE_CELL>
 			</TABLE_ROW>
