@@ -24,13 +24,15 @@
 
 package neohort.util;
 
-import java.io.ByteArrayInputStream;
+
 import java.io.File;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 public class util_xml {
 	
@@ -49,7 +51,11 @@ public static Document readXML(String uriXML, boolean valid) throws Exception{
 }
 public static Document readXMLData(String dataXML, boolean valid) throws Exception{
 	if(dataXML==null) return null;
-	ByteArrayInputStream xmlSrcStream = new	ByteArrayInputStream(dataXML.getBytes());
+	
+    InputSource xmlSrcStream = new InputSource();
+    xmlSrcStream.setCharacterStream(new StringReader(dataXML));
+	
+//	ByteArrayInputStream xmlSrcStream = new	ByteArrayInputStream(dataXML.getBytes());
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setValidating(valid);
 	return dbf.newDocumentBuilder().parse(xmlSrcStream);
@@ -67,7 +73,9 @@ public static Document readXML(String uriXML) throws Exception{
 }
 public static Document readXMLData(String dataXML) throws Exception{
 	if(dataXML==null) return null;
-	ByteArrayInputStream xmlSrcStream = new	ByteArrayInputStream(dataXML.getBytes());
+    InputSource xmlSrcStream = new InputSource();
+    xmlSrcStream.setCharacterStream(new StringReader(dataXML));
+//	ByteArrayInputStream xmlSrcStream = new	ByteArrayInputStream(dataXML.getBytes());
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setValidating(false);
 	return  dbf.newDocumentBuilder().parse(xmlSrcStream);
