@@ -66,6 +66,7 @@ public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		try{
 			bean _sysPdfPageHeader = ((bean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageHeader_))));
 			_sysPdfPageHeader.setContent(new Vector());
+			_sysPdfPageHeader.setNodeCurrent(this.getNodeCurrent());
 			draw = false;
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(_sysPdfPageHeader);
 		}catch(Exception ex){
