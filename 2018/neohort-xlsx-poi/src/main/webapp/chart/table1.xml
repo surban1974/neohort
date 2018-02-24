@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by  Svyatoslav Urbanovych svyatoslav.urbanovych@gmail.com-->
+<GENERAL 
+	id="table1"
+	type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type')%" 
+ 
+	ORIENTATION="LANDSCAPE"  
+	LIB="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$lib')%">
+	<INIT>
+		<BEAN ID="mreport" TYPE="it.Management_Report" CLASS="it.Management_Report" SCOPE="SESSION"/>
+		<OBJECT_JAVA ID="tabella1" TYPE="java.util.Vector" CLASS="java.util.Vector" SOURCE="man_report" METHOD="service_find(java.lang.String:'01';java.lang.String:'130001').getDates().get(java.lang.String:'vettore')"/>		
+		<OBJECT_JAVA ID="data" TYPE="java.util.Date" CLASS="java.util.Date" SOURCE="" METHOD=""/>
+		<OBJECT_JAVA ID="s_d_f" TYPE="java.text.SimpleDateFormat" CLASS="java.text.SimpleDateFormat" SOURCE="" METHOD="java.text.SimpleDateFormat(java.lang.String:'dd/MM/yy')"/>
+		<STYLE ID="ST_HEADER_1" FONT="HELVETICA" FONT_SIZE="23" FONT_TYPE="BOLD" ALIGN="CENTER"/>
+		<STYLE ID="ST_CELL_H" FONT="HELVETICA" FONT_SIZE="6" BORDER="15" ALIGN="CENTER" BORDER_COLOR_RGB="250,10,170"/>
+		<STYLE ID="StyleCellImport" FONT_SIZE="6" FONT="HELVETICA" BORDER="15" ALIGN="CENTER" FORMAT="ISNULL:|NUMBER:###,##0.00"/>
+	</INIT>
+	<DOCUMENT>
+		<PAGE_HEADER_>
+			<TABLE COL="4" COLLS_DIMENTION="26,10,12,52">
+				<TABLE_ROW>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Label 0</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Label 1</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="250,240,200" FONT_TYPE="bold">Label 2</TABLE_CELL>
+					<TABLE_BLOCK>
+						<TABLE COL="3" COLLS_DIMENTION="6,58,36">					
+							<TABLE_ROW>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="255,128,128" FONT_TYPE="bold"/>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">Title 1
+								</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">Title 2
+								</TABLE_CELL>
+							</TABLE_ROW>
+						</TABLE>
+					</TABLE_BLOCK>
+				</TABLE_ROW>
+			</TABLE>
+			<CONDITION_FOR FOR_FIRSTCOUNTER="0" FOR_LASTCOUNTER="1" ID="C_F0" FOR_STEPCOUNTER="1"/>			
+			<OBJECT_JAVA ID="elementGen" TYPE="java.util.Vector" CLASS="java.util.Vector" SOURCE="tabella1" METHOD="elementAt(int:0%)"/>
+			<TABLE COL="12" COLLS_DIMENTION="2,7,3,4,6,4,5,5,4,4,4,52">					
+					<TABLE_ROW>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">#</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 3</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 4</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 5</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 6</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 7</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 8</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="250,210,170" FONT_TYPE="bold">Title 9</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6" BACK_COLOR_RGB="250,240,200" FONT_TYPE="bold">Title 10</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,240,200" FONT_TYPE="bold">Title 11</TABLE_CELL>
+						<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="250,240,200" FONT_TYPE="bold">Title 12</TABLE_CELL>
+						<TABLE_BLOCK>
+							<TABLE COL="12" COLLS_DIMENTION="6,22,7,7,7,7,8,7,7,7,7,8">								
+								<CYCLE CONDITION_ID="C_F0" CONDITION_TYPE="CONDITION_FOR" ID="C0">
+									<OBJECT_JAVA ID="elementGen" TYPE="java.util.Vector" CLASS="java.util.Vector" SOURCE="tabella1" METHOD="elementAt(int:%EXECUTETAG.CONDITION_FOR:C_F0.RETURN._%)"/>
+									<TABLE_ROW>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="14" BACK_COLOR_RGB="255,128,128" FONT_TYPE="bold"/>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">Title 13</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:0)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:1)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:2)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:3)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="250,160,120" FONT_TYPE="bold">Title 14</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:4)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:5)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:6)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">%EXECUTEBEAN.elementGen.get(int:7)%</TABLE_CELL>
+										<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="250,90,50" FONT_TYPE="bold">Title 15</TABLE_CELL>
+									</TABLE_ROW>
+								</CYCLE>
+							</TABLE>
+						</TABLE_BLOCK>
+					</TABLE_ROW>
+			</TABLE>
+		</PAGE_HEADER_>
+		<PAGEBREAK/>
+		
+		<CONDITION_FOR FOR_FIRSTCOUNTER="1" FOR_LASTCOUNTER="3" ID="C_F0" FOR_STEPCOUNTER="1"/>
+		<TABLE COL="12" COLLS_DIMENTION="2,7,3,4,6,4,5,5,4,4,4,52">
+			<CYCLE CONDITION_ID="C_F0" CONDITION_TYPE="CONDITION_FOR" ID="C0">
+				<OBJECT_JAVA ID="elementR" TYPE="java.util.Vector" CLASS="java.util.Vector" SOURCE="tabella1" METHOD="elementAt(int:%EXECUTETAG.CONDITION_FOR:C_F0.RETURN._%)"/>				
+				<OBJECT_JAVA ID="dif0" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:36)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:37)%)"/>
+				<OBJECT_JAVA ID="dif1" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:41)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:42)%)"/>
+				<OBJECT_JAVA ID="dif2" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:46)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:47)%)"/>
+				
+				<OBJECT_JAVA ID="dif00" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:16)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:17)%)"/>
+				<OBJECT_JAVA ID="dif01" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:21)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:22)%)"/>
+				<OBJECT_JAVA ID="dif02" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:26)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:27)%)"/>
+				<OBJECT_JAVA ID="dif03" TYPE="java.math.BigDecimal" CLASS="java.math.BigDecimal" SOURCE="" METHOD="java.math.BigDecimal(java.lang.String:'%EXECUTEBEAN.elementR.get(int:33)%').negate().add(java.math.BigDecimal:%EXECUTEBEAN.elementR.get(int:32)%)"/>
+								
+				<TABLE_ROW>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="7">
+%EXECUTEBEAN.elementR.get(int:0)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="3">
+%EXECUTEBEAN.elementR.get(int:1)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="3">
+%EXECUTEBEAN.elementR.get(int:2)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="3">
+%EXECUTEBEAN.elementR.get(int:3)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="3">
+%EXECUTEBEAN.elementR.get(int:4)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="11">
+%EXECUTEBEAN.elementR.get(int:5)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="StyleCellImport" BORDER="7">
+%EXECUTEFORMAT.({EXECUTEBEAN.elementR.get(int:7)}).(ISNULL:|NUMBER:###,##0)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="StyleCellImport" BORDER="11">
+%EXECUTEFORMAT.({EXECUTEBEAN.elementR.get(int:6)}).(ISNULL:|NUMBER:###,##0)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="7">
+%EXECUTEBEAN.elementR.get(int:8)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="3">
+%EXECUTEBEAN.elementR.get(int:9)%</TABLE_CELL>
+					<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="11">
+%EXECUTEBEAN.elementR.get(int:10)%</TABLE_CELL>					
+					<TABLE_BLOCK>
+						<TABLE COL="12" COLLS_DIMENTION="6,22,7,7,7,7,8,7,7,7,7,8">
+							<TABLE_ROW>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="13">S.T.
+								</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="5" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:49)%">%EXECUTEBEAN.elementR.get(int:11)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:49)%">%EXECUTEBEAN.elementR.get(int:14)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:49)%">%EXECUTEBEAN.elementR.get(int:15)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:49)%">%EXECUTEBEAN.elementR.get(int:16)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:49)%">%EXECUTEBEAN.elementR.get(int:17)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="9" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:52)%" FONT_TYPE="bold">%EXECUTEBEAN.dif00.toString()%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="5">%EXECUTEBEAN.elementR.get(int:34)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1">%EXECUTEBEAN.elementR.get(int:35)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1">%EXECUTEBEAN.elementR.get(int:36)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="1">%EXECUTEBEAN.elementR.get(int:37)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="9" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:55)%" FONT_TYPE="bold">%EXECUTEBEAN.dif0.toString()%</TABLE_CELL>
+							</TABLE_ROW>
+							<TABLE_ROW>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="12">M.T.
+								</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:50)%">%EXECUTEBEAN.elementR.get(int:12)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:50)%">%EXECUTEBEAN.elementR.get(int:19)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:50)%">%EXECUTEBEAN.elementR.get(int:20)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:50)%">%EXECUTEBEAN.elementR.get(int:21)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:50)%">%EXECUTEBEAN.elementR.get(int:22)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:53)%" FONT_TYPE="bold">%EXECUTEBEAN.dif01.toString()%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4">%EXECUTEBEAN.elementR.get(int:39)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:40)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:41)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:42)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:56)%" FONT_TYPE="bold">%EXECUTEBEAN.dif1.toString()%</TABLE_CELL>
+							</TABLE_ROW>
+							<TABLE_ROW>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="12">L.T.
+								</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:51)%">%EXECUTEBEAN.elementR.get(int:13)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:51)%">%EXECUTEBEAN.elementR.get(int:24)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:51)%">%EXECUTEBEAN.elementR.get(int:25)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:51)%">%EXECUTEBEAN.elementR.get(int:26)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:51)%">%EXECUTEBEAN.elementR.get(int:27)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:54)%" FONT_TYPE="bold">%EXECUTEBEAN.dif02.toString()%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="4">%EXECUTEBEAN.elementR.get(int:44)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:45)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:46)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="0">%EXECUTEBEAN.elementR.get(int:47)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="8" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:57)%" FONT_TYPE="bold">%EXECUTEBEAN.dif2.toString()%</TABLE_CELL>
+							</TABLE_ROW>
+							<TABLE_ROW>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="14">CDS
+								</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6"> </TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">%EXECUTEBEAN.elementR.get(int:29)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">%EXECUTEBEAN.elementR.get(int:30)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">%EXECUTEBEAN.elementR.get(int:31)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2">%EXECUTEBEAN.elementR.get(int:32)%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="%EXECUTEBEAN.elementR.get(int:58)%" FONT_TYPE="bold">%EXECUTEBEAN.dif03.toString()%</TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="6"> </TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2"> </TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2"> </TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="2"> </TABLE_CELL>
+								<TABLE_CELL STYLE_ID="ST_CELL_H" BORDER="10" BACK_COLOR_RGB="207,207,207" FONT_TYPE="bold"> </TABLE_CELL>
+							</TABLE_ROW>
+						</TABLE>
+					</TABLE_BLOCK>
+				</TABLE_ROW>
+			</CYCLE>
+		</TABLE>
+
+		<BLOCK FONT="HELVETICA" FONT_SIZE="10" FONT_COLOR="BLUE" FONT_TYPE="NORMAL">%EXECUTEBEAN.data_string.toString%</BLOCK>
+		<TABLE COL="2" COLLS_DIMENTION="50,50">
+			<TABLE_ROW>
+				<CHART ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+					CHART_DATA_X="	-;-;
+							2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;" 
+					CHART_DATA_Y="	-;-;
+							10;10;10;9;9;|;
+							5;-2;7;4;1;|;
+							7;-2;11;3;|;
+							8;-1;13;6;|;
+							8;1;13;7;|;
+							10;4;15;10;|;
+							12;5;17;12;|;
+							15;11;19;12;|;
+							21;14;21;15;|;"
+					CHART_DATA_Z="	1;0;"		
+					FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;;;" 
+					FONT_SCALE_COLOR_XYZ="blue;black;;" 
+					FONT_SCALE_SIZE_XYZ="7;7;;" 
+					MAXELEMENT_LABEL_XYZ="7;7;;" 
+					GR_LABEL_XYZ="0;0;;" 
+					ALIGN_LABEL_XYZ="CENTER;;;" 
+					FONT_LABEL_XYZ="Helvetica;;;" 
+					FONT_LABEL_COLOR_XYZ="RED;;;" 
+					FONT_LABEL_SIZE_XYZ="10;;;" 
+					LABEL_X="" 
+					LABEL_TOP="	Rating SP;
+							E-TELECOM-E20;
+							E-TELECOM-E30;
+							E-TELECOM-E40;
+							E-TELECOM-E50;
+							E-TELECOM-E60;
+							E-TELECOM-E70;
+							E-TELECOM-E80;
+							E-TELECOM-E90;"
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="LEFT"
+					ELEMENT_COLOR_3D="red;blue;black;"
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"
+					LABEL_Y=""/>
+				<CHART ID="First_Chart_1" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+					CHART_DATA_X="	-;-;
+							2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" 
+					CHART_DATA_Y="	-2;21;
+							10;10;10;9;9;|;
+							5;-2;7;4;1;|;"
+					FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;;;" 
+					FONT_SCALE_COLOR_XYZ="blue;black;;" 
+					FONT_SCALE_SIZE_XYZ="7;7;;" 
+					MAXELEMENT_LABEL_XYZ="7;7;;" 
+					GR_LABEL_XYZ="0;0;;" 
+					ALIGN_LABEL_XYZ="CENTER;;;" 
+					FONT_LABEL_XYZ="Helvetica;;;" 
+					FONT_LABEL_COLOR_XYZ="RED;;;" 
+					FONT_LABEL_SIZE_XYZ="10;;;" 
+					LABEL_X="" 
+					LABEL_TOP="	Rating SP;
+							E-TELECOM-E20;"
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="LEFT"
+					ELEMENT_COLOR_3D="red;blue;black;"
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"
+					LABEL_Y=""/>
+					
+			</TABLE_ROW>
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_COLUMN_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="	-;-;	
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;"
+					CHART_DATA_Y="	-;-;
+							0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;|;	
+							800;0;950;50;-150;450;0;1;10;0;135;50;98;980;150;-500;230;|;
+							8;100;-95;150;150;-450;230;100;-10;450;13;-50;9;98;-150;500;230;|;
+							20;30;40;50;60;70;80;80;100;110;120;130;140;150;160;170;180;|;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="10;10;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP="	Rating SP;
+							E-TELECOM-E20;
+							E-TELECOM-E30;
+							E-TELECOM-E40;"
+
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"
+					/>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_PIE_ADVANCED" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;;;;"
+					CHART_DATA_Y="DataTTTTTT #1;Data #2;DataTTTTT #3;Data #4;Data #5;Data #6;DataTTTTTTTTT #7;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;"
+					CHART_DATA_Z="7;12;15;"
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="0;;;"
+					FONT_SCALE_XYZ="Helvetica;;;"
+					FONT_SCALE_COLOR_XYZ="blue;;;"
+					FONT_SCALE_SIZE_XYZ="7;;;"
+					MAXELEMENT_LABEL_XYZ="7;;;"
+					
+					GR_LABEL_XYZ="90;;;"
+					ALIGN_LABEL_XYZ="CENTER;;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;;;"
+					FONT_LABEL_COLOR_XYZ="RED;;;"
+					FONT_LABEL_SIZE_XYZ="10;;;"
+
+					LABEL_X=""
+					LABEL_TOP="	E-TELECOM-E20;
+							E-TELECOM-E30;
+							E-TELECOM-E40;
+							E-TELECOM-E50;
+							E-TELECOM-E60;
+							E-TELECOM-E70;
+							E-TELECOM-E80;"
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="CENTER"
+					
+					ELEMENT_COLOR_3D="red;pink;black;"
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"/>			
+			</TABLE_ROW>
+			<TABLE_ROW>
+				<CHART ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;NUMBER;" 
+					CHART_DATA_X="	-;-;
+							2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;
+							2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;" 
+					CHART_DATA_Y="	-;-;
+							10;10;10;9;9;|;
+							5;-2;7;4;1;|;
+							7;-2;11;3;|;"
+					CHART_DATA_Z="	1;0;2;"	
+					LABEL_TOP="	Rating SP;
+							E-TELECOM-E20;
+							E-TELECOM-E30;"					
+					FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;;;" 
+					FONT_SCALE_COLOR_XYZ="blue;black;;" 
+					FONT_SCALE_SIZE_XYZ="7;7;;" 
+					MAXELEMENT_LABEL_XYZ="7;7;;" 
+					GR_LABEL_XYZ="0;0;;" 
+					ALIGN_LABEL_XYZ="CENTER;;;" 
+					FONT_LABEL_XYZ="Helvetica;;;" 
+					FONT_LABEL_COLOR_XYZ="RED;;;" 
+					FONT_LABEL_SIZE_XYZ="10;;;" 
+					LABEL_X="" 
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="LEFT"
+					ELEMENT_COLOR_3D="red;blue;black;"
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"
+					LABEL_Y=""/>
+				<CHART ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;NUMBER;" 
+					CHART_DATA_X="	-;-;
+							2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+							2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" 
+					CHART_DATA_Y="	-;-;
+							21;14;21;15;9;|;
+							5;2;7;4;1;|;"
+					CHART_DATA_Z="	0;2;"		
+					FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;;;" 
+					FONT_SCALE_COLOR_XYZ="blue;black;;" 
+					FONT_SCALE_SIZE_XYZ="7;7;;" 
+					MAXELEMENT_LABEL_XYZ="7;7;;" 
+					GR_LABEL_XYZ="0;0;;" 
+					ALIGN_LABEL_XYZ="CENTER;;;" 
+					FONT_LABEL_XYZ="Helvetica;;;" 
+					FONT_LABEL_COLOR_XYZ="RED;;;" 
+					FONT_LABEL_SIZE_XYZ="10;;;" 
+					LABEL_X="" 
+					LABEL_TOP=""
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					ALIGN_LABEL_TOP="LEFT"
+					ELEMENT_COLOR_3D="red;blue;black;"
+					DIMENTION_V="240"
+					DIMENTION_H="400"
+					BORDER="0"
+					ALIGN="CENTER"
+					LABEL_Y=""/>
+			</TABLE_ROW>		
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_COLUMN_ADVANCED_XY" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;"
+					CHART_DATA_X="	-;-;	
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;
+							2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;|;"
+					CHART_DATA_Y="	-;-;
+							0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;|;	
+							800;0;950;50;-150;450;0;1;10;0;135;50;98;980;150;-500;230;|;
+							8;100;-95;150;150;-450;230;100;-10;450;13;-50;9;98;-150;500;230;|;
+							20;30;40;50;60;70;80;80;100;110;120;130;140;150;160;170;180;|;"					
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,##0;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="90;0;;"
+					FONT_SCALE_XYZ="Helvetica;Helvetica;;"
+					FONT_SCALE_COLOR_XYZ="BLUE;BLUE;;"
+					FONT_SCALE_SIZE_XYZ="8;8;;"
+					MAXELEMENT_LABEL_XYZ="10;10;;"
+					
+					LABEL_X="Time,t"
+					LABEL_Y="Price, euro"
+					GR_LABEL_XYZ="0;90;;"
+					ALIGN_LABEL_XYZ="CENTER;CENTER;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;Helvetica-Oblique;;"
+					FONT_LABEL_COLOR_XYZ="RED;RED;;"
+					FONT_LABEL_SIZE_XYZ="10;10;;"
+					
+					LABEL_TOP=""
+					FONT_LABEL_TOP="Helvetica-Bold"
+					FONT_LABEL_COLOR_TOP="RED"
+					FONT_LABEL_SIZE_TOP="18"
+					ALIGN_LABEL_TOP="LEFT"
+					
+					ELEMENT_COLOR_3D="red;lightGray;black;"
+					
+					DIMENTION_V="450"
+					DIMENTION_H="700"
+					BORDER="0"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>			
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="2" COLLS_DIMENTION="50,50">
+			<TABLE_ROW>
+				<TABLE_BLOCK>
+					<TABLE COL="1" COLLS_DIMENTION="100">
+						<TABLE_ROW>			
+							<TABLE_CELL BORDER="0">			
+							
+							
+							
+							
+							</TABLE_CELL>			
+						</TABLE_ROW>			
+						<TABLE_ROW>			
+						<CHART ID="First_Chart" 
+							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							CHART_DATA_X="	-;-;
+									2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;
+									2003-01-10;2003-01-21;2003-03-05;2003-04-31;|;" 
+							CHART_DATA_Y="	-;-;
+									10;10;10;9;9;|;
+									5;-2;7;4;1;|;
+									7;-2;11;3;|;
+									8;-1;13;6;|;
+									8;1;13;7;|;
+									10;4;15;10;|;
+									12;5;17;12;|;
+									15;11;19;12;|;
+									21;14;21;15;|;" 
+							CHART_DATA_Z="	1;0;" 
+							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							SHOW_SCALE_XYZ="true;true;;" 
+							GR_SCALE_XYZ="90;0;;" 
+							FONT_SCALE_XYZ="Helvetica;;;" 
+							FONT_SCALE_COLOR_XYZ="blue;black;;" 
+							FONT_SCALE_SIZE_XYZ="7;7;;" 
+							MAXELEMENT_LABEL_XYZ="7;7;;" 
+							GR_LABEL_XYZ="0;0;;" 
+							ALIGN_LABEL_XYZ="CENTER;;;" 
+							FONT_LABEL_XYZ="Helvetica;;;" 
+							FONT_LABEL_COLOR_XYZ="RED;;;" 
+							FONT_LABEL_SIZE_XYZ="10;;;" 
+							LABEL_X="" 
+							LABEL_TOP="	Rating SP;
+									E-TELECOM-E20;
+									E-TELECOM-E30;
+									E-TELECOM-E40;
+									E-TELECOM-E50;
+									E-TELECOM-E60;
+									E-TELECOM-E70;
+									E-TELECOM-E80;
+									E-TELECOM-E90;" 
+							FONT_LABEL_TOP="Helvetica" 
+							FONT_LABEL_COLOR_TOP="blue" 
+							FONT_LABEL_SIZE_TOP="8" 
+							ALIGN_LABEL_TOP="LEFT" 
+							ELEMENT_COLOR_3D="red;blue;black;" 
+							DIMENTION_V="350" 
+							DIMENTION_H="400" 
+							BORDER="0" 
+							ALIGN="CENTER" 
+							LABEL_Y=""/>
+						</TABLE_ROW>
+					</TABLE>
+				</TABLE_BLOCK>
+				<TABLE_BLOCK>
+					<TABLE COL="1" COLLS_DIMENTION="100">
+						<TABLE_ROW>
+							<CHART ID="First_Chart_1" CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" SHOW_SCALE_XYZ="true;true;;" GR_SCALE_XYZ="90;0;;" FONT_SCALE_XYZ="Helvetica;;;" FONT_SCALE_COLOR_XYZ="blue;black;;" FONT_SCALE_SIZE_XYZ="7;7;;" MAXELEMENT_LABEL_XYZ="7;7;;" GR_LABEL_XYZ="0;0;;" ALIGN_LABEL_XYZ="CENTER;;;" FONT_LABEL_XYZ="Helvetica;;;" FONT_LABEL_COLOR_XYZ="RED;;;" FONT_LABEL_SIZE_XYZ="8;;;" LABEL_X="" LABEL_TOP="	Rating SP;
+										E-TELECOM-E20;" FONT_LABEL_TOP="Helvetica" FONT_LABEL_COLOR_TOP="blue" FONT_LABEL_SIZE_TOP="8" ALIGN_LABEL_TOP="LEFT" ELEMENT_COLOR_3D="red;blue;black;" DIMENTION_V="160" DIMENTION_H="315" BORDER="0" ALIGN="CENTER" LABEL_Y=""/>
+
+						</TABLE_ROW>
+						<TABLE_ROW>
+							<CHART ID="First_Chart_1" CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" SHOW_SCALE_XYZ="true;true;;" GR_SCALE_XYZ="90;0;;" FONT_SCALE_XYZ="Helvetica;;;" FONT_SCALE_COLOR_XYZ="blue;black;;" FONT_SCALE_SIZE_XYZ="7;7;;" MAXELEMENT_LABEL_XYZ="7;7;;" GR_LABEL_XYZ="0;0;;" ALIGN_LABEL_XYZ="CENTER;;;" FONT_LABEL_XYZ="Helvetica;;;" FONT_LABEL_COLOR_XYZ="RED;;;" FONT_LABEL_SIZE_XYZ="8;;;" LABEL_X="" LABEL_TOP="	Rating SP;
+										E-TELECOM-E20;" FONT_LABEL_TOP="Helvetica" FONT_LABEL_COLOR_TOP="blue" FONT_LABEL_SIZE_TOP="8" ALIGN_LABEL_TOP="LEFT" ELEMENT_COLOR_3D="red;blue;black;" DIMENTION_V="160" DIMENTION_H="315" BORDER="0" ALIGN="CENTER" LABEL_Y=""/>
+
+						</TABLE_ROW>
+						<TABLE_ROW>
+							<CHART ID="First_Chart_1" CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" CHART_DATA_X="	-;-;
+										2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
+										2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;" CHART_DATA_Y="	-2;21;
+										10;10;10;9;9;|;
+										5;-2;7;4;1;|;" FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" SHOW_SCALE_XYZ="true;true;;" GR_SCALE_XYZ="90;0;;" FONT_SCALE_XYZ="Helvetica;;;" FONT_SCALE_COLOR_XYZ="blue;black;;" FONT_SCALE_SIZE_XYZ="7;7;;" MAXELEMENT_LABEL_XYZ="7;7;;" GR_LABEL_XYZ="0;0;;" ALIGN_LABEL_XYZ="CENTER;;;" FONT_LABEL_XYZ="Helvetica;;;" FONT_LABEL_COLOR_XYZ="RED;;;" FONT_LABEL_SIZE_XYZ="8;;;" LABEL_X="" LABEL_TOP="	Rating SP;
+										E-TELECOM-E20;" FONT_LABEL_TOP="Helvetica" FONT_LABEL_COLOR_TOP="blue" FONT_LABEL_SIZE_TOP="8" ALIGN_LABEL_TOP="LEFT" ELEMENT_COLOR_3D="red;blue;black;" DIMENTION_V="160" DIMENTION_H="315" BORDER="0" ALIGN="CENTER" LABEL_Y=""/>
+
+						</TABLE_ROW>
+					</TABLE>
+				</TABLE_BLOCK>
+			</TABLE_ROW>
+		</TABLE>
+		<PAGEBREAK/>
+		<TABLE COL="1" COLLS_DIMENTION="100">
+			<TABLE_ROW>
+				<CHART 
+					ID="First_Chart" 
+					CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_PIE_ADVANCED" 
+					FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;;;;"
+					CHART_DATA_Y="DataTTTTTT #1;Data #2;DataTTTTTTTTTTTTTTT #3;Data #4;Data #5;Data #6;DataTTTTTTTTT #7;Data #8;Data #9;DataTTTTTTTTTTTTTT #10;Data #11;DataTTTTTTTTTTTTTTTTTTTTT #12;Data #13;Data #14;Data #15;Data #16;Data #17;Data #18;"
+					CHART_DATA_X="2003-01-01;2004-02-01;2005-03-01;2006-04-01;2007-05-01;2008-06-01;2009-07-01;2010-08-01;2011-09-01;2012-10-01;2013-11-01;2014-12-01;2015-01-01;2016-02-01;2017-03-01;2018-04-01;2019-05-01;2119-05-01;"
+					CHART_DATA_Z="7;15;20;"
+					FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;;;"
+					SHOW_SCALE_XYZ="true;true;;"
+					GR_SCALE_XYZ="0;;;"
+					FONT_SCALE_XYZ="Helvetica;;;"
+					FONT_SCALE_COLOR_XYZ="black;;;"
+					FONT_SCALE_SIZE_XYZ="7;;;"
+					MAXELEMENT_LABEL_XYZ="7;;;"
+					
+					GR_LABEL_XYZ="90;;;"
+					ALIGN_LABEL_XYZ="CENTER;;;"
+					FONT_LABEL_XYZ="Helvetica-Oblique;;;"
+					FONT_LABEL_COLOR_XYZ="RED;;;"
+					FONT_LABEL_SIZE_XYZ="10;;;"
+
+					LABEL_X=""
+					LABEL_TOP=""
+
+					FONT_LABEL_TOP="Helvetica"
+					FONT_LABEL_COLOR_TOP="blue"
+					FONT_LABEL_SIZE_TOP="8"
+					
+					ELEMENT_COLOR_3D="red;pink;black;"
+					DIMENTION_V="300"
+					DIMENTION_H="600"
+					BORDER="0"
+					ALIGN="CENTER"/>
+			</TABLE_ROW>
+
+		</TABLE>		
+	</DOCUMENT>
+</GENERAL>
