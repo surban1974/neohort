@@ -81,13 +81,13 @@
   	</repositories> 
   	
    <dependencies>
-<!--   
+   
    		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-base</artifactId>
-			<version>1.4.10</version>
+			<version>1.4.0</version>
 		</dependency>
- --> 		
+		
  
 		<dependency>
 			<groupId>javax.servlet</groupId>
