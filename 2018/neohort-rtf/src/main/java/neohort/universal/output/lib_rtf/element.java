@@ -36,7 +36,7 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
-import neohort.universal.output.lib_pdf.text;
+
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
