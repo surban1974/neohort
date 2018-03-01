@@ -143,7 +143,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				b_Code.setBaseline(_t_align_v);
 			}catch(Exception e){}
 
-			chartIm = b_Code.createImageWithBarcode(cb, getField_Color(internal_style.getBAR_COLOR(),null), getField_Color(internal_style.getFONT_COLOR(),null));
+			chartIm = b_Code.createImageWithBarcode(cb, getField_Color(internal_style.getBAR_COLOR()), getField_Color(internal_style.getFONT_COLOR()));
 
 
 

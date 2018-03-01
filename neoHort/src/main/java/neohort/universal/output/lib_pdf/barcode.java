@@ -50,7 +50,7 @@ public class barcode extends element{
 	private String BARCODE_TYPE;
 	private String CODE;
 	private String BARCODE_HEIGHT;
-	
+
 public barcode() {
 	super();
 }
@@ -143,7 +143,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				b_Code.setBaseline(_t_align_v);
 			}catch(Exception e){}
 
-			chartIm = b_Code.createImageWithBarcode(cb, getField_Color(new Color(0).getClass(),internal_style.getBAR_COLOR(),null), getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),null));
+			chartIm = b_Code.createImageWithBarcode(cb, getField_Color(internal_style.getBAR_COLOR(),null), getField_Color(internal_style.getFONT_COLOR(),null));
 
 
 
@@ -200,11 +200,11 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 public void reimposta() {
 	setName("BARCODE");
 	BARCODE_TYPE = "";
-	CODE = "";	
+	CODE = "";
 	STYLE_ID = "";
 	BARCODE_HEIGHT = "";
 }
-public void reStyle(style style_new) {	
+public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }

@@ -28,13 +28,13 @@ import java.util.HashMap;
 import java.util.Vector;
 
 public interface I_chart_dati {
-public Vector getDati(int type, float length);
-public Vector getDati(int type, float lengthX, float lengthY, float lengthZ);
-public Vector getScale(int type, int max_scale);
+public Vector<Object> getDati(int type, float length);
+public Vector<Object> getDati(int type, float lengthX, float lengthY, float lengthZ);
+public Vector<Object> getScale(int type, int max_scale);
 public void setDati(int type, Object D);
 public void setDati(int type,String format, String value);
 public void setFormat(int type, String format);
-public HashMap getExternal_parameters();
-public void setExternal_parameters(HashMap map);
+public HashMap<String,Object> getExternal_parameters();
+public void setExternal_parameters(HashMap<String,Object> map);
 
 }

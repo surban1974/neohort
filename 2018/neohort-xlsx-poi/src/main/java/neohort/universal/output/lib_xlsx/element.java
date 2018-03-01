@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -45,6 +46,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -66,11 +68,11 @@ import neohort.util.util_format;
 public abstract class element extends report_element_base  implements report_element {
 
 	private static final long serialVersionUID = 1L;
-	protected static HashMap colorsCache;
-	protected static HashMap fontNameCache;
-	protected static HashMap alignCache;
-	protected static HashMap vAlignCache;
-	protected static HashMap hAlignCache;
+	protected static HashMap<Color,XSSFColor> colorsCache;
+	protected static HashMap<String,String> fontNameCache;
+//	protected static HashMap<String,Short> alignCache;
+	protected static HashMap<String,VerticalAlignment> vAlignCache;
+	protected static HashMap<String,HorizontalAlignment> hAlignCache;
 
 	protected short defDATEFORMAT;
 	protected short defDATETIMEFORMAT;
@@ -91,8 +93,8 @@ public element() {
 }
 public void add(report_element_base child) {}
 
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
 public void reimposta(){
@@ -102,7 +104,7 @@ public void reimposta(){
 public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 	Cell cell = null;
-	
+
 	CellReference cr = new CellReference(Y,X);
 	Row row = document.getRow(cr.getRow());
 	if(row==null)
@@ -115,7 +117,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 	boolean isFormat=false;
 	String frase = "";
-	if(getContent()!=null) 
+	if(getContent()!=null)
 		frase = (String)getContent();
 
 	CellStyle format = null;
@@ -124,16 +126,16 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 				(
 						internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==-1 &&
 						internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==-1
-				)		
+				)
 			)
 		format = (XSSFCellStyle)old.getCellStyle();
 	}
 	else
 		format =  workbook.createCellStyle();
-	
+
 	if(format==null)
 		format =  workbook.createCellStyle();
-	
+
 	Font font = null;
 	try{
 		if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
@@ -242,7 +244,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		}catch(Exception e){
 		}
 	}
-	
+
 	if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
 		try{
 			format.setWrapText(true);
@@ -252,10 +254,10 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		try{
 			format.setWrapText(false);
 		}catch(Exception e){
-		}			
+		}
 	}
 
-	
+
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
 			String formatNumber = getFormat(format_NUMBER, internal_style.getFORMAT());
@@ -265,8 +267,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 				format.setDataFormat(workbook.createDataFormat().getFormat(formatNumber));
 				isFormat=true;
 			}
-			
-			if (isFormat) 
+
+			if (isFormat)
 				cell.setCellStyle(format);
 
 			Double dvalue = null;
@@ -275,7 +277,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 			}catch(Exception e){
 				try{
 					dvalue = new Double(frase.trim().replace(',', '.'));
-				}catch(Exception ex){					
+				}catch(Exception ex){
 				}
 			}
 			if(dvalue!=null)
@@ -290,7 +292,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_FORMULA)>-1){
-			if (isFormat) 
+			if (isFormat)
 				cell.setCellStyle(format);
 
 			cell.setCellFormula(frase);
@@ -304,7 +306,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
-			
+
 			String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
 			if(!formatDate.equals("")){
 				if(!isFormat)
@@ -317,7 +319,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 					defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
 				}
 				if(!isFormat)
-					format =  workbook.createCellStyle();		
+					format =  workbook.createCellStyle();
 				format.setDataFormat(defDATETIMEFORMAT);
 				isFormat=true;
 			}
@@ -335,7 +337,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 	}
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
-			
+
 			String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
 			if(!formatDate.equals("")){
 				if(!isFormat)
@@ -371,7 +373,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 
 	if(frase==null || frase.equals("")){
-		if (isFormat) 
+		if (isFormat)
 			cell.setCellStyle(format);
 		cell.setCellValue("");
 		if(getHyperlink()!=null)
@@ -380,7 +382,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		return cell;
 	}
 	else {
-		if (isFormat) 
+		if (isFormat)
 			cell.setCellStyle(format);
 		cell.setCellValue(frase);
 		if(getHyperlink()!=null)
@@ -392,7 +394,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 
 }
 
-public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void initCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean initProcess = new Boolean(false);
 		try{
@@ -407,11 +409,12 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				_sysinitProcess);
 
 		}
-		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-
-		Object current_Element = canvas.lastElement();
-			canvas.removeElement(canvas.lastElement());
-		Object content_Element = canvas.lastElement();
+		List<Object> canvas = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+		if(canvas.isEmpty()) return;
+		Object current_Element = canvas.get(canvas.size()-1);
+			canvas.remove(canvas.size()-1);
+			if(canvas.isEmpty()) return;
+		Object content_Element = canvas.get(canvas.size()-1);
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||
@@ -424,9 +427,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 		if(content_Element instanceof bean){
 			if(((bean)content_Element).getID().equals("PageFooter_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			if(((bean)content_Element).getID().equals("PageHeader_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			return;
 		}
 
@@ -458,8 +461,8 @@ public boolean analiseItalicStyle(String type){
 	return false;
 }
 public String analizeFontName(String name){
-	if(fontNameCache==null) fontNameCache=new HashMap();
-	String fontName = (String)fontNameCache.get(name);
+	if(fontNameCache==null) fontNameCache=new HashMap<String,String>();
+	String fontName = fontNameCache.get(name);
 
 	if(fontName==null){
 		if(name==null || name.equals("")) fontName = "Calibri";
@@ -475,10 +478,10 @@ public String analizeFontName(String name){
 }
 
 public static XSSFColor getNearestColour(Color awtColor){
-	if(colorsCache==null) colorsCache=new HashMap();
-	
+	if(colorsCache==null) colorsCache=new HashMap<Color,XSSFColor>();
 
-	XSSFColor userColor = (XSSFColor) colorsCache.get(awtColor);
+
+	XSSFColor userColor = colorsCache.get(awtColor);
 
     if (userColor == null){
     	userColor = new XSSFColor(awtColor);
@@ -487,27 +490,43 @@ public static XSSFColor getNearestColour(Color awtColor){
 
     return userColor;
 }
- 
 
 
-public short analiseVAlign(String align){
-	if(vAlignCache==null) vAlignCache=new HashMap();
-	Short alignment = (Short)vAlignCache.get(align);
+
+//@SuppressWarnings("deprecation")
+//public short analiseVAlign(String align){
+//	if(vAlignCache==null) vAlignCache=new HashMap<String,Short>();
+//	Short alignment = vAlignCache.get(align);
+//
+//	if(alignment==null){
+//		if(align.equalsIgnoreCase("TOP"))  alignment =  CellStyle.VERTICAL_TOP;
+//		if(align.equalsIgnoreCase("CENTER"))  alignment =  CellStyle.VERTICAL_CENTER;
+//		if(align.equalsIgnoreCase("BOTTOM"))  alignment =  CellStyle.VERTICAL_BOTTOM;
+//		if(align.equalsIgnoreCase("JUSTIFY"))  alignment =  CellStyle.VERTICAL_JUSTIFY;
+//		if(alignment==null) alignment =  CellStyle.VERTICAL_JUSTIFY;
+//		vAlignCache.put(align, alignment);
+//	}
+//	return alignment;
+//}
+
+public VerticalAlignment analiseVAlign(String align){
+	if(vAlignCache==null) vAlignCache=new HashMap<String,VerticalAlignment>();
+	VerticalAlignment alignment = vAlignCache.get(align);
 
 	if(alignment==null){
-		if(align.equalsIgnoreCase("TOP"))  alignment =  CellStyle.VERTICAL_TOP;
-		if(align.equalsIgnoreCase("CENTER"))  alignment =  CellStyle.VERTICAL_CENTER;
-		if(align.equalsIgnoreCase("BOTTOM"))  alignment =  CellStyle.VERTICAL_BOTTOM;
-		if(align.equalsIgnoreCase("JUSTIFY"))  alignment =  CellStyle.VERTICAL_JUSTIFY;
-		if(alignment==null) alignment =  CellStyle.VERTICAL_JUSTIFY;
+		if(align.equalsIgnoreCase("TOP"))  alignment =  VerticalAlignment.TOP;
+		if(align.equalsIgnoreCase("CENTER"))  alignment =  VerticalAlignment.CENTER;
+		if(align.equalsIgnoreCase("BOTTOM"))  alignment =  VerticalAlignment.BOTTOM;
+		if(align.equalsIgnoreCase("JUSTIFY"))  alignment =  VerticalAlignment.JUSTIFY;
+		if(alignment==null) alignment =  VerticalAlignment.JUSTIFY;
 		vAlignCache.put(align, alignment);
 	}
 	return alignment;
 }
 
 public HorizontalAlignment analiseHAlign(String align){
-	if(hAlignCache==null) hAlignCache=new HashMap();
-	HorizontalAlignment alignment = (HorizontalAlignment)hAlignCache.get(align);
+	if(hAlignCache==null) hAlignCache=new HashMap<String,HorizontalAlignment>();
+	HorizontalAlignment alignment = hAlignCache.get(align);
 
 	if(alignment==null){
 		if(align.equalsIgnoreCase("LEFT"))  alignment =  HorizontalAlignment.LEFT;
@@ -530,111 +549,111 @@ public void analiseBorder_Colour(XSSFCellStyle format, style internal_style){
 	if(border>0){
 			if(border==1){
 				format.setBorderTop(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				
+
 			}
 			if(border==2){
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==3){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==4){
 				format.setBorderLeft(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-			
+
 			}
 			if(border==5){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				
+
 			}
 			if(border==6){
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==7){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==8){
 				format.setBorderRight(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				
+
 			}
 			if(border==9){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				
+
 			}
 			if(border==10){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==11){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-				
+
 			}
 			if(border==12){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				
+
  			}
 			if(border==13){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				
+
 			}
 			if(border==14){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
@@ -645,7 +664,7 @@ public void analiseBorder_Colour(XSSFCellStyle format, style internal_style){
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-				
+
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
 				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
@@ -675,7 +694,7 @@ public java.util.Date getCallDate(String content, String format_id, String forma
 			try{
 				return new java.util.Date(util_format.stringToData(content,format).getTime());
 			}catch(Exception e){
-				
+
 			}
 		}
 		try{
@@ -697,7 +716,7 @@ public java.util.Date getCallDate(String content, String format_id, String forma
 			try{
 				return new java.util.Date(util_format.stringToData(content,format).getTime());
 			}catch(Exception e){
-				
+
 			}
 		}
 		try{
@@ -744,7 +763,7 @@ public static String getFormat(String format_id, String format_string){
 			firstpart = mixed.substring(0,sep);
 			secondpart = mixed.substring(sep+1);
 		}
-			
+
 
 		if(!firstpart.equals("") && firstpart.equalsIgnoreCase(format_id))
 			return secondpart;

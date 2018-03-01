@@ -33,7 +33,7 @@ import neohort.universal.output.lib.report_element_base;
 
 public abstract class element extends report_element_base  implements report_element {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	public String _header = "";
 	public String _footer = "";
 	public String _content = "";
@@ -44,8 +44,8 @@ public element() {
 	reimposta();
 }
 public void add(report_element_base child) {}
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
 public void reimposta(){
@@ -55,7 +55,7 @@ public String getSize(String value) {
 	try {
 //		int vInt = Integer.valueOf(value).intValue();
 		return Integer.valueOf(value).toString();
-/*		
+/*
 		if (vInt >= 8 && vInt < 10)
 			return "1";
 		if (vInt >= 10 && vInt < 12)
@@ -71,7 +71,7 @@ public String getSize(String value) {
 		if (vInt >= 37)
 			return "7";
 		return "";
-*/		
+*/
 	} catch (Exception e) {
 		return "";
 	}
@@ -81,14 +81,14 @@ public String analiseBorder(String BORDER){
 	String result="";
 	if(BORDER.equals("0") && BORDER.length()>0) result+="border:none;";
 	int border=0;
-	try{			
+	try{
 		border=new Integer(BORDER).intValue();
 	}catch(Exception e){
 	}
 	if(border>0){
 		if(border==1) result+="border-top:solid;";
 		if(border==2) result+="border-bottom:solid;";
-			if(border==3) result+="border-top:solid;border-bottom:solid;";		
+			if(border==3) result+="border-top:solid;border-bottom:solid;";
 		if(border==4) result+="border-left:solid;";
 			if(border==5) result+="border-left:solid;border-top:solid;";
 			if(border==6) result+="border-left:solid;border-bottom:solid;";
@@ -101,9 +101,9 @@ public String analiseBorder(String BORDER){
 			if(border==13) result+="border-right:solid;border-left:solid;border-top:solid;";
 			if(border==14) result+="border-right:solid;border-left:solid;border-bottom:solid;";
 			if(border==15) result+="border-right:solid;border-left:solid;border-bottom:solid;border-top:solid;";
-		
-	}	
-	
+
+	}
+
 	return result+"border-width:1px;";
 }
 

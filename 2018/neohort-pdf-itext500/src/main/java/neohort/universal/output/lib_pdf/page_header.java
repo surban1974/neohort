@@ -35,21 +35,23 @@ import neohort.universal.output.lib.style;
 import com.itextpdf.text.pdf.PdfPTable;
 
 public class page_header extends element{
-	private static final long serialVersionUID = 921107389267849220L;
+	private static final long serialVersionUID = -1L;
 	PdfPTable table;
 	boolean draw = true;
 public page_header() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	if(draw)
 		initCanvas(_tagLibrary,_beanLibrary);
 	else
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).remove(((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:Canvas")).getContent())).lastElement());
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList().remove(
+				_beanLibrary.get("SYSTEM:Canvas").getContentLastElement()
+			);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfPageHeader = new bean();
 				_sysPdfPageHeader.setContent(table);
@@ -70,7 +72,7 @@ public void reimposta() {
 	setName("PAGE_HEADER");
 	STYLE_ID = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		try{
 			if(null!=
@@ -84,7 +86,7 @@ public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		table = new com.itextpdf.text.pdf.PdfPTable(1);
 		table.setHorizontalAlignment(50);
 		table.setWidthPercentage(100);
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(table);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(table);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}

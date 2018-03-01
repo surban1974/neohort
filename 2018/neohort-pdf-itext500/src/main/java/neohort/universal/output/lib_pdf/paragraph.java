@@ -36,14 +36,14 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 
 public class paragraph extends element{
-	private static final long serialVersionUID = -4732450202172868461L;
+	private static final long serialVersionUID = -1L;
 
 public paragraph() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -57,11 +57,11 @@ public void reimposta() {
 	setName("PARAGRAPH");
 	STYLE_ID = "";
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 		Paragraph pr = null;
@@ -75,7 +75,7 @@ public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 			int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
 			pr.setAlignment(_align);
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(pr);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(pr);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}

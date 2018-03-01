@@ -18,12 +18,12 @@ import neohort.universal.output.util.OutputRunTime;
 
 public class general_j2ee {
 
-public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeFirst(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
 		else{
-			
+
 			I_StreamWrapper iStreamWrapper = null;
 			if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
 			if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
@@ -35,12 +35,12 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 				}
 			}
 
-			
+
 			javax.servlet.http.HttpServletResponse response = null;
 			try{
 				response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 			}catch(Exception e){}
-	
+
 			if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && body.getSOURCE_DOCUMENT()!=null){
 				body.writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(body.getSOURCE_DOCUMENT(),false)));
 				if(!body.getSOURCE_BEFORE_FIXED().equals("")){
@@ -66,29 +66,29 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 					body.writer = new java.io.DataOutputStream(response.getOutputStream());
 				}
 			}
-	
+
 			if(body.writer!=null){
 				body._beanLibrary = _beanLibrary;
 			}
-	
-	
+
+
 			bean _sysPdfWriter = new bean();
 				_sysPdfWriter.setContent(body.writer);
 				_sysPdfWriter.setName("SYSTEM");
 				_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
 				_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
-	
+
 			bean _sysDocument = new bean();
 				_sysDocument.setContent(body.document);
 				_sysDocument.setName("SYSTEM");
 				_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 				_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-	
+
 				body._header = "<HTML>"+body._separator();
 				body._header+="<HEAD>"+body._separator();
 				body._header+=body._meta();
 				body._header+="</HEAD>"+body._separator()+"<BODY>"+body._separator();
-	
+
 			if(iStreamWrapper==null)
 				((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._header);
 			else{
@@ -98,7 +98,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 				_sysSW.setContent(iStreamWrapper);
 				_sysSW.setName("SYSTEM");
 				_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-				_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 			}
 
 		}
@@ -106,12 +106,12 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 		body.setError(e);
 	}
 }
-public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeLast(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
 		else{
-			
+
 			I_StreamWrapper iStreamWrapper = null;
 
 			if(body.getCLASS_STREAM_WRAPPER()!=null && !body.getCLASS_STREAM_WRAPPER().equals("")){
@@ -121,8 +121,8 @@ public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _b
 					body.setError(e);
 				}
 			}
-			
-			
+
+
 			body._footer = "</BODY>"+body._separator()+"</HTML>"+body._separator();
 			body.document = (document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 			body.prepareComment(_tagLibrary,_beanLibrary);
@@ -157,9 +157,9 @@ public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _b
 						}catch(Exception e){}
 					}
 				}
-	
-			_tagLibrary = new Hashtable();
-			_beanLibrary = new Hashtable();
+
+			_tagLibrary = new Hashtable<String, report_element_base>();
+			_beanLibrary = new Hashtable<String, report_element_base>();
 		}
 
 	}catch(Exception e){

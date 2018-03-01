@@ -34,19 +34,19 @@ import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
 
 public class pagebreak extends element{
-	private static final long serialVersionUID = -8931736222173377614L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String ORIENTATION;
 	private java.lang.String MARGINS;
-	
+
 public pagebreak() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Document document = ((Document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent()));
 		if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("LANDSCAPE"))
 			document.setPageSize(PageSize.A4.rotate());
-		if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("PORTRAIT"))			
+		if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("PORTRAIT"))
 			document.setPageSize(PageSize.A4);
 		if(getMARGINS()!=null && !getMARGINS().equals("")){
 			try{
@@ -62,7 +62,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				document.setMargins(p1, p2, p3, p4);
 			}catch(Exception e){
 				document.setMargins(30, 30, 30, 30);
-			}			
+			}
 		}
 		document.newPage();
 	}catch(Exception e){
@@ -70,7 +70,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

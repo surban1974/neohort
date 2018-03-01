@@ -4,18 +4,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
 
+import neohort.universal.output.lib.report_element_base;
+
 public class ByteStreamWrapper implements I_StreamWrapper {
 	private ByteArrayOutputStream bos = null;
 
 	
 	@Override
-	public OutputStream createOutputStream(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+	public OutputStream createOutputStream(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 		bos = new ByteArrayOutputStream();
 		return bos;
 	}
 	
 	@Override
-	public OutputStream createOutputStream(byte[] input, Hashtable _tagLibrary, Hashtable _beanLibrary) {
+	public OutputStream createOutputStream(byte[] input, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 		bos = new ByteArrayOutputStream();
 		if(input!=null){
 			try{
@@ -28,12 +30,12 @@ public class ByteStreamWrapper implements I_StreamWrapper {
 	}	
 
 	@Override
-	public OutputStream getOutputStream(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+	public OutputStream getOutputStream(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 		return bos;
 	}
 
 	@Override
-	public byte[] getByteFromStream(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+	public byte[] getByteFromStream(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 		if(bos!=null)
 			return bos.toByteArray();
 		return null;

@@ -34,22 +34,22 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
 public class link extends element{
-	private static final long serialVersionUID = 1353262987825901458L;
+	private static final long serialVersionUID = -1L;
 	private String LINK;
-	
+
 public link() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 		initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 		int X = 0;
 		int Y = 0;
 		try{
@@ -61,9 +61,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}catch(Exception e){
 		}
 
-		
-		
-			
+
+
+
 			double width=X;
 			try{
 				width = new Double(internal_style.getWIDTH()).doubleValue();
@@ -74,16 +74,16 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				height = new Double(internal_style.getHEIGHT()).doubleValue();
 			}catch(Exception e){
 			}
-			
-			WritableHyperlink hyper = new WritableHyperlink(X,Y,(int)width,(int)height,new URL(getLINK()));		
-					
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(hyper);
+
+			WritableHyperlink hyper = new WritableHyperlink(X,Y,(int)width,(int)height,new URL(getLINK()));
+
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(hyper);
 			X++;
-			
-	
+
+
 			_sysPdfCR.setContent(new Integer(Y));
-			_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
-	
+			_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
+
 			_sysPdfCC.setContent(new Integer(X));
 			_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);
 

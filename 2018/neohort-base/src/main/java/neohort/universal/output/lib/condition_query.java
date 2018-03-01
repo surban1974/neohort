@@ -36,19 +36,19 @@ import neohort.universal.output.iConst;
 
 
 public class condition_query extends report_element_base{
-	private static final long serialVersionUID = 2765908908525724082L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String Q_INIT;
 	private java.lang.String Q_QUERY;
 	private java.lang.String Q_MAX_ELEMENT;
 
-	private Vector rows = new Vector();
-	private Vector tabName = new Vector();
+	private Vector<Vector<Object>> rows = new Vector<Vector<Object>>();
+	private Vector<String> tabName = new Vector<String>();
 	private int cur_element = 0;
 	private int max_element = -1;
 public condition_query() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{		
 		if(getQ_INIT().equals("") || getQ_QUERY().equals("")) return;
 		try{
@@ -65,7 +65,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				int c_counter = 0;
 				if(max_element>-1){
 		  			while (rset.next() && c_counter<max_element) {
-						java.util.Vector newRow = new java.util.Vector();
+						Vector<Object> newRow = new Vector<Object>();
 						for (int i = 1; i <= rsetMD.getColumnCount(); i++) {
 	  	      				newRow.addElement(rset.getObject(i));
 						}
@@ -74,7 +74,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}
 				}else{
 		  			while (rset.next()) {
-						java.util.Vector newRow = new java.util.Vector();
+						Vector<Object> newRow = new Vector<Object>();
 						for (int i = 1; i <= rsetMD.getColumnCount(); i++) {
 	  	      				newRow.addElement(rset.getObject(i));
 						}
@@ -104,7 +104,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		cur_element = 0;
 	}catch(Exception e){
@@ -153,7 +153,7 @@ public String RETURN(String nome){
 						cont+=1;
 			}			
 			if (cont>=tabName.size()) return "";
-			Object res = ((Vector)rows.elementAt(cur_element)).elementAt(cont);
+			Object res = (rows.elementAt(cur_element)).elementAt(cont);
 			String curValue = "";
 			if(res instanceof String)  curValue = (String)res;
 			else curValue = String.valueOf(res);

@@ -31,19 +31,19 @@ import neohort.log.stubs.iStub;
 import org.w3c.dom.Node;
 
 public class general extends report_element_base{
-	private static final long serialVersionUID = 14828475440818093L;
+	private static final long serialVersionUID = -1L;
 
 
-	Hashtable _beanLibrary;
+	Hashtable<String, report_element_base> _beanLibrary;
 	private String LIB;
 	private String TYPE_DOCUMENT;
 
 public general() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
 public java.lang.String getLIB() {
 	return LIB;
@@ -53,7 +53,10 @@ public void reimposta() {
 	LIB="";
 	TYPE_DOCUMENT="attachment";
 }
-public Object init_element(Node node, report_element_base element_parent,Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+public Object init_element(Node node, report_element_base element_parent,
+		Hashtable<String, report_element_base> _tagLibrary,
+		Hashtable<String, report_element_base> _beanLibrary,
+		Hashtable<String, report_element_base> _styleLibrary) {
 	report_element_base ret_obj = null;
 	try{
 		ret_obj = (report_element_base)super.init_element(node,element_parent,_tagLibrary,_beanLibrary,_styleLibrary);

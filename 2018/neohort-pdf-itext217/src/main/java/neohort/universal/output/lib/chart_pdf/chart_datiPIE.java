@@ -24,6 +24,7 @@
 
 package neohort.universal.output.lib.chart_pdf;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -42,7 +43,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
 	if(newFormatY!=null) formatY = newFormatY;
 	if(newFormatZ!=null) formatZ = newFormatZ;	
 }
-    public  ArrayList bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent) {
+    public  ArrayList<float[]> bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent) {
         float tmp;
         
         float alfa_tmp = (float)((startAng)*Math.PI/180);        
@@ -76,7 +77,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         float ry = (y2-y1)/2f;
         float halfAng = (float)(fragAngle * Math.PI / 360.);
         float kappa = (float)(Math.abs(4. / 3. * (1. - Math.cos(halfAng)) / Math.sin(halfAng)));
-        ArrayList pointList = new ArrayList(); 
+        ArrayList<float[]> pointList = new ArrayList<float[]>(); 
         for (int i = 0; i < Nfrag; ++i) {
             float theta0 = (float)((startAng + i*fragAngle) * Math.PI / 180.);
             float theta1 = (float)((startAng + (i+1)*fragAngle) * Math.PI / 180.);
@@ -159,7 +160,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         }
         return pointList;
     }
-    public  ArrayList bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent, float xd, float yd) {
+    public  ArrayList<float[]> bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent, float xd, float yd) {
         float tmp;
         
         float alfa_tmp = (float)((startAng)*Math.PI/180);        
@@ -193,7 +194,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         float ry = (y2-y1)/2f;
         float halfAng = (float)(fragAngle * Math.PI / 360.);
         float kappa = (float)(Math.abs(4. / 3. * (1. - Math.cos(halfAng)) / Math.sin(halfAng)));
-        ArrayList pointList = new ArrayList(); 
+        ArrayList<float[]> pointList = new ArrayList<float[]>(); 
         for (int i = 0; i < Nfrag; ++i) {
             float theta0 = (float)((startAng + i*fragAngle) * Math.PI / 180.);
             float theta1 = (float)((startAng + (i+1)*fragAngle) * Math.PI / 180.);
@@ -276,8 +277,8 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         }
         return pointList;
     }
-public Vector getDati(int type, float length) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float length) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(length,length);
@@ -289,8 +290,8 @@ public Vector getDati(int type, float length) {
 	    	return result; 
     }
 }
-public Vector getDati(int type, float lengthX, float lengthY, float lengthZ) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float lengthX, float lengthY, float lengthZ) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(lengthX,lengthY);
@@ -302,9 +303,9 @@ public Vector getDati(int type, float lengthX, float lengthY, float lengthZ) {
 	    	return result; 
     }
 }
-private Vector getDatiX(float lengthX, float lengthY) {
-    Vector result = new Vector();
-    Vector sort_result = new Vector();
+private Vector<Object> getDatiX(float lengthX, float lengthY) {
+    Vector<Object> result = new Vector<Object>();
+    Vector<Object> sort_result = new Vector<Object>();
 
     if (datiX == null || datiX.size() == 0) return result;
 
@@ -321,31 +322,31 @@ if(datiZ!=null && datiZ.size()!=0){
 	
 	        Radice = Radice - dRadice;
     
-	Vector colorsSh = new Vector();     
-	Vector colors = new Vector();
-		colorsSh.add(new java.awt.Color(255-40,0,0));
-		colorsSh.add(new java.awt.Color(0,255-40,0));
-		colorsSh.add(new java.awt.Color(0,0,255-40));
+	Vector<Color> colorsSh = new Vector<Color>();     
+	Vector<Color> colors = new Vector<Color>();
+		colorsSh.add(new Color(255-40,0,0));
+		colorsSh.add(new Color(0,255-40,0));
+		colorsSh.add(new Color(0,0,255-40));
 	
-		colors.add(java.awt.Color.red);
-		colors.add(java.awt.Color.green);
-		colors.add(java.awt.Color.blue);
+		colors.add(Color.red);
+		colors.add(Color.green);
+		colors.add(Color.blue);
 		int coefColor = (datiX.size()>2)?60/(datiX.size()/3):60;
 		int coefColor1 = (datiX.size()>2)?240/(datiX.size()/3):240;
 		int ic=3;
 		int icC=1;
 		while(ic<datiX.size()){
-								colors.add(new java.awt.Color(255-coefColor*icC,coefColor1*icC,coefColor*icC));
-								colorsSh.add(new java.awt.Color(255-40-coefColor*icC,coefColor1*icC,coefColor*icC));
+								colors.add(new Color(255-coefColor*icC,coefColor1*icC,coefColor*icC));
+								colorsSh.add(new Color(255-40-coefColor*icC,coefColor1*icC,coefColor*icC));
 								ic++;
 			if(ic<datiX.size()){
-								colors.add(new java.awt.Color(coefColor*icC,255-coefColor*icC,coefColor1*icC));
-								colorsSh.add(new java.awt.Color(coefColor*icC,255-40-coefColor*icC,coefColor1*icC));
+								colors.add(new Color(coefColor*icC,255-coefColor*icC,coefColor1*icC));
+								colorsSh.add(new Color(coefColor*icC,255-40-coefColor*icC,coefColor1*icC));
 								ic++;
 			}
 			if(ic<datiX.size()){
-								colors.add(new java.awt.Color(coefColor1*icC,coefColor*icC,255-coefColor*icC));
-								colorsSh.add(new java.awt.Color(coefColor1*icC,coefColor*icC,255-40-coefColor*icC));
+								colors.add(new Color(coefColor1*icC,coefColor*icC,255-coefColor*icC));
+								colorsSh.add(new Color(coefColor1*icC,coefColor*icC,255-40-coefColor*icC));
 								ic++;
 			}	
 			icC++;
@@ -374,7 +375,7 @@ if(datiZ!=null && datiZ.size()!=0){
 				cdc.setXcenter(new java.math.BigDecimal(Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setYcenter(new java.math.BigDecimal(Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 
-				ArrayList ar = bezierArc(	(float)(-Radice),
+				ArrayList<float[]> ar = bezierArc(	(float)(-Radice),
 											(float)(-Radice),
 											(float)(Radice),
 											(float)(Radice),
@@ -399,8 +400,8 @@ if(datiZ!=null && datiZ.size()!=0){
 //				cdc.setX1(new java.math.BigDecimal(Radice*Math.cos(alfaStart)).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 //				cdc.setY1(new java.math.BigDecimal(Radice*Math.sin(alfaStart)).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
        			
-				cdc.setColorTop((java.awt.Color)colors.elementAt(i));
-				cdc.setColorSh((java.awt.Color)colorsSh.elementAt(i));
+				cdc.setColorTop((Color)colors.elementAt(i));
+				cdc.setColorSh((Color)colorsSh.elementAt(i));
 				result.add(cdc);
             } 
 
@@ -427,7 +428,7 @@ if(datiZ!=null && datiZ.size()!=0){
 				cdc.setXcenter(new java.math.BigDecimal(Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setYcenter(new java.math.BigDecimal(Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 
-				ArrayList ar = bezierArc(	(float)(-Radice),
+				ArrayList<float[]> ar = bezierArc(	(float)(-Radice),
 											(float)(-Radice),
 											(float)(Radice),
 											(float)(Radice),
@@ -452,8 +453,8 @@ if(datiZ!=null && datiZ.size()!=0){
 //				cdc.setX1(new java.math.BigDecimal(Radice*Math.cos(alfaStart)+Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 //				cdc.setY1(new java.math.BigDecimal(Radice*Math.sin(alfaStart)+Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
        			
-				cdc.setColorTop((java.awt.Color)colors.elementAt(i));
-				cdc.setColorSh((java.awt.Color)colorsSh.elementAt(i));
+				cdc.setColorTop((Color)colors.elementAt(i));
+				cdc.setColorSh((Color)colorsSh.elementAt(i));
 				result.add(cdc);
             } 
 
@@ -485,14 +486,14 @@ while (result.size()!=0 && !finish){
 return sort_result;
     
 }
-private Vector getDatiY(float lengthX, float lengthY) {
-    return new Vector();
+private Vector<Object> getDatiY(float lengthX, float lengthY) {
+    return new Vector<Object>();
 }
-private Vector getDatiZ(float lengthX, float lengthY) {
+private Vector<Object> getDatiZ(float lengthX, float lengthY) {
     return datiZ;
 }
-public Vector getScale(int type, int max_scale) {
-    Vector result = new Vector();
+public Vector<Object> getScale(int type, int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getScaleX(max_scale);
@@ -504,10 +505,10 @@ public Vector getScale(int type, int max_scale) {
 	    	return result; 
     }
 }
-private Vector getScaleX(int max_scale) {
+private Vector<Object> getScaleX(int max_scale) {
 	float lengthX = max_scale;
 	float lengthY = max_scale;	
-	Vector result = new Vector();
+	Vector<Object> result = new Vector<Object>();
 
     if (datiX == null || datiX.size() == 0) return result;
     
@@ -520,24 +521,24 @@ private Vector getScaleX(int max_scale) {
 	        float dRadice = Radice/7;
 	        Radice = Radice - dRadice;
     
-	Vector colors = new Vector();
+	Vector<Color> colors = new Vector<Color>();
 	
-		colors.add(java.awt.Color.red);
-		colors.add(java.awt.Color.green);
-		colors.add(java.awt.Color.blue);
+		colors.add(Color.red);
+		colors.add(Color.green);
+		colors.add(Color.blue);
 		int coefColor = (datiX.size()>2)?60/(datiX.size()/3):60;
 		int coefColor1 = (datiX.size()>2)?240/(datiX.size()/3):240;
 		int ic=3;
 		int icC=1;
 		while(ic<datiX.size()){
-								colors.add(new java.awt.Color(255-coefColor*icC,coefColor1*icC,coefColor*icC));
+								colors.add(new Color(255-coefColor*icC,coefColor1*icC,coefColor*icC));
 								ic++;
 			if(ic<datiX.size()){
-								colors.add(new java.awt.Color(coefColor*icC,255-coefColor*icC,coefColor1*icC));
+								colors.add(new Color(coefColor*icC,255-coefColor*icC,coefColor1*icC));
 								ic++;
 			}
 			if(ic<datiX.size()){
-								colors.add(new java.awt.Color(coefColor1*icC,coefColor*icC,255-coefColor*icC));
+								colors.add(new Color(coefColor1*icC,coefColor*icC,255-coefColor*icC));
 								ic++;
 			}	
 			icC++;
@@ -576,7 +577,7 @@ private Vector getScaleX(int max_scale) {
 				cdc.setX1(new java.math.BigDecimal(Radice*Math.cos(alfaStart)+Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setY1(new java.math.BigDecimal(Radice*Math.sin(alfaStart)+Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 */				
-				cdc.setColorTop((java.awt.Color)colors.elementAt(i));
+				cdc.setColorTop((Color)colors.elementAt(i));
 				cdc.setLabel((String)datiY.elementAt(i)+" "+
 					prepareContentString(formatX,((java.math.BigDecimal)datiX.elementAt(i)).toString())
 					);
@@ -635,7 +636,7 @@ private Vector getScaleX(int max_scale) {
 				cdc.setX1(new java.math.BigDecimal(Radice*Math.cos(alfaStart)+Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setY1(new java.math.BigDecimal(Radice*Math.sin(alfaStart)+Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 */				
-				cdc.setColorTop((java.awt.Color)colors.elementAt(i));
+				cdc.setColorTop((Color)colors.elementAt(i));
 				cdc.setLabel((String)datiY.elementAt(i)+" "+
 					prepareContentString(formatX,((java.sql.Date)datiX.elementAt(i)).toString())
 					);
@@ -655,11 +656,11 @@ private Vector getScaleX(int max_scale) {
 	
     return result;
 }
-private Vector getScaleY(int max_scale) {
-    return new Vector();
+private Vector<Object> getScaleY(int max_scale) {
+    return new Vector<Object>();
 }
-private Vector getScaleZ(int max_scale) {
-	return new Vector();
+private Vector<Object> getScaleZ(int max_scale) {
+	return new Vector<Object>();
 }
 public String prepareContentString(String formatSG, String value) {
 	String content=value;

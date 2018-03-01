@@ -78,6 +78,9 @@ public Object getContent() {
 	return content;
 }
 public Color getField_Color(Class cl, String name, Color d_value) {
+	return getField_Color(name, d_value);
+}
+public Color getField_Color( String name, Color d_value) {
 	Color result = d_value;
 	if(name.indexOf(",")>-1){
 		try{
@@ -95,13 +98,13 @@ public Color getField_Color(Class cl, String name, Color d_value) {
 		}catch(Exception e){}	
 	}else{	
 		try{
-			result = (Color)cl.getField(name).get(cl);
+			result = (Color)Color.class.getField(name).get(Color.class);
 		}catch(Exception e){
 			try{
-				result = (Color)cl.getField(name.toUpperCase()).get(cl);
+				result = (Color)Color.class.getField(name.toUpperCase()).get(Color.class);
 			}catch(Exception ex){
 				try{
-					result = (Color)cl.getField(name.toLowerCase()).get(cl);
+					result = (Color)Color.class.getField(name.toLowerCase()).get(Color.class);
 				}catch(Exception exp){}
 			}
 		}

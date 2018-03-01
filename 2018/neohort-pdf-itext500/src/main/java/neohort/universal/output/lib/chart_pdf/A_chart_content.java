@@ -48,7 +48,7 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
     public int label_fontsize;
     public BaseColor label_color = new BaseColor(BaseColor.BLACK.getRGB());
 
-    public Vector scale = new Vector();
+    public Vector<Object> scale = new Vector<Object>();
     public float scale_gr;
     public com.itextpdf.text.pdf.BaseFont scale_font;
     public int scale_fontsize;
@@ -57,7 +57,7 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
     public int scale_max;
 
 
-	public Vector valueXY = new Vector();
+	public Vector<Object> valueXY = new Vector<Object>();
 
     public int or_CENTER = 0;
     public int or_BOTTOM = 1;
@@ -88,14 +88,14 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 	public BaseColor element_color_2 = new BaseColor(BaseColor.LIGHT_GRAY.getRGB());
 	public BaseColor element_color_3 = new BaseColor(BaseColor.BLACK.getRGB());
 
-	public Vector colors = new Vector();
-	public Vector colorsShadow = new Vector();
+	public Vector<BaseColor> colors = new Vector<BaseColor>();
+	public Vector<BaseColor> colorsShadow = new Vector<BaseColor>();
 
-	public Vector scaleX = new Vector();
+	public Vector<Object> scaleX = new Vector<Object>();
 	public int scaleX_max = 0;
 	private String External;
 
-	private HashMap external_parameters;
+	private HashMap<String,Object> external_parameters;
 	private I_OutputRunTime motore;
 	private boolean isError=false;
 	public String name = "CHART_ELEMENT_BASE";
@@ -113,7 +113,7 @@ public void setMotore(I_OutputRunTime motore) {
 
 public void setIsError(boolean isError) {
 	this.isError = isError;
-	if(isError) isError=isError;
+	if(isError) this.isError=isError;
 
 }
 
@@ -126,8 +126,8 @@ public void setError(Exception e, String level) {
 	}
 }
 
-public static Vector _createColors(int size) {
-	Vector result = new Vector();
+public static Vector<BaseColor> _createColors(int size) {
+	Vector<BaseColor> result = new Vector<BaseColor>();
 	int cycle = 1+(int)(size/7);
 	int coef = 125/cycle;
 
@@ -213,19 +213,19 @@ public static Vector _createColors(int size) {
 					));
 
 	}
-	Vector result_buf = new Vector();
+	Vector<BaseColor> result_buf = new Vector<BaseColor>();
 	for(int i=0;i<size;i++)
 		result_buf.add(result.get(i));
 	return result_buf;
 }
-public static Vector _createColorsShadow(int size) {
-	Vector result = _createColors(size);
+public static Vector<BaseColor> _createColorsShadow(int size) {
+	Vector<BaseColor> result = _createColors(size);
 	for(int i=0;i<result.size();i++){
 		BaseColor curr = (BaseColor)result.get(i);
 		result.set(i,new BaseColor(curr.getRed()/2,curr.getGreen()/2,curr.getBlue()/2));
 	}
 
-	Vector result_buf = new Vector();
+	Vector<BaseColor> result_buf = new Vector<BaseColor>();
 	for(int i=0;i<size;i++)
 		result_buf.add(result.get(i));
 	return result_buf;
@@ -244,7 +244,7 @@ public void _prepareColori(int size) {
 			}
 		}catch(Exception e){}
 		int count_col = colors.size();
-		Vector col_gen = _createColors(size-count_col);
+		Vector<BaseColor> col_gen = _createColors(size-count_col);
 		int i = 0;
 		while(i<size-count_col){
 			colors.add(col_gen.get(i));
@@ -259,7 +259,7 @@ public void _prepareColoriShadow(int size) {
 			}
 		}catch(Exception e){}
 		int count_col = colorsShadow.size();
-		Vector col_gen = _createColorsShadow(size-count_col);
+		Vector<BaseColor> col_gen = _createColorsShadow(size-count_col);
 		int i = 0;
 		while(i<size-count_col){
 			colorsShadow.add(col_gen.get(i));
@@ -354,7 +354,7 @@ public float getLabel_gr() {
 public int getOrientation() {
 	return orientation;
 }
-public java.util.Vector getScale() {
+public Vector<Object> getScale() {
 	return scale;
 }
 public BaseColor getScale_color() {
@@ -375,7 +375,7 @@ public float getScale_gr() {
 public int getScale_max() {
 	return scale_max;
 }
-public java.util.Vector getValueXY() {
+public Vector<Object> getValueXY() {
 	return valueXY;
 }
 public float getWidth() {
@@ -435,7 +435,7 @@ public void setLabel_gr(float newLabel_gr) {
 public void setOrientation(int newOrientation) {
 	orientation = newOrientation;
 }
-public void setScale(java.util.Vector newScale) {
+public void setScale(Vector<Object> newScale) {
 	scale = newScale;
 }
 public void setScale_color(BaseColor newScale_color) {
@@ -459,7 +459,7 @@ public void setScale_max(int newScale_max) {
 public void setShow_scale(boolean newShow_scale) {
 	show_scale = newShow_scale;
 }
-public void setValueXY(java.util.Vector newValueXY) {
+public void setValueXY(Vector<Object> newValueXY) {
 	valueXY = newValueXY;
 }
 public void setWidth(float newWidth) {
@@ -471,12 +471,17 @@ public void setX(float newX) {
 public void setY(float newY) {
 	y = newY;
 }
-public HashMap getExternal_parameters() {
+public HashMap<String,Object> getExternal_parameters() {
 	return external_parameters;
 }
 
-public void setExternal_parameters(HashMap map) {
+public void setExternal_parameters(HashMap<String,Object> map) {
 	external_parameters = map;
+}
+
+
+public boolean isError() {
+	return isError;
 }
 
 }

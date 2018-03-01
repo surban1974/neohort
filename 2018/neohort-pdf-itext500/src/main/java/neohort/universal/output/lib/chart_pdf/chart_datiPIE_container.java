@@ -24,6 +24,8 @@
 
 package neohort.universal.output.lib.chart_pdf;
 
+import java.util.ArrayList;
+
 import com.itextpdf.text.BaseColor;
 
 public class chart_datiPIE_container {
@@ -44,7 +46,7 @@ public class chart_datiPIE_container {
 	private BaseColor colorTop = new BaseColor(BaseColor.LIGHT_GRAY.getRGB());
 	private BaseColor colorSh = new BaseColor(BaseColor.LIGHT_GRAY.getRGB());
 	private java.lang.String labelPerc="";
-	public java.util.ArrayList points;
+	public ArrayList<float[]> points;
 
 public chart_datiPIE_container() {
 	super();
@@ -64,7 +66,7 @@ public java.lang.String getLabel() {
 public java.lang.String getLabelPerc() {
 	return labelPerc;
 }
-public java.util.ArrayList getPoints() {
+public ArrayList<float[]> getPoints() {
 	return points;
 }
 public float getX0() {
@@ -118,7 +120,7 @@ public void setLabel(java.lang.String newLabel) {
 public void setLabelPerc(java.lang.String newLabelPerc) {
 	labelPerc = newLabelPerc;
 }
-public void setPoints(java.util.ArrayList newPoints) {
+public void setPoints(ArrayList<float[]> newPoints) {
 	points = newPoints;
 }
 public void setX0(float newX0) {

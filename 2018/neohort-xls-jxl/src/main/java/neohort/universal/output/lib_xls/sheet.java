@@ -36,24 +36,24 @@ import neohort.universal.output.lib.report_element_base;
 
 
 public class sheet extends element{
-	private static final long serialVersionUID = 4161088494447853191L;
+	private static final long serialVersionUID = -1L;
 	WritableSheet document;
 	WritableWorkbook writer;
 
 	private String SHEET_NUMBER="";
 	private String SHEET_NAME="";
-	
+
 public sheet() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-			document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());				
+			document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 			bean _sysPdfCR = new bean();
 					_sysPdfCR.setContent(new Integer("0"));
 					_sysPdfCR.setName("SYSTEM");
 					_sysPdfCR.setID(iConst.iHORT_SYSTEM_CurrentROW);
-					_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+					_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 			bean _sysPdfCC = new bean();
 					_sysPdfCC.setContent(new Integer("0"));
@@ -67,7 +67,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					try{
 						document = writer.getSheet(current_sheet);
 					}catch(Exception ex){
-							 
+
 						if(writer.getSheets().length>current_sheet) document = writer.getSheet(current_sheet);
 						else{
 							int len = writer.getSheets().length;
@@ -79,9 +79,9 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 							_sysDocument.setName("SYSTEM");
 							_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 							_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-						
+
 				}catch(Exception e){
-					setError(e,iStub.log_ERROR);	
+					setError(e,iStub.log_ERROR);
 				}
 			}
 			try{
@@ -94,7 +94,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_ERROR);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
@@ -114,13 +114,13 @@ public void reimposta() {
 	SHEET_NUMBER = "";
 	SHEET_NAME = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
-		else{
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(document);
-		}
+		else
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(document);
+		
 	}catch(Exception e){}
 }
 	public String getSHEET_NUMBER() {

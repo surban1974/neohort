@@ -26,7 +26,7 @@ package neohort.universal.output.lib_pdf;
 
 
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -47,16 +47,16 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public abstract class element extends report_element_base implements report_element {
 
-	private static final long serialVersionUID = 1L;
-	int _sys_border = 0;
-	int _sys_align = 0;
+	private static final long serialVersionUID = -1L;
+	protected int _sys_border = 0;
+	protected int _sys_align = 0;
 public element() {
 	super();
 	Parameters.addElement("ID");
 	reimposta();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
 
@@ -139,7 +139,7 @@ public com.itextpdf.text.Font getFont(){
 	return font;
 }
 
-public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
+public PdfPCell getCellC(String frase,int border,Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 
 		if(frase==null) frase="";
@@ -403,7 +403,9 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 		return new PdfPCell(new Phrase(""));
 	}
 }
-public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+
+
+public void initCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean initProcess = new Boolean(false);
 		try{
@@ -418,12 +420,13 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
             	_sysinitProcess);
 
 		}
-		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
+
+		List<Object> canvas = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
 		if(canvas.size()==0) return;
-		Object current_Element = canvas.lastElement();
-			canvas.removeElement(canvas.lastElement());
+		Object current_Element = canvas.get(canvas.size()-1);
+			canvas.remove(canvas.size()-1);
 		if(canvas.size()==0) return;	
-		Object content_Element = canvas.lastElement();
+		Object content_Element = canvas.get(canvas.size()-1);
 
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0 ||
@@ -436,18 +439,18 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 		if(content_Element instanceof bean){
 			if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0)
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			return;
 		}
 		if(current_Element instanceof text){
 			((text)current_Element).drawDirect(_beanLibrary);
 			if(content_Element instanceof bean){
 				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0)
-					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					((bean)content_Element).add2content(current_Element);
 				if(((bean)content_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0)
-					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					((bean)content_Element).add2content(current_Element);
 			}
 			return;
 		}
@@ -522,20 +525,20 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			if(current_Element instanceof bean){
 				if(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageHeader)==0){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
-						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
-						for(int i=0;i<buf.size();i++){
+						List<Object> buf = ((bean)current_Element).getContentAsList();
+						for(Object tmp:buf){
 							boolean added=false;
-							if(buf.get(i) instanceof text){
-								((text)buf.get(i)).drawDirect(_beanLibrary);
+							if(tmp instanceof text){
+								((text)tmp).drawDirect(_beanLibrary);
 								added=true;
 							}
-							if(buf.get(i) instanceof rectangle){
-								((rectangle)buf.get(i)).drawDirect(_beanLibrary);
+							if(tmp instanceof rectangle){
+								((rectangle)tmp).drawDirect(_beanLibrary);
 								added=true;
 							}
 
 							if(!added) 
-								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
+								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)tmp);
 						}
 
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
@@ -544,20 +547,20 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}
 				if(	((bean)current_Element).getID().indexOf(iConst.iHORT_SYSTEM_PageFooter)==0){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
-						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
-						for(int i=0;i<buf.size();i++){
+						List<Object> buf = ((bean)current_Element).getContentAsList();
+						for(Object tmp:buf){
 							boolean added=false;
-							if(buf.get(i) instanceof text){
-								((text)buf.get(i)).drawDirect(_beanLibrary);
+							if(tmp instanceof text){
+								((text)tmp).drawDirect(_beanLibrary);
 								added=true;
 							}
-							if(buf.get(i) instanceof rectangle){
-								((rectangle)buf.get(i)).drawDirect(_beanLibrary);
+							if(tmp instanceof rectangle){
+								((rectangle)tmp).drawDirect(_beanLibrary);
 								added=true;
 							}
 	
 							if(!added)
-								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)buf.elementAt(i));
+								((com.itextpdf.text.Document)content_Element).add((com.itextpdf.text.Element)tmp);
 						}
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 

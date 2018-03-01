@@ -32,17 +32,17 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 
 public class paragraph extends element{
-	private static final long serialVersionUID = 8484044846528927986L;
+	private static final long serialVersionUID = -1L;
 	private table_cell parentCell = null;
 
 
 public paragraph() {
-	super();	
+	super();
 }
 
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-		
+
 
 		report_element_base parentC = (report_element_base)getParent();
 		while (parentC!=null && !parentC.getName().equalsIgnoreCase("TABLE_CELL"))
@@ -53,20 +53,20 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		if(parentCell!=null)
 			return;
 
-		
+
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 		int X = 0;
 		int Y = 0;
 		try{
 			Y = ((Integer)_sysPdfCR.getContent()).intValue();
 		}catch(Exception e){
 		}
-		
-		
+
+
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 		_sysPdfCC.setContent(new Integer(X));
 		_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);
@@ -75,20 +75,20 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
-	
+
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
 	try{
-		
+
 
 		if(parentCell!=null){
 			return;
-		}		
+		}
 
-		
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 
 		int Y = 0;
 		try{
@@ -97,7 +97,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}
 		Y++;
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)

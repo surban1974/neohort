@@ -140,7 +140,7 @@ public class ftpClient {
                 new LineNumberReader(
                      new InputStreamReader(data.getInputStream()));
 
-            Vector lines = new Vector();    
+            Vector<String> lines = new Vector<String>();    
             String line = null;
             while ((line = in.readLine()) != null) {
                 lines.add(line);

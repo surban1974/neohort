@@ -33,45 +33,45 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
 public class block extends element{
-	private static final long serialVersionUID = 7651725253765855433L;
+	private static final long serialVersionUID = -1L;
 public block() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 		int X = 0;
 		int Y = 0;
 		try{
 			Y = ((Integer)_sysPdfCR.getContent()).intValue();
 		}catch(Exception e){
 		}
-		
-		
-		
+
+
+
 		WritableSheet document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
-		
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y,_tagLibrary,_beanLibrary));
-		
+
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this.getCellC(document.getWritableCell(X,Y),X,Y,_tagLibrary,_beanLibrary));
+
 
 		try{
 			if(!internal_style.getWIDTH().equals("")) document.setColumnView(X,new Integer(internal_style.getWIDTH()).intValue());
-		}catch(Exception e){	
+		}catch(Exception e){
 		}
 		if(!internal_style.getHEIGHT().equals("") && parent!=null && parent instanceof table_row)
 			((table_row)parent).setHEIGHT(internal_style.getHEIGHT());
 
 		Y++;
-		
+
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 		_sysPdfCC.setContent(new Integer(X));
 		_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);

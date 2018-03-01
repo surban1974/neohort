@@ -22,7 +22,7 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *********************************************************************************/
 
-package neohort.universal.output.lib_pdf; 
+package neohort.universal.output.lib_pdf;
 
 
 import java.awt.Color;
@@ -62,22 +62,22 @@ public Object execute(Hashtable _beanLibrary) {
 }
 
 public com.lowagie.text.Font getFont(){
-	
+
 //	com.itextpdf.text.Font font = new com.itextpdf.text.Font(_f_name, _f_size, _f_type);
-	
+
 
 //	com.itextpdf.text.Font font = FontFactory.getFont("MSung-Light",
 //                "UniCNS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
-	
+
 //	com.itextpdf.text.Font font = FontFactory.getFont("HYSMyeongJoStd-Medium",
 //            "UniKS-UCS2-H", BaseFont.NOT_EMBEDDED,_f_size, _f_type);
-	
+
 //	com.itextpdf.text.Font font = new Font(BaseFont.createFont("resources/arialuni.ttf",
 //            BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
 
 //	com.itextpdf.text.Font font = new Font(BaseFont.createFont("HYSMyeongJoStd-Medium",
-//			"UniKS-UCS2-H", BaseFont.NOT_EMBEDDED),_f_size, _f_type);	
-	
+//			"UniKS-UCS2-H", BaseFont.NOT_EMBEDDED),_f_size, _f_type);
+
 	com.lowagie.text.Font font = new com.lowagie.text.Font();
 	try{
 
@@ -85,15 +85,15 @@ public com.lowagie.text.Font getFont(){
 		try{
 			_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
 		}catch(Exception e){}
-		
+
 		int _f_type = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT_TYPE(),com.lowagie.text.Font.NORMAL);
 
 
-		
 
 
 
-			
+
+
 		try{
 			if(getStyle()!=null && !getStyle().getEXTRA_FONT().equals("")){
 				if(!getStyle().getFONT_ENCODED().equals("")){
@@ -107,21 +107,21 @@ public com.lowagie.text.Font getFont(){
 					}
 				}else
 					font = new Font(BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED),_f_size, _f_type);
-				
+
 			}else{
-				
-				int _f_name = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER);					
+
+				int _f_name = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER);
 				font =new com.lowagie.text.Font(_f_name, _f_size, _f_type);
-				
+
 			}
 
 		}catch(Exception e){
 			setError(e,iStub.log_WARN);
 		}
-		
+
 		if(!internal_style.getFONT_COLOR().equals("")){
 			try{
-				Color fontColor = getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.BLACK);
+				Color fontColor = getField_Color(internal_style.getFONT_COLOR(),Color.BLACK);
 				font.setColor(fontColor);
 			}catch(Exception e){}
 		}
@@ -133,75 +133,75 @@ public com.lowagie.text.Font getFont(){
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
-	
+
 	return font;
 }
 
 
 public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 	try{
-		
+
 		if(frase==null) frase="";
-		
+
 		PdfPCell cell = null;
-		
+
 		float rotation = 0;
 		try{
 			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 		}catch(Exception e){
 		}
-		
+
 		if(internal_style==null){
 			internal_style=new style();
 		}
-		
+
 		if(rotation==0){
-			
-/*			
+
+/*
 			int fontDim = 0;
 			int fontType = 0;
 			int fontStyle = 0;
-			
-					
+
+
 			if(!internal_style.getFONT_SIZE().equals("")){
 				try{
 					fontDim = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
 				}catch(Exception e){}
-			}	
+			}
 			if(fontDim == 0) fontDim = 8;
-			
+
 			if(!internal_style.getFONT().equals("")){
 				try{
-					fontType = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER); 
+					fontType = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER);
 				}catch(Exception e){
 				}
-			}		
-			
+			}
+
 			if(!internal_style.getFONT_TYPE().equals("")){
 				try{
 					fontStyle = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT_TYPE(),com.lowagie.text.Font.NORMAL);
 				}catch(Exception e){
 				}
-			}	
-		
+			}
+
 			if(fontStyle == 0) fontStyle = com.lowagie.text.Font.NORMAL;
 			Font font = new Font(fontType, fontDim, fontStyle);
-			
+
 			if(!internal_style.getFONT_COLOR().equals("")){
 				try{
-					Color fontColor = getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black);
+					Color fontColor = getField_Color(internal_style.getFONT_COLOR(),Color.black);
 					font.setColor(fontColor);
 				}catch(Exception e){}
-			}	
-		
+			}
+
 			if(!internal_style.getFONT_STYLE().equals(""))
 				font.setStyle(internal_style.getFONT_STYLE().toLowerCase());
 
 
-*/				
+*/
 			Font font = getFont();
 
-			
+
 			cell = null;
 			int _f_leading = -1;
 			try{
@@ -209,7 +209,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 			}catch(Exception e){}
 			if(_f_leading==-1) cell = new PdfPCell(new Phrase(frase,font));
 			else cell = new PdfPCell(new Phrase(_f_leading,frase,font));
-			
+
 
 		}else{
 
@@ -217,10 +217,10 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 			try{
 				_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
 			}catch(Exception e){}
-		
+
 			BaseFont bs = null;
 			String bs_name="Helvetica";
-		
+
 			if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
 					bs_name = adaptAttrName(internal_style.getFONT());
 					if(internal_style.getFONT_TYPE()!=null && !internal_style.getFONT_TYPE().equals(""))
@@ -229,17 +229,17 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 						if(bs_name.indexOf("_")==-1) bs_name+="-"+adaptAttrName(internal_style.getFONT_STYLE());
 						else bs_name+=adaptAttrName(internal_style.getFONT_STYLE());
 					}
-				
+
 				String bs_code = "Cp1252";
 				if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
 					bs_code = internal_style.getFONT_ENCODED();
-				}	
+				}
 				try{
 					bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
 				}catch(Exception e){
 					bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
 				}
-				
+
 			}else if(internal_style.getEXTRA_FONT()!=null && !internal_style.getEXTRA_FONT().equals("")){
 				if(!getStyle().getFONT_ENCODED().equals("")){
 					if(!getStyle().getFONT_EMBEDDED().equals("")){
@@ -252,7 +252,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 					}
 				}else
 					bs = BaseFont.createFont(getStyle().getEXTRA_FONT(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-	
+
 			}else{
 				String bs_code = "Cp1252";
 				if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
@@ -265,7 +265,7 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 				}
 			}
 
-			
+
 			float height_check=-1;
 			if(!internal_style.getHEIGHT().equals("")){
 				try{
@@ -276,34 +276,34 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 				try{
 					height_check = Float.valueOf(internal_style.getDIMENTION_V()).floatValue();
 				}catch(Exception e){}
-			}	
+			}
 
 
 			float width_img = bs.getWidthPoint(frase, _f_size)+4;
-			float height_img = _f_size + 2; 
-			
+			float height_img = _f_size + 2;
+
 			if(height_check>0){
 				double alfa = rotation*Math.PI/180;
 				double h_real =Math.abs(Math.cos(alfa)*height_img)+Math.abs(Math.sin(alfa)*width_img);
 
-			
+
 				if(height_check<h_real){
 					int l = (int)(h_real/(height_check-2));
 					if((int)(h_real/(height_check-2))<width_img/(height_check-2)) l++;
-					width_img = height_check; 
-//					height_img = height_img*l; 
+					width_img = height_check;
+//					height_img = height_img*l;
 					frase = split(frase,l);
-				}	
+				}
 			}
-			
-			
+
+
 			PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 			PdfTemplate template = pdfWriter.getDirectContent().createTemplate(20, 20);
 			template.beginText();
 
-			template.setColorFill(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black));
+			template.setColorFill(getField_Color(internal_style.getFONT_COLOR(),Color.black));
 //			template.setRGBColorFillF(1, 1, 1);
-			
+
 			template.setFontAndSize(bs, _f_size);
 			template.setTextMatrix(2, 2);
 			template.showText(frase);
@@ -312,94 +312,94 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 			template.setHeight(height_img);
 			Image img = Image.getInstance(template);
 			img.setRotationDegrees(rotation);
-			
+
 			cell = new PdfPCell(img);
 		}
-			
+
 		cell.setBorder(border);
-		if(!internal_style.getPADDING().equals("")){	
+		if(!internal_style.getPADDING().equals("")){
 			float padding = 0;
 			try{
 				padding = Float.valueOf(internal_style.getPADDING()).floatValue();
 				if(padding!=0) cell.setPadding(padding);
 			}catch(Exception e){}
 		}
-		
+
 		if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
 			try{
 				float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_TOP()).floatValue();
 				cell.setUseVariableBorders(true);
 				cell.setBorderWidthTop(localborderWidth);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_WIDTH_BOTTOM().equals("")){
 			try{
 				float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_BOTTOM()).floatValue();
 				cell.setUseVariableBorders(true);
 				cell.setBorderWidthBottom(localborderWidth);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_WIDTH_LEFT().equals("")){
 			try{
 				float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_LEFT()).floatValue();
 				cell.setBorderWidthLeft(localborderWidth);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_WIDTH_RIGHT().equals("")){
 			try{
 				float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_RIGHT()).floatValue();
 				cell.setUseVariableBorders(true);
 				cell.setBorderWidthRight(localborderWidth);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_COLOR().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black);
+				Color color = getField_Color(internal_style.getBORDER_COLOR(),Color.black);
 				cell.setBorderColor(color);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_COLOR_TOP().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black);
+				Color color = getField_Color(internal_style.getBORDER_COLOR_TOP(),Color.black);
 				cell.setUseVariableBorders(true);
 				cell.setBorderColorTop(color);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_COLOR_BOTTOM().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black);
+				Color color = getField_Color(internal_style.getBORDER_COLOR_BOTTOM(),Color.black);
 				cell.setUseVariableBorders(true);
 				cell.setBorderColorBottom(color);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_COLOR_LEFT().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black);
+				Color color = getField_Color(internal_style.getBORDER_COLOR_LEFT(),Color.black);
 				cell.setUseVariableBorders(true);
 				cell.setBorderColorLeft(color);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_COLOR_RIGHT().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black);
+				Color color = getField_Color(internal_style.getBORDER_COLOR_RIGHT(),Color.black);
 				cell.setUseVariableBorders(true);
 				cell.setBorderColorRight(color);
 			}catch(Exception e){}
-		}			
+		}
 		if(!internal_style.getBACK_COLOR().equals("")){
 			try{
-				Color color = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.black);
+				Color color = getField_Color(internal_style.getBACK_COLOR(),Color.black);
 				cell.setUseVariableBorders(false);
 				cell.setBackgroundColor(color);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getBORDER_WIDTH().equals("")){
 			try{
 				float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH()).floatValue();
 
 				cell.setBorderWidth(localborderWidth);
 			}catch(Exception e){}
-		}	
+		}
 		if(!internal_style.getHEIGHT().equals("")){
 			try{
 				float height = Float.valueOf(internal_style.getHEIGHT()).floatValue();
@@ -411,8 +411,8 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 				float height = Float.valueOf(internal_style.getDIMENTION_V()).floatValue();
 				cell.setFixedHeight(height);
 			}catch(Exception e){}
-		}	
-			
+		}
+
 		if(!internal_style.getTEXT_ALIGN_V().equals("")){
 			try{
 				int align_v = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getTEXT_ALIGN_V(),0);
@@ -439,15 +439,15 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 				cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 		}
 
-		if(!internal_style.getROW_SPAN().equals("")){	
+		if(!internal_style.getROW_SPAN().equals("")){
 			int rowspan = 0;
 			try{
 				rowspan = Float.valueOf(internal_style.getROW_SPAN()).intValue();
 				if(rowspan!=0) cell.setRowspan(rowspan);
 			}catch(Exception e){}
 		}
-		
-		if(!internal_style.getCOL_SPAN().equals("")){	
+
+		if(!internal_style.getCOL_SPAN().equals("")){
 			int colspan = 0;
 			try{
 				colspan = Float.valueOf(internal_style.getCOL_SPAN()).intValue();
@@ -511,8 +511,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 					((bean)content_Element).setContent(current_Element);
 					current_Element=null;
 				}
-			}			
-			
+			}
+
 			return;
 		}
 		if(current_Element instanceof text){
@@ -529,12 +529,12 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			}
 			return;
 		}
-		
+
 		if(content_Element instanceof Vector){
 			if(	current_Element instanceof bean &&
 				((bean)current_Element).getID().equals("TableBlock") &&
 				((bean)current_Element).getContent()!=null){
-				
+
 				PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.pdf.PdfPTable)((bean)current_Element).getContent());
 				((Vector)content_Element).add(cell);
 				return;
@@ -550,7 +550,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				((Vector)content_Element).add((com.lowagie.text.pdf.PdfPCell)current_Element);
 				return;
 			}
-			
+
 			if(current_Element instanceof com.lowagie.text.Phrase){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Phrase)current_Element);
 				cell.setBorder(_sys_border);
@@ -564,7 +564,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				cell.setHorizontalAlignment(_sys_align);
 				((Vector)content_Element).add(cell);
 				return;
-			}				
+			}
 			if(current_Element instanceof com.lowagie.text.Image){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Image)current_Element);
 				cell.setBorder(_sys_border);
@@ -581,8 +581,8 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}catch(Exception e){
 				}
 				return;
-		}		
-				
+		}
+
 		if(content_Element instanceof com.lowagie.text.pdf.PdfPTable){
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.pdf.PdfPTable)current_Element);
@@ -623,7 +623,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				cell=null;
 				return;
 			}
-			
+
 			if(current_Element instanceof com.lowagie.text.Image){
 				com.lowagie.text.pdf.PdfPCell cell = new com.lowagie.text.pdf.PdfPCell((com.lowagie.text.Image)current_Element);
 				cell.setBorder(_sys_border);
@@ -649,7 +649,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 						if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
 						bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
 						_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
-					} catch (Exception e) {}				
+					} catch (Exception e) {}
 				}
 				current_Element=null;
 				return;
@@ -662,15 +662,15 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 							boolean added=false;
 							if(buf.get(i) instanceof text){
 								((text)buf.get(i)).drawDirect(_beanLibrary);
-								added=true; 
+								added=true;
 							}
 							if(buf.get(i) instanceof rectangle){
 								((rectangle)buf.get(i)).drawDirect(_beanLibrary);
-								added=true; 
+								added=true;
 							}
 
 							if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)buf.elementAt(i));
-						}	
+						}
 
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
@@ -683,31 +683,31 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 						boolean added=false;
 						if(buf.get(i) instanceof text){
 							((text)buf.get(i)).drawDirect(_beanLibrary);
-							added=true; 
+							added=true;
 						}
 						if(buf.get(i) instanceof rectangle){
 							((rectangle)buf.get(i)).drawDirect(_beanLibrary);
-							added=true; 
+							added=true;
 						}
 
 						if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)buf.elementAt(i));
-					}	
+					}
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
 					return;
 				}
 			}
-			
+
 			if(current_Element instanceof text){
 				((text)current_Element).drawDirect(_beanLibrary);
-				return; 
+				return;
 			}
 			if(current_Element instanceof rectangle){
 				((rectangle)current_Element).drawDirect(_beanLibrary);
-				return; 
-			}		
-			
-			
+				return;
+			}
+
+
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPCell){
 				com.lowagie.text.pdf.PdfPTable	_table = new com.lowagie.text.pdf.PdfPTable(1);
 				_table.setHorizontalAlignment(50);
@@ -718,19 +718,19 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				_table=null;
 				return;
 			}
-/*			
+/*
 			if(current_Element instanceof com.lowagie.text.Watermark){
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Watermark)current_Element);
 				return;
 			}
-*/			
+*/
 			if(current_Element instanceof com.lowagie.text.Image){
 				((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Image)current_Element);
 				current_Element=null;
 				return;
 			}
 
-			
+
 			((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)current_Element);
 			if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
 				float curr_height = ((com.lowagie.text.pdf.PdfPTable)current_Element).calculateHeights(true);
@@ -738,7 +738,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 					if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight,new bean());
 					bean _sysPdfPH = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Page_TablesHeight);
 					_sysPdfPH.setContent(new Float(((Float)_sysPdfPH.getContent()).floatValue()+curr_height));
-				} catch (Exception e) {}				
+				} catch (Exception e) {}
 			}
 
 			return;
@@ -746,7 +746,7 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 		if(content_Element instanceof com.lowagie.text.Paragraph){
 //			if(current_Element instanceof com.lowagie.text.Watermark)
 //				((com.lowagie.text.Paragraph)content_Element).add((com.lowagie.text.Watermark)current_Element);
-//			else 
+//			else
 				((com.lowagie.text.Paragraph)content_Element).add((com.lowagie.text.Element)current_Element);
 				current_Element=null;
 			return;

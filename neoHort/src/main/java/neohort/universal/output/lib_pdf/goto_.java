@@ -58,8 +58,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}catch(Exception e){}
 		int _f_name = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT(),com.lowagie.text.Font.COURIER);
 		int _f_type = getField_Int(new com.lowagie.text.Font().getClass(),internal_style.getFONT_TYPE(),com.lowagie.text.Font.NORMAL);
-		Color _fColor =getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black);
-		Color _bColor = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white);
+		Color _fColor =getField_Color(internal_style.getFONT_COLOR(),Color.black);
+		Color _bColor = getField_Color(internal_style.getBACK_COLOR(),Color.white);
 		String content=prepareContentString(internal_style.getFORMAT());
 
 		com.lowagie.text.Font font = new com.lowagie.text.Font(_f_name, _f_size, _f_type);

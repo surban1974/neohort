@@ -29,7 +29,7 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class object_java extends report_element_base{
-	private static final long serialVersionUID = 3535062471126131192L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String TYPE;
 	private java.lang.String CLASS;
 	private java.lang.String SOURCE;
@@ -37,7 +37,7 @@ public class object_java extends report_element_base{
 public object_java() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Object result = null; 
 		if(this.getSOURCE().length()>0){
@@ -56,7 +56,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 	
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

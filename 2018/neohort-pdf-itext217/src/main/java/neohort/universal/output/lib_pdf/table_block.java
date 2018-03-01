@@ -33,16 +33,16 @@ import neohort.universal.output.lib.report_element_base;
 import com.lowagie.text.pdf.PdfPTable;
 
 public class table_block extends element{
-	private static final long serialVersionUID = -6150121629888337860L;
+	private static final long serialVersionUID = -1L;
 public table_block() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		try{
 			_sys_border = Integer.valueOf(internal_style.getBORDER()).intValue();
@@ -60,12 +60,12 @@ public void reimposta() {
 	setName("TABLE_BLOCK");
 	STYLE_ID = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		PdfPTable table = new com.lowagie.text.pdf.PdfPTable(1);
 		table.setHorizontalAlignment(50);
 		table.setWidthPercentage(100);
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(table);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(table);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}

@@ -35,13 +35,13 @@ import neohort.universal.output.lib.style;
 import com.lowagie.text.Phrase;
 
 public class phrase extends element{
-	private static final long serialVersionUID = -9191296089484347050L;
+	private static final long serialVersionUID = -1L;
 public phrase() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 		int _f_size = 10;
@@ -70,7 +70,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		if(_f_leading==-1) phrase = new Phrase(content,font);
 		else phrase = new Phrase(_f_leading,content,font);
 
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(phrase);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(phrase);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
@@ -90,7 +90,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 }

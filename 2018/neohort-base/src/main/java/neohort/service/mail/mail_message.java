@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class mail_message implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	private String IMAPHOST;
 	private String SMTPHOST;
 	private String SMTPPORT;
 	private String SMTPUSESOCKET;
 	private String MAILUSER;
 	private String MAILPSWD;
-	private Vector ATTACHMENTS;
-	private Vector ATTACHMENTS_AS_BYTE;
+	private Vector<String> ATTACHMENTS;
+	private Vector<Object> ATTACHMENTS_AS_BYTE;
 	private String BODY;
 	private String SUBJECT;
 	private String MAILADDRESS_FROM;
@@ -25,7 +25,7 @@ public mail_message() {
 	super();
 	reimposta();
 }
-public Vector getATTACHMENTS() {
+public Vector<String> getATTACHMENTS() {
 	return ATTACHMENTS;
 }
 public java.lang.String getBODY() {
@@ -65,8 +65,8 @@ public void reimposta() {
 	SMTPUSESOCKET = "";
 	MAILUSER = "";
 	MAILPSWD = "";
-	ATTACHMENTS = new Vector();
-	ATTACHMENTS_AS_BYTE = new Vector();
+	ATTACHMENTS = new Vector<String>();
+	ATTACHMENTS_AS_BYTE = new Vector<Object>();
 	BODY = "";
 	SUBJECT = "";
 	MAILADDRESS_FROM = "";
@@ -75,7 +75,7 @@ public void reimposta() {
 	MAILADDRESS_BCC = "";
 	BODY_CONTENT_TYPE = "";
 }
-public void setATTACHMENTS(Vector newATTACHMENTS) {
+public void setATTACHMENTS(Vector<String> newATTACHMENTS) {
 	ATTACHMENTS = newATTACHMENTS;
 }
 public void setBODY(java.lang.String newBODY) {
@@ -120,10 +120,10 @@ public String getSMTPUSESOCKET() {
 public void setSMTPUSESOCKET(String smtpusesocket) {
 	SMTPUSESOCKET = smtpusesocket;
 }
-public Vector getATTACHMENTS_AS_BYTE() {
+public Vector<Object> getATTACHMENTS_AS_BYTE() {
 	return ATTACHMENTS_AS_BYTE;
 }
-public void setATTACHMENTS_AS_BYTE(Vector attachments_as_byte) {
+public void setATTACHMENTS_AS_BYTE(Vector<Object> attachments_as_byte) {
 	ATTACHMENTS_AS_BYTE = attachments_as_byte;
 }
 public String getBODY_CONTENT_TYPE() {

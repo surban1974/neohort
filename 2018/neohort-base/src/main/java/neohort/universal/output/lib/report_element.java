@@ -42,9 +42,9 @@ public interface report_element extends Serializable{
 	public String SYMBOL_11	=	"_$11$_";	//	'
 	public String SYMBOL_12	=	"_$12$_";	//	,
 		
-void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary);
-void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary);
-void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary);
+void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary);
+void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary);
+void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary);
 void reimposta();
 Object getContent();
 String getID();

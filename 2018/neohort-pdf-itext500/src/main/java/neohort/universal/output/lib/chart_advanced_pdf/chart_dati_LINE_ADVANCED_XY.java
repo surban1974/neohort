@@ -4,6 +4,8 @@
  */
 package neohort.universal.output.lib.chart_advanced_pdf;
 
+
+
 import java.util.Vector;
 
 import neohort.universal.output.lib.chart_pdf.A_chart_dati;
@@ -15,10 +17,10 @@ import neohort.util.util_format;
 
 public class chart_dati_LINE_ADVANCED_XY extends A_chart_dati implements I_chart_dati{
 
-    private java.util.Vector datiX_General = new Vector();
-	private java.util.Vector datiY_General = new Vector();
-    public java.util.Vector datiX_st = new Vector();
-	public java.util.Vector datiY_st = new Vector();
+    private Vector<Object> datiX_General = new Vector<Object>();
+	private Vector<Object> datiY_General = new Vector<Object>();
+    public Vector<Vector<Object>> datiX_st = new Vector<Vector<Object>>();
+	public Vector<Vector<Object>> datiY_st = new Vector<Vector<Object>>();
 
 	private float minX = 0;
     private float maxX = 0;
@@ -32,7 +34,7 @@ public class chart_dati_LINE_ADVANCED_XY extends A_chart_dati implements I_chart
     private int max_min_inputY=0;    
 
  
-    private Vector deltaXYZ; 
+    private Vector<Object> deltaXYZ; 
     	
 	
 chart_dati_LINE_ADVANCED_XY() {
@@ -46,8 +48,8 @@ public chart_dati_LINE_ADVANCED_XY(java.lang.String newFormatX,java.lang.String 
 	if(newFormatY!=null) formatY = newFormatY;
 	if(newFormatZ!=null) formatZ = newFormatZ;	
 }
-public Vector getDati(int type, float length) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float length) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(length);
@@ -59,14 +61,14 @@ public Vector getDati(int type, float length) {
 	    	return result; 
     }
 }
-public Vector getDati(int type, float length, float count, float lengthZ) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float length, float count, float lengthZ) {
+    Vector<Object> result = new Vector<Object>();
     
     try{
     	int i = new java.math.BigDecimal(count).intValue();
     	if(i>-1){
-    		datiX = (Vector)datiX_st.elementAt(i);
-    		datiY = (Vector)datiY_st.elementAt(i);
+    		datiX = datiX_st.elementAt(i);
+    		datiY = datiY_st.elementAt(i);
     	}else{
 	    	if(i==-2){
 		    	return deltaXYZ;
@@ -91,8 +93,8 @@ public Vector getDati(int type, float length, float count, float lengthZ) {
     }
 
 }
-public Vector getDatiX(float length) {
-    Vector result = new Vector();  
+public Vector<Object> getDatiX(float length) {
+    Vector<Object> result = new Vector<Object>();  
     if (datiX_General == null || datiX_General.size() == 0) return result;
     try {
         if (formatX.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -173,8 +175,8 @@ public Vector getDatiX(float length) {
     } catch (Exception e) {}
     return result;
 }
-public Vector getDatiY(float length) {
-    Vector result = new Vector(); 
+public Vector<Object> getDatiY(float length) {
+    Vector<Object> result = new Vector<Object>(); 
     if (datiY_General == null || datiY_General.size() == 0) return result;
     try {
         if (formatY.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -257,16 +259,16 @@ public Vector getDatiY(float length) {
     } catch (Exception e) {}
     return result;
 }
-public Vector getDatiZ(float length) {
-    Vector result = new Vector();
+public Vector<Object> getDatiZ(float length) {
+    Vector<Object> result = new Vector<Object>();
     try{
         for (int i = 0; i < datiZ.size(); i++)
         	result.add(String.valueOf(((java.math.BigDecimal) datiZ.elementAt(i)).floatValue()));
     }catch(Exception e){}    	
     return result;
 }
-public Vector getScale(int type, int max_scale) {
-    Vector result = new Vector();
+public Vector<Object> getScale(int type, int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getScaleX(max_scale);
@@ -278,11 +280,11 @@ public Vector getScale(int type, int max_scale) {
 	    	return result; 
     }
 }
-private Vector getScaleX(int max_scale) {
-    Vector result = new Vector();
+private Vector<Object> getScaleX(int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     if(datiX_General.size()==0){
 	    for(int i=0;i<datiX_st.size();i++){
-		    for(int j=0;j<((Vector)datiX_st.elementAt(i)).size();j++) datiX_General.add(((Vector)datiX_st.elementAt(i)).elementAt(j));
+		    for(int j=0;j<(datiX_st.elementAt(i)).size();j++) datiX_General.add((datiX_st.elementAt(i)).elementAt(j));
 		}
     }    	
     if (datiX_General == null || datiX_General.size() == 0) return result;
@@ -341,11 +343,11 @@ private Vector getScaleX(int max_scale) {
     } catch (Exception e) {}
     return result;
 }
-private Vector getScaleY(int max_scale) {
-    Vector result = new Vector();
+private Vector<Object> getScaleY(int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     if(datiY_General.size()==0){
 	    for(int i=0;i<datiY_st.size();i++){
-		    for(int j=0;j<((Vector)datiY_st.elementAt(i)).size();j++) datiY_General.add(((Vector)datiY_st.elementAt(i)).elementAt(j));
+		    for(int j=0;j<(datiY_st.elementAt(i)).size();j++) datiY_General.add((datiY_st.elementAt(i)).elementAt(j));
 		}
     }    
     if (datiY_General == null || datiY_General.size() == 0) return result;
@@ -404,8 +406,8 @@ private Vector getScaleY(int max_scale) {
     } catch (Exception e) {}
     return result;
 }
-private Vector getScaleZ(int max_scale) {
-	Vector result = new Vector();
+private Vector<Object> getScaleZ(int max_scale) {
+	Vector<Object> result = new Vector<Object>();
 	return result;
 }
 public String prepareContentString(String formatSG, String value) {
@@ -470,7 +472,7 @@ public Object prepareDataValue(String formatSG, String value) {
 }
 public void reimposta() {
 	super.reimposta();
-	deltaXYZ = new Vector();
+	deltaXYZ = new Vector<Object>();
 	deltaXYZ.add("0");
 	deltaXYZ.add("0");
 	deltaXYZ.add("0");
@@ -484,19 +486,19 @@ public void setDati(int type,String format, String value) {
 			switch (type){
 				case 0:
 					if(datiX.size()>0){
-						Vector buf = new Vector();
+						Vector<Object> buf = new Vector<Object>();
 						for(int i=0;i<datiX.size();i++) buf.add(datiX.elementAt(i));
 						datiX_st.add(buf);
 					}	
-					datiX = new Vector();
+					datiX = new Vector<Object>();
 					break;
 				case 1:
 					if(datiY.size()>0){
-						Vector buf = new Vector();
+						Vector<Object> buf = new Vector<Object>();
 						for(int i=0;i<datiY.size();i++) buf.add(datiY.elementAt(i));
 						datiY_st.add(buf);
 					}	
-					datiY = new Vector();
+					datiY = new Vector<Object>();
 				case 2:
 					break;
 			}

@@ -359,7 +359,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		if(st_font_color_label.hasMoreTokens()) font_color_label_X = getField_Color(st_font_color_label.nextToken(),BaseColor.BLACK);
 		if(st_font_color_label.hasMoreTokens()) font_color_label_Y = getField_Color(st_font_color_label.nextToken(),BaseColor.BLACK);
 
-	BaseColor color_background = getField_Color(internal_style.getBACK_COLOR(),null);
+	BaseColor color_background = getField_Color(internal_style.getBACK_COLOR());
 
 	BaseColor element_color_2d_bar = new BaseColor(BaseColor.BLUE.getRGB());
 	BaseColor element_color_2d_right = new BaseColor(BaseColor.LIGHT_GRAY.getRGB());

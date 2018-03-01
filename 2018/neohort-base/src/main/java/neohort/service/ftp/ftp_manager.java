@@ -9,7 +9,7 @@ import neohort.log.stubs.iStub;
 
 
 public class ftp_manager {
-	private java.util.Vector trace = new Vector();
+	private Vector<operation> trace = new Vector<operation>();
 	private java.lang.String ID;
 	private ftp_message FTP;
 
@@ -105,7 +105,7 @@ public ftp_message getFTP() {
 public java.lang.String getID() {
 	return ID;
 }
-public java.util.Vector getTrace() {
+public Vector<operation> getTrace() {
 	return trace;
 }
 public boolean run() throws Exception{
@@ -132,7 +132,7 @@ public boolean run() throws Exception{
 public void setID(java.lang.String newID) {
 	ID = newID;
 }
-public void setTrace(java.util.Vector newTrace) {
+public void setTrace(Vector<operation> newTrace) {
 	trace = newTrace;
 }
 }

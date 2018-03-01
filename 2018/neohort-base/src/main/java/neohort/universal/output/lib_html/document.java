@@ -26,20 +26,21 @@ package neohort.universal.output.lib_html;
 
 import java.io.DataOutputStream;
 import java.util.Hashtable;
+import java.util.List;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
 public class document extends element{
-	private static final long serialVersionUID = 4287109635677547320L;
+	private static final long serialVersionUID = -1L;
 	document document;
 public document() {
 	super();
 }
 public void add(element child) {
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			if(included!=null && included.booleanValue()==true){}
@@ -54,14 +55,15 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_ERROR);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
 		else{
 			document = (document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
-			java.util.Vector vector = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-			vector.remove(vector.lastElement());
+			List<Object> vector = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+			if(!vector.isEmpty())
+				vector.remove(vector.size()-1);
 			if(_tagLibrary.get(getName()+":"+getID())==null)
 				_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 			else _tagLibrary.remove(getName()+":"+getID());
@@ -77,12 +79,12 @@ public void reimposta() {
 	setName("DOCUMENT");
 	STYLE_ID = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
 		else{
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(document);
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(document);
 		}
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);

@@ -6,6 +6,8 @@
 package neohort.universal.output.lib.chart_advanced_pdf;
 
 
+
+
 import java.util.Vector;
 
 import com.itextpdf.text.BaseColor;
@@ -19,7 +21,7 @@ import neohort.universal.output.lib.chart_pdf.I_chart_dati;
 
 
 public class chart_content_CURVEB_MULTI_XY extends A_chart_content implements I_chart_content, java.io.Serializable {
-	private static final long serialVersionUID = -6112979387451177728L;
+	private static final long serialVersionUID = -1L;
 	static private float space_0 = 2;
 public chart_content_CURVEB_MULTI_XY() {
 	super();
@@ -119,7 +121,7 @@ public void ActionAfter(PdfContentByte cb, I_chart_content ch_contentT,I_chart_c
 public I_chart_dati ChartDatiFactory() {
 	return new chart_dati_LINE_ADVANCED_XY();
 }
-BaseColor getField_Color(Class cl, String name, BaseColor d_value) {
+BaseColor getField_Color(Class<?> cl, String name, BaseColor d_value) {
 	BaseColor result = d_value;
 	if(name.indexOf(",")>-1){
 		try{
@@ -151,11 +153,11 @@ BaseColor getField_Color(Class cl, String name, BaseColor d_value) {
 	return new BaseColor(result.getRGB());
 }
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
-	colors = new Vector();
+	colors = new Vector<BaseColor>();
 	float prof = 7;
 	boolean positionV = false;
     try {
-Vector scale_buf = new Vector();
+Vector<Object> scale_buf = new Vector<Object>();
 
         if (orientation == super.or_TOP) {
 			if(paint){
@@ -167,7 +169,7 @@ Vector scale_buf = new Vector();
 			}
 //Label-Top
             if (label != null && label.trim().length() > 0) {
-				Vector descr_label_top = new Vector();
+				Vector<String> descr_label_top = new Vector<String>();
 				try{
 					java.util.StringTokenizer st = new java.util.StringTokenizer(label, ";");
 					while (st.hasMoreTokens()){
@@ -284,7 +286,7 @@ Vector scale_buf = new Vector();
 				}
 			}
 //Label-Bottom
-			Vector descr_label_X = new Vector();
+			Vector<String> descr_label_X = new Vector<String>();
             if (label != null && label.trim().length() > 0) {
 				boolean isLABEL = true;
 				try{
@@ -543,10 +545,10 @@ Vector scale_buf = new Vector();
 				}catch(Exception e){}
 
 	        _prepareColori(((chart_dati_LINE_ADVANCED_XY)dati).datiX_st.size());
-			Vector datiX = dati.getDati(0,width-prof,-1,0);
-			Vector datiY = dati.getDati(1,height-prof,-1,0);
-			Vector datiZ = dati.getDati(2,height-prof);
-			Vector deltaXYZ = dati.getDati(0,width-prof,-2,0);
+			Vector<Object> datiX = dati.getDati(0,width-prof,-1,0);
+			Vector<Object> datiY = dati.getDati(1,height-prof,-1,0);
+			Vector<Object> datiZ = dati.getDati(2,height-prof);
+			Vector<Object> deltaXYZ = dati.getDati(0,width-prof,-2,0);
 
 			float delta_minusX = Float.valueOf((String)deltaXYZ.elementAt(0)).floatValue();
 			float delta_minusY = Float.valueOf((String)deltaXYZ.elementAt(1)).floatValue();

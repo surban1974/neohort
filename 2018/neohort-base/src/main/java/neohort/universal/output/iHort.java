@@ -60,7 +60,7 @@ import neohort.util.util_xml;
 import neohort.exception.exception_manager;
 
 public class iHort extends OutputRunTime implements I_OutputRunTime{
-	private static final long serialVersionUID = 4687357971197883208L;
+	private static final long serialVersionUID = -1L;
 	private report_element_base element_current;
 //	private iHort instance = null;
 
@@ -86,7 +86,7 @@ public iHort() {
 	initXML(fname);
 }
 
-public iHort(String fname, Hashtable _beanLibrary, report_element parentForINCLUDE) {
+public iHort(String fname, Hashtable<String, report_element_base> _beanLibrary, report_element parentForINCLUDE) {
 	String XML_name="";
 	String parameters="";
 	if(fname==null || _beanLibrary==null) return;
@@ -442,9 +442,9 @@ public void reimposta() {
 		namePac+=fullName.substring(0,fullName.indexOf("."))+".";
 		fullName = fullName.substring(fullName.indexOf(".")+1);
 	}
-	_tagLibrary = new Hashtable();
-	_beanLibrary = new Hashtable();
-	_styleLibrary = new Hashtable();
+	_tagLibrary = new Hashtable<String, report_element_base>();
+	_beanLibrary = new Hashtable<String, report_element_base>();
+	_styleLibrary = new Hashtable<String, report_element_base>();
 	element_current = null;
 
 	bean _sysIncluded = new bean();
@@ -478,19 +478,19 @@ public void reimposta() {
 		_beanLibrary.put(_sysRequest.getName()+":"+_sysRequest.getID(),_sysRequest);
 
 	bean _sysCanvas = new bean();
-		_sysCanvas.setContent(new java.util.Vector());
+		_sysCanvas.setContent(new Vector<Object>());
 		_sysCanvas.setName("SYSTEM");
 		_sysCanvas.setID(iConst.iHORT_SYSTEM_Canvas);
 		_beanLibrary.put(_sysCanvas.getName()+":"+_sysCanvas.getID(),_sysCanvas);	
 
 	bean _sysParagraph = new bean();
-		_sysParagraph.setContent(new java.util.Vector());
+		_sysParagraph.setContent(new Vector<Object>());
 		_sysParagraph.setName("SYSTEM");
 		_sysParagraph.setID(iConst.iHORT_SYSTEM_Paragraph);
 		_beanLibrary.put(_sysParagraph.getName()+":"+_sysParagraph.getID(),_sysParagraph);	
 
 	bean _sysPageBreak = new bean();
-		_sysPageBreak.setContent(new java.util.Vector());
+		_sysPageBreak.setContent(new Vector<Object>());
 		_sysPageBreak.setName("SYSTEM");
 		_sysPageBreak.setID(iConst.iHORT_SYSTEM_PageBreak);
 		_beanLibrary.put(_sysPageBreak.getName()+":"+_sysPageBreak.getID(),_sysPageBreak);
@@ -726,7 +726,7 @@ private void usebeanFactory(Node node, report_element_base element_parent) {
 	}	
 }
 
-public Hashtable get_tagLibrery(){
+public Hashtable<String, report_element_base> get_tagLibrery(){
 	return this._tagLibrary;
 }
 
@@ -774,7 +774,7 @@ private void writeOpen() {
 		}
 		String afterSaveAs = saveAsName.substring(saveAs.length(),saveAsName.length());
 		java.util.StringTokenizer st = new java.util.StringTokenizer(afterSaveAs, separatore);
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		String buf=saveAs;	
@@ -824,7 +824,7 @@ private String analisePath(String path) {
 	if(	path.trim().toLowerCase().indexOf("http://")==0 || path.trim().toLowerCase().indexOf("https://")==0 ||
 		path.trim().toLowerCase().indexOf("http:\\\\")==0 || path.trim().toLowerCase().indexOf("https:\\\\")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(path.replace('\\','/'), "/");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		nameXML=(String)parts.elementAt(parts.size()-1);
@@ -834,7 +834,7 @@ private String analisePath(String path) {
 	if(	path.trim().toLowerCase().indexOf("file://")==0 ||
 		path.trim().toLowerCase().indexOf("file:\\\\")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(path.replace('\\','/'), "/");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		nameXML=(String)parts.elementAt(parts.size()-1);
@@ -844,7 +844,7 @@ private String analisePath(String path) {
 	if(	path.trim().toLowerCase().indexOf("/")==0 ||
 		path.trim().toLowerCase().indexOf("\\")==0){
 			java.util.StringTokenizer st = new java.util.StringTokenizer(path.replace('\\','/'), "/");
-			Vector parts = new Vector();
+			Vector<String> parts = new Vector<String>();
 			while (st.hasMoreTokens())
 				parts.add(st.nextToken());
 			nameXML=(String)parts.elementAt(parts.size()-1);			
@@ -866,7 +866,7 @@ private String analisePath(String path) {
 			
 	if(	path.trim().toLowerCase().indexOf("../")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "/");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		if(parts.size()>0){
@@ -881,7 +881,7 @@ private String analisePath(String path) {
 	}	
 	if(	path.trim().toLowerCase().indexOf("..\\")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "\\");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		if(parts.size()>0){
@@ -896,7 +896,7 @@ private String analisePath(String path) {
 	if(	fullPath.trim().toLowerCase().indexOf("http://")==0 ||
 		fullPath.trim().toLowerCase().indexOf("http:\\\\")==0){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "/"); 
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		if(parts.size()>0){
@@ -909,7 +909,7 @@ private String analisePath(String path) {
 		}
 	}else{
 		java.util.StringTokenizer st = new java.util.StringTokenizer(fullPath, "\\");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		if(parts.size()>0){

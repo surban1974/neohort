@@ -33,7 +33,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 
 public class chart_content_RADAR  extends A_chart_content implements I_chart_content, java.io.Serializable {
- 	private static final long serialVersionUID = -3430891037027371513L;
+ 	private static final long serialVersionUID = -1L;
 	private float x;
     private float y;
     private float width;
@@ -47,7 +47,7 @@ public class chart_content_RADAR  extends A_chart_content implements I_chart_con
     private int label_fontsize;
     private BaseColor label_color = new BaseColor(BaseColor.BLACK.getRGB());
 
-    private Vector scale = new Vector();
+    private Vector<Object> scale = new Vector<Object>();
     private float scale_gr;
     private com.itextpdf.text.pdf.BaseFont scale_font;
     private int scale_fontsize;
@@ -55,7 +55,7 @@ public class chart_content_RADAR  extends A_chart_content implements I_chart_con
     private java.lang.String scale_format;
     private int scale_max;
 
-	private java.util.Vector valueXY = new Vector();
+	private Vector<Object> valueXY = new Vector<Object>();
 
     static public int or_CENTER = 0;
     static public int or_BOTTOM = 1;
@@ -149,7 +149,7 @@ public float getLabel_gr() {
 public int getOrientation() {
 	return orientation;
 }
-public java.util.Vector getScale() {
+public java.util.Vector<Object> getScale() {
 	return scale;
 }
 public BaseColor getScale_color() {
@@ -170,7 +170,7 @@ public float getScale_gr() {
 public int getScale_max() {
 	return scale_max;
 }
-public java.util.Vector getValueXY() {
+public java.util.Vector<Object> getValueXY() {
 	return valueXY;
 }
 public float getWidth() {
@@ -188,7 +188,7 @@ public boolean isShow_scale() {
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 
     try {
-Vector scale_buf = new Vector();
+Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == or_TOP) {
 			if(paint){
 				if(background!=null){
@@ -293,7 +293,7 @@ Vector scale_buf = new Vector();
 
 					float centerX = (width-prof+x_Line)/2;
             		float centerY = (height-prof)/2;
-				Vector datiX = dati.getDati(0,Radice*2);
+				Vector<Object> datiX = dati.getDati(0,Radice*2);
             		float alfaDelta = 360/datiX.size();
 
             		float alfaStart = 90;
@@ -351,8 +351,8 @@ Vector scale_buf = new Vector();
         		if(width>height) Radice = (height-prof)/2;
         		else Radice = (width-prof)/2;
 
-				Vector datiX = dati.getDati(0,Radice*2);
-				Vector datiY = dati.getDati(1,Radice*2);
+				Vector<Object> datiX = dati.getDati(0,Radice*2);
+				Vector<Object> datiY = dati.getDati(1,Radice*2);
 				if(paint && datiX.size()>0 && datiY.size()>0){
 
 					float centerX = (width-prof)/2;
@@ -462,7 +462,7 @@ public void setLabel_gr(float newLabel_gr) {
 public void setOrientation(int newOrientation) {
 	orientation = newOrientation;
 }
-public void setScale(java.util.Vector newScale) {
+public void setScale(java.util.Vector<Object> newScale) {
 	scale = newScale;
 }
 public void setScale_color(BaseColor newScale_color) {
@@ -486,7 +486,7 @@ public void setScale_max(int newScale_max) {
 public void setShow_scale(boolean newShow_scale) {
 	show_scale = newShow_scale;
 }
-public void setValueXY(java.util.Vector newValueXY) {
+public void setValueXY(java.util.Vector<Object> newValueXY) {
 	valueXY = newValueXY;
 }
 public void setWidth(float newWidth) {

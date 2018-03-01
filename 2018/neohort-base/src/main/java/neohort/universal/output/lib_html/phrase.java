@@ -34,11 +34,11 @@ import neohort.universal.output.lib.style;
 
 public class phrase extends element{
 
-	private static final long serialVersionUID = -2358142129783368712L;
+	private static final long serialVersionUID = -1L;
 public phrase() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	this._header+="<SPAN ";
 	this._footer="</SPAN>"+this._footer;
@@ -52,7 +52,7 @@ try{
 		!internal_style.getFONT_COLOR().equals("") ||
 		!internal_style.getFONT_SIZE().equals("") ||
 		!internal_style.getFONT_TYPE().equals("")){
-	
+
 		this._header+="style=\"";
 		if(!internal_style.getFONT().trim().equals("")) this._header+="font-family:"+internal_style.getFONT()+";";
 		if(!internal_style.getFONT_COLOR().trim().equals("")){
@@ -68,16 +68,16 @@ try{
 			if(internal_style.getFONT_TYPE().toUpperCase().equals("ITALIC"))
 				this._header+="font-style:italic;";
 		}
-		
+
 	}
 	this._header+="\">";
-	this._header = this._header.trim();	
+	this._header = this._header.trim();
 	((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(this._header);
 }catch(Exception e){
 	setError(e,iStub.log_WARN);
 }
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(this.getContent()!=null){
 			String result=(String)this.getContent();
@@ -95,9 +95,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			this.setContent(buf);
 			this._content+=prepareContentString(internal_style.getFORMAT());
 //			this._content=this._content.replace(" ", "&nbsp;");
-		
+
 		}
-		((report_element_base)((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement()).add(this);
+		((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement()).add(this);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());

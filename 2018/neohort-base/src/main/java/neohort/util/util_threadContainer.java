@@ -38,12 +38,12 @@ import java.util.Vector;
 public class util_threadContainer {
 
     protected int state=-1;
-    protected Hashtable tredHT;
+    protected Hashtable<String,String> tredHT;
     protected String command;
     protected boolean currentErrorLaunch = true;
     protected boolean wait = true;
     protected Process process;
-	protected Vector launch_mess = new Vector();
+	protected Vector<mess_element> launch_mess = new Vector<mess_element>();
 	protected String dates_input = "";
 
 public class mess_element{
@@ -70,9 +70,9 @@ private class TheThread extends Throwable implements Runnable {
 	private volatile Thread workThread;
     private boolean start = false;
     private util_threadContainer container = null;
-    TheThread() {
-        super();
-    }
+//    TheThread() {
+//        super();
+//    }
     TheThread(util_threadContainer container) {
         super();
         this.container = container;
@@ -193,19 +193,19 @@ private class TheThread extends Throwable implements Runnable {
 
 
 public util_threadContainer() {
-    this.tredHT = new Hashtable();
+    this.tredHT = new Hashtable<String,String>();
     this.command = "";
 }
 public util_threadContainer(String comando) {
-    this.tredHT = new Hashtable();
+    this.tredHT = new Hashtable<String,String>();
     this.command = comando;
 }
 public util_threadContainer(String command, boolean wait) {
-    this.tredHT = new Hashtable();
+    this.tredHT = new Hashtable<String,String>();
     this.command = command;
     this.wait = wait;
 }
-public util_threadContainer(Hashtable tredHTin) {
+public util_threadContainer(Hashtable<String,String> tredHTin) {
     this.tredHT = tredHTin;
     this.command = (String) this.tredHT.get("command");
 }
@@ -215,14 +215,14 @@ public Process getProcess() {
 public int getState() {
 	return state;
 }
-public Hashtable getTredHT() {
+public Hashtable<String,String> getTredHT() {
 	return tredHT;
 }
 public boolean isWait() {
 	return wait;
 }
 public boolean launch() {
-	launch_mess = new Vector();
+	launch_mess = new Vector<mess_element>();
 	currentErrorLaunch = true;
     this.state = -1;
     new TheThread(this).start();
@@ -237,7 +237,7 @@ public void setDates_input(String newDates_input) {
 public void setWait(boolean newWait) {
 	wait = newWait;
 }
-public Vector getLaunch_mess() {
+public Vector<mess_element> getLaunch_mess() {
 	return launch_mess;
 }
 public void setState(int i) {

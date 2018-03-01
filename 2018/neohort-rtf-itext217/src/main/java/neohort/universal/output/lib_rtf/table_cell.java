@@ -25,7 +25,7 @@
 package neohort.universal.output.lib_rtf;
 
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -41,9 +41,9 @@ public class table_cell extends element{
 public table_cell() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 		if(cell.getCompositeElements()==null || cell.getCompositeElements().size()==0){
@@ -53,8 +53,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}catch(Exception e){}
 
 			String content=prepareContentString(internal_style.getFORMAT());
-			cell=getCellC(	content,border,_beanLibrary);	
-			Vector chain = (java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent());
+			cell=getCellC(	content,border,_beanLibrary);
+			List<Object> chain = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
 			if(chain.get(chain.size()-1) instanceof PdfPCell )
 				chain.set(chain.size()-1, cell);
 		}
@@ -66,19 +66,19 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 }
 
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-		
+
 		int border = 15;
 		try{
 			border = Integer.valueOf(internal_style.getBORDER()).intValue();
 		}catch(Exception e){}
-		
-		String content=prepareContentString(internal_style.getFORMAT());
-		cell=getCellC(	content,border,_beanLibrary);	
-		
 
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+		String content=prepareContentString(internal_style.getFORMAT());
+		cell=getCellC(	content,border,_beanLibrary);
+
+
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}
@@ -94,7 +94,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 }

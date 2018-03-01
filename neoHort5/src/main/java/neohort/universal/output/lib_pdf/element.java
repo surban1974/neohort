@@ -33,11 +33,9 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
 import neohort.universal.output.lib.report_element_base;
-import neohort.universal.output.lib.report_element_baseNawt;
 import neohort.universal.output.lib.style;
 
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
@@ -47,7 +45,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public abstract class element extends report_element_baseNawt implements report_element {
+public abstract class element extends report_element_base implements report_element {
 
 	private static final long serialVersionUID = 1L;
 	int _sys_border = 0;
@@ -642,5 +640,69 @@ private String split(String frase,int l){
 		}else length_curr++;
 	}
 	return result;
+}
+public BaseColor getField_Color( String name) {
+	BaseColor result = null;
+	if(name.indexOf(",")>-1){
+		try{
+			int _r = -1;
+			int _g = -1;
+			int _b = -1;
+			java.util.StringTokenizer st = new java.util.StringTokenizer(name, ",");
+			if(st.hasMoreTokens()) _r = Integer.valueOf(st.nextToken()).intValue();
+			if(st.hasMoreTokens()) _g = Integer.valueOf(st.nextToken()).intValue();
+			if(st.hasMoreTokens()) _b = Integer.valueOf(st.nextToken()).intValue();
+			if(	_r != -1 &&
+				_g != -1 &&
+				_b != -1)
+				result = new BaseColor(_r,_g,_b);
+		}catch(Exception e){}	
+	}else{	
+		try{
+			result = (BaseColor)BaseColor.class.getField(name).get(BaseColor.class);
+		}catch(Exception e){
+			try{
+				result = (BaseColor)BaseColor.class.getField(name.toUpperCase()).get(BaseColor.class);
+			}catch(Exception ex){
+				try{
+					result = (BaseColor)BaseColor.class.getField(name.toLowerCase()).get(BaseColor.class);
+				}catch(Exception exp){}
+			}
+		}
+	}	
+	if(result==null) return BaseColor.WHITE;
+	else return new BaseColor(result.getRGB());
+}
+public BaseColor getField_Color( String name, BaseColor d_value) {
+	BaseColor result = d_value;
+	if(name.indexOf(",")>-1){
+		try{
+			int _r = -1;
+			int _g = -1;
+			int _b = -1;
+			java.util.StringTokenizer st = new java.util.StringTokenizer(name, ",");
+			if(st.hasMoreTokens()) _r = Integer.valueOf(st.nextToken()).intValue();
+			if(st.hasMoreTokens()) _g = Integer.valueOf(st.nextToken()).intValue();
+			if(st.hasMoreTokens()) _b = Integer.valueOf(st.nextToken()).intValue();
+			if(	_r != -1 &&
+				_g != -1 &&
+				_b != -1)
+				result = new BaseColor(_r,_g,_b);
+		}catch(Exception e){}	
+	}else{	
+		try{
+			result = (BaseColor)BaseColor.class.getField(name).get(BaseColor.class);
+		}catch(Exception e){
+			try{
+				result = (BaseColor)BaseColor.class.getField(name.toUpperCase()).get(BaseColor.class);
+			}catch(Exception ex){
+				try{
+					result = (BaseColor)BaseColor.class.getField(name.toLowerCase()).get(BaseColor.class);
+				}catch(Exception exp){}
+			}
+		}
+	}	
+	if(result==null) return BaseColor.WHITE;
+	else return new BaseColor(result.getRGB());
 }
 }

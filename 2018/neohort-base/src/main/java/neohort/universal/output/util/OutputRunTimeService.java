@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.Hashtable;
 
 import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -41,9 +42,9 @@ public abstract class OutputRunTimeService implements I_OutputRunTime,Serializab
 	public String LIB;
 	public String LOG_INTERCEPTOR;
 
-	public Hashtable _tagLibrary = new Hashtable();
-	public Hashtable _beanLibrary = new Hashtable();
-	public Hashtable _styleLibrary = new Hashtable();
+	public Hashtable<String, report_element_base> _tagLibrary = new Hashtable<String, report_element_base>();
+	public Hashtable<String, report_element_base> _beanLibrary = new Hashtable<String, report_element_base>();
+	public Hashtable<String, report_element_base> _styleLibrary = new Hashtable<String, report_element_base>();
 	public String namePac = "";
 
 
@@ -79,7 +80,7 @@ public void _wait() {
 	_wait = true;
 }
 
-public Hashtable get_beanLibrary() {
+public Hashtable<String, report_element_base> get_beanLibrary() {
 	return _beanLibrary;
 }
 

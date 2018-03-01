@@ -58,7 +58,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		
 		WritableSheet document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 		
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y, _tagLibrary, _beanLibrary));
+		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y,_tagLibrary,_beanLibrary));
 		
 
 		try{

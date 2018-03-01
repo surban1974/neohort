@@ -24,13 +24,15 @@
 
 package neohort.universal.output.lib.chart_pdf;
 
+
+
 import java.util.Vector;
 
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 
 public class chart_content_CURVE_XY  extends A_chart_content implements I_chart_content, java.io.Serializable {
-	private static final long serialVersionUID = -7117765743129392878L;
+	private static final long serialVersionUID = -1L;
 	private float x;
     private float y;
     private float width;
@@ -44,7 +46,7 @@ public class chart_content_CURVE_XY  extends A_chart_content implements I_chart_
     private int label_fontsize;
     private java.awt.Color label_color = java.awt.Color.black;
 
-    private Vector scale = new Vector();
+    private Vector<Object> scale = new Vector<Object>();
     private float scale_gr;
     private com.lowagie.text.pdf.BaseFont scale_font;
     private int scale_fontsize;
@@ -52,7 +54,7 @@ public class chart_content_CURVE_XY  extends A_chart_content implements I_chart_
     private java.lang.String scale_format;
     private int scale_max;
 
-	private java.util.Vector valueXY = new Vector();
+	private Vector<Object> valueXY = new Vector<Object>();
     
     static public int or_CENTER = 0;
     static public int or_BOTTOM = 1;
@@ -143,7 +145,7 @@ public float getLabel_gr() {
 public int getOrientation() {
 	return orientation;
 }
-public java.util.Vector getScale() {
+public Vector<Object> getScale() {
 	return scale;
 }
 public java.awt.Color getScale_color() {
@@ -164,7 +166,7 @@ public float getScale_gr() {
 public int getScale_max() {
 	return scale_max;
 }
-public java.util.Vector getValueXY() {
+public Vector<Object> getValueXY() {
 	return valueXY;
 }
 public float getWidth() {
@@ -178,13 +180,13 @@ public float getY() {
 }
 private int ii23d_c(
 					int m,
-					Vector x_v,
-					Vector y_v,
-					Vector a_v,
-					Vector b_v,
-					Vector c_v,
-					Vector p_v, 
-        			Vector q_v
+					Vector<Object> x_v,
+					Vector<Object> y_v,
+					Vector<Object> a_v,
+					Vector<Object> b_v,
+					Vector<Object> c_v,
+					Vector<Object> p_v, 
+        			Vector<Object> q_v
         			)
 {
 
@@ -285,7 +287,7 @@ public boolean isShow_scale() {
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	float prof = 7;
     try {
-Vector scale_buf = new Vector();
+Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == or_TOP) {
 			if(paint){	        
 				if(background!=null){	        
@@ -553,13 +555,13 @@ Vector scale_buf = new Vector();
 		
 //Scale-Center
             if (dati != null) {
-				Vector datiX = dati.getDati(0,width-prof);
-				Vector datiY = dati.getDati(1,height-prof);
-Vector a_v = new Vector();
-Vector b_v = new Vector();
-Vector c_v = new Vector();
-Vector p_v = new Vector();
-Vector q_v = new Vector();
+				Vector<Object> datiX = dati.getDati(0,width-prof);
+				Vector<Object> datiY = dati.getDati(1,height-prof);
+Vector<Object> a_v = new Vector<Object>();
+Vector<Object> b_v = new Vector<Object>();
+Vector<Object> c_v = new Vector<Object>();
+Vector<Object> p_v = new Vector<Object>();
+Vector<Object> q_v = new Vector<Object>();
 ii23d_c(	datiX.size(),
 			datiX,
 			datiY,
@@ -758,7 +760,7 @@ public void setLabel_gr(float newLabel_gr) {
 public void setOrientation(int newOrientation) {
 	orientation = newOrientation;
 }
-public void setScale(java.util.Vector newScale) {
+public void setScale(Vector<Object> newScale) {
 	scale = newScale;
 }
 public void setScale_color(java.awt.Color newScale_color) {
@@ -782,7 +784,7 @@ public void setScale_max(int newScale_max) {
 public void setShow_scale(boolean newShow_scale) {
 	show_scale = newShow_scale;
 }
-public void setValueXY(java.util.Vector newValueXY) {
+public void setValueXY(Vector<Object> newValueXY) {
 	valueXY = newValueXY;
 }
 public void setWidth(float newWidth) {

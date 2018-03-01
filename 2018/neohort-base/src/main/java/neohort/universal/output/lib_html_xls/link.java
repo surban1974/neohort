@@ -33,12 +33,12 @@ import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 public class link extends element{
-	private static final long serialVersionUID = 8344387401001851364L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String LINK;
 public link() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	this._header+=	"<TD ";
 	this._footer=	"</TD>"+_separator()+this._footer;
@@ -74,19 +74,19 @@ try{
 
 	if(	(!internal_style.getBORDER().equals("0") && internal_style.getBORDER().length()>0)||
 		(!internal_style.getPADDING().equals("0") && internal_style.getPADDING().length()>0)){
-		this._header+="STYLE=\"";	
+		this._header+="STYLE=\"";
 		if(!internal_style.getBORDER().trim().equals("")) this._header+=analiseBorder(internal_style.getBORDER());
 		else this._header+=analiseBorder("15");
 		if(!internal_style.getBORDER_WIDTH().equals("0") && internal_style.getBORDER_WIDTH().length()>0) this._header+="border-width:"+internal_style.getBORDER_WIDTH()+";";
 		if(!internal_style.getBORDER_COLOR().equals("")){
-			if(internal_style.getBORDER_COLOR().indexOf(",")>-1) this._header+="border-color:rgb("+internal_style.getBORDER_COLOR()+");"; 
+			if(internal_style.getBORDER_COLOR().indexOf(",")>-1) this._header+="border-color:rgb("+internal_style.getBORDER_COLOR()+");";
 			else this._header+="border-color:"+internal_style.getBORDER_COLOR()+";";
 		}
 		if(!internal_style.getBACK_COLOR().equals("")){
-			if(internal_style.getBACK_COLOR().indexOf(",")>-1) this._header+="background-color:rgb("+internal_style.getBACK_COLOR()+");"; 
+			if(internal_style.getBACK_COLOR().indexOf(",")>-1) this._header+="background-color:rgb("+internal_style.getBACK_COLOR()+");";
 			else this._header+="background-color:"+internal_style.getBACK_COLOR()+";";
 		}
-			
+
 		if(!internal_style.getPADDING().equals("0") && internal_style.getPADDING().length()>0) this._header+="padding: "+internal_style.getPADDING()+";";
 		this._header+="\"";
 	}
@@ -101,7 +101,7 @@ try{
 		!internal_style.getFONT_TYPE().equals("")){
 		this._header+="<SPAN ";
 		this._footer="</SPAN>"+this._footer;
-	
+
 		this._header+="style=\"";
 		if(!internal_style.getFONT().trim().equals("")) this._header+="font-family:"+internal_style.getFONT()+";";
 		if(!internal_style.getFONT_COLOR().trim().equals("")){
@@ -113,7 +113,7 @@ try{
 		this._header+="\">";
 		this._header = this._header.trim();
 	}
-	
+
 	if(!getLINK().equals("")){
 		this._header+="<A HREF=\""+getLINK()+"\">";
 		this._footer="</A>"+this._footer;
@@ -123,10 +123,10 @@ try{
 	setError(e,iStub.log_WARN);
 }
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		this._content+=prepareContentString(internal_style.getFORMAT());
-		((report_element_base)((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement()).add(this);
+		((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement()).add(this);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());

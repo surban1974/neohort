@@ -37,7 +37,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 
 public class rectangle extends element{
-	private static final long serialVersionUID = 2898978196248810829L;
+	private static final long serialVersionUID = -1L;
 	private String X_LEFT;
 	private String Y_TOP;
 	private String X_RIGHT;
@@ -47,19 +47,19 @@ public class rectangle extends element{
 public rectangle() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this);
+	_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this);
 	if(_tagLibrary.get(getName()+":"+getID())==null)
 		_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 	else _tagLibrary.remove(getName()+":"+getID());
 
 }
 
-public void drawDirect(Hashtable _beanLibrary){
+public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 		PdfContentByte cb = pdfWriter.getDirectContent();
@@ -119,7 +119,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 

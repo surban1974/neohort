@@ -25,7 +25,8 @@
 package neohort.universal.output.lib_pdf;
 
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
+
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -36,21 +37,21 @@ import neohort.universal.output.lib.style;
 import com.lowagie.text.pdf.PdfPCell;
 
 public class table_cell extends element{
-	private static final long serialVersionUID = 7167799341234651659L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 public table_cell() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-/*		
+/*
 		int border = 15;
 			try{
 				border = Integer.valueOf(internal_style.getBORDER()).intValue();
 			}catch(Exception e){}
-			
+
 		String content=prepareContentString(internal_style.getFORMAT());
 		cell=getCellC(	content,border,_beanLibrary);
 
@@ -63,9 +64,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}catch(Exception e){}
 
 			String content=prepareContentString(internal_style.getFORMAT());
-			cell=getCellC(	content,border,_beanLibrary);	
-			Vector chain = (java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent());
-			if(chain.get(chain.size()-1) instanceof PdfPCell )
+			cell=getCellC(	content,border,_beanLibrary);
+			List<Object> chain = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+			if(chain!=null && !chain.isEmpty() && chain.get(chain.size()-1) instanceof PdfPCell )
 				chain.set(chain.size()-1, cell);
 		}
 		if(_tagLibrary.get(getName()+":"+getID())==null)
@@ -76,17 +77,17 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 }
 
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-		
-		int border = 15;
-		try{
-			border = Integer.valueOf(internal_style.getBORDER()).intValue();
-		}catch(Exception e){}
-		
+
+//		int border = 15;
+//		try{
+//			border = Integer.valueOf(internal_style.getBORDER()).intValue();
+//		}catch(Exception e){}
+
 		cell=new PdfPCell();
 
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+	_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}
@@ -102,7 +103,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 }

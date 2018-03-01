@@ -31,7 +31,7 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class init_db_connection extends report_element_base{
-	private static final long serialVersionUID = 1431745749861977477L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String DB_USER;
 	private java.lang.String DB_PASSWORD;
 	private java.lang.String DB_DRIVER;
@@ -39,7 +39,7 @@ public class init_db_connection extends report_element_base{
 public init_db_connection() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(	!getDB_USER().equals("") &&
 			!getDB_PASSWORD().equals("") &&
@@ -54,7 +54,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_ERROR);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

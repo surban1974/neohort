@@ -26,7 +26,7 @@ public class general_j2ee {
 public general_j2ee() {
 	super();
 }
-public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeFirst(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -77,7 +77,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 							body.setError(e);
 	//						e.toString();
 						}
-					}	
+					}
 				}
 				if (body.getTYPE_DOCUMENT()!=null && !body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") ){
 					if(!noGenerate.booleanValue())
@@ -91,7 +91,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 							body.setError(e);
 	//						e.toString();
 						}
-					}	
+					}
 				}
 			}else if(iStreamWrapper!=null){
 				if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") ){
@@ -106,7 +106,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 							body.setError(e);
 	//						e.toString();
 						}
-					}	
+					}
 				}
 				if (body.getTYPE_DOCUMENT()!=null && !body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") ){
 					if(!noGenerate.booleanValue())
@@ -120,14 +120,14 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 							body.setError(e);
 	//						e.toString();
 						}
-					}	
+					}
 				}
-				
+
 			}
-			
+
 			if (response!=null){
 				if(body.getSOURCE_DOCUMENT().equals("") && iStreamWrapper==null){
-					if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("ATTACHMENT")){			
+					if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("ATTACHMENT")){
 						response.setHeader("Content-Disposition","attachment; filename="+body.ID+".pdf");
 						response.setHeader("Content-Transfer-Encoding","base64");
 						response.setContentType("Application/pdf");
@@ -150,39 +150,39 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 					body.getWriter().setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 				}
 			}
-	
+
 			bean _sysDocument = new bean();
 					_sysDocument.setContent(body.getDocument());
 					_sysDocument.setName("SYSTEM");
 					_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 					_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-	
+
 			bean _sysPdfWriter = new bean();
 					_sysPdfWriter.setContent(body.getWriter());
 					_sysPdfWriter.setName("SYSTEM");
 					_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
 					_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
-	
+
 			bean _sysPdfPN = new bean();
 					_sysPdfPN.setContent(new Integer("0"));
 					_sysPdfPN.setName("SYSTEM");
 					_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 					_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
-					
+
 			if(iStreamWrapper!=null){
 				bean _sysSW = new bean();
 				_sysSW.setContent(iStreamWrapper);
 				_sysSW.setName("SYSTEM");
 				_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-				_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+				_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 			}
-	
+
 		}
 	}catch(Exception e){
 		body.setError(e);
 	}
 }
-public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeLast(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -199,9 +199,9 @@ try{
 			}
 		}
 
-		
+
 		if(!noGenerate.booleanValue()) ((PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).flush();
-		
+
 		if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("STREAM") && body.getSOURCE_DOCUMENT().equals("") && iStreamWrapper==null){
 			javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
 			for(int i=0;i<8000;i++)
@@ -240,7 +240,7 @@ try{
 				response.setHeader("Content-Type","Application/pdf");
 				response.getOutputStream().write(util_file.getBytesFromFile(body.getSOURCE_DOCUMENT()));
 				response.flushBuffer();
-			}		
+			}
 		}else if(iStreamWrapper!=null){
 			if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("ATTACHMENT")){
 				if(!noGenerate.booleanValue()) ((PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
@@ -259,10 +259,10 @@ try{
 				response.getOutputStream().write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
 				iStreamWrapper.close();
 				response.flushBuffer();
-			}		
+			}
 		}
-		_tagLibrary = new Hashtable();
-		_beanLibrary = new Hashtable();
+		_tagLibrary = new Hashtable<String, report_element_base>();
+		_beanLibrary = new Hashtable<String, report_element_base>();
 
 	}
 }catch(Exception e){

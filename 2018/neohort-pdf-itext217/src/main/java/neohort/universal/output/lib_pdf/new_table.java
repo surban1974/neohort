@@ -36,17 +36,17 @@ import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 public class new_table extends element{
-	private static final long serialVersionUID = 3741454443562801743L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String COL;
 	private java.lang.String ROW;
 	private java.lang.String COLLS_DIMENTION;
-	
+
 	PdfPTable table;
 
 public new_table() {
-	super();	
+	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
 
 	try{
@@ -55,44 +55,44 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			col = Integer.valueOf(getCOL()).intValue();
 		}catch(Exception e){}
 		table = new com.lowagie.text.pdf.PdfPTable(col);
-		
-		if(	internal_style!=null && 
+
+		if(	internal_style!=null &&
 			(!internal_style.getALIGN().equals("") || !internal_style.getTEXT_ALIGN_H().equals(""))
 			){
-				if(!internal_style.getALIGN().equals("")){	
+				if(!internal_style.getALIGN().equals("")){
 					try{
-						int align_h = getField_Int(table.getClass(),"ALIGN_"+internal_style.getALIGN(),50);				
+						int align_h = getField_Int(table.getClass(),"ALIGN_"+internal_style.getALIGN(),50);
 						table.setHorizontalAlignment(align_h);
 					}catch(Exception e){
 						table.setHorizontalAlignment(50);
 					}
-				}	
-				if(!internal_style.getTEXT_ALIGN_H().equals("")){	
+				}
+				if(!internal_style.getTEXT_ALIGN_H().equals("")){
 					try{
-						int align_h = getField_Int(table.getClass(),"ALIGN_"+internal_style.getTEXT_ALIGN_H(),50);				
+						int align_h = getField_Int(table.getClass(),"ALIGN_"+internal_style.getTEXT_ALIGN_H(),50);
 						table.setHorizontalAlignment(align_h);
 					}catch(Exception e){
 						table.setHorizontalAlignment(50);
 					}
-				}	
+				}
 		}else table.setHorizontalAlignment(50);
 
 		if(internal_style!=null && !internal_style.getWIDTH().equals("")){
-			try{	
+			try{
 				if(internal_style.getWIDTH().indexOf("%")>-1)
 					table.setWidthPercentage(new Float(replace(internal_style.getWIDTH(),"%","")).floatValue());
 				else{
 					table.setTotalWidth(new Float(internal_style.getWIDTH()).floatValue());
-					table.setLockedWidth(true); 
+					table.setLockedWidth(true);
 				}
-							
+
 			}catch(Exception e){
 				table.setWidthPercentage(100);
 			}
-		}else table.setWidthPercentage(100);	
+		}else table.setWidthPercentage(100);
 
 		StringTokenizer st = new StringTokenizer(replace(getCOLLS_DIMENTION(),"%",""), ",");
-		Vector width = new Vector();
+		Vector<String> width = new Vector<String>();
 		float delta = 100/col;
 		for(int i=0;i<col;i++) width.add(new Float(delta).toString());
 		int k=0;
@@ -100,10 +100,10 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			try{
 				width.set(k,st.nextToken());
 				k++;
-			}catch(Exception e){	 
+			}catch(Exception e){
 			}
 		}
-	
+
 		float[] dim = new float[width.size()];
 		for (int i=0;i<width.size();i++) dim[i]=Float.valueOf((String)width.elementAt(i)).floatValue();
 		table.setWidths(dim);
@@ -112,13 +112,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
-	
+
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-		else _tagLibrary.remove(getName()+":"+getID());		
+		else _tagLibrary.remove(getName()+":"+getID());
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
@@ -126,16 +126,16 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 }
 
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(table);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(table);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
-	} 
+	}
 
 }
 
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 

@@ -44,7 +44,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws Servle
 	} catch (Exception exc) {
 	} finally {
 		if(gc){
-			final WeakReference ref = new WeakReference(ort);
+			final WeakReference<Object> ref = new WeakReference<Object>(ort);
 			if(ort!=null)
 				ort.clear();
 			ort=null;
@@ -84,7 +84,7 @@ public void doPost(HttpServletRequest req, HttpServletResponse res) throws Servl
 	} catch (Exception exc) {
 	} finally {
 		if(gc){
-			final WeakReference ref = new WeakReference(ort);
+			final WeakReference<Object> ref = new WeakReference<Object>(ort);
 			if(ort!=null)
 				ort.clear();
 			ort=null;

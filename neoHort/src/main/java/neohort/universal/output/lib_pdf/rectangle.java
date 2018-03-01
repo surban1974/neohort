@@ -42,16 +42,16 @@ public class rectangle extends element{
 	private String Y_TOP;
 	private String X_RIGHT;
 	private String Y_BOTTOM;
-	
-	
+
+
 public rectangle() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){	
+public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
-	
+
 	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this);
 	if(_tagLibrary.get(getName()+":"+getID())==null)
 		_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -80,7 +80,7 @@ public void drawDirect(Hashtable _beanLibrary){
 			y_bottom = Float.valueOf(getY_BOTTOM()).floatValue();
 		}catch(Exception e){}
 
-		Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black);
+		Color color = getField_Color(internal_style.getBORDER_COLOR(),Color.black);
 
 		cb.setColorFill(color);
 			cb.moveTo(x_left,y_top);
@@ -90,19 +90,19 @@ public void drawDirect(Hashtable _beanLibrary){
 			cb.lineTo(x_right,y_top);
 			cb.lineTo(x_left,y_bottom);
 		cb.fill();
-		
+
 		if(internal_style!=null && !internal_style.getBACK_COLOR().equals("")){
-			Color background = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white);
+			Color background = getField_Color(internal_style.getBACK_COLOR(),Color.white);
 			cb.setColorFill(background);
-			cb.rectangle(x_left+0.1f,y_top+0.1f,x_right-0.1f,y_bottom-0.1f); 
+			cb.rectangle(x_left+0.1f,y_top+0.1f,x_right-0.1f,y_bottom-0.1f);
 			cb.fill();
 		}
-		
+
 
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}
-	
+
 }
 
 public void reimposta() {
@@ -112,8 +112,8 @@ public void reimposta() {
 	Y_TOP = "0";
 	X_RIGHT = "0";
 	Y_BOTTOM = "0";
-	
-	
+
+
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;

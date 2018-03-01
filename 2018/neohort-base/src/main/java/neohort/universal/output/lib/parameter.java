@@ -30,18 +30,18 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class parameter extends report_element_base{
-	private static final long serialVersionUID = 2401089161630448270L;
+	private static final long serialVersionUID = -1L;
 	private String TYPE;
 public parameter() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){	
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){	
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(parent!=null){
 			Object result = executeBean(null,this.getTYPE(),_beanLibrary,0);
-			if(((report_element_base)parent).external_parameters==null) ((report_element_base)parent).external_parameters = new HashMap();
+			if(((report_element_base)parent).external_parameters==null) ((report_element_base)parent).external_parameters = new HashMap<String,Object>();
 			((report_element_base)parent).external_parameters.put(ID,result); 			
 		}
 		if(_tagLibrary.get(getName()+":"+getID())==null)

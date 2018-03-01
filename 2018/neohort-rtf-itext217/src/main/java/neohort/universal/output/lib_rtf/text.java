@@ -42,7 +42,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class text extends element{
 
-	private static final long serialVersionUID = -2628963603560963835L;
+	private static final long serialVersionUID = -1L;
 	private String ISTEMPLATE;
 	private PdfTemplate template=null;
 	private boolean drawTextInTemplate=false;
@@ -52,7 +52,7 @@ public class text extends element{
 public text() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(getISTEMPLATE().equalsIgnoreCase("TRUE") && _beanLibrary.get(getName()+":"+getID())!=null)
 			this.setTemplate(((text)_beanLibrary.get(getName()+":"+getID())).getTemplate());
@@ -60,13 +60,14 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this);
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
+	_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this);
 	if(getISTEMPLATE().equalsIgnoreCase("TRUE")){
 		_beanLibrary.put(getName()+":"+getID(),this);
 		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Templates,new bean());
-		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) ((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable());
-		((Hashtable)((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()).put(getName()+":"+getID(),getName()+":"+getID());
+		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null)
+			((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable<String,Object>());
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates).getContentAsMap().put(getName()+":"+getID(),getName()+":"+getID());
 	}else{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -74,7 +75,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 }
 
-public void drawDirect(Hashtable _beanLibrary){
+public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(	getISTEMPLATE().equalsIgnoreCase("TRUE") &&
 			_beanLibrary.get(getName()+":"+getID())!=null) isCreated=true;
@@ -174,7 +175,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 	public PdfTemplate getTemplate() {

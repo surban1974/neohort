@@ -24,7 +24,7 @@
 
 package neohort.universal.output.lib;
 
-
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -39,8 +39,6 @@ import neohort.util.util_xml_ibm;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
-
-//import com.itextpdf.text.BaseColor;
 
 public abstract class report_element_base implements report_element {
 	private static final long serialVersionUID = 370688978693756518L;
@@ -79,41 +77,11 @@ public abstract void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary);
 public Object getContent() {
 	return content;
 }
-/*
-public BaseColor getField_Color( String name, BaseColor d_value) {
-	BaseColor result = d_value;
-	if(name.indexOf(",")>-1){
-		try{
-			int _r = -1;
-			int _g = -1;
-			int _b = -1;
-			java.util.StringTokenizer st = new java.util.StringTokenizer(name, ",");
-			if(st.hasMoreTokens()) _r = Integer.valueOf(st.nextToken()).intValue();
-			if(st.hasMoreTokens()) _g = Integer.valueOf(st.nextToken()).intValue();
-			if(st.hasMoreTokens()) _b = Integer.valueOf(st.nextToken()).intValue();
-			if(	_r != -1 &&
-				_g != -1 &&
-				_b != -1)
-				result = new BaseColor(_r,_g,_b);
-		}catch(Exception e){}	
-	}else{	
-		try{
-			result = (BaseColor)BaseColor.class.getField(name).get(BaseColor.class);
-		}catch(Exception e){
-			try{
-				result = (BaseColor)BaseColor.class.getField(name.toUpperCase()).get(BaseColor.class);
-			}catch(Exception ex){
-				try{
-					result = (BaseColor)BaseColor.class.getField(name.toLowerCase()).get(BaseColor.class);
-				}catch(Exception exp){}
-			}
-		}
-	}	
-	if(result==null) return BaseColor.WHITE;
-	else return new BaseColor(result.getRGB());
+public Color getField_Color(Class cl, String name, Color d_value) {
+	return getField_Color(name, d_value);
 }
-public BaseColor getField_ColorAsColor(String name, BaseColor d_value) {
-	BaseColor result = d_value;
+public Color getField_Color( String name, Color d_value) {
+	Color result = d_value;
 	if(name.indexOf(",")>-1){
 		try{
 			int _r = -1;
@@ -126,24 +94,23 @@ public BaseColor getField_ColorAsColor(String name, BaseColor d_value) {
 			if(	_r != -1 &&
 				_g != -1 &&
 				_b != -1)
-				result = new BaseColor(_r,_g,_b);
+				result = new Color(_r,_g,_b);
 		}catch(Exception e){}	
 	}else{	
 		try{
-			result = (BaseColor)BaseColor.class.getField(name).get(BaseColor.class);
+			result = (Color)Color.class.getField(name).get(Color.class);
 		}catch(Exception e){
 			try{
-				result = (BaseColor)BaseColor.class.getField(name.toUpperCase()).get(BaseColor.class);
+				result = (Color)Color.class.getField(name.toUpperCase()).get(Color.class);
 			}catch(Exception ex){
 				try{
-					result = (BaseColor)BaseColor.class.getField(name.toLowerCase()).get(BaseColor.class);
+					result = (Color)Color.class.getField(name.toLowerCase()).get(Color.class);
 				}catch(Exception exp){}
 			}
 		}
 	}	
 	return result;
 }
-*/
 public int getField_Int(Class cl, String name, int d_value) {
 	int result = d_value;
 	try{
@@ -564,7 +531,7 @@ public void add(report_element_base child) {}
 public String getPARSER_JAVA() {
 	return PARSER_JAVA;
 }
-public void setPARSER_JAVA(String pARSER_JAVA) {
-	PARSER_JAVA = pARSER_JAVA;
+public void setPARSER_JAVA(String pARSERJAVA) {
+	PARSER_JAVA = pARSERJAVA;
 }
 }

@@ -23,7 +23,7 @@
 *********************************************************************************/
 
 /*
-* ENCODED = "iso-8859-1" or "cp1252" or ... 
+* ENCODED = "iso-8859-1" or "cp1252" or ...
 */
 
 package neohort.universal.output.lib_xlsx;
@@ -55,9 +55,9 @@ import neohort.util.util_web;
 
 
 public class general extends element{
-	private static final long serialVersionUID = 3788220213800261200L;
+	private static final long serialVersionUID = -1L;
 
-	public Hashtable _beanLibrary;
+	public Hashtable<String, report_element_base> _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
 	private String CLASS_STREAM_WRAPPER;
@@ -70,28 +70,28 @@ public class general extends element{
 	private String LIB;
 	private String TEMPORARYFILEDURINGWRITE;
 	private String ROWSXSSFACCESSWINDOWSIZE;
-	
+
 	private int rowSXSSFAccessWindowSize=100;
 
-	
+
 
 public general() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	Sheet document = null;
 
-	
+
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){	
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
-		
+
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
@@ -106,13 +106,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						setError(e);
 					}
 				}
-				
 
-				
-				
-				
+
+
+
+
 				if(getTEMPLATE()!=null && !getTEMPLATE().equals("")){
-					
+
 					Exception ex=null;
 					String path = util_web.adaptPath(getTEMPLATE(),_beanLibrary);
 					try{
@@ -142,10 +142,10 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}
 					}
 					if(workbook==null && ex!=null)
-						setError(ex,iStub.log_ERROR);			
-					
+						setError(ex,iStub.log_ERROR);
 
-					
+
+
 					if(workbook!=null){
 //						if (getTYPE_DOCUMENT()!=null && !getSOURCE_DOCUMENT().equals("")){
 //							if(!noGenerate.booleanValue()){
@@ -159,13 +159,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 //							}
 //						}else{
 //							if(!noGenerate.booleanValue()){
-//								if(settings==null) writer = Workbook.createWorkbook(oStream,workbook); 
-//								else writer = Workbook.createWorkbook(oStream,workbook,settings); 
+//								if(settings==null) writer = Workbook.createWorkbook(oStream,workbook);
+//								else writer = Workbook.createWorkbook(oStream,workbook,settings);
 //							}
 //						}
 						try{
 							document = workbook.getSheetAt(0);
-						}catch(Exception e){	
+						}catch(Exception e){
 							document = workbook.createSheet("Sheet 0");
 						}
 					}else{
@@ -174,19 +174,19 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 //							if(!noGenerate.booleanValue()){
 //								if(settings==null) writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()));
 //								else writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),settings);
-//							}	
+//							}
 //						}else if (getTYPE_DOCUMENT()!=null && iStreamWrapper!=null){
 //							if(!noGenerate.booleanValue()){
 //								if(settings==null) writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
 //								else writer = Workbook.createWorkbook(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary),settings);
-//							}	
+//							}
 //						}else{
 //							if(!noGenerate.booleanValue()){
 //								if(settings==null) writer = Workbook.createWorkbook(oStream);
-//								else writer = Workbook.createWorkbook(oStream,settings); 
+//								else writer = Workbook.createWorkbook(oStream,settings);
 //							}
 //						}
-										 
+
 						document = workbook.createSheet("Sheet 0");
 					}
 					bean _sysXlsT = new bean();
@@ -202,27 +202,27 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 //							if(settings==null) writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()));
 //							else writer = Workbook.createWorkbook(new File(getSOURCE_DOCUMENT()),settings);
 //						}else{
-//							if(settings==null) writer = Workbook.createWorkbook(oStream);	
-//							else  writer = Workbook.createWorkbook(oStream,settings);	
+//							if(settings==null) writer = Workbook.createWorkbook(oStream);
+//							else  writer = Workbook.createWorkbook(oStream,settings);
 //						}
 					}
 					document = workbook.createSheet("Sheet 0");
-					
+
 					if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("LANDSCAPE"))
 						document.getPrintSetup().setLandscape(true);
-					else 
+					else
 						document.getPrintSetup().setLandscape(false);
-					
-					
+
+
 					try{
 						java.util.StringTokenizer st = new java.util.StringTokenizer(getMARGINS(), ",");
-		
+
 						document.setMargin(Sheet.LeftMargin, Double.valueOf(st.nextToken()).doubleValue()/96);
 						document.setMargin(Sheet.RightMargin, Double.valueOf(st.nextToken()).doubleValue()/96);
 						document.setMargin(Sheet.TopMargin, Double.valueOf(st.nextToken()).doubleValue()/96);
 						document.setMargin(Sheet.BottomMargin, Double.valueOf(st.nextToken()).doubleValue()/96);
-						
-			
+
+
 					}catch(Exception e){
 					}
 					bean _sysXlsT = new bean();
@@ -230,53 +230,53 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						_sysXlsT.setName("SYSTEM");
 						_sysXlsT.setID(iConst.iHORT_SYSTEM_Excel_template_present);
 						_beanLibrary.put(_sysXlsT.getName()+":"+_sysXlsT.getID(),_sysXlsT);
-					
+
 				}
-		
+
 				bean _sysPdfWorkbook = new bean();
 					_sysPdfWorkbook.setContent(workbook);
 					_sysPdfWorkbook.setName("SYSTEM");
 					_sysPdfWorkbook.setID(iConst.iHORT_SYSTEM_Workbook);
-					_beanLibrary.put(_sysPdfWorkbook.getName()+":"+_sysPdfWorkbook.getID(),_sysPdfWorkbook);				
-				
-		
+					_beanLibrary.put(_sysPdfWorkbook.getName()+":"+_sysPdfWorkbook.getID(),_sysPdfWorkbook);
+
+
 				bean _sysDocument = new bean();
 						_sysDocument.setContent(document);
 						_sysDocument.setName("SYSTEM");
 						_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 						_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-		
+
 				bean _sysPdfPN = new bean();
 						_sysPdfPN.setContent(new Integer("0"));
 						_sysPdfPN.setName("SYSTEM");
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
-		
-						
+
+
 				if(iStreamWrapper!=null){
 					bean _sysSW = new bean();
 					_sysSW.setContent(iStreamWrapper);
 					_sysSW.setName("SYSTEM");
 					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
-				}		
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
+				}
 			}
 		}catch(Exception e){
 			setError(e);
 		}
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeLast(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
-		
+
 			if(included!=null && included.booleanValue()==true){}
 			else{
 				I_StreamWrapper iStreamWrapper = null;
@@ -300,7 +300,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}else if(iStreamWrapper!=null){
 						if(!noGenerate.booleanValue()){
 							workbook.write(iStreamWrapper.createOutputStream(_tagLibrary, _beanLibrary));
-							
+
 							HttpServletResponse response = null;
 							try{
 								response = (HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
@@ -343,12 +343,12 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}catch(Exception e){}
 					}
 				}
-				
-				
-				
-				_tagLibrary = new Hashtable();
-				_beanLibrary = new Hashtable();
-		
+
+
+
+				_tagLibrary = new Hashtable<String, report_element_base>();
+				_beanLibrary = new Hashtable<String, report_element_base>();
+
 			}
 		}catch(Exception e){
 			setError(e);
@@ -360,12 +360,12 @@ public Workbook wrapSXSSF(XSSFWorkbook xssf){
 	if(getTEMPORARYFILEDURINGWRITE()!=null && getTEMPORARYFILEDURINGWRITE().equalsIgnoreCase("true")){
 		int rowsxss = rowSXSSFAccessWindowSize;
 		if(getROWSXSSFACCESSWINDOWSIZE()!=null && !getROWSXSSFACCESSWINDOWSIZE().equals("")){
-			
+
 			try{
 				rowsxss = Integer.valueOf(getROWSXSSFACCESSWINDOWSIZE());
-			}catch(Exception e){				
+			}catch(Exception e){
 			}
-		}				
+		}
 		if(xssf==null)
 			return new SXSSFWorkbook(rowsxss);
 		return new SXSSFWorkbook(xssf, rowsxss);
@@ -376,7 +376,7 @@ public Workbook wrapSXSSF(XSSFWorkbook xssf){
 		else
 			return xssf;
 	}
-	
+
 
 }
 public String getMARGINS() {
@@ -384,7 +384,7 @@ public String getMARGINS() {
 }
 public String getORIENTATION() {
 	return ORIENTATION;
-} 
+}
 public String getSOURCE_AFTER_FIXED() {
 	return SOURCE_AFTER_FIXED;
 }
@@ -413,21 +413,21 @@ public void reimposta() {
 	LIB="xlsx";
 	TEMPLATE="";
 	TEMPORARYFILEDURINGWRITE="";
-	
+
 }
 public void setError(Exception e) {
 	if(motore instanceof OutputRunTime){
 		general_j2ee.setError(this,e);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try {
 			isError = true;
 			if(e.toString().indexOf("java.io.IOException")>-1){
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 					if(!getSOURCE_ERROR_FIXED().equals("")){
-						try{						
+						try{
 							XSSFWorkbook workbook = (XSSFWorkbook)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Workbook)).getContent();
 							if(workbook!=null){
 								workbook.write(new FileOutputStream(new File(getSOURCE_ERROR_FIXED())));
@@ -444,7 +444,7 @@ public void setError(Exception e) {
 						}catch(Exception ex){}
 					}
 				}
-	
+
 			}else{
 				((iHort)motore).setError(e,this.getName(),iStub.log_ERROR);
 			}

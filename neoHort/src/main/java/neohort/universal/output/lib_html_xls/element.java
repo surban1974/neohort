@@ -26,7 +26,10 @@ package neohort.universal.output.lib_html_xls;
 
 import java.util.Hashtable;
 
-import neohort.universal.output.lib.*;
+import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
+
+
 
 public abstract class element extends report_element_base  implements report_element {
 

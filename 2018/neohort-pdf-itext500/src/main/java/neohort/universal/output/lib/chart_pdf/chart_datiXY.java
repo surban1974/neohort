@@ -41,8 +41,8 @@ public chart_datiXY(java.lang.String newFormatX,java.lang.String newFormatY,java
 	if(newFormatY!=null) formatY = newFormatY;
 	if(newFormatZ!=null) formatZ = newFormatZ;	
 }
-public Vector getDati(int type, float length) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float length) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(length);
@@ -54,12 +54,12 @@ public Vector getDati(int type, float length) {
 	    	return result; 
     }
 }
-public Vector getDati(int type, float lengthX, float lengthY, float lengthZ) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float lengthX, float lengthY, float lengthZ) {
+    Vector<Object> result = new Vector<Object>();
    	return result; 
 }
-public Vector getDatiX(float length) {
-    Vector result = new Vector(); 
+public Vector<Object> getDatiX(float length) {
+    Vector<Object> result = new Vector<Object>(); 
     if (datiX == null || datiX.size() == 0) return result;
     try {
         if (formatX.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -101,8 +101,8 @@ public Vector getDatiX(float length) {
     } catch (Exception e) {}
     return result;
 }
-public Vector getDatiY(float length) {
-    Vector result = new Vector();
+public Vector<Object> getDatiY(float length) {
+    Vector<Object> result = new Vector<Object>();
     if (datiY == null || datiY.size() == 0) return result;
     try {
         if (formatY.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -144,8 +144,8 @@ public Vector getDatiY(float length) {
     } catch (Exception e) {}
     return result;
 }
-public Vector getDatiZ(float length) {
-    Vector result = new Vector();
+public Vector<Object> getDatiZ(float length) {
+    Vector<Object> result = new Vector<Object>();
     if (datiZ == null || datiZ.size() == 0) return result;
     try {
         if (formatZ.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -187,8 +187,8 @@ public Vector getDatiZ(float length) {
     } catch (Exception e) {}
     return result;
 }
-public Vector getScale(int type, int max_scale) {
-    Vector result = new Vector();
+public Vector<Object> getScale(int type, int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getScaleX(max_scale);
@@ -200,8 +200,8 @@ public Vector getScale(int type, int max_scale) {
 	    	return result; 
     }
 }
-private Vector getScaleX(int max_scale) {
-    Vector result = new Vector();
+private Vector<Object> getScaleX(int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     if (datiX == null || datiX.size() == 0) return result;
     try {
         if (formatX.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -247,8 +247,8 @@ private Vector getScaleX(int max_scale) {
     } catch (Exception e) {}
     return result;
 }
-private Vector getScaleY(int max_scale) {
-	Vector result = new Vector();
+private Vector<Object> getScaleY(int max_scale) {
+	Vector<Object> result = new Vector<Object>();
 	if(datiY==null || datiY.size()==0) return result;
 	try{
 		if (formatY.trim().toUpperCase().indexOf("NUMBER")==0) {
@@ -296,8 +296,8 @@ private Vector getScaleY(int max_scale) {
 	}catch(Exception e){}	
 	return result;
 }
-private Vector getScaleZ(int max_scale) {
-	Vector result = new Vector();
+private Vector<Object> getScaleZ(int max_scale) {
+	Vector<Object> result = new Vector<Object>();
 	if(datiZ==null || datiZ.size()==0) return result;
 	try{
 		if (formatZ.trim().toUpperCase().indexOf("NUMBER")==0) {

@@ -30,23 +30,24 @@ import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 public class table extends element{
 
-	private static final long serialVersionUID = 4421566444036916843L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String COL;
 	private java.lang.String ROW;
 	private java.lang.String COLLS_DIMENTION;
 	private int startX=0;
 	private table_block parentTable_Block;
 public table() {
-	super();	
+	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
 
 		report_element parentForINCLUDE = null;
 		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_ParentForINCLUDE+"_ids_"+motore.hashCode())!=null)
@@ -54,7 +55,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 		if(	parent!=null && parent instanceof table_block) parentTable_Block = (table_block)parent;
 		else{
-			if(parentForINCLUDE!=null && parentForINCLUDE  instanceof table_block) parentTable_Block = (table_block)parentForINCLUDE; 
+			if(parentForINCLUDE!=null && parentForINCLUDE  instanceof table_block) parentTable_Block = (table_block)parentForINCLUDE;
 		}
 
 		int X = 0;
@@ -67,28 +68,28 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}
 		}else startX=0;
 
-			
+
 		try{
 			Y = ((Integer)_sysPdfCR.getContent()).intValue();
 		}catch(Exception e){
 		}
-		
+
 		X=startX;
-		
+
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
-	
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
+
 		_sysPdfCC.setContent(new Integer(X));
 		_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-		else _tagLibrary.remove(getName()+":"+getID());		
+		else _tagLibrary.remove(getName()+":"+getID());
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

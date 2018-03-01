@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -69,11 +70,11 @@ import neohort.util.util_format;
 
 public abstract class element extends report_element_base  implements report_element {
 
-	private static final long serialVersionUID = 1L;
-	protected static HashMap colorsCache;
-	protected static HashMap fontNameCache;
-	protected static HashMap alignCache;
-	protected static HashMap vAlignCache;
+	private static final long serialVersionUID = -1L;
+	protected static HashMap<Color,Colour> colorsCache;
+	protected static HashMap<String,WritableFont.FontName> fontNameCache;
+	protected static HashMap<String,Alignment> alignCache;
+	protected static HashMap<String,VerticalAlignment> vAlignCache;
 
 	protected WritableCellFormat defDATEFORMAT;
 	protected WritableCellFormat defDATETIMEFORMAT;
@@ -94,8 +95,8 @@ public element() {
 }
 public void add(report_element_base child) {}
 
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
 public void reimposta(){
@@ -106,18 +107,19 @@ public Cell getCellC(Cell old,int X,int Y) {
 	return getCellC(old, X, Y, null, null);
 }
 
-public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public Cell getCellC(Cell old,int X,int Y, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 
 
-	Hashtable wcfCash = null;
+	Hashtable<String,WritableCellFormat> wcfCash = null;
 	if(_beanLibrary!=null){
 		bean _sysWcfCash = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
 		if(_sysWcfCash!=null){
-			wcfCash = (Hashtable)_sysWcfCash.getContent();
+			wcfCash = (Hashtable<String,WritableCellFormat>)_sysWcfCash.getContent();
+			
 			if(wcfCash==null)
-				wcfCash = new Hashtable();
+				wcfCash = new Hashtable<String,WritableCellFormat>();
 		}else{
-			wcfCash = new Hashtable();
+			wcfCash = new Hashtable<String,WritableCellFormat>();
 			_sysWcfCash = new bean();
 			_sysWcfCash.setContent(wcfCash);
 			_sysWcfCash.setName("SYSTEM");
@@ -125,7 +127,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			_beanLibrary.put(_sysWcfCash.getName()+":"+_sysWcfCash.getID(),_sysWcfCash);
 		}
 	}else
-		wcfCash = new Hashtable();
+		wcfCash = new Hashtable<String,WritableCellFormat>();
 
 
 
@@ -262,7 +264,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 
 		format.setFont(font);
 
-		Vector[] borders_colours = analiseBorder_Colour(internal_style);
+		Vector<?>[] borders_colours = analiseBorder_Colour(internal_style);
 		Vector borders = borders_colours[0];
 		Vector colours = borders_colours[1];
 		if (borders.size() >0) isFormat=true;
@@ -409,7 +411,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 	return cell;
 }
 
-public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void initCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean initProcess = new Boolean(false);
 		try{
@@ -424,12 +426,13 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				_sysinitProcess);
 
 		}
-		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-
-		Object current_Element = canvas.lastElement();
-			canvas.removeElement(canvas.lastElement());
-		Object content_Element = canvas.lastElement();
-
+		List<Object> canvas = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+		if(canvas.isEmpty()) return;
+		Object current_Element = canvas.get(canvas.size()-1);
+			canvas.remove(canvas.size()-1);
+			if(canvas.isEmpty()) return;
+		Object content_Element = canvas.get(canvas.size()-1);
+		
 		if(	initProcess.booleanValue() &&
 			(	((bean)current_Element).getID().equals("PageFooter_") ||
 				((bean)current_Element).getID().equals("PageHeader_"))
@@ -441,9 +444,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 		if(content_Element instanceof bean){
 			if(((bean)content_Element).getID().equals("PageFooter_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			if(((bean)content_Element).getID().equals("PageHeader_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			return;
 		}
 
@@ -506,8 +509,8 @@ public boolean analiseItalicStyle(String type){
 	return false;
 }
 public WritableFont.FontName analizeFontName(String name){
-	if(fontNameCache==null) fontNameCache=new HashMap();
-	WritableFont.FontName fontName = (WritableFont.FontName)fontNameCache.get(name);
+	if(fontNameCache==null) fontNameCache=new HashMap<String,WritableFont.FontName>();
+	WritableFont.FontName fontName = fontNameCache.get(name);
 
 	if(fontName==null){
 		if(name==null || name.equals("")) fontName = WritableFont.COURIER;
@@ -522,8 +525,8 @@ public WritableFont.FontName analizeFontName(String name){
 }
 
 public static Colour getNearestColour(Color awtColor){
-	if(colorsCache==null) colorsCache=new HashMap();
-    Colour color = (Colour) colorsCache.get(awtColor);
+	if(colorsCache==null) colorsCache=new HashMap<Color,Colour>();
+    Colour color = colorsCache.get(awtColor);
 
     if (color == null)
     {
@@ -561,8 +564,8 @@ public static Colour getNearestColour(Color awtColor){
 
 
 public Alignment analiseAlign(String align){
-	if(alignCache==null) alignCache=new HashMap();
-	Alignment alignment = (Alignment)alignCache.get(align);
+	if(alignCache==null) alignCache=new HashMap<String,Alignment>();
+	Alignment alignment = alignCache.get(align);
 
 	if(alignment==null){
 
@@ -579,8 +582,8 @@ public Alignment analiseAlign(String align){
 }
 
 public VerticalAlignment analiseVAlign(String align){
-	if(vAlignCache==null) vAlignCache=new HashMap();
-	VerticalAlignment alignment = (VerticalAlignment)vAlignCache.get(align);
+	if(vAlignCache==null) vAlignCache=new HashMap<String,VerticalAlignment>();
+	VerticalAlignment alignment = vAlignCache.get(align);
 
 	if(alignment==null){
 		if(align.equalsIgnoreCase("TOP"))  alignment =  VerticalAlignment.TOP;
@@ -593,12 +596,12 @@ public VerticalAlignment analiseVAlign(String align){
 	return alignment;
 }
 
-public Vector[] analiseBorder_Colour(style internal_style){
+public Vector<?>[] analiseBorder_Colour(style internal_style){
 
-
-	Vector[] result= new Vector[2];
-	Vector borders = new Vector();
-	Vector colours = new Vector();
+	
+	Vector<?>[] result= new Vector[2];
+	Vector<Border> borders = new Vector<Border>();
+	Vector<Colour> colours = new Vector<Colour>();
 	int border=0;
 	try{
 		border=new Integer(internal_style.getBORDER()).intValue();

@@ -31,7 +31,7 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 
 public class chart_content_PIE  extends A_chart_content implements I_chart_content, java.io.Serializable {
-	private static final long serialVersionUID = -4829762592811608504L;
+	private static final long serialVersionUID = -1L;
 	private float x;
     private float y;
     private float width;
@@ -45,7 +45,7 @@ public class chart_content_PIE  extends A_chart_content implements I_chart_conte
     private int label_fontsize;
     private java.awt.Color label_color = java.awt.Color.black;
 
-    private Vector scale = new Vector();
+    private Vector<Object> scale = new Vector<Object>();
     private float scale_gr;
     private com.lowagie.text.pdf.BaseFont scale_font;
     private int scale_fontsize;
@@ -53,7 +53,7 @@ public class chart_content_PIE  extends A_chart_content implements I_chart_conte
     private java.lang.String scale_format;
     private int scale_max;
 
-	private java.util.Vector valueXY = new Vector();
+	private Vector<Object> valueXY = new Vector<Object>();
     
     static public int or_CENTER = 0;
     static public int or_BOTTOM = 1;
@@ -134,7 +134,7 @@ public float getLabel_gr() {
 public int getOrientation() {
 	return orientation;
 }
-public java.util.Vector getScale() {
+public Vector<Object> getScale() {
 	return scale;
 }
 public java.awt.Color getScale_color() {
@@ -155,7 +155,7 @@ public float getScale_gr() {
 public int getScale_max() {
 	return scale_max;
 }
-public java.util.Vector getValueXY() {
+public Vector<Object> getValueXY() {
 	return valueXY;
 }
 public float getWidth() {
@@ -173,7 +173,7 @@ public boolean isShow_scale() {
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 float coefStr = 1/(float)(Math.sin(Math.PI/6));
 float coef_h_pie = 16;
-Vector dZ = dati.getDati(2,0);
+Vector<Object> dZ = dati.getDati(2,0);
 if(dZ!=null && dZ.size()>1){
 	try{
 		float ang = new java.math.BigDecimal((String)dZ.elementAt(1)).floatValue();
@@ -188,7 +188,7 @@ if(dZ!=null && dZ.size()>2){
 }
 
     try {
-        Vector scale_buf = new Vector();
+        Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == or_TOP) {
             if (paint) {
                 if (background != null) {
@@ -351,7 +351,7 @@ if(dZ!=null && dZ.size()>2){
 
                 float heightPie = Radice / coef_h_pie;
                  
-                Vector datiX = dati.getDati(0, Radice * 2);
+                Vector<Object> datiX = dati.getDati(0, Radice * 2);
                 if (paint && datiX.size() > 0) {
 
                     float centerX = (width - prof) / 2;
@@ -391,7 +391,7 @@ if(dZ!=null && dZ.size()>2){
                         cb.fill();
 
 
-						ArrayList ar = cdc.getPoints();
+						ArrayList<float []> ar = cdc.getPoints();
                         cb.setColorFill(cdc.getColorSh());
 							
 						cb.moveTo(x2, y2 - heightPie);
@@ -434,7 +434,7 @@ if(dZ!=null && dZ.size()>2){
                         float x2 = cdc.getX1()+x+centerX+prof;
                         float y2 = cdc.getY1()/coefStr+y+centerY+prof;
 
-						ArrayList ar = cdc.getPoints();
+						ArrayList<float []> ar = cdc.getPoints();
 
 						cb.setColorFill(cdc.getColorTop());
                         cb.moveTo(xd, yd + heightPie);
@@ -541,7 +541,7 @@ public void setLabel_gr(float newLabel_gr) {
 public void setOrientation(int newOrientation) {
 	orientation = newOrientation;
 }
-public void setScale(java.util.Vector newScale) {
+public void setScale(Vector<Object> newScale) {
 	scale = newScale;
 }
 public void setScale_color(java.awt.Color newScale_color) {
@@ -565,7 +565,7 @@ public void setScale_max(int newScale_max) {
 public void setShow_scale(boolean newShow_scale) {
 	show_scale = newShow_scale;
 }
-public void setValueXY(java.util.Vector newValueXY) {
+public void setValueXY(Vector<Object> newValueXY) {
 	valueXY = newValueXY;
 }
 public void setWidth(float newWidth) {

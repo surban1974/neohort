@@ -34,15 +34,15 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 
 public class pagebreak extends element{
-	private static final long serialVersionUID = -8931736222173377614L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String ORIENTATION;
 	private java.lang.String MARGINS;
 
 public pagebreak() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
-	
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
+
 	try{
 		Document document = ((Document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent()));
 		if(getORIENTATION()!=null && getORIENTATION().trim().equalsIgnoreCase("LANDSCAPE"))
@@ -65,14 +65,14 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				document.setMargins(30, 30, 30, 30);
 			}
 		}
-		
+
 		document.newPage();
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

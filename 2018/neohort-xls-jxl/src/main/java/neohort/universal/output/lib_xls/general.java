@@ -52,9 +52,9 @@ import neohort.util.util_web;
 
 
 public class general extends element{
-	private static final long serialVersionUID = 3788220213800261200L;
+	private static final long serialVersionUID = -1L;
 
-	public Hashtable _beanLibrary;
+	public Hashtable<String, report_element_base> _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
 	private String CLASS_STREAM_WRAPPER;
@@ -74,7 +74,7 @@ public class general extends element{
 public general() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	WritableSheet document = null;
 	WritableWorkbook writer = null;
 	WorkbookSettings settings = null;
@@ -159,7 +159,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}
 					}
 					if(workbook==null && ex!=null)
-						setError(ex,iStub.log_ERROR);		
+						setError(ex,iStub.log_ERROR);
 
 					if(ENCODED!=null){
 						if(settings==null)
@@ -290,7 +290,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeLast(this, _tagLibrary, _beanLibrary);
 	}
@@ -325,8 +325,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					e.toString();
 				}
 
-				_tagLibrary = new Hashtable();
-				_beanLibrary = new Hashtable();
+				_tagLibrary = new Hashtable<String, report_element_base>();
+				_beanLibrary = new Hashtable<String, report_element_base>();
 
 			}
 		}catch(Exception e){

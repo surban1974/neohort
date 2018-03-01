@@ -37,7 +37,7 @@ public static String environmentState(HttpServletRequest request){
 	String result="";
 		try{		
 			result+=("Start DEBUG --------------------"+System.getProperty("line.separator"));
-			Enumeration en = request.getSession().getAttributeNames();		
+			Enumeration<?> en = request.getSession().getAttributeNames();		
 			while(en.hasMoreElements()){
 				String key = (String)en.nextElement();
 				try{
@@ -69,7 +69,7 @@ public static String environmentState(HttpServletRequest request){
 	return result;
 }
 
-public static String adaptPath(String IMAGE_SOURCE, Hashtable _beanLibrary){
+public static String adaptPath(String IMAGE_SOURCE, Hashtable<String, report_element_base> _beanLibrary){
 	javax.servlet.http.HttpServletRequest request = null;
 	try{
 		request = (javax.servlet.http.HttpServletRequest)(((report_element_base)_beanLibrary.get("SYSTEM:Request")).getContent());

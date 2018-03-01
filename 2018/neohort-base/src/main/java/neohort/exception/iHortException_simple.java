@@ -30,7 +30,7 @@ import neohort.log.log;
 import neohort.util.util_reflect;
 
 public class iHortException_simple extends Exception {
-	private static final long serialVersionUID = -3917282490455112971L;
+	private static final long serialVersionUID = -1L;
 	private static String levels=";DEBUG;INFO;WARN;ERROR;FATAL;";
 
 public iHortException_simple(String mess, Exception ex, String level) {

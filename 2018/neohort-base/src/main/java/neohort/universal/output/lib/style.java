@@ -27,7 +27,7 @@ package neohort.universal.output.lib;
 import java.util.Hashtable;
 
 public class style extends report_element_base{
-	private static final long serialVersionUID = 4061897228931015406L;
+	private static final long serialVersionUID = -1L;
 	private String TEXT_ALIGN_H;
 	private String TEXT_ALIGN_V;
 	private String FONT;
@@ -97,9 +97,9 @@ public class style extends report_element_base{
 public style() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
 
 public String getCashKey(){

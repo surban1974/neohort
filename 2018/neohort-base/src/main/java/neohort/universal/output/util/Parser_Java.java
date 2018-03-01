@@ -38,6 +38,7 @@ import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
 import neohort.util.util_format;
 
 public class Parser_Java {
@@ -53,7 +54,7 @@ public Parser_Java(String type_tag, I_OutputRunTime motore) {
 	this.type_tag = type_tag.toUpperCase();
 	if(type_tag!=null && type_tag.indexOf(":")>-1)
 		this.type_s_tag = type_tag.substring(0,type_tag.indexOf(":")+1);
-	else this.type_s_tag = "";	
+	else this.type_s_tag = "";
 	this.motore = motore;
 }
 public Parser_Java(String type_tag, I_OutputRunTime motore, boolean vError) {
@@ -61,12 +62,12 @@ public Parser_Java(String type_tag, I_OutputRunTime motore, boolean vError) {
 	this.type_tag = type_tag.toUpperCase();
 	if(type_tag!=null && type_tag.indexOf(":")>-1)
 		this.type_s_tag = type_tag.substring(0,type_tag.indexOf(":")+1);
-	else this.type_s_tag = "";	
+	else this.type_s_tag = "";
 	this.motore = motore;
 }
 
 private String adaptResult(Object value, String className) {
-	try{	
+	try{
 		String type_prim = "INT;SHORT;DOUBLE;LONG;FLOAT;CHAR;BYTE;BOOLEAN;";
 		if(type_prim.indexOf(className.toUpperCase()+";")>-1)
 			return String.valueOf(value);
@@ -74,54 +75,54 @@ private String adaptResult(Object value, String className) {
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 		return "";
-	}	
+	}
 }
-public String checkAttribute(String value, Hashtable _tagLibrary, Hashtable _beanLibrary) { 
-	String result=value; 
-	if(_beanLibrary!=null){		
+public String checkAttribute(String value, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
+	String result=value;
+	if(_beanLibrary!=null){
 		bean _sysPdfParseJava = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_ParseJava);
 		if(_sysPdfParseJava!=null && _sysPdfParseJava.getContent()!=null && ((String)_sysPdfParseJava.getContent()).equalsIgnoreCase("false")) return result;
 	}
 	if(value.toUpperCase().indexOf("%EXECUTE")==-1) return result;
 	try{
 		if(value.toUpperCase().indexOf("%EXECUTEBEAN.")>-1){
-			int start = value.toUpperCase().indexOf("%EXECUTEBEAN."); 
+			int start = value.toUpperCase().indexOf("%EXECUTEBEAN.");
 			int finish = value.indexOf("%",start+1);
 			return checkAttribute(value.substring(0,start)+
 				direttivaBean(preDirettiva(value.substring(start+1,finish),_tagLibrary, _beanLibrary), _beanLibrary)+
 				value.substring(finish+1),_tagLibrary, _beanLibrary);
 		}
 		if(value.toUpperCase().indexOf("%EXECUTETAG.")>-1){
-			int start = value.toUpperCase().indexOf("%EXECUTETAG."); 
+			int start = value.toUpperCase().indexOf("%EXECUTETAG.");
 			int finish = value.indexOf("%",start+1);
 			return checkAttribute(value.substring(0,start)+
 				direttivaTag(preDirettiva(value.substring(start+1,finish),_tagLibrary, _beanLibrary), _tagLibrary)+
 				value.substring(finish+1),_tagLibrary, _beanLibrary);
 		}
 		if(value.toUpperCase().indexOf("%EXECUTEFORMAT.")>-1){
-			int start = value.toUpperCase().indexOf("%EXECUTEFORMAT."); 
+			int start = value.toUpperCase().indexOf("%EXECUTEFORMAT.");
 			int finish = value.indexOf("%",start+1);
 			return 	checkAttribute(value.substring(0,start)+
 					direttivaFormat(preDirettiva(value.substring(start+1,finish),_tagLibrary, _beanLibrary))+
 					value.substring(finish+1),_tagLibrary, _beanLibrary);
 		}
-		
+
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 		return value;
 	}catch(Throwable t){
 //		setError(t,iStub.log_ERROR);
 		return value;
-	}		
+	}
 	return value;
-	
+
 }
-private String direttivaBean(String direttiva, Hashtable _beanLibrary) {
+private String direttivaBean(String direttiva, Hashtable<String, report_element_base> _beanLibrary) {
     try {
 		String result = "";
 		if(direttiva.toUpperCase().indexOf("EXECUTE")!=0) return direttiva;
 		Object o_requsting = null;
-		o_requsting = executeBean(o_requsting,direttiva,_beanLibrary,1); 
+		o_requsting = executeBean(o_requsting,direttiva,_beanLibrary,1);
         if(o_requsting!=null) result = o_requsting.toString();
         else return "";
         return result;
@@ -136,8 +137,8 @@ private String direttivaFormat(String direttiva) {
 		if(direttiva.toUpperCase().indexOf("EXECUTE")!=0) return direttiva;
 		direttiva = precompileDirettivaBean(direttiva,0);
 		StringTokenizer st = new StringTokenizer(direttiva, ".");
-		if (st.hasMoreTokens()) st.nextToken(); 
-		if (st.hasMoreTokens()){ 
+		if (st.hasMoreTokens()) st.nextToken();
+		if (st.hasMoreTokens()){
 			String value = st.nextToken();
 			if(	value!=null &&
 				value.length()>1 &&
@@ -151,18 +152,18 @@ private String direttivaFormat(String direttiva) {
 						format.charAt(0)=='(' &&
 						format.charAt(format.length()-1)==')'){
 						return prepareContentString(value,re_precompileDirettivaBean(format.substring(1,format.length()-1)));
-					}else return result; 
-				}else return result; 
+					}else return result;
+				}else return result;
 			}else return result;
-		}else return result;	
+		}else return result;
     } catch (Exception e) {
         setError(e,iStub.log_ERROR);
         return "";
     }
 }
-private String direttivaTag(String direttiva, Hashtable _tagLibrary) {
+private String direttivaTag(String direttiva, Hashtable<String, report_element_base> _tagLibrary) {
 	try{
-		if(direttiva.toUpperCase().indexOf("EXECUTE")!=0) return direttiva;	
+		if(direttiva.toUpperCase().indexOf("EXECUTE")!=0) return direttiva;
 		String tagName="";
 		String tagMethod="";
 		String tagParameter="";
@@ -170,12 +171,12 @@ private String direttivaTag(String direttiva, Hashtable _tagLibrary) {
 		if (st.hasMoreTokens()){
 			st.nextToken();
 			if (st.hasMoreTokens()){
-				tagName = st.nextToken(); 
+				tagName = st.nextToken();
 					if (st.hasMoreTokens()){
 						tagMethod = st.nextToken();
-						if (st.hasMoreTokens())	tagParameter = st.nextToken(); 
-					}	
-			}		
+						if (st.hasMoreTokens())	tagParameter = st.nextToken();
+					}
+			}
 		}
 		report_element tag_lib = (report_element)_tagLibrary.get(tagName+"_ids_"+motore.hashCode());
 		if(tag_lib==null) tag_lib = (report_element)_tagLibrary.get(tagName);
@@ -183,24 +184,24 @@ private String direttivaTag(String direttiva, Hashtable _tagLibrary) {
 			String result = "";
 			if (tagParameter.length()==0)
 				result = getValue(tag_lib,tagMethod).toString();
-			else result = getValueWithParemeters(null,tag_lib,tagMethod, "java.lang.String:"+tagParameter).toString();	
-			return result;			
+			else result = getValueWithParemeters(null,tag_lib,tagMethod, "java.lang.String:"+tagParameter).toString();
+			return result;
 		}
 		else return "";
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 		return "";
-	}	
+	}
 }
-public Object executeBean(Object requested, String execution, Hashtable _beanLibrary, int check) {
+public Object executeBean(Object requested, String execution, Hashtable<String, report_element_base> _beanLibrary, int check) {
     try {
-    	
 
-    	
-	    if(execution==null || execution.trim().length()==0) return requested; 
+
+
+	    if(execution==null || execution.trim().length()==0) return requested;
 	    execution = precompileDirettivaBean(execution,0);
-	    Vector pre_elements = new Vector();
-		StringTokenizer st_elements = new StringTokenizer(execution, ".");	    
+	    Vector<String> pre_elements = new Vector<String>();
+		StringTokenizer st_elements = new StringTokenizer(execution, ".");
 		if(check==1){
         	if (st_elements.hasMoreTokens()) st_elements.nextToken();
         	if (st_elements.hasMoreTokens()) {
@@ -211,13 +212,13 @@ public Object executeBean(Object requested, String execution, Hashtable _beanLib
    		   		else{
             		bean_lib = (report_element) _beanLibrary.get(this.type_s_tag +"BEAN:" + beanName+"_ids_"+motore.hashCode());
             		if(bean_lib==null) bean_lib = (report_element) _beanLibrary.get(this.type_s_tag +"BEAN:" + beanName);
-   		   		}	
-            	if (bean_lib!=null) requested = bean_lib.getContent();	
+   		   		}
+            	if (bean_lib!=null) requested = bean_lib.getContent();
         	}
 		}
         while (st_elements.hasMoreTokens()) pre_elements.addElement(st_elements.nextToken());
 
-        String cur_method = ""; 
+        String cur_method = "";
         for(int i=0;i<pre_elements.size();i++){
 			cur_method+= (String)pre_elements.elementAt(i);
 	        boolean ver_method = (cur_method.indexOf("(") > -1 &&
@@ -231,10 +232,10 @@ public Object executeBean(Object requested, String execution, Hashtable _beanLib
 		        if(!ver_method_next){
 		        	cur_method+="(java.lang.String:"+(String)pre_elements.elementAt(i+1)+")";
 		        	ver_method=true;
-		        	i++;		        	
-		        }else cur_method+=".";	
+		        	i++;
+		        }else cur_method+=".";
 	        }
-	        if(!ver_method && i==pre_elements.size()-1){ 
+	        if(!ver_method && i==pre_elements.size()-1){
 		        cur_method+="()";
 		        ver_method=true;
 	        }
@@ -242,72 +243,74 @@ public Object executeBean(Object requested, String execution, Hashtable _beanLib
 		        cur_method+=".";
 	        }
 			if(ver_method){
-        		String beanMethod = ""; 
+        		String beanMethod = "";
         		String beanParameter = "";
-            	beanMethod = cur_method.substring(0, cur_method.indexOf("("));	        	
-            	beanParameter = cur_method.substring(cur_method.indexOf("(") + 1, cur_method.indexOf(")"));            	
+            	beanMethod = cur_method.substring(0, cur_method.indexOf("("));
+            	beanParameter = cur_method.substring(cur_method.indexOf("(") + 1, cur_method.indexOf(")"));
 				beanParameter = precompileDirettivaBean(beanParameter,1);
 				if(requested==null)
 	           		requested = this.getValueWithParemeters(_beanLibrary,requested,beanMethod,beanParameter);
-	           	else{	
-	            	if (beanParameter.length() > 0) 
+	           	else{
+	            	if (beanParameter.length() > 0)
  		           		requested = this.getValueWithParemeters(_beanLibrary,requested,beanMethod,beanParameter);
    		         	else requested = this.getValue(requested, beanMethod);
-	           	} 	
-            	cur_method=""; 
+	           	}
+            	cur_method="";
 	        }
-        }    
+        }
 		return requested;
     } catch (Exception e) {
         setError(e,iStub.log_ERROR);
         return null;
-    } 	    
+    }
 
 }
-public Object getValue(Object requested, String nome){ 
+
+public Object getValue(Object requested, String nome){
 	if (nome == null || nome.trim().length()==0) return null;
 	try{
 		java.lang.reflect.Method mtd = null;
 		mtd = requested.getClass().getMethod(nome,null);
 		if(mtd==null) return null;
 		Object resultObject = null;
-
 		resultObject = mtd.invoke(requested, null);
 		if(mtd.getReturnType().getName().equalsIgnoreCase("JAVA.LANG.STRING")) return adaptResult(resultObject,mtd.getReturnType().getName());
 		else return resultObject;
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 		return null;
-	}	
+	}
 
 }
-public Object getValue(String nome){ 
+
+
+public Object getValue(String nome){
 	if (nome == null || nome.trim().length()==0) return null;
 	try{
 		java.lang.reflect.Method mtd = null;
 		mtd = this.getClass().getMethod(nome,null);
 		if(mtd==null) return null;
 		Object resultObject = null;
-
 		resultObject = mtd.invoke(this, null);
 		if(mtd.getReturnType().getName().equalsIgnoreCase("JAVA.LANG.STRING")) return adaptResult(resultObject,mtd.getReturnType().getName());
 		else return resultObject;
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 		return null;
-	}	
+	}
 
 }
-public Object getValueWithParemeters(Hashtable _beanLibrary, Object requested, String nome, String parameters){ 
+
+public Object getValueWithParemeters(Hashtable<String, report_element_base> _beanLibrary, Object requested, String nome, String parameters){
 	if (nome == null || nome.trim().length()==0) return null;
 	Object resultObject = null;
-	try{ 
+	try{
 			String retName = "";
 			java.lang.reflect.Method mtd = null;
-			Hashtable out = prepareParemeters(_beanLibrary,parameters); 
-	
+			Hashtable<String,Object[]> out = prepareParemeters(_beanLibrary,parameters);
+
 			Object prm[] = (Object[])out.get("prs");
-			Class[] cls = (Class[])out.get("cls");
+			Class<?>[] cls = (Class[])out.get("cls");
 			try{
 				if(requested!=null) mtd = requested.getClass().getMethod(nome.trim(),cls);
 			}catch(Exception e){
@@ -319,70 +322,70 @@ public Object getValueWithParemeters(Hashtable _beanLibrary, Object requested, S
 							if(cls[i]!=null && !cls[i].isPrimitive() && !cls[i].getName().equals("java.lang.Object")){
 								cls[i] = cls[i].getSuperclass();
 								count++;
-							}	
+							}
 						}
-						try{						
-							mtd = requested.getClass().getMethod(nome.trim(),cls); 
+						try{
+							mtd = requested.getClass().getMethod(nome.trim(),cls);
 						}catch(Exception ex){
 							mtd = null;
 						}
 						if(count>0 && mtd==null) fine = false;
 						else fine = true;
 						maxCount++;
-					}	
+					}
 			}
-				
-			
-			if(requested==null){ 
-				try{	
-					Class cl = Class.forName(nome); 
-					resultObject = cl.getConstructor(cls).newInstance(prm); 
-					return resultObject; 
-				}catch(Exception e){
-					setError(e,iStub.log_WARN); 
-					return null;
-				}	
-			} 
-			
-			if (mtd==null){ 
+
+
+			if(requested==null){
 				try{
-					Class cl = Class.forName(nome); 
-					resultObject = cl.getConstructor(cls).newInstance(prm); 
+					Class<?> cl = Class.forName(nome);
+					resultObject = cl.getConstructor(cls).newInstance(prm);
+					return resultObject;
+				}catch(Exception e){
+					setError(e,iStub.log_WARN);
+					return null;
+				}
+			}
+
+			if (mtd==null){
+				try{
+					Class<?> cl = Class.forName(nome);
+					resultObject = cl.getConstructor(cls).newInstance(prm);
 					retName = requested.getClass().getName();
 					if(retName.equalsIgnoreCase("JAVA.LANG.STRING")) return adaptResult(resultObject,retName);
-					else return resultObject; 
+					else return resultObject;
 				}catch(Exception e){
-					setError(e,iStub.log_WARN); 
-					return null; 
-				}	
-			}	
-			if(mtd!=null){ 
+					setError(e,iStub.log_WARN);
+					return null;
+				}
+			}
+			if(mtd!=null){
 					resultObject = mtd.invoke(requested,  prm);
 					retName = mtd.getReturnType().getName();
-			}	
+			}
 		if(retName.equalsIgnoreCase("JAVA.LANG.STRING")) return adaptResult(resultObject,retName);
-		else return resultObject; 
+		else return resultObject;
 	}catch(Exception e){
-		setError(e,iStub.log_WARN); 
+		setError(e,iStub.log_WARN);
 		return null;
 	}
 }
 
 private static String normalizePG(String input){
-	
+
 	if(	input.toUpperCase().indexOf("(CHAR:")!=-1 ||
 		input.toUpperCase().indexOf(";CHAR:")!=-1 ||
 		input.toUpperCase().indexOf("(STRING:")!=-1 ||
 		input.toUpperCase().indexOf(";STRING:")!=-1 ||
 		input.toUpperCase().indexOf("."+"STRING:")!=-1
 	   ){
-			input = normalizeParentezi_Grafi(0,"CHAR:",input); 
+			input = normalizeParentezi_Grafi(0,"CHAR:",input);
 			input = normalizeParentezi_Grafi(0,";CHAR:",input);
 			input = normalizeParentezi_Grafi(0,"(STRING:",input);
 			input = normalizeParentezi_Grafi(0,";STRING:",input);
 			input = normalizeParentezi_Grafi(0,"."+"STRING:",input+"");
 		}
-	return input;	
+	return input;
 }
 
 private static String normalizeParentezi_Grafi(int start,String paR, String input){
@@ -392,11 +395,11 @@ private static String normalizeParentezi_Grafi(int start,String paR, String inpu
 		(input.indexOf("(",start)==-1 &&
 		input.indexOf(")",start)==-1 &&
 		input.indexOf("{",start)==-1 &&
-		input.indexOf("}",start)==-1 
+		input.indexOf("}",start)==-1
 		)) return input;
 	int first=0;
 	try{
-		
+
 
 		first = input.toUpperCase().indexOf(paR,start)+paR.length();
 		char finish_s=input.charAt(first);
@@ -409,7 +412,7 @@ private static String normalizeParentezi_Grafi(int start,String paR, String inpu
 		}else{
 			i=first+1;
 		}
-				
+
 		result=input.substring(0,first+1);
 		boolean fin=true;
 		while(fin && i<input.length()){
@@ -427,17 +430,17 @@ private static String normalizeParentezi_Grafi(int start,String paR, String inpu
 				case '}':
 				result+=report_element.SYMBOL_6;
 				break;
-			default:			
-				result+=corrente;				
+			default:
+				result+=corrente;
 			}
 			i++;
 			if(input.charAt(i)==finish_s) fin=false;
 			if(finish_s2!='-' && input.charAt(i)==finish_s2) fin=false;
 		}
-		result+=input.substring(i,input.length());			
-	}catch(Exception e){		
+		result+=input.substring(i,input.length());
+	}catch(Exception e){
 	}
-	result = normalizeParentezi_Grafi(first,paR,result);	
+	result = normalizeParentezi_Grafi(first,paR,result);
 	return result;
 }
 
@@ -447,11 +450,11 @@ public static String precompileDirettivaBean(String value, int level) {
 	boolean flag_level_char_1 = false;	//	CHAR:'
 	boolean flag_level_string_0 = false;//	STRING:
 	boolean flag_level_string_1 = false;//	STRING:"
-	boolean flag_level_string_2 = false;//	STRING:'		
+	boolean flag_level_string_2 = false;//	STRING:'
 	String Result = "";
 	if(level==0){
 		if(value.indexOf("(")==-1) return value;
-		
+
 		value = normalizePG(value);
 		for(int i=0;i<value.length();i++){
 			char corrente = value.charAt(i);
@@ -464,20 +467,20 @@ public static String precompileDirettivaBean(String value, int level) {
 						flag_level_0=!flag_level_0;
 						Result+=corrente;
 						break;
-					default:			
+					default:
 						Result+=corrente;
-				}		
+				}
 			}else{
-				switch (corrente){				
+				switch (corrente){
 					case '(':
 						flag_level_0=!flag_level_0;
 						Result+=corrente;
 						break;
-					default:			
+					default:
 						Result+=corrente;
-				}		
+				}
 			}
-			
+
 		}
 
 	}
@@ -505,8 +508,8 @@ public static String precompileDirettivaBean(String value, int level) {
 					Result+=buf.substring(0,6);
 					i=i+6;
 					is = true;
-				}		
-				
+				}
+
 			if(flag_level_char_1) flag_level_char_0=false;
 
 			if(!is &&
@@ -520,10 +523,10 @@ public static String precompileDirettivaBean(String value, int level) {
 					}else{
 						Result+=buf.substring(0,8);
 						i=i+9;
-					}						
+					}
 					is = true;
 				}
-			if(!is &&				
+			if(!is &&
 				(buf.toUpperCase().indexOf("(STRING:'")==0 ||
 				buf.toUpperCase().indexOf(";STRING:'")==0 ||
 				buf.toUpperCase().indexOf(report_element.SYMBOL_0+"STRING:'")==0 )){
@@ -534,10 +537,10 @@ public static String precompileDirettivaBean(String value, int level) {
 					}else{
 						Result+=buf.substring(0,8);
 						i=i+9;
-					}						
+					}
 					is = true;
 				}
-			if(!is &&				
+			if(!is &&
 				(buf.toUpperCase().indexOf("(STRING:")==0 ||
 				buf.toUpperCase().indexOf(";STRING:")==0 ||
 				buf.toUpperCase().indexOf(report_element.SYMBOL_0+"STRING:")==0 )){
@@ -548,21 +551,21 @@ public static String precompileDirettivaBean(String value, int level) {
 					}else{
 						Result+=buf.substring(0,8);
 						i=i+8;
-					}						
+					}
 					is = true;
-				}		
-			if(flag_level_string_1 || flag_level_string_2) flag_level_string_0=false; 
+				}
+			if(flag_level_string_1 || flag_level_string_2) flag_level_string_0=false;
 			char corrente = value.charAt(i);
 			if(	!flag_level_char_0 &&
-				!flag_level_char_1 &&				
+				!flag_level_char_1 &&
 				!flag_level_string_0 &&
 				!flag_level_string_1 &&
 				!flag_level_string_2){
 				if(corrente == '\\'){
 					if(i>0 && value.charAt(i-1)=='\\') Result+=corrente;
 				}else Result+=corrente;
-			}		
-			
+			}
+
 			if(flag_level_char_0 || flag_level_char_1){
 				switch (corrente){
 					case ';':
@@ -578,14 +581,14 @@ public static String precompileDirettivaBean(String value, int level) {
 							if(flag_level_char_1)
 								flag_level_char_1=false;
 							else Result+=corrente;
-						}	
+						}
 						break;
 					case '\\':
 						if(i>0 && value.charAt(i-1)=='\\') Result+=corrente;
 						break;
 					default:
 						Result+=corrente;
-				}		
+				}
 			}
 			if(flag_level_string_0 || flag_level_string_1 || flag_level_string_2){
 				switch (corrente){
@@ -602,7 +605,7 @@ public static String precompileDirettivaBean(String value, int level) {
 							if(flag_level_string_1)
 								flag_level_string_1=false;
 							else Result+=corrente;
-						}	
+						}
 						break;
 					case '\'':
 						if(i>0 && value.charAt(i-1)=='\\') Result+=corrente;
@@ -610,16 +613,16 @@ public static String precompileDirettivaBean(String value, int level) {
 							if(flag_level_string_2)
 								flag_level_string_2=false;
 							else Result+=corrente;
-						}	
+						}
 						break;
 					case '\\':
 						if(i>0 && value.charAt(i-1)=='\\') Result+=corrente;
 						break;
 					default:
 						Result+=corrente;
-				}		
+				}
 			}
-		} 
+		}
 	}
 	if(level==2){
 		if(	(value.charAt(0)!='"' && value.charAt(value.length()-1)!='"') &&
@@ -629,11 +632,11 @@ public static String precompileDirettivaBean(String value, int level) {
 			if(value.length()>1) Result = value.substring(1,value.length()-1);
 			else return value;
 		}
-	}	
+	}
 	return Result;
 }
-private String preDirettiva(String value, Hashtable _tagLibrary, Hashtable _beanLibrary) {
-	String result=value;	 
+private String preDirettiva(String value, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
+	String result=value;
 	if(value.toUpperCase().indexOf("{EXECUTE")==-1 && value.toUpperCase().indexOf("EXECUTE")==-1 && value.toUpperCase().indexOf("%EXECUTE")==-1) return result;
 	String valueBuf = value;
 	try{
@@ -643,12 +646,12 @@ private String preDirettiva(String value, Hashtable _tagLibrary, Hashtable _bean
 			if(result.toUpperCase().indexOf("EXECUTEBEAN.")==0) return preDirettiva(direttivaBean(result, _beanLibrary), _tagLibrary, _beanLibrary);
 			if(result.toUpperCase().indexOf("EXECUTETAG.")==0) return preDirettiva(direttivaTag(result, _tagLibrary), _tagLibrary, _beanLibrary);
 			if(result.toUpperCase().indexOf("EXECUTEFORMAT.")==0) return preDirettiva(direttivaFormat(result), _tagLibrary, _beanLibrary);
-		}	
-		while(valueBuf.toUpperCase().indexOf("{EXECUTE")>-1){   
-			int start = valueBuf.toUpperCase().indexOf("{EXECUTE"); 
-			int sub_start = start+1; 
+		}
+		while(valueBuf.toUpperCase().indexOf("{EXECUTE")>-1){
+			int start = valueBuf.toUpperCase().indexOf("{EXECUTE");
+			int sub_start = start+1;
 			int counter = 1;
-			String sub_value = valueBuf.substring(sub_start);				
+			String sub_value = valueBuf.substring(sub_start);
 			while (	sub_value.toUpperCase().indexOf("{EXECUTE")>-1 &&
 					sub_value.toUpperCase().indexOf("{EXECUTE")<sub_value.toUpperCase().indexOf("}")
 				){
@@ -657,10 +660,10 @@ private String preDirettiva(String value, Hashtable _tagLibrary, Hashtable _bean
 				sub_value = sub_value.substring(sub_start);
 			}
 			sub_start = start+1;
-			int finish = 0;	
+			int finish = 0;
 			while(counter!=0 && valueBuf.indexOf("}",sub_start)>-1) {
-				finish = valueBuf.indexOf("}",sub_start); 
-				sub_start = finish+1; 
+				finish = valueBuf.indexOf("}",sub_start);
+				sub_start = finish+1;
 				counter--;
 			}
 			String value_d = 	preDirettiva(valueBuf.substring(start+1,finish), _tagLibrary, _beanLibrary);
@@ -675,7 +678,7 @@ private String preDirettiva(String value, Hashtable _tagLibrary, Hashtable _bean
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 		return value;
-	}	
+	}
 }
 public static String prepareContentString(String value, String formatSG) {
 	String content=value;
@@ -693,7 +696,7 @@ public static String prepareContentString(String value, String formatSG) {
 				is=true;
 			}
 			if(!is){
-				if (formatS.toUpperCase().indexOf("DATE:")==0){ 
+				if (formatS.toUpperCase().indexOf("DATE:")==0){
 					try{
 						String format = formatS.substring(5);
 						SimpleDateFormat df = new SimpleDateFormat(format);
@@ -702,25 +705,25 @@ public static String prepareContentString(String value, String formatSG) {
 						try{
 							String format = formatS.substring(5);
 							java.text.SimpleDateFormat df = new java.text.SimpleDateFormat(format);
-							content = df.format(new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime()));						
+							content = df.format(new java.util.Date(java.text.DateFormat.getDateInstance().parse(content).getTime()));
 						}catch(Exception ex){
 						}
 					}
 					is=true;
 				}
 				if(!is){
-					if (formatS.toUpperCase().indexOf("ISNULL:")==0){ 
+					if (formatS.toUpperCase().indexOf("ISNULL:")==0){
 						try{
 							String format = formatS.substring(7);
 							if (content.trim().equals("0")) content = format;
 							else{
 								if (new java.math.BigDecimal(content).doubleValue()==0) content = format;
-							}									
+							}
 						}catch(Exception e){}
 						is=true;
 					}
 					if(!is){
-						if (formatS.toUpperCase().indexOf("NOTNULL:")==0){ 
+						if (formatS.toUpperCase().indexOf("NOTNULL:")==0){
 							try{
 								String format = formatS.substring(8);
 								if (content.trim().equals("")) content = format;
@@ -732,55 +735,55 @@ public static String prepareContentString(String value, String formatSG) {
 								try{
 									content = content.trim();
 								}catch(Exception e){}
-								is=true;	
+								is=true;
 							}
 							if(!is){
 								if (formatS.toUpperCase().indexOf("UPPERCASE:")>-1){
 									try{
 										content = content.toUpperCase();
 									}catch(Exception e){}
-									is=true;	
+									is=true;
 								}
 								if(!is){
 									if (formatS.toUpperCase().indexOf("LOWERCASE:")>-1){
 										try{
 											content = content.toLowerCase();
 										}catch(Exception e){}
-										is=true;	
+										is=true;
 									}
 									if(!is){
 										if (formatS.toUpperCase().indexOf("SUBSTRING:")>-1){
 											try{
-												String format = formatS.substring(10+formatS.indexOf("SUBSTRING:"));					
+												String format = formatS.substring(10+formatS.indexOf("SUBSTRING:"));
 												content = content.substring(0,Integer.valueOf(format).intValue());
 											}catch(Exception e){}
-											is=true;	
+											is=true;
 										}
 										if(!is){
 											if (formatS.toUpperCase().indexOf("REPLACE:")>-1){
 												try{
 													String format = formatS.substring(8);
-													if(format.charAt(0)=='[' && format.charAt(format.length()-1)==']'){						
+													if(format.charAt(0)=='[' && format.charAt(format.length()-1)==']'){
 														java.util.StringTokenizer stf = new java.util.StringTokenizer(format, "--");
 														String vFirst = stf.nextToken();
 														String vSecond = stf.nextToken();
-														content = content.replace(vFirst.charAt(1),vSecond.charAt(0));	
-													}	
+														content = content.replace(vFirst.charAt(1),vSecond.charAt(0));
+													}
 													content = content.substring(0,Integer.valueOf(format).intValue());
 												}catch(Exception e){}
 												is=true;
-											}		
+											}
 										}
-									}	
-								}	
-							}	
-						}	
-					}	
-				}	
-			}	
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
-	}		
-	return content;		
+	}
+	return content;
 }
 private static String re_precompileDirettivaBean(String value) {
 	String Result = value;
@@ -801,8 +804,8 @@ private static String re_precompileDirettivaBean(String value) {
 				if (index>-1){
 					Result=Result.substring(0,index)+":"+Result.substring(index+6);
 					fine = true;
-				}				
-				if(!fine){				
+				}
+				if(!fine){
 					index = Result.indexOf(report_element.SYMBOL_2);
 					if (index>-1){
 						Result=Result.substring(0,index)+";"+Result.substring(index+6);
@@ -868,19 +871,19 @@ private static String re_precompileDirettivaBean(String value) {
 																Result=Result.substring(0,index)+","+Result.substring(index+6);
 																fine = true;
 															}
-														}	
-													}	
-												}	
-											}	
-										}	
-									}	
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}	
+		}
 	}
 	return Result;
 }
@@ -893,41 +896,41 @@ public void setError(Exception e, String level) {
 	}
 }
 
-public Hashtable prepareParemeters (Hashtable _beanLibrary, String parameters) {
-	Hashtable out = new Hashtable();
-	Vector datesFT = new Vector();
-	Vector datesST = new Vector();
-	String type_prim = "INT;SHORT;DOUBLE;LONG;FLOAT;CHAR;BYTE;BOOLEAN;"; 
+public Hashtable<String,Object[]> prepareParemeters (Hashtable<String, report_element_base> _beanLibrary, String parameters) {
+	Hashtable<String,Object[]> out = new Hashtable<String,Object[]>();
+	Vector<String> datesFT = new Vector<String>();
+	Vector<String> datesST = new Vector<String>();
+	String type_prim = "INT;SHORT;DOUBLE;LONG;FLOAT;CHAR;BYTE;BOOLEAN;";
 	StringTokenizer st = new StringTokenizer(parameters, ";");
-	while (st.hasMoreTokens()){ 
+	while (st.hasMoreTokens()){
 		String curToken = st.nextToken();
-		java.util.StringTokenizer stInt = new java.util.StringTokenizer(curToken, ":");  
+		java.util.StringTokenizer stInt = new java.util.StringTokenizer(curToken, ":");
 		String FT = "";
 		String ST = "";
 		if (stInt.hasMoreTokens()){
 			FT = re_precompileDirettivaBean(stInt.nextToken());
 			if (stInt.hasMoreTokens()){
-				ST = re_precompileDirettivaBean(stInt.nextToken());						
+				ST = re_precompileDirettivaBean(stInt.nextToken());
 				datesFT.add(FT);
 				datesST.add(ST);
 			}else{
-				ST = "";						
+				ST = "";
 				datesFT.add(FT);
 				datesST.add(ST);
-			}	
-		}		
+			}
+		}
 	}
 	Object[] prs = new Object[datesFT.size()];
-	Class[] cls = new Class[datesFT.size()];
+	Class<?>[] cls = new Class[datesFT.size()];
 
 	for(int i=0;i<datesFT.size();i++){
 		try{
 			String FT = ((String)datesFT.get(i)).trim();
 			String ST = (String)datesST.get(i);
-			
+
 			boolean is = false;
 			if(ST!=null && ST.length()>0 && ST.charAt(0)=='[' && ST.charAt(ST.length()-1)==']'){
-				ST = ST.substring(1,ST.length()-1);				
+				ST = ST.substring(1,ST.length()-1);
 				report_element bean_set = (report_element)_beanLibrary.get(this.type_s_tag +"BEAN:"+ST+"_ids_"+motore.hashCode());
 				if(bean_set==null) bean_set = (report_element)_beanLibrary.get(this.type_s_tag +"BEAN:"+ST);
 				prs[i] = bean_set.getContent();
@@ -941,60 +944,60 @@ public Hashtable prepareParemeters (Hashtable _beanLibrary, String parameters) {
 						cls[i] = java.lang.Integer.TYPE;
 						is = true;
 					}
-					if(!is){	
+					if(!is){
 						if(FT.equalsIgnoreCase("short")){
 							prs[i] = new Short(ST);
 							cls[i] = java.lang.Short.TYPE;
 							is = true;
 						}
-						if(!is){	
+						if(!is){
 							if(FT.equalsIgnoreCase("double")){
 								prs[i] = new Double(ST);
 								cls[i] = java.lang.Double.TYPE;
 								is = true;
 							}
-							if(!is){	
+							if(!is){
 								if(FT.equalsIgnoreCase("long")){
 									prs[i] = new Long(ST);
 									cls[i] = java.lang.Long.TYPE;
 									is = true;
 								}
-								if(!is){	
+								if(!is){
 									if(FT.equalsIgnoreCase("float")){
 										prs[i] = new Float(ST);
 										cls[i] = java.lang.Float.TYPE;
 										is = true;
 									}
-									if(!is){	
+									if(!is){
 										if(FT.equalsIgnoreCase("byte")){
 											prs[i] = new Byte(ST);
 											cls[i] = java.lang.Byte.TYPE;
 											is = true;
 										}
-										if(!is){	
+										if(!is){
 											if(FT.equalsIgnoreCase("boolean")){
 												prs[i] = new Boolean(ST);
 												cls[i] = java.lang.Boolean.TYPE;
 												is = true;
 											}
-											if(!is){	
+											if(!is){
 												if(FT.equalsIgnoreCase("char")){
 													if(ST!=null && ST.length()>0)
 														prs[i] = new Character(ST.charAt(0));
 													else{
 														ST = " ";
 														prs[i] =new Character(ST.charAt(0));
-													}	
+													}
 													cls[i] = java.lang.Character.TYPE;
 													is = true;
 												}
-											}	
-										}	
-									}	
-								}	
-							}	
-						}	
-					}		
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 				if(!is){
 					if(FT.equalsIgnoreCase("STRING") || FT.equalsIgnoreCase("JAVA.LANG.STRING")){
@@ -1005,7 +1008,7 @@ public Hashtable prepareParemeters (Hashtable _beanLibrary, String parameters) {
 					if(!is){
 						if(FT.equalsIgnoreCase("BIGDECIMAL") || FT.equalsIgnoreCase("JAVA.MATH.BIGDECIMAL")){
 							prs[i]=new java.math.BigDecimal(ST);
-							cls[i]=prs[i].getClass();				
+							cls[i]=prs[i].getClass();
 							is = true;
 						}
 						if(!is){
@@ -1015,13 +1018,13 @@ public Hashtable prepareParemeters (Hashtable _beanLibrary, String parameters) {
 							cls[i] = bean_set.getContent().getClass();
 							is = true;
 						}
-					}	
-				}	
-			}	
+					}
+				}
+			}
 		}catch(Exception e){
 			setError(e,iStub.log_WARN);
 		}
-	}	
+	}
 	out.put("prs",prs);
 	out.put("cls",cls);
 	return out;

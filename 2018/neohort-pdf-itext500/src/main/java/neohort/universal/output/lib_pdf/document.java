@@ -31,12 +31,12 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.report_element_base;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfWriter;
+
 
 public class document extends element{
-	private static final long serialVersionUID = 6673640422528510532L;
-	Document document;
-	PdfWriter writer;
+	private static final long serialVersionUID = -1L;
+	private Document document;
+
 
 	private String TITLE;
 	private String AUTHOR;
@@ -48,7 +48,7 @@ public class document extends element{
 public document() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			if(included!=null && included.booleanValue()==true){}
@@ -72,7 +72,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_ERROR);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
@@ -96,12 +96,13 @@ public void reimposta() {
 	KEYWORDS = "";
 	CREATOR = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
 		else{
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(document);
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(document);
 		}
 	}catch(Exception e){}
 }

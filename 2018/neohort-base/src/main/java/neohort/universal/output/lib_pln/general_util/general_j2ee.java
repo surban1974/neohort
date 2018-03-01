@@ -41,12 +41,12 @@ import neohort.universal.output.util.OutputRunTime;
 public class general_j2ee{
 
 
-public static void executeFirst(general body,  Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeFirst(general body,  Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	if(included!=null && included.booleanValue()==true){}
 	else{
-		
+
 		I_StreamWrapper iStreamWrapper = null;
 		if(body.getSOURCE_DOCUMENT()==null) body.setSOURCE_DOCUMENT("");
 		if(body.getCLASS_STREAM_WRAPPER()==null) body.setCLASS_STREAM_WRAPPER("");
@@ -58,7 +58,7 @@ try{
 			}
 		}
 
-		
+
 		javax.servlet.http.HttpServletResponse response = null;
 		try{
 			response = (javax.servlet.http.HttpServletResponse)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Response)).getContent());
@@ -125,7 +125,7 @@ try{
 			_sysSW.setContent(iStreamWrapper);
 			_sysSW.setName("SYSTEM");
 			_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-			_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+			_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 		}
 
 	}
@@ -133,7 +133,7 @@ try{
 	body.setError(e);
 }
 }
-public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeLast(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	if(included!=null && included.booleanValue()==true){}
@@ -156,10 +156,10 @@ try{
 					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(body._content);
 				else
 					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
-				
+
 			}
-		_tagLibrary = new Hashtable();
-		_beanLibrary = new Hashtable();
+		_tagLibrary = new Hashtable<String, report_element_base>();
+		_beanLibrary = new Hashtable<String, report_element_base>();
 		}
 		if (body.getTYPE_DOCUMENT()!=null && body.getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 			if(iStreamWrapper==null){
@@ -184,8 +184,8 @@ try{
 				}catch(Exception e){}
 			}
 		}
-		_tagLibrary = new Hashtable();
-		_beanLibrary = new Hashtable();
+		_tagLibrary = new Hashtable<String, report_element_base>();
+		_beanLibrary = new Hashtable<String, report_element_base>();
 
 	}
 }catch(Exception e){

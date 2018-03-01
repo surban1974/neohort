@@ -1,7 +1,7 @@
 package neohort.service.ftp;
 
 public class ftpException extends Exception {
- 	private static final long serialVersionUID = 4792074975723601379L;
+ 	private static final long serialVersionUID = -1L;
 	private int replyCode = -1;
 
     public ftpException(String msg) {

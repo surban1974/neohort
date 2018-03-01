@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-base</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <name>neohort base</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Support functionality</description>
   <url>https://github.com/surban1974/neohort</url>

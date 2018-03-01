@@ -32,6 +32,7 @@ public class util_file {
 	           offset += numRead;
 	     }
 	     if (offset < bytes.length) {
+	    	 is.close();
 	         throw new IOException("Could not completely read file "+file.getName());
 	     }
 	     is.close();

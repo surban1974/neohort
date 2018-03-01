@@ -41,30 +41,30 @@ import neohort.universal.output.lib.*;
 import neohort.util.util_web;
 
 public class image extends element{
-	private static final long serialVersionUID = 3997198916703577511L;
+	private static final long serialVersionUID = -1L;
 	private String IMAGE_SOURCE;
 	private String path;
 
 	private static final double CELL_DEFAULT_HEIGHT = 17;
 	private static final double CELL_DEFAULT_WIDTH = 64;
-	
+
 public image() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	Boolean template = null;
 	try{
 		template = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Excel_template_present)).getContent());
-	}catch(Exception e){	
+	}catch(Exception e){
 	}
 	if(template!=null && template.booleanValue()==false)
 		initCanvas(_tagLibrary,_beanLibrary);
 //	if(path!=null && path.toUpperCase().indexOf(".PNG")>-1)
-		
+
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
@@ -72,10 +72,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		Boolean template = null;
 		try{
 			template = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Excel_template_present)).getContent());
-		}catch(Exception e){	
+		}catch(Exception e){
 		}
 
-		
+
 		int X = 0;
 		int Y = 0;
 		try{
@@ -87,9 +87,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}catch(Exception e){
 		}
 
-		
+
 		WritableImage image = null;
-		
+
 
 		try{
 			path = util_web.adaptPath(getIMAGE_SOURCE(), _beanLibrary);
@@ -100,7 +100,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}
 		if(path==null) path = getIMAGE_SOURCE();
 
-		
+
 		BufferedImage input = null;
 //		if(path!=null && path.toUpperCase().indexOf(".PNG")>-1){
 		if(template!=null && template.booleanValue()==false){
@@ -133,16 +133,16 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				image = new WritableImage(X,Y,input.getWidth() / CELL_DEFAULT_WIDTH,
 						input.getHeight() / CELL_DEFAULT_HEIGHT, baos.toByteArray());
 
-				((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(image);
+				_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(image);
 				X++;
-			
-	
+
+
 				_sysPdfCR.setContent(new Integer(Y));
-				_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
-	
+				_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
+
 				_sysPdfCC.setContent(new Integer(X));
 				_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);
-							
+
 			}
 			if(input==null) path=null;
 		}
@@ -184,7 +184,7 @@ public static BufferedImage toBufferedImage(Image image) {
 	if (image instanceof BufferedImage) {
 		return (BufferedImage)image;
 	}
-    
+
 	image = new ImageIcon(image).getImage();
 	boolean hasAlpha = hasAlpha(image);
 
@@ -201,7 +201,7 @@ public static BufferedImage toBufferedImage(Image image) {
 		image.getWidth(null), image.getHeight(null), transparency);
 	} catch (Exception e) {
 	}
-    
+
 	if (bimage == null) {
 		int type = BufferedImage.TYPE_INT_RGB;
 		if (hasAlpha) {
@@ -209,12 +209,12 @@ public static BufferedImage toBufferedImage(Image image) {
 		}
 		bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
 	}
- 
+
 	Graphics g = bimage.createGraphics();
-    
+
 	g.drawImage(image, 0, 0, null);
 	g.dispose();
-    
+
 	return bimage;
 }
 

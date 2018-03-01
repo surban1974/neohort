@@ -41,9 +41,9 @@ import neohort.universal.output.util.OutputRunTimeService;
 
 public class general extends element{
 
-	private static final long serialVersionUID = 229981380741589124L;
+	private static final long serialVersionUID = -1L;
 	public Object writer;
-	public Hashtable _beanLibrary;
+	public Hashtable<String, report_element_base> _beanLibrary;
 	private java.lang.String TYPE_DOCUMENT;
 	private java.lang.String SOURCE_DOCUMENT;
 	private java.lang.String CLASS_STREAM_WRAPPER;
@@ -57,20 +57,20 @@ public class general extends element{
 public general() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
-				
+
 				I_StreamWrapper iStreamWrapper = null;
 
 				if(getCLASS_STREAM_WRAPPER()!=null && !getCLASS_STREAM_WRAPPER().equals("")){
@@ -81,38 +81,38 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}
 				}
 
-		
+
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && getSOURCE_DOCUMENT()!=null){
 						writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(getSOURCE_DOCUMENT(),false)));
-		
+
 				}
 				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
 					if(!noGenerate.booleanValue()) writer = new java.io.DataOutputStream((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
 
-		
+
 				if(writer!=null){
 					this._beanLibrary = _beanLibrary;
 				}
-		
-		
+
+
 				bean _sysDocument = new bean();
 						_sysDocument.setContent(new document());
 						_sysDocument.setName("SYSTEM");
 						_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 						_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-		
+
 				bean _sysPdfWriter = new bean();
 						_sysPdfWriter.setContent(writer);
 						_sysPdfWriter.setName("SYSTEM");
 						_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
 						_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
-		
+
 				bean _sysPdfPN = new bean();
 						_sysPdfPN.setContent(new Integer("0"));
 						_sysPdfPN.setName("SYSTEM");
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
-		
+
 				if(iStreamWrapper==null)
 					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes("");
 				else{
@@ -122,22 +122,22 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					_sysSW.setContent(iStreamWrapper);
 					_sysSW.setName("SYSTEM");
 					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 				}
-		
+
 			}
 		}catch(Exception e){
 			setError(e);
 		}
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeLast(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){	
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -153,13 +153,13 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						setError(e);
 					}
 				}
-				
+
 				if(iStreamWrapper==null)
 					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(this._content.getBytes());
 				else
 					((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).write(iStreamWrapper.getByteFromStream(_tagLibrary, _beanLibrary));
-				
-				
+
+
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED")){
 					if(!noGenerate.booleanValue()) ((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).close();
 					if (this.motore.getClass().getName().indexOf("PLNRunThread") > -1) {
@@ -169,9 +169,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}catch(Exception e){}
 					}
 				}
-				_tagLibrary = new Hashtable();
-				_beanLibrary = new Hashtable();
-		
+				_tagLibrary = new Hashtable<String, report_element_base>();
+				_beanLibrary = new Hashtable<String, report_element_base>();
+
 			}
 		}catch(Exception e){
 			setError(e);
@@ -229,8 +229,8 @@ public void setError(Exception e) {
 		general_j2ee.setError(this, e);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try {
 			isError = true;
 			if(e.toString().indexOf("java.io.IOException")>-1){
@@ -247,7 +247,7 @@ public void setError(Exception e) {
 						}catch(Exception ex){}
 					}
 				}
-	
+
 			}else{
 				motore.setError(e,this.getName(),iStub.log_ERROR);
 			}

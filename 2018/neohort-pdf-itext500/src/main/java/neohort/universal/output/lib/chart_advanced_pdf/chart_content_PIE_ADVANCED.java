@@ -19,7 +19,7 @@ import neohort.universal.output.lib.chart_pdf.I_chart_dati;
 
 
 public class chart_content_PIE_ADVANCED extends A_chart_content implements I_chart_content, java.io.Serializable {
-	private static final long serialVersionUID = -3688167212361469202L;
+	private static final long serialVersionUID = -1L;
 	static private float space_0 = 2;
     private float prof = 7;
 public chart_content_PIE_ADVANCED() {
@@ -72,7 +72,7 @@ float coef_h_pie = 16;
 
 
 
-Vector dZ = dati.getDati(2,0);
+Vector<Object> dZ = dati.getDati(2,0);
 if(dZ!=null && dZ.size()>1){
 	try{
 		float ang = new java.math.BigDecimal((String)dZ.elementAt(1)).floatValue();
@@ -87,7 +87,7 @@ if(dZ!=null && dZ.size()>2){
 }
 
     try {
-        Vector scale_buf = new Vector();
+        Vector<Object> scale_buf = new Vector<Object>();
 
         if (orientation == super.or_TOP) {
 			if(paint){
@@ -100,9 +100,9 @@ if(dZ!=null && dZ.size()>2){
 //Label-Top
 boolean positionV = false;
 
-			Vector datiXbuf = dati.getDati(0, 1*2);
+			Vector<Object> datiXbuf = dati.getDati(0, 1*2);
             if (label != null && label.trim().length() > 0) {
-				Vector descr_label_top = new Vector();
+				Vector<Object> descr_label_top = new Vector<Object>();
 				try{
 					java.util.StringTokenizer st = new java.util.StringTokenizer(label, ";");
 					while (st.hasMoreTokens()){
@@ -269,7 +269,7 @@ float maxY = height;
 
                 float heightPie = Radice / coef_h_pie;
 
-                Vector datiX = dati.getDati(0, Radice * 2);
+                Vector<Object> datiX = dati.getDati(0, Radice * 2);
                 if (paint && datiX.size() > 0) {
 
                     float centerX = (width - prof) / 2;
@@ -316,7 +316,7 @@ float maxY = height;
 	                        cb.lineTo(xd, yd + heightPie);
                         cb.fill();
 
-						ArrayList ar = cdc.getPoints();
+						ArrayList<float[]> ar = cdc.getPoints();
 
 
 
@@ -415,7 +415,7 @@ float maxY = height;
                         if(yl>maxY) maxY = yl;
                         if(yl<minY) minY = yl;
 
-						ArrayList ar = cdc.getPoints();
+						ArrayList<float[]> ar = cdc.getPoints();
 
 
 						cb.setColorFill(cdc.getColorTop());
@@ -441,9 +441,9 @@ float maxY = height;
 
                     }
 
-Vector full_des_y = new Vector();
-Vector full_des_x = new Vector();
-Vector full_des_pair = new Vector();
+Vector<Float> full_des_y = new Vector<Float>();
+Vector<Float> full_des_x = new Vector<Float>();
+Vector<Float> full_des_pair = new Vector<Float>();
 
 float max_sc_width_buf = 0;
 

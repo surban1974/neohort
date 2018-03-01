@@ -29,7 +29,7 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class condition_for extends report_element_base{
-	private static final long serialVersionUID = 7475732844248230642L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String FOR_FIRSTCOUNTER;
 	private java.lang.String FOR_LASTCOUNTER;
 	private java.lang.String FOR_STEPCOUNTER;
@@ -39,7 +39,7 @@ public class condition_for extends report_element_base{
 public condition_for() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		for_firstcounter = Integer.valueOf(getFOR_FIRSTCOUNTER()).intValue();
 		for_lastcounter = Integer.valueOf(getFOR_LASTCOUNTER()).intValue();
@@ -55,7 +55,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 	
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		for_firstcounter = Integer.valueOf(getFOR_FIRSTCOUNTER()).intValue();
 		for_lastcounter = Integer.valueOf(getFOR_LASTCOUNTER()).intValue();

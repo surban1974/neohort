@@ -34,7 +34,6 @@ import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.BaseFont;
@@ -69,7 +68,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class text extends element{
 
-	private static final long serialVersionUID = -2628963603560963835L;
+	private static final long serialVersionUID = -1L;
 	private String ISTEMPLATE;
 	private PdfTemplate template=null;
 	private boolean drawTextInTemplate=false;
@@ -79,7 +78,7 @@ public class text extends element{
 public text() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(getISTEMPLATE().equalsIgnoreCase("TRUE") && _beanLibrary.get(getName()+":"+getID())!=null)
 			this.setTemplate(((text)_beanLibrary.get(getName()+":"+getID())).getTemplate());
@@ -87,13 +86,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this);
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
+	_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this);
 	if(getISTEMPLATE().equalsIgnoreCase("TRUE")){
 		_beanLibrary.put(getName()+":"+getID(),this);
 		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Templates,new bean());
-		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) ((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable());
-		((Hashtable)((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()).put(getName()+":"+getID(),getName()+":"+getID());
+		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) ((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable<String,Object>());
+		((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContentAsMap().put(getName()+":"+getID(),getName()+":"+getID());
 	}else{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -101,7 +100,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 }
 
-public void drawDirect(Hashtable _beanLibrary){
+public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(	getISTEMPLATE().equalsIgnoreCase("TRUE") &&
 			_beanLibrary.get(getName()+":"+getID())!=null) isCreated=true;
@@ -115,7 +114,7 @@ public void drawDirect(Hashtable _beanLibrary){
 		BaseFont bs = null;
 		String bs_name="Helvetica";
 
-		
+
 		if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
 			bs_name = adaptAttrName(internal_style.getFONT());
 			if(internal_style.getFONT_TYPE()!=null && !internal_style.getFONT_TYPE().equals(""))
@@ -179,9 +178,9 @@ public void drawDirect(Hashtable _beanLibrary){
 		}
 
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
-		
 
-		
+
+
 		PdfContentByte cb = pdfWriter.getDirectContent();
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
 
@@ -196,7 +195,7 @@ public void drawDirect(Hashtable _beanLibrary){
 				template.setTextMatrix(0, 0);
 				if(rotation==0)	template.showText(content);
 				else template.showTextAligned(PdfContentByte.ALIGN_LEFT, content, 0, 0, rotation);
-				
+
 				template.endText();
 			}
 		}else{
@@ -211,7 +210,7 @@ public void drawDirect(Hashtable _beanLibrary){
 				cb.showTextAligned(PdfContentByte.ALIGN_LEFT, content, absolute_x, absolute_y, rotation);
 			}
 			cb.endText();
-*/			
+*/
 			Font font = getFont();
 			Phrase phrase = null;
 			int _f_leading = -1;
@@ -223,7 +222,7 @@ public void drawDirect(Hashtable _beanLibrary){
 			int align_h = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL"))
 				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation,PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
-			else 
+			else
 				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation);
 		}
 //		cb.saveState();
@@ -245,7 +244,7 @@ public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
 	public PdfTemplate getTemplate() {

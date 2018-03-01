@@ -29,22 +29,23 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
+import neohort.universal.output.lib.report_element_base;
 
 public class table_block extends element{
-	private static final long serialVersionUID = -1412738670812683414L;
+	private static final long serialVersionUID = -1L;
 	private int deltaCol;
 	private int deltaRow;
 	private int startCol;
 	private int startRow;
-	
+
 public table_block() {
-	super();	
+	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 		int X = 0;
 		int Y = 0;
 		try{
@@ -57,10 +58,10 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		}
 		startCol = X;
 		startRow = Y;
-	}catch(Exception e){	
+	}catch(Exception e){
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
@@ -68,13 +69,13 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
 			_sysPdfCR.setContent(new Integer(startRow));
 		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
-		
+
 		if(getParent()!=null && getParent() instanceof table_row)
 			((table_row)getParent()).setDeltaRow(deltaRow);
-				
+
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-		else _tagLibrary.remove(getName()+":"+getID());		
+		else _tagLibrary.remove(getName()+":"+getID());
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

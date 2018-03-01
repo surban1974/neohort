@@ -29,19 +29,20 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
+import neohort.universal.output.lib.report_element_base;
 
 public class page_footer extends element{
-	private static final long serialVersionUID = -9052781652371777657L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String FONT;
 	private java.lang.String FONT_SIZE;
 	private java.lang.String FONT_TYPE;
-	private java.lang.String ALIGN;	
+	private java.lang.String ALIGN;
 	private java.lang.String STYLE_ID;
 
 public page_footer() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(!getALIGN().equals(""))
 			this._header+="&"+getALIGN().charAt(0);
@@ -60,19 +61,19 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
-	}	
+	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		this._content = (String)getContent();
 		bean _sysPdfPageHeader = new bean();
 				_sysPdfPageHeader.setContent(this);
 				_sysPdfPageHeader.setName("SYSTEM");
 				_sysPdfPageHeader.setID(iConst.iHORT_SYSTEM_PageFooter);
-				_beanLibrary.put(_sysPdfPageHeader.getName()+":"+_sysPdfPageHeader.getID(),_sysPdfPageHeader);	
+				_beanLibrary.put(_sysPdfPageHeader.getName()+":"+_sysPdfPageHeader.getID(),_sysPdfPageHeader);
 		_tagLibrary.remove(getName()+":"+getID());
-		
-		
+
+
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}

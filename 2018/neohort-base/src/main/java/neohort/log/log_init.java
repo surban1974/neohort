@@ -31,7 +31,7 @@ import java.util.Properties;
 import neohort.util.util_format;
 
 public class log_init implements Serializable{
-	private static final long serialVersionUID = -427352104359589848L;
+	private static final long serialVersionUID = -1L;
 	static public String id_LogStub =			"application.log.stub";
 	static public String id_LogLevel =			"application.log.level";
 		

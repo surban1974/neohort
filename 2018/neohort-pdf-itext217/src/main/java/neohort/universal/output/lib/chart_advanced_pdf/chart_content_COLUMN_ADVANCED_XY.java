@@ -16,7 +16,7 @@ import neohort.universal.output.lib.chart_pdf.I_chart_dati;
 
 
 public class chart_content_COLUMN_ADVANCED_XY extends A_chart_content implements I_chart_content, java.io.Serializable {
-	private static final long serialVersionUID = -205115486680893971L;
+	private static final long serialVersionUID = -1L;
 	public float space_0 = 2;
 	public Double max_scale_fixed_Y;
 	public Boolean show_under_columns;
@@ -63,7 +63,7 @@ public void ActionAfter(PdfContentByte cb, I_chart_content ch_contentT,I_chart_c
 public I_chart_dati ChartDatiFactory() {
 	return new chart_dati_COLUMN_ADVANCED_XY();
 }
-Color getField_Color(Class cl, String name, Color d_value) {
+Color getField_Color(Class<?> cl, String name, Color d_value) {
 	Color result = d_value;
 	if(name.indexOf(",")>-1){
 		try{
@@ -95,13 +95,13 @@ Color getField_Color(Class cl, String name, Color d_value) {
 	return result;
 }
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
-	colors = new Vector();
-	colorsShadow = new Vector();
+	colors = new Vector<Color>();
+	colorsShadow = new Vector<Color>();
 	float prof = 7;
 	boolean positionV = false;
 	
     try {
-Vector scale_buf = new Vector();
+Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == super.or_TOP) {
 			if(paint){	        
 				if(background!=null){	        
@@ -112,7 +112,7 @@ Vector scale_buf = new Vector();
 			}
 //Label-Top
             if (label != null && label.trim().length() > 0) {
-				Vector descr_label_top = new Vector();
+				Vector<String> descr_label_top = new Vector<String>();
 				try{
 					java.util.StringTokenizer st = new java.util.StringTokenizer(label, ";");
 					while (st.hasMoreTokens()){
@@ -483,8 +483,8 @@ Vector scale_buf = new Vector();
 	        
 	        _prepareColori(((chart_dati_COLUMN_ADVANCED_XY)dati).datiX_st.size());
 	        _prepareColoriShadow(((chart_dati_COLUMN_ADVANCED_XY)dati).datiX_st.size());
-			Vector datiX = dati.getDati(0,width-prof,-1,0);
-			Vector datiY = dati.getDati(1,height-prof,-1,0);
+			Vector<Object> datiX = dati.getDati(0,width-prof,-1,0);
+			Vector<Object> datiY = dati.getDati(1,height-prof,-1,0);
 			
 float deltaGen = (width-prof)/datiY.size();
  
@@ -514,11 +514,11 @@ float deltaGen = (width-prof)/datiY.size();
 	
 					 
 	        int k=0;
-Vector datiYDes = new Vector();	        
-Vector datiXGen = new Vector();
-Vector datiYGen = new Vector();
+Vector<Vector<Object>> datiYDes = new Vector<Vector<Object>>();	        
+Vector<Vector<Object>> datiXGen = new Vector<Vector<Object>>();
+Vector<Vector<Object>> datiYGen = new Vector<Vector<Object>>();
 int countR=0;
-Vector datiydesloc = null;
+Vector<Object> datiydesloc = null;
 			datiX = dati.getDati(0,width-prof,k,0);
 			datiY = dati.getDati(1,height-prof,k,0);
 			datiydesloc = dati.getDati(11,height-prof,k,0);
@@ -537,11 +537,11 @@ Vector datiydesloc = null;
 
 			}	
 
-Vector datiXRes = new Vector();
-Vector datiYRes = new Vector();
-Vector datiYResDes = new Vector();
-Vector datiColor = new Vector();
-Vector datiColorShadow = new Vector();
+Vector<Object> datiXRes = new Vector<Object>();
+Vector<Object> datiYRes = new Vector<Object>();
+Vector<Object> datiYResDes = new Vector<Object>();
+Vector<Color> datiColor = new Vector<Color>();
+Vector<Color> datiColorShadow = new Vector<Color>();
 
 			for(int i=0;i<countR;i++){
 				for(int j=0;j<datiXGen.size();j++){
@@ -552,9 +552,9 @@ Vector datiColorShadow = new Vector();
 						datiColor.add(colors.elementAt(j));
 						datiColorShadow.add(colorsShadow.elementAt(j));
 					}else{	
-						datiXRes.add(((Vector)datiXGen.elementAt(j)).elementAt(i));
-						datiYRes.add(((Vector)datiYGen.elementAt(j)).elementAt(i));
-						datiYResDes.add(((Vector)datiYDes.elementAt(j)).elementAt(i));
+						datiXRes.add(datiXGen.elementAt(j).elementAt(i));
+						datiYRes.add(datiYGen.elementAt(j).elementAt(i));
+						datiYResDes.add(datiYDes.elementAt(j).elementAt(i));
 						datiColor.add(colors.elementAt(j));
 						datiColorShadow.add(colorsShadow.elementAt(j));
 					}	

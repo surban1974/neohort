@@ -35,15 +35,15 @@ public class custom extends report_element_base{
 public custom() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(delegate!=null)
 		delegate.executeFirst(_tagLibrary, _beanLibrary);
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(delegate!=null)
 		delegate.executeLast(_tagLibrary, _beanLibrary);
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	if(delegate!=null)
 		delegate.drawCanvas(_tagLibrary, _beanLibrary);
 }

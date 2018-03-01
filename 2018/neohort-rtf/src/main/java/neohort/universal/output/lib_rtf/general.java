@@ -47,7 +47,7 @@ import com.lowagie.text.rtf.RtfWriter2;
 
 
 public class general extends element{
-	
+
 	public Document getDocument() {
 		return document;
 	}
@@ -60,10 +60,10 @@ public class general extends element{
 	public void setWriter(RtfWriter2 writer) {
 		this.writer = writer;
 	}
-	private static final long serialVersionUID = 1772526932083369013L;
+	private static final long serialVersionUID = -1L;
 	private Document document;
 	private RtfWriter2 writer;
-	public Hashtable _beanLibrary;
+	public Hashtable<String, report_element_base> _beanLibrary;
 	private String TYPE_DOCUMENT;
 	private String SOURCE_DOCUMENT;
 	private String CLASS_STREAM_WRAPPER;
@@ -75,22 +75,22 @@ public class general extends element{
 	private String LIB;
 	private boolean documentClosed=false;
 	private int cur_page = 0;
-	
+
 
 public general() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){	
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
-	
+
 			if(included!=null && included.booleanValue()==true){}
 			else{
 				I_StreamWrapper iStreamWrapper = null;
@@ -142,53 +142,53 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
 					if(!noGenerate.booleanValue()) writer = RtfWriter2.getInstance(document,(OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
-				
+
 				if(writer!=null){
 					this._beanLibrary = _beanLibrary;
 				}
-		
+
 				bean _sysDocument = new bean();
 						_sysDocument.setContent(document);
 						_sysDocument.setName("SYSTEM");
 						_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 						_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-		
+
 				bean _sysRtfWriter2 = new bean();
 						_sysRtfWriter2.setContent(writer);
 						_sysRtfWriter2.setName("SYSTEM");
 						_sysRtfWriter2.setID(iConst.iHORT_SYSTEM_Writer);
 						_beanLibrary.put(_sysRtfWriter2.getName()+":"+_sysRtfWriter2.getID(),_sysRtfWriter2);
-		
+
 				bean _sysPdfPN = new bean();
 						_sysPdfPN.setContent(new Integer("0"));
 						_sysPdfPN.setName("SYSTEM");
 						_sysPdfPN.setID(iConst.iHORT_SYSTEM_Document_PageNumber);
 						_beanLibrary.put(_sysPdfPN.getName()+":"+_sysPdfPN.getID(),_sysPdfPN);
 
-						
+
 				if(iStreamWrapper!=null){
 					bean _sysSW = new bean();
 					_sysSW.setContent(iStreamWrapper);
 					_sysSW.setName("SYSTEM");
 					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 				}			}
 		}catch(Exception e){
 			setError(e);
 		}
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeLast(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){	
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
-		
+
 			if(included!=null && included.booleanValue()==true){}
 			else{
 				if(!noGenerate.booleanValue()) ((RtfWriter2)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).flush();
@@ -201,9 +201,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}catch(Exception e){}
 					}
 				}
-				_tagLibrary = new Hashtable();
-				_beanLibrary = new Hashtable();
-		
+				_tagLibrary = new Hashtable<String, report_element_base>();
+				_beanLibrary = new Hashtable<String, report_element_base>();
+
 			}
 		}catch(Exception e){
 			setError(e);
@@ -248,8 +248,8 @@ public void setError(Exception e) {
 		general_j2ee.setError(this, e);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){	
+
+	if(motore instanceof OutputRunTimeService){
 		try {
 			isError = true;
 			if(e.toString().indexOf("java.io.IOException")>-1){
@@ -266,7 +266,7 @@ public void setError(Exception e) {
 						}catch(Exception ex){}
 					}
 				}
-	
+
 			}else{
 				((iHort)motore).setError(e,this.getName(),iStub.log_ERROR);
 			}

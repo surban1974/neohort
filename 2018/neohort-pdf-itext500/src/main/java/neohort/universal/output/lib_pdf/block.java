@@ -34,17 +34,17 @@ import neohort.universal.output.lib.style;
 import com.itextpdf.text.pdf.PdfPCell;
 
 public class block extends element{
-	private static final long serialVersionUID = 1992073480484748961L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 public block() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		int border = 0;
 			try{
@@ -55,7 +55,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		String content=prepareContentString(internal_style.getFORMAT());
 		cell=getCellC(	content,border,_beanLibrary);
 
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

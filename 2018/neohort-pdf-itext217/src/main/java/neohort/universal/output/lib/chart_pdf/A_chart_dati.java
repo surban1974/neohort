@@ -27,10 +27,11 @@ package neohort.universal.output.lib.chart_pdf;
 import java.util.HashMap;
 import java.util.Vector;
 
+
 public abstract class A_chart_dati implements I_chart_dati{	
-	public java.util.Vector datiX = new Vector();
-	public java.util.Vector datiY = new Vector();
-	public java.util.Vector datiZ = new Vector();	
+	public Vector<Object> datiX = new Vector<Object>();
+	public Vector<Object> datiY = new Vector<Object>();
+	public Vector<Object> datiZ = new Vector<Object>();	
 	public java.lang.String formatX = "";
 	public java.lang.String formatY = "";
 	public java.lang.String formatZ = "";
@@ -39,8 +40,8 @@ public abstract class A_chart_dati implements I_chart_dati{
 	public long delta_month = 2678400;
 	public long delta_year = 31536000;
 	
-	private HashMap container_tmp;
-	private HashMap external_parameters;
+	private HashMap<String,Object> container_tmp;
+	private HashMap<String,Object> external_parameters;
 	
 
 
@@ -49,18 +50,18 @@ public A_chart_dati() {
 	reimposta();
 }
 
-public abstract Vector getDati(int type, float length);
-public abstract Vector getDati(int type, float length, float count, float lengthZ);
-public Vector getDatiX(float length){
+public abstract Vector<Object> getDati(int type, float length);
+public abstract Vector<Object> getDati(int type, float length, float count, float lengthZ);
+public Vector<Object> getDatiX(float length){
 	return null;
 }
-public Vector getDatiY(float length){
+public Vector<Object> getDatiY(float length){
 	return null;
 }
-public Vector getDatiZ(float length){
+public Vector<Object> getDatiZ(float length){
 	return null;
 }
-public abstract Vector getScale(int type, int max_scale);
+public abstract Vector<Object> getScale(int type, int max_scale);
 public abstract String prepareContentString(String formatSG, String value);
 public abstract Object prepareDataValue(String formatSG, String value);
 public void reimposta() {
@@ -79,15 +80,15 @@ public abstract void setDati(int type,String format, String value);
 public abstract void setDati(Object X, Object Y);
 public abstract void setDati(Object X, Object Y, Object Z);
 public abstract void setFormat(int type, String format);
-public HashMap getContainer_tmp() {
-	if(container_tmp==null) container_tmp=new HashMap();
+public HashMap<String,Object> getContainer_tmp() {
+	if(container_tmp==null) container_tmp=new HashMap<String,Object>();
 	return container_tmp;
 }
-public HashMap getExternal_parameters() {
-	if(external_parameters==null) external_parameters=new HashMap();
+public HashMap<String,Object> getExternal_parameters() {
+	if(external_parameters==null) external_parameters=new HashMap<String,Object>();
 	return external_parameters;
 }
-public void setExternal_parameters(HashMap map) {
+public void setExternal_parameters(HashMap<String,Object> map) {
 	external_parameters = map;
 }
 

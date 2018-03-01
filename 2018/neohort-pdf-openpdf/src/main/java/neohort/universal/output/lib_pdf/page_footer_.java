@@ -34,16 +34,18 @@ import neohort.universal.output.lib.report_element_base;
 
 public class page_footer_ extends element{
 
-	private static final long serialVersionUID = -1551086314251292437L;
+	private static final long serialVersionUID = -1L;
 public page_footer_() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
-	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).remove(((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:Canvas")).getContent())).lastElement());
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
+	_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList().remove(
+			_beanLibrary.get("SYSTEM:Canvas").getContentLastElement()
+		);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -57,15 +59,15 @@ public void reimposta() {
 	setName("PAGE_FOOTER_");
 	STYLE_ID = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 
 	try{
 		bean _sysPdfPageFooter = new bean();
-				_sysPdfPageFooter.setContent(new Vector());
+				_sysPdfPageFooter.setContent(new Vector<Object>());
 				_sysPdfPageFooter.setName("SYSTEM");
 				_sysPdfPageFooter.setID(iConst.iHORT_SYSTEM_PageFooter_);
 				_beanLibrary.put(_sysPdfPageFooter.getName()+":"+_sysPdfPageFooter.getID(),_sysPdfPageFooter);
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(_sysPdfPageFooter);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(_sysPdfPageFooter);
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}

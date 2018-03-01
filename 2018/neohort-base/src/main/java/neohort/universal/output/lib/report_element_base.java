@@ -25,8 +25,11 @@
 package neohort.universal.output.lib;
 
 import java.awt.Color;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
@@ -41,9 +44,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
 public abstract class report_element_base implements report_element {
-	private static final long serialVersionUID = 370688978693756518L;
+	private static final long serialVersionUID = -1L;
 	public String ID = "";
-	public Vector Parameters = new Vector();
+	public Vector<String> Parameters = new Vector<String>();
 	public String name = "REPORT_ELEMENT_BASE";
 	public Object content;
 	public report_element parent;
@@ -57,7 +60,7 @@ public abstract class report_element_base implements report_element {
 	public String STYLE_ID = "";
 	public String PARSER_JAVA = "true";
 	public style internal_style;	
-	public HashMap external_parameters;
+	public HashMap<String,Object> external_parameters;
 	
 		
 public report_element_base() {
@@ -65,19 +68,59 @@ public report_element_base() {
 	Parameters.addElement("ID");
 	reimposta();	
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
-public Object executeBean(Object requested, String execution, Hashtable _beanLibrary, int check) {
+public Object executeBean(Object requested, String execution, Hashtable<String, report_element_base> _beanLibrary, int check) {
 	return new Parser_Java(this.name,this.motore).executeBean(requested, execution, _beanLibrary, check);
 }
-public abstract void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary);
-public abstract void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary);
+public abstract void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary);
+public abstract void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary);
+
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public boolean add2content(Object value) {
+	if(content==null || value==null)
+		return false;
+	if(content instanceof Collection){
+		((Collection)content).add(value);
+		return true;
+	}
+	return false;
+}
+@SuppressWarnings({ "rawtypes" })
+public Object getContentLastElement() {
+	if(content==null)
+		return null;
+	if(content instanceof java.util.List){
+		if(!((java.util.List)content).isEmpty())
+			return ((java.util.List)content).get(((java.util.List)content).size()-1);
+	}
+	return null;
+}
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public List<Object> getContentAsList() {
+	if(content==null)
+		return null;
+	if(content instanceof List)
+		return (List)content;
+	return null;
+}
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public Map<Object,Object> getContentAsMap() {
+	if(content==null)
+		return null;
+	if(content instanceof Map)
+		return (Map)content;
+	return null;
+}
+
 public Object getContent() {
 	return content;
 }
-public Color getField_Color(Class cl, String name, Color d_value) {
+public Color getField_Color(Class<?> cl, String name, Color d_value) {
 	return getField_Color(name, d_value);
 }
 public Color getField_Color( String name, Color d_value) {
@@ -111,7 +154,7 @@ public Color getField_Color( String name, Color d_value) {
 	}	
 	return result;
 }
-public int getField_Int(Class cl, String name, int d_value) {
+public int getField_Int(Class<?> cl, String name, int d_value) {
 	int result = d_value;
 	try{
 		result = cl.getField(name).getInt(cl);
@@ -132,7 +175,7 @@ public java.lang.String getID() {
 public Node getNodeCurrent() {
 	return nodeCurrent;
 }
-public Vector getParameters() {
+public Vector<String> getParameters() {
 	return Parameters;
 }
 public report_element getParent() {
@@ -151,7 +194,7 @@ public java.lang.String getSYSATTR() {
 public Object getValue(String nome){
 	return new Parser_Java(this.name,this.motore).getValue(nome);	
 }
-public boolean isActive(Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+public boolean isActive(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary, Hashtable<String, report_element_base> _styleLibrary) {
 	return isActive();
 }
 public boolean isActive() {
@@ -160,7 +203,7 @@ public boolean isActive() {
 public boolean isActiveCycle() {
 	return false;
 }
-public boolean isPreActive(Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+public boolean isPreActive(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary, Hashtable<String, report_element_base> _styleLibrary) {
 	return isPreActive();
 }
 public boolean isPreActive() {
@@ -281,7 +324,7 @@ public abstract void reimposta();
 public String RETURN(String nome){ 
 	return getValue(nome).toString();	
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
 public void setContent(Object newContent) {
 	content = newContent;
 }
@@ -301,7 +344,7 @@ public void setMotore(I_OutputRunTime newMotore) {
 public void setNodeCurrent(Node newNodeCurrent) {
 	nodeCurrent = newNodeCurrent;
 }
-public void setParameters(Vector newParameters) {
+public void setParameters(Vector<String> newParameters) {
 	Parameters = newParameters;
 }
 public void setParent(report_element newParent) {
@@ -436,7 +479,10 @@ public String _separator() {
 	else return sep;
 }
 
-public Object init_element(Node node, report_element_base element_parent,Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
+public Object init_element(Node node, report_element_base element_parent, 
+		Hashtable<String, report_element_base> _tagLibrary,
+		Hashtable<String, report_element_base> _beanLibrary,
+		Hashtable<String, report_element_base> _styleLibrary) {
 	if(node!=null) nodeCurrent = node; 
 	Object result = this;
 	String styleID = "";

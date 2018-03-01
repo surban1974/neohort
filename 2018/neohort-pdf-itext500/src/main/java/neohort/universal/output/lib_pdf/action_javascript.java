@@ -40,18 +40,18 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class action_javascript extends element{
-	private static final long serialVersionUID = 984648479620588585L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String UNICODE;
 	private java.lang.String JAVASCRIPT;
 public action_javascript() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		boolean _unicode = false;
 		try{
@@ -73,7 +73,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 		Object canvas_prev = null;
 		try{
-			canvas_prev = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement();
+			canvas_prev = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement();
 		}catch(Exception e){}
 
 		PdfWriter writer = (PdfWriter)((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent();
@@ -104,10 +104,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 			}
 
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
-		}else{
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(chunk);
-		}
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
+		}else
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(chunk);
+		
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)

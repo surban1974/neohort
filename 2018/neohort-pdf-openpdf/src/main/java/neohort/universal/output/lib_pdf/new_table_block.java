@@ -35,16 +35,16 @@ import neohort.universal.output.lib.report_element_base;
 
 
 public class new_table_block extends element{
-	private static final long serialVersionUID = -6150121629888337860L;
+	private static final long serialVersionUID = -1L;
 public new_table_block() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		try{
 			_sys_border = Integer.valueOf(internal_style.getBORDER()).intValue();
@@ -62,13 +62,13 @@ public void reimposta() {
 	setName("NEW_TABLE_BLOCK");
 	STYLE_ID = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		bean _sysPdfTableBlock = new bean();
 		_sysPdfTableBlock.setName("SYSTEM");
 		_sysPdfTableBlock.setID(iConst.iHORT_SYSTEM_TableBlock);
 
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(_sysPdfTableBlock);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(_sysPdfTableBlock);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());

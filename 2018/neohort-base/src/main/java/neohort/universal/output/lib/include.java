@@ -31,12 +31,12 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.iHort;
 
 public class include extends report_element_base{
-	private static final long serialVersionUID = 1735041360413529270L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String LINK;
 public include() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
     Boolean included =
         (Boolean) (((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
     String hash_prev = "";
@@ -46,7 +46,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary) {
     hash_prev = "_ids_" + new_pdfrt.hashCode();
 
     if (!hash_prev.equals("")) {
-        Enumeration keys = _beanLibrary.keys();
+        Enumeration<String> keys = _beanLibrary.keys();
         while (keys.hasMoreElements()) {
             try {
                 String key = (String) keys.nextElement();
@@ -68,7 +68,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary) {
             _sysIncluded);
     }
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
 public java.lang.String getLINK() {
 	return LINK;

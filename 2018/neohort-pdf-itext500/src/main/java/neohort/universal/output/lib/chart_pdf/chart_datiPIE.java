@@ -44,7 +44,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
 	if(newFormatY!=null) formatY = newFormatY;
 	if(newFormatZ!=null) formatZ = newFormatZ;	
 }
-    public  ArrayList bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent) {
+    public  ArrayList<float[]> bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent) {
         float tmp;
         
         float alfa_tmp = (float)((startAng)*Math.PI/180);        
@@ -78,7 +78,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         float ry = (y2-y1)/2f;
         float halfAng = (float)(fragAngle * Math.PI / 360.);
         float kappa = (float)(Math.abs(4. / 3. * (1. - Math.cos(halfAng)) / Math.sin(halfAng)));
-        ArrayList pointList = new ArrayList(); 
+        ArrayList<float[]> pointList = new ArrayList<float[]>(); 
         for (int i = 0; i < Nfrag; ++i) {
             float theta0 = (float)((startAng + i*fragAngle) * Math.PI / 180.);
             float theta1 = (float)((startAng + (i+1)*fragAngle) * Math.PI / 180.);
@@ -161,7 +161,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         }
         return pointList;
     }
-    public  ArrayList bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent, float xd, float yd) {
+    public  ArrayList<float[]> bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent, float xd, float yd) {
         float tmp;
         
         float alfa_tmp = (float)((startAng)*Math.PI/180);        
@@ -195,7 +195,7 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         float ry = (y2-y1)/2f;
         float halfAng = (float)(fragAngle * Math.PI / 360.);
         float kappa = (float)(Math.abs(4. / 3. * (1. - Math.cos(halfAng)) / Math.sin(halfAng)));
-        ArrayList pointList = new ArrayList(); 
+        ArrayList<float[]> pointList = new ArrayList<float[]>(); 
         for (int i = 0; i < Nfrag; ++i) {
             float theta0 = (float)((startAng + i*fragAngle) * Math.PI / 180.);
             float theta1 = (float)((startAng + (i+1)*fragAngle) * Math.PI / 180.);
@@ -278,8 +278,8 @@ public chart_datiPIE(java.lang.String newFormatX,java.lang.String newFormatY,jav
         }
         return pointList;
     }
-public Vector getDati(int type, float length) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float length) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(length,length);
@@ -291,8 +291,8 @@ public Vector getDati(int type, float length) {
 	    	return result; 
     }
 }
-public Vector getDati(int type, float lengthX, float lengthY, float lengthZ) {
-    Vector result = new Vector();
+public Vector<Object> getDati(int type, float lengthX, float lengthY, float lengthZ) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getDatiX(lengthX,lengthY);
@@ -304,9 +304,9 @@ public Vector getDati(int type, float lengthX, float lengthY, float lengthZ) {
 	    	return result; 
     }
 }
-private Vector getDatiX(float lengthX, float lengthY) {
-    Vector result = new Vector();
-    Vector sort_result = new Vector();
+private Vector<Object> getDatiX(float lengthX, float lengthY) {
+    Vector<Object> result = new Vector<Object>();
+    Vector<Object> sort_result = new Vector<Object>();
 
     if (datiX == null || datiX.size() == 0) return result;
 
@@ -323,8 +323,8 @@ if(datiZ!=null && datiZ.size()!=0){
 	
 	        Radice = Radice - dRadice;
     
-	Vector colorsSh = new Vector();     
-	Vector colors = new Vector();
+	Vector<BaseColor> colorsSh = new Vector<BaseColor>();     
+	Vector<BaseColor> colors = new Vector<BaseColor>();
 		colorsSh.add(new BaseColor(255-40,0,0));
 		colorsSh.add(new BaseColor(0,255-40,0));
 		colorsSh.add(new BaseColor(0,0,255-40));
@@ -376,7 +376,7 @@ if(datiZ!=null && datiZ.size()!=0){
 				cdc.setXcenter(new java.math.BigDecimal(Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setYcenter(new java.math.BigDecimal(Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 
-				ArrayList ar = bezierArc(	(float)(-Radice),
+				ArrayList<float[]> ar = bezierArc(	(float)(-Radice),
 											(float)(-Radice),
 											(float)(Radice),
 											(float)(Radice),
@@ -429,7 +429,7 @@ if(datiZ!=null && datiZ.size()!=0){
 				cdc.setXcenter(new java.math.BigDecimal(Xd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 				cdc.setYcenter(new java.math.BigDecimal(Yd).divide(new java.math.BigDecimal("1"),15,java.math.BigDecimal.ROUND_HALF_UP).floatValue());
 
-				ArrayList ar = bezierArc(	(float)(-Radice),
+				ArrayList<float[]> ar = bezierArc(	(float)(-Radice),
 											(float)(-Radice),
 											(float)(Radice),
 											(float)(Radice),
@@ -487,14 +487,14 @@ while (result.size()!=0 && !finish){
 return sort_result;
     
 }
-private Vector getDatiY(float lengthX, float lengthY) {
-    return new Vector();
+private Vector<Object> getDatiY(float lengthX, float lengthY) {
+    return new Vector<Object>();
 }
-private Vector getDatiZ(float lengthX, float lengthY) {
+private Vector<Object> getDatiZ(float lengthX, float lengthY) {
     return datiZ;
 }
-public Vector getScale(int type, int max_scale) {
-    Vector result = new Vector();
+public Vector<Object> getScale(int type, int max_scale) {
+    Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getScaleX(max_scale);
@@ -506,10 +506,10 @@ public Vector getScale(int type, int max_scale) {
 	    	return result; 
     }
 }
-private Vector getScaleX(int max_scale) {
+private Vector<Object> getScaleX(int max_scale) {
 	float lengthX = max_scale;
 	float lengthY = max_scale;	
-	Vector result = new Vector();
+	Vector<Object> result = new Vector<Object>();
 
     if (datiX == null || datiX.size() == 0) return result;
     
@@ -522,7 +522,7 @@ private Vector getScaleX(int max_scale) {
 	        float dRadice = Radice/7;
 	        Radice = Radice - dRadice;
     
-	Vector colors = new Vector();
+	Vector<BaseColor> colors = new Vector<BaseColor>();
 	
 		colors.add(BaseColor.RED);
 		colors.add(BaseColor.GREEN);
@@ -657,11 +657,11 @@ private Vector getScaleX(int max_scale) {
 	
     return result;
 }
-private Vector getScaleY(int max_scale) {
-    return new Vector();
+private Vector<Object> getScaleY(int max_scale) {
+    return new Vector<Object>();
 }
-private Vector getScaleZ(int max_scale) {
-	return new Vector();
+private Vector<Object> getScaleZ(int max_scale) {
+	return new Vector<Object>();
 }
 public String prepareContentString(String formatSG, String value) {
 	String content=value;

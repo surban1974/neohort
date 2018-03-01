@@ -34,7 +34,7 @@ import neohort.service.mail.mail_manager_smtp;
 import neohort.service.mail.mail_message;
 
 public class mail extends report_element_base{
-	private static final long serialVersionUID = 4511188447041392485L;
+	private static final long serialVersionUID = -1L;
 	private String IMAPHOST;
 	private String SMTPHOST;
 	private String MAILUSER;
@@ -52,7 +52,7 @@ public class mail extends report_element_base{
 public mail() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		mess = new mail_message();
 		mess.setIMAPHOST(getIMAPHOST());
@@ -69,7 +69,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		
 		if(!getATTACHMENTS().equals("")){
 			StringTokenizer st = new StringTokenizer(getATTACHMENTS(),";");
-			Vector att = new Vector();
+			Vector<String> att = new Vector<String>();
 			while(st.hasMoreTokens()) att.add(st.nextToken());
 			mess.setATTACHMENTS(att);
 		}	
@@ -83,7 +83,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}
 
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

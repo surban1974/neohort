@@ -69,8 +69,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			padding = Float.valueOf(internal_style.getPADDING()).floatValue();
 		}catch(Exception e){}
 
-		Color _fColor =getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black);
-		Color _bColor = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white);
+		Color _fColor =getField_Color(internal_style.getFONT_COLOR(),Color.black);
+		Color _bColor = getField_Color(internal_style.getBACK_COLOR(),Color.white);
 		String content=prepareContentString(internal_style.getFORMAT());
 
 		com.lowagie.text.Font font = new com.lowagie.text.Font(_f_name, _f_size, _f_type);
@@ -115,7 +115,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				if(cell!=null)
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 			}
-			
+
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
 		}else{
 			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(chunk);

@@ -28,11 +28,11 @@ import java.util.Vector;
 
 
 public abstract class Block implements BlockI{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	String Data = null;
 	char Action;
 	boolean CheckBrackets=false;
-	Vector PreparedData = new Vector();
+	Vector<SymbolContainer> PreparedData = new Vector<SymbolContainer>();
 	BlockI LeftB = null;
 	BlockI RightB = null;
 	
@@ -41,9 +41,9 @@ public abstract class Block implements BlockI{
 		private String Value = null;
 		private String Ident = null;
 
-		SymbolContainer(){
-			super();			
-		}
+//		SymbolContainer(){
+//			super();			
+//		}
 		SymbolContainer(String Value, int Ident){
 			super();
 			this.Value = Value;
@@ -51,10 +51,11 @@ public abstract class Block implements BlockI{
 		}
 		public String getSymbol(){return Value;}
 		public String getIdent(){return Ident;}
-		public boolean isIdent(int Ident){
-			if (this.Ident.equalsIgnoreCase("_"+String.valueOf(Ident).trim())) return true;
-			else return false;
-		}
+		
+//		public boolean isIdent(int Ident){
+//			if (this.Ident.equalsIgnoreCase("_"+String.valueOf(Ident).trim())) return true;
+//			else return false;
+//		}
 		public String toString(){return Value+"{"+Ident+"}";}
 		
 	}

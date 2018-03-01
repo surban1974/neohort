@@ -49,22 +49,22 @@ import neohort.util.util_reflect;
 import neohort.util.util_web;
 
 public class image extends element{
-	private static final long serialVersionUID = 3997198916703577511L;
+	private static final long serialVersionUID = -1L;
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
 	private String path;
 
-	private static final double CELL_DEFAULT_HEIGHT = 17;
-	private static final double CELL_DEFAULT_WIDTH = 64;
-	
+//	private static final double CELL_DEFAULT_HEIGHT = 17;
+//	private static final double CELL_DEFAULT_WIDTH = 64;
+
 public image() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
@@ -72,10 +72,10 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		Boolean template = null;
 		try{
 			template = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Excel_template_present)).getContent());
-		}catch(Exception e){	
+		}catch(Exception e){
 		}
 
-		
+
 		int X = 0;
 		int Y = 0;
 		try{
@@ -95,14 +95,14 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				loader = Class.forName(IMAGE_LOADER).newInstance();
 				util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
 				imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
-				
+
 			}catch(Exception e){
 
 				setError(e,iStub.log_ERROR);
 			}
-		}		
+		}
 
-		
+
 		if(imgBytes==null){
 			try{
 				path = util_web.adaptPath(getIMAGE_SOURCE(), _beanLibrary);
@@ -112,8 +112,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				path=null;
 			}
 			if(path==null) path = getIMAGE_SOURCE();
-	
-		
+
+
 			BufferedImage input = null;
 
 			if(template!=null && template.booleanValue()==false){
@@ -152,7 +152,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 
 				int pictureIdx = workbook.addPicture(imgBytes, Workbook.PICTURE_TYPE_PNG);
 				CreationHelper helper = workbook.getCreationHelper();
-				Drawing drawing = document.createDrawingPatriarch();
+				Drawing<?> drawing = document.createDrawingPatriarch();
 				ClientAnchor anchor = helper.createClientAnchor();
 				anchor.setCol1(X);
 				anchor.setRow1(Y);
@@ -167,36 +167,36 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					try{
 						_d_h = Integer.valueOf(internal_style.getWIDTH()).intValue();
 					}catch(Exception e){
-					}			
+					}
 				}
 				try{
 					_d_v = Integer.valueOf(internal_style.getDIMENTION_V()).intValue();
 				}catch(Exception e){
-				}	
+				}
 				if(_d_v==0){
 					try{
 						_d_v = Integer.valueOf(internal_style.getHEIGHT()).intValue();
 					}catch(Exception e){
-					}			
+					}
 				}
 				if(_d_h==0 && _d_v==0)
 					pict.resize();
 				else{
-					Dimension dim = pict.getImageDimension();					
+					Dimension dim = pict.getImageDimension();
 					pict.resize(_d_v/dim.getHeight(),_d_h/dim.getWidth());
 				}
-					
 
-							
+
+
 			}
-			
+
 			if(input==null) path=null;
 		}
 		X++;
-		
-		
+
+
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 		_sysPdfCC.setContent(new Integer(X));
 		_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);
@@ -245,7 +245,7 @@ public static BufferedImage toBufferedImage(Image image) {
 	if (image instanceof BufferedImage) {
 		return (BufferedImage)image;
 	}
-    
+
 	image = new ImageIcon(image).getImage();
 	boolean hasAlpha = hasAlpha(image);
 
@@ -262,7 +262,7 @@ public static BufferedImage toBufferedImage(Image image) {
 		image.getWidth(null), image.getHeight(null), transparency);
 	} catch (Exception e) {
 	}
-    
+
 	if (bimage == null) {
 		int type = BufferedImage.TYPE_INT_RGB;
 		if (hasAlpha) {
@@ -270,12 +270,12 @@ public static BufferedImage toBufferedImage(Image image) {
 		}
 		bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
 	}
- 
+
 	Graphics g = bimage.createGraphics();
-    
+
 	g.drawImage(image, 0, 0, null);
 	g.dispose();
-    
+
 	return bimage;
 }
 

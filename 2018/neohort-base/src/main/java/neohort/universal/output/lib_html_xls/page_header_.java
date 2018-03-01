@@ -29,34 +29,35 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
+import neohort.universal.output.lib.report_element_base;
 
 public class page_header_ extends element{
-	private static final long serialVersionUID = 5300983780085085641L;
+	private static final long serialVersionUID = -1L;
 	private String STYLE_ID;
 	private int header_rows_start;
 	private int header_rows_finish;
 public page_header_() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		header_rows_start = ((table)this.getParent()).getCurrentRow();
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
-	
+
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		header_rows_finish = ((table)this.getParent()).getCurrentRow();
 		bean _sysPdfPageHeader = new bean();
 				_sysPdfPageHeader.setContent(this);
 				_sysPdfPageHeader.setName("SYSTEM");
 				_sysPdfPageHeader.setID(iConst.iHORT_SYSTEM_PageHeader);
-				_beanLibrary.put(_sysPdfPageHeader.getName()+":"+_sysPdfPageHeader.getID(),_sysPdfPageHeader);	
+				_beanLibrary.put(_sysPdfPageHeader.getName()+":"+_sysPdfPageHeader.getID(),_sysPdfPageHeader);
 				if(_tagLibrary.get(getName()+":"+getID())==null)
 					_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-				else _tagLibrary.remove(getName()+":"+getID());		
+				else _tagLibrary.remove(getName()+":"+getID());
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

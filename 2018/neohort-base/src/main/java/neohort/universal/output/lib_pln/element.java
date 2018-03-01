@@ -31,7 +31,7 @@ import neohort.universal.output.lib.report_element_base;
 
 public abstract class element extends report_element_base implements report_element {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	public String _content = "";
 public element() {
 	super();
@@ -43,8 +43,8 @@ public void add(element child) {
 					child._content;
 ;
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
 public void reimposta(){

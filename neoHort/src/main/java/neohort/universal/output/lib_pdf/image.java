@@ -51,7 +51,7 @@ public class image extends element{
 	private PdfPCell cell;
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
-	
+
 public image() {
 	super();
 }
@@ -84,7 +84,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				pathImg=null;
 			}
 			if(pathImg==null) pathImg = getIMAGE_SOURCE();
-			
+
 			if(!IMAGE_LOADER.equals("")){
 				Object loader = null;
 				try{
@@ -94,7 +94,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					chartIm = Image.getInstance(imgBytes);
 //					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
 //					chartIm = Image.getInstance(awtImage,null);
-					
+
 				}catch(Exception e){
 					chartIm=null;
 					setError(e,iStub.log_ERROR);
@@ -131,8 +131,8 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						ImageIO.write(input, "PNG", baos);
 						chartIm = Image.getInstance(baos.toByteArray());
-					}					
-/*					
+					}
+/*
 					if(pathImg.trim().indexOf("http:")==0 || pathImg.trim().indexOf("https:")==0){
 						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(new java.net.URL(pathImg));
 						chartIm = Image.getInstance(awtImage,null);
@@ -142,7 +142,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						chartIm = Image.getInstance(awtImage,null);
 
 					}
-*/					
+*/
 				}catch(Exception e){}
 			}
 
@@ -156,41 +156,41 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				try{
 					_d_h = Integer.valueOf(internal_style.getWIDTH()).intValue();
 				}catch(Exception e){
-				}			
+				}
 			}
 			try{
 				_d_v = Integer.valueOf(internal_style.getDIMENTION_V()).intValue();
 			}catch(Exception e){
-			}	
+			}
 			if(_d_v==0){
 				try{
 					_d_v = Integer.valueOf(internal_style.getHEIGHT()).intValue();
 				}catch(Exception e){
-				}			
+				}
 			}
 
-			
+
 			float rotation = 0;
 			try{
 				rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 			}catch(Exception e){
 			}
 
-			
+
 			if(_d_h>0 && _d_v>0){
 				try{
 					chartIm.scaleAbsolute(_d_h,_d_v);
 				}catch(Exception e){
 				}
 			}
-			
+
 			if(rotation!=0){
 				try{
 					chartIm.setRotationDegrees(rotation);
 				}catch(Exception e){
 				}
 			}
-			
+
 			if(chartIm!=null && !internal_style.getABSOLUTE_X().equals("") && !internal_style.getABSOLUTE_Y().equals("")){
 				try{
 					chartIm.setAbsolutePosition(new Float(internal_style.getABSOLUTE_X()).floatValue(),new Float(internal_style.getABSOLUTE_Y()).floatValue());
@@ -198,12 +198,12 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					if(_tagLibrary.get(getName()+":"+getID())==null)
 						_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 					else _tagLibrary.remove(getName()+":"+getID());
-					
+
 					return;
 				}catch(Exception e){
 				}
 			}
-			
+
 			if(chartIm==null) cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
 			else cell = new PdfPCell(chartIm);
 				cell.setHorizontalAlignment(_align);
@@ -238,41 +238,41 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}
 			if(!internal_style.getBORDER_COLOR().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black);
+					Color color = getField_Color(internal_style.getBORDER_COLOR(),Color.black);
 					cell.setBorderColor(color);
 				}catch(Exception e){}
 			}
 			if(!internal_style.getBORDER_COLOR_TOP().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.BLACK);
+					Color color = getField_Color(internal_style.getBORDER_COLOR_TOP(),Color.BLACK);
 					cell.setUseVariableBorders(true);
 					cell.setBorderColorTop(color);
 				}catch(Exception e){}
 			}
 			if(!internal_style.getBORDER_COLOR_BOTTOM().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.BLACK);
+					Color color = getField_Color(internal_style.getBORDER_COLOR_BOTTOM(),Color.BLACK);
 					cell.setUseVariableBorders(true);
 					cell.setBorderColorBottom(color);
 				}catch(Exception e){}
 			}
 			if(!internal_style.getBORDER_COLOR_LEFT().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.BLACK);
+					Color color = getField_Color(internal_style.getBORDER_COLOR_LEFT(),Color.BLACK);
 					cell.setUseVariableBorders(true);
 					cell.setBorderColorLeft(color);
 				}catch(Exception e){}
 			}
 			if(!internal_style.getBORDER_COLOR_RIGHT().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.BLACK);
+					Color color = getField_Color(internal_style.getBORDER_COLOR_RIGHT(),Color.BLACK);
 					cell.setUseVariableBorders(true);
 					cell.setBorderColorRight(color);
 				}catch(Exception e){}
 			}
 			if(!internal_style.getBACK_COLOR().equals("")){
 				try{
-					Color color = getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.BLACK);
+					Color color = getField_Color(internal_style.getBACK_COLOR(),Color.BLACK);
 					cell.setUseVariableBorders(false);
 					cell.setBackgroundColor(color);
 				}catch(Exception e){}
@@ -284,7 +284,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					cell.setBorderWidth(localborderWidth);
 				}catch(Exception e){}
 			}
-			
+
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
 				if(cell!=null)
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);

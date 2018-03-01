@@ -33,12 +33,7 @@ import org.w3c.dom.Node;
 public class general extends report_element_base{
 	private static final long serialVersionUID = 14828475440818093L;
 
-	public String getTYPE_DOCUMENT() {
-		return TYPE_DOCUMENT;
-	}
-	public void setTYPE_DOCUMENT(String type_document) {
-		TYPE_DOCUMENT = type_document;
-	}
+
 	Hashtable _beanLibrary;
 	private String LIB;
 	private String TYPE_DOCUMENT;
@@ -56,7 +51,7 @@ public java.lang.String getLIB() {
 public void reimposta() {
 	setName("GENERAL");
 	LIB="";
-	TYPE_DOCUMENT="";
+	TYPE_DOCUMENT="attachment";
 }
 public Object init_element(Node node, report_element_base element_parent,Hashtable _tagLibrary, Hashtable _beanLibrary, Hashtable _styleLibrary) {
 	report_element_base ret_obj = null;
@@ -83,5 +78,13 @@ public Object init_element(Node node, report_element_base element_parent,Hashtab
 
 public void setLIB(java.lang.String newLIB) {
 	if(newLIB!=null) LIB = newLIB.toLowerCase();
+}
+
+public String getTYPE_DOCUMENT() {
+	return TYPE_DOCUMENT;
+}
+public void setTYPE_DOCUMENT(String type_document) {
+	if(type_document!=null && !type_document.trim().equals(""))
+		TYPE_DOCUMENT = type_document;
 }
 }

@@ -157,7 +157,7 @@ private InternetAddress[] prepareInternetAddress(String address_list) throws Exc
 	String sep_def=";";
 	if(address_list.indexOf(",")>-1) sep_def=",";
 	java.util.StringTokenizer st = new java.util.StringTokenizer(address_list,sep_def);
-	Vector sumForAdress = new Vector();
+	Vector<InternetAddress[]> sumForAdress = new Vector<InternetAddress[]>();
 	while(st.hasMoreTokens()) 
 		sumForAdress.add(InternetAddress.parse(st.nextToken(), false));
 	InternetAddress[] sumAddrs = new InternetAddress[sumForAdress.size()];

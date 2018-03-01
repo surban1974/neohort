@@ -204,9 +204,10 @@ public String getRealPathName(){
 	File[] list = f.listFiles(filter);
 	if(list==null || list.length == 0) return pathLogsDirectory + "_0.log";
 	
-	Vector vList = new Vector();
+	Vector<log_element> vList = new Vector<log_element>();
 	for(int i=0;i<list.length;i++) vList.add(new log_element(list[i].getAbsolutePath(),String.valueOf(list[i].lastModified())));
-	vList = new util_sort().sort(vList,"Mod","D");
+//	vList = new util_sort().sort(vList,"Mod","D");
+	vList = util_sort.sort(vList,"Mod","D");
 	
 	log_element maxEl = (log_element)vList.get(0);
 	int index = -1;

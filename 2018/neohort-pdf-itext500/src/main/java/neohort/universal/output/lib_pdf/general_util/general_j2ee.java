@@ -29,7 +29,7 @@ public class general_j2ee {
 public general_j2ee() {
 	super();
 }
-public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeFirst(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -185,7 +185,7 @@ public static void executeFirst(general body, Hashtable _tagLibrary, Hashtable _
 		body.setError(e);
 	}
 }
-public static void executeLast(general body, Hashtable _tagLibrary, Hashtable _beanLibrary){
+public static void executeLast(general body, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 try{
 	Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 	Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -262,8 +262,8 @@ try{
 				response.flushBuffer();
 			}		
 		}
-		_tagLibrary = new Hashtable();
-		_beanLibrary = new Hashtable();
+		_tagLibrary = new Hashtable<String, report_element_base>();
+		_beanLibrary = new Hashtable<String, report_element_base>();
 
 	}
 }catch(Exception e){

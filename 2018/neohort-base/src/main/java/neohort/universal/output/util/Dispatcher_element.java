@@ -25,18 +25,18 @@
 package neohort.universal.output.util;
 
 import java.io.Serializable;
-import java.util.Vector;
+//import java.util.Vector;
 
 public class Dispatcher_element implements Serializable{
-	private static final long serialVersionUID = 8267215984535990451L;
+	private static final long serialVersionUID = 1L;
 	private int status = -1;
-	private Vector listamessaggi = new Vector();
+//	private Vector listamessaggi = new Vector();
 public Dispatcher_element() {
 	super();
 }
-public Vector getListamessaggi() {
-	return listamessaggi;
-}
+//public Vector getListamessaggi() {
+//	return listamessaggi;
+//}
 public int getStatus() {
 	return status;
 }

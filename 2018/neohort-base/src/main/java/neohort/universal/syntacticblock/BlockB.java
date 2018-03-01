@@ -25,7 +25,7 @@
 package neohort.universal.syntacticblock;
 
 public class BlockB extends Block implements BlockI {
-	private static final long serialVersionUID = 8701350119618081529L;
+	private static final long serialVersionUID = -1L;
 public BlockB() {
 	super();
 }

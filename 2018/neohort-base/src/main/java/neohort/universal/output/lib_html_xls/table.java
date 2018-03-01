@@ -26,6 +26,7 @@ package neohort.universal.output.lib_html_xls;
 
 import java.io.DataOutputStream;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
@@ -34,12 +35,12 @@ import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 public class table extends element{
-	private static final long serialVersionUID = 561345809529655249L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String STYLE_ID;
 	private java.lang.String COL;
 	private java.lang.String COLLS_DIMENTION;
 	private java.lang.String ALIGN;
-	Vector width = new Vector();
+	Vector<String> width = new Vector<String>();
 	int cur_col = 0;
 	int max_col = 0;
 	int cur_row = 0;
@@ -48,11 +49,11 @@ public class table extends element{
 public table() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		String border = "";
 		if (!getBORDER().trim().equals("")) border = " border=\""+getBORDER()+"\" ";
-		width = new Vector();
+		width = new Vector<String>();
 		int WidthMax = 0;
 		if(getCOLLS_DIMENTION().equals("")){
 			max_col = 1;
@@ -92,12 +93,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-		java.util.Vector vector = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-		vector.remove(vector.lastElement());
+		List<Object> vector = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+		if(!vector.isEmpty())
+			vector.remove(vector.size()-1);
 
-		((report_element_base)((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement()).add(this);
+		((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement()).add(this);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
@@ -154,9 +156,9 @@ public void setALIGN(java.lang.String newALIGN) {
 public void setBORDER(java.lang.String newBORDER) {
 	BORDER = newBORDER;
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(this);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}

@@ -45,6 +45,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -490,16 +491,16 @@ public static XSSFColor getNearestColour(Color awtColor){
  
 
 
-public short analiseVAlign(String align){
+public VerticalAlignment analiseVAlign(String align){
 	if(vAlignCache==null) vAlignCache=new HashMap();
-	Short alignment = (Short)vAlignCache.get(align);
+	VerticalAlignment alignment = (VerticalAlignment)vAlignCache.get(align);
 
 	if(alignment==null){
-		if(align.equalsIgnoreCase("TOP"))  alignment =  CellStyle.VERTICAL_TOP;
-		if(align.equalsIgnoreCase("CENTER"))  alignment =  CellStyle.VERTICAL_CENTER;
-		if(align.equalsIgnoreCase("BOTTOM"))  alignment =  CellStyle.VERTICAL_BOTTOM;
-		if(align.equalsIgnoreCase("JUSTIFY"))  alignment =  CellStyle.VERTICAL_JUSTIFY;
-		if(alignment==null) alignment =  CellStyle.VERTICAL_JUSTIFY;
+		if(align.equalsIgnoreCase("TOP"))  alignment =  VerticalAlignment.TOP;
+		if(align.equalsIgnoreCase("CENTER"))  alignment =  VerticalAlignment.CENTER;
+		if(align.equalsIgnoreCase("BOTTOM"))  alignment =  VerticalAlignment.BOTTOM;
+		if(align.equalsIgnoreCase("JUSTIFY"))  alignment =  VerticalAlignment.JUSTIFY;
+		if(alignment==null) alignment =  VerticalAlignment.JUSTIFY;
 		vAlignCache.put(align, alignment);
 	}
 	return alignment;

@@ -27,6 +27,7 @@ package neohort.universal.output.lib_pdf;
 
 import java.util.Hashtable;
 
+
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.report_element_base;
@@ -47,7 +48,7 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class chart extends element{
-	private static final long serialVersionUID = 4642174161706470914L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String CHART_TYPE;
 	private java.lang.String CHART_DATA_X;
 	private java.lang.String CHART_DATA_Y;
@@ -91,7 +92,7 @@ public Image chartFactory(PdfWriter pWriter) {
 
 	return null;
 }
-private Image chartFactory(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+private Image chartFactory(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		PdfWriter pWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 		PdfContentByte cb = pWriter.getDirectContent();
@@ -121,12 +122,13 @@ private PdfTemplate createTemplateWithBarcode(PdfContentByte cb) {
 
     return tp;
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 			int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
@@ -146,7 +148,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			if(chartIm!=null && !internal_style.getABSOLUTE_X().equals("") && !internal_style.getABSOLUTE_Y().equals("")){
 				try{
 					chartIm.setAbsolutePosition(new Float(internal_style.getABSOLUTE_X()).floatValue(),new Float(internal_style.getABSOLUTE_Y()).floatValue());
-					((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 					if(_tagLibrary.get(getName()+":"+getID())==null)
 						_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 					else _tagLibrary.remove(getName()+":"+getID());
@@ -167,8 +169,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 			}
 
-
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)

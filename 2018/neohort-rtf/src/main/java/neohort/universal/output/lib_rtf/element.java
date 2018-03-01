@@ -27,7 +27,7 @@ package neohort.universal.output.lib_rtf;
 
 import java.awt.Color;
 import java.util.Hashtable;
-
+import java.util.List;
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
@@ -48,7 +48,7 @@ import com.lowagie.text.pdf.PdfPCell;
 
 public abstract class element extends report_element_base implements report_element {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	int _sys_border = 0;
 	int _sys_align = 0;
 public element() {
@@ -56,11 +56,11 @@ public element() {
 	Parameters.addElement("ID");
 	reimposta();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {}
-public Object execute(Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {}
+public Object execute(Hashtable<String, report_element_base> _beanLibrary) {
 	return null;
 }
-public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
+public PdfPCell getCellC(String frase,int border,Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 
 		if(frase==null) frase="";
@@ -349,7 +349,8 @@ public PdfPCell getCellC(String frase,int border,Hashtable _beanLibrary) {
 		return new PdfPCell(new Phrase(""));
 	}
 }
-public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public void initCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean initProcess = new Boolean(false);
 		try{
@@ -364,10 +365,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
             	_sysinitProcess);
 
 		}
-		java.util.Vector canvas = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
+		List<Object> canvas = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
 		Object current_Element = canvas.get(canvas.size()-1);
 			canvas.remove(canvas.size()-1);
-//			canvas.removeElement(canvas.lastElement());
 		Object content_Element = canvas.get(canvas.size()-1);
 
 		if(	initProcess.booleanValue() &&
@@ -381,9 +381,9 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
 		if(content_Element instanceof bean){
 			if(((bean)content_Element).getID().equals("PageFooter_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 			if(((bean)content_Element).getID().equals("PageHeader_"))
-				((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+				((bean)content_Element).add2content(current_Element);
 
 			if(((bean)content_Element).getID().equals("TableBlock")){
 				if(current_Element instanceof com.lowagie.text.pdf.PdfPTable){
@@ -397,11 +397,11 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			((text)current_Element).drawDirect(_beanLibrary);
 			if(content_Element instanceof bean){
 				if(((bean)content_Element).getID().equals("PageFooter_")){
-					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					((bean)content_Element).add2content(current_Element);
 					current_Element=null;
 				}
 				if(((bean)content_Element).getID().equals("PageHeader_")){
-					((java.util.Vector)((bean)content_Element).getContent()).add(current_Element);
+					((bean)content_Element).add2content(current_Element);
 					current_Element=null;
 				}
 			}
@@ -515,16 +515,16 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 			if(current_Element instanceof bean){
 				if(	((bean)current_Element).getID().equals("PageHeader_")){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
-						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
-						for(int i=0;i<buf.size();i++){
+						List<Object> buf = ((bean)current_Element).getContentAsList();
+						for(Object tmp:buf){
 							boolean added=false;
-							if(buf.get(i) instanceof text){
-								((text)buf.get(i)).drawDirect(_beanLibrary);
+							if(tmp instanceof text){
+								((text)tmp).drawDirect(_beanLibrary);
 								added=true;
 							}
 
 
-							if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)buf.elementAt(i));
+							if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)tmp);
 						}
 
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
@@ -533,16 +533,16 @@ public void initCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 				}
 				if(	((bean)current_Element).getID().equals("PageFooter_")){
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(true));
-						Vector buf = ((java.util.Vector)((bean)current_Element).getContent());
-					for(int i=0;i<buf.size();i++){
+					List<Object> buf = ((bean)current_Element).getContentAsList();
+					for(Object tmp:buf){
 						boolean added=false;
-						if(buf.get(i) instanceof text){
-							((text)buf.get(i)).drawDirect(_beanLibrary);
+						if(tmp instanceof text){
+							((text)tmp).drawDirect(_beanLibrary);
 							added=true;
 						}
 
 
-						if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)buf.elementAt(i));
+						if(!added) ((com.lowagie.text.Document)content_Element).add((com.lowagie.text.Element)tmp);
 					}
 					((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_initProcess)).setContent(new Boolean(false));
 
@@ -607,17 +607,5 @@ public static String adaptAttrName(String value){
 	else result = value;
 	return result;
 }
-private String split(String frase,int l){
-	String result="";
-	int length = frase.length()/l;
-	int length_curr=0;
-	for(int i=0;i<frase.length();i++){
-		result+=frase.charAt(i);
-		if(length_curr==length){
-			length_curr=0;
-			result+=_separator();
-		}else length_curr++;
-	}
-	return result;
-}
+
 }

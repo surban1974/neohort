@@ -57,12 +57,12 @@ import com.lowagie.text.pdf.PdfWriter;
 	"Times-Italic";
 	"Times-BoldItalic";
 	"ZapfDingbats";
-	
+
 	CP1250 = "Cp1250";
     CP1252 = "Cp1252";
 	CP1257 = "Cp1257";
 	WINANSI = "Cp1252";
-	
+
  */
 
 public class text extends element{
@@ -71,48 +71,48 @@ public class text extends element{
 	private String ISTEMPLATE;
 	private PdfTemplate template=null;
 	private boolean drawTextInTemplate=false;
-	private boolean isCreated=false; 
-	
-	
+	private boolean isCreated=false;
+
+
 public text() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){	
+public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	try{
-		if(getISTEMPLATE().equalsIgnoreCase("TRUE") && _beanLibrary.get(getName()+":"+getID())!=null) 
+		if(getISTEMPLATE().equalsIgnoreCase("TRUE") && _beanLibrary.get(getName()+":"+getID())!=null)
 			this.setTemplate(((text)_beanLibrary.get(getName()+":"+getID())).getTemplate());
-	}catch(Exception e){	
+	}catch(Exception e){
 	}
-	
+
 }
 public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this);
 	if(getISTEMPLATE().equalsIgnoreCase("TRUE")){
 		_beanLibrary.put(getName()+":"+getID(),this);
-		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Templates,new bean());		
+		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Templates,new bean());
 		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) ((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable());
 		((Hashtable)((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()).put(getName()+":"+getID(),getName()+":"+getID());
-	}else{		
+	}else{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
-	}	
+	}
 }
 
 public void drawDirect(Hashtable _beanLibrary){
 	try{
 		if(	getISTEMPLATE().equalsIgnoreCase("TRUE") &&
 			_beanLibrary.get(getName()+":"+getID())!=null) isCreated=true;
-		
+
 		this.init_element(this.getNodeCurrent(),(report_element_base)this.getParent(), null, _beanLibrary, null);
 		int _f_size = 10;
 		try{
 			_f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
 		}catch(Exception e){}
-		
+
 		BaseFont bs = null;
 		String bs_name="Helvetica";
-		
+
 		if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
 			bs_name = adaptAttrName(internal_style.getFONT());
 			if(internal_style.getFONT_TYPE()!=null && !internal_style.getFONT_TYPE().equals(""))
@@ -121,11 +121,11 @@ public void drawDirect(Hashtable _beanLibrary){
 				if(bs_name.indexOf("_")==-1) bs_name+="-"+adaptAttrName(internal_style.getFONT_STYLE());
 				else bs_name+=adaptAttrName(internal_style.getFONT_STYLE());
 			}
-		
+
 			String bs_code = "Cp1252";
 			if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
 				bs_code = internal_style.getFONT_ENCODED();
-			}	
+			}
 			try{
 				bs = BaseFont.createFont(bs_name, bs_code, BaseFont.NOT_EMBEDDED);
 			}catch(Exception e){
@@ -155,11 +155,11 @@ public void drawDirect(Hashtable _beanLibrary){
 				bs = BaseFont.createFont("Helvetica", BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
 			}
 		}
-			
-		
+
+
 
 		String content = prepareContentString(internal_style.getFORMAT());
-		
+
 		float absolute_x = 0;
 		try{
 			absolute_x = new Float(getStyle().getABSOLUTE_X()).floatValue();
@@ -175,37 +175,37 @@ public void drawDirect(Hashtable _beanLibrary){
 			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 		}catch(Exception e){
 		}
-		
+
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 		PdfContentByte cb = pdfWriter.getDirectContent();
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
-			
+
 			if(!isCreated || template==null)	template = cb.createTemplate(absolute_y, absolute_x);
 //			template.setBoundingBox(new com.lowagie.text.Rectangle(-20, -20, width, height));
 			if(!drawTextInTemplate) cb.addTemplate(template, absolute_x, absolute_y);
-			
+
 			if(	drawTextInTemplate){
 				template.beginText();
 				template.setFontAndSize(bs, _f_size);
-				template.setColorFill(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black));
+				template.setColorFill(getField_Color(internal_style.getFONT_COLOR(),Color.black));
 				template.setTextMatrix(0, 0);
 				if(rotation==0)	template.showText(content);
 				else template.showTextAligned(PdfContentByte.ALIGN_LEFT, content, 0, 0, rotation);
 				template.endText();
-			}	
-		}else{	
-/*			
+			}
+		}else{
+/*
 			cb.beginText();
 			cb.setFontAndSize(bs,_f_size);
-			cb.setColorFill(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black));
+			cb.setColorFill(getField_Color(internal_style.getFONT_COLOR(),Color.black));
 			if(rotation==0){
 				cb.setTextMatrix(absolute_x, absolute_y);
 				cb.showText(content);
-			}else{	
+			}else{
 				cb.showTextAligned(PdfContentByte.ALIGN_LEFT, content, absolute_x, absolute_y, rotation);
-			}				
+			}
 			cb.endText();
-*/			
+*/
 			Font font = getFont();
 			Phrase phrase = null;
 			int _f_leading = -1;
@@ -217,10 +217,10 @@ public void drawDirect(Hashtable _beanLibrary){
 			int align_h = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL"))
 				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation,PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
-			else 
+			else
 				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation);
 		}
-			
+
 
 //		cb.saveState();
 
@@ -235,7 +235,7 @@ public void reimposta() {
 	setName("TEXT");
 	STYLE_ID = "";
 	ISTEMPLATE="FALSE";
-	
+
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;

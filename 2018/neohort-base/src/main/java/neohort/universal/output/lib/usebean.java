@@ -29,14 +29,14 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class usebean extends report_element_base{
-	private static final long serialVersionUID = -4863264758730383381L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String METHOD;
 	private java.lang.String PARAMETERS;
 	private java.lang.String SET;
 public usebean() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		report_element_base bean_lib = (report_element_base)_beanLibrary.get("BEAN:"+this.getID()+"_ids_"+motore.hashCode());
 		if(bean_lib==null) bean_lib = (report_element_base)_beanLibrary.get("BEAN:"+this.getID());
@@ -59,7 +59,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_ERROR);
 	}	
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
 public java.lang.String getMETHOD() {
 	if(METHOD!=null) return METHOD;

@@ -45,7 +45,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class barcode extends element{
-	private static final long serialVersionUID = -2506449791104304361L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 	private String BARCODE_TYPE;
 	private String CODE;
@@ -54,12 +54,12 @@ public class barcode extends element{
 public barcode() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(getBARCODE_TYPE().equals("") || getCODE().equals("")) return;
 
@@ -171,7 +171,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			if(chartIm!=null && !internal_style.getABSOLUTE_X().equals("") && !internal_style.getABSOLUTE_Y().equals("")){
 				try{
 					chartIm.setAbsolutePosition(new Float(internal_style.getABSOLUTE_X()).floatValue(),new Float(internal_style.getABSOLUTE_Y()).floatValue());
-					((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 					if(_tagLibrary.get(getName()+":"+getID())==null)
 						_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -187,7 +187,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			cell.setBorder(border);
 			if(padding!=0) cell.setPadding(padding);
 
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

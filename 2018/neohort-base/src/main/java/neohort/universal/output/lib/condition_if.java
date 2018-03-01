@@ -31,13 +31,13 @@ import neohort.universal.syntacticblock.BlockI;
 import neohort.universal.syntacticblock.InstBlock;
 
 public class condition_if extends report_element_base{
-	private static final long serialVersionUID = -3444573393698347768L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String CONDITION;
 	private java.lang.String cond_locale = "false";
 public condition_if() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		cond_locale	= getCONDITION();
 		if (cond_locale.trim().equalsIgnoreCase("TRUE") || cond_locale.trim().equals("1")){
@@ -55,7 +55,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
 public java.lang.String getCONDITION() {
 	return CONDITION;

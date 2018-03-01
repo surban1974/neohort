@@ -25,10 +25,12 @@
 package neohort.universal.output.util;
 
 import java.io.Serializable;
+import java.util.Hashtable;
+
 
 public class Dispatcher implements Serializable{
-	private static final long serialVersionUID = 764238184854849313L;
-	private java.util.Hashtable reports = new java.util.Hashtable();
+	private static final long serialVersionUID = 1L;
+	private Hashtable<String, Dispatcher_element> reports = new Hashtable<String, Dispatcher_element>();
 public Dispatcher() {
 	super();
 }
@@ -43,7 +45,7 @@ public Dispatcher_element getReport(String key) {
 		return null;
 	}	
 }
-public java.util.Hashtable getReports() {
+public Hashtable<String, Dispatcher_element> getReports() {
 	return reports;
 }
 public void setReport(String key, Dispatcher_element report) {
@@ -54,7 +56,7 @@ public void setReport(String key, Dispatcher_element report) {
 		reports.put(key,report);
 	}	
 }
-public void setReports(java.util.Hashtable newReports) {
+public void setReports(Hashtable<String, Dispatcher_element> newReports) {
 	reports = newReports;
 }
 }

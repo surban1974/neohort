@@ -34,15 +34,15 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 
 public class page_header extends element{
-	private static final long serialVersionUID = 2608152973817745952L;
+	private static final long serialVersionUID = -1L;
 public page_header() {
-	super();	
+	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
-	try{	
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
+	try{
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
 
 		int Y = -1;
 		try{
@@ -55,11 +55,11 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
-	
+
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-		else _tagLibrary.remove(getName()+":"+getID());		
+		else _tagLibrary.remove(getName()+":"+getID());
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

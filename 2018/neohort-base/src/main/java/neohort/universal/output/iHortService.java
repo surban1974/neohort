@@ -45,9 +45,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class iHortService extends OutputRunTimeService implements I_OutputRunTime{
-	private static final long serialVersionUID = 4687357971197883208L;
+	private static final long serialVersionUID = -1L;
 	private report_element_base element_current;
-	private Vector info_warning_error;
+	private Vector<Object[]> info_warning_error;
 //	private iHort instance = null;  
 
 
@@ -56,7 +56,7 @@ public iHortService() {
 	super();
 }
 
-public iHortService(Hashtable extBeanLibrary) {
+public iHortService(Hashtable<String, report_element_base> extBeanLibrary) {
 	super();
 	if(extBeanLibrary!=null) _beanLibrary = extBeanLibrary;
 }
@@ -217,9 +217,9 @@ public void reimposta() {
 		namePac+=fullName.substring(0,fullName.indexOf("."))+".";
 		fullName = fullName.substring(fullName.indexOf(".")+1);
 	}
-	if(_tagLibrary==null) _tagLibrary = new Hashtable();
-	if(_beanLibrary==null) _beanLibrary = new Hashtable();
-	if(_styleLibrary==null) _styleLibrary = new Hashtable();
+	if(_tagLibrary==null) _tagLibrary = new Hashtable<String, report_element_base>();
+	if(_beanLibrary==null) _beanLibrary = new Hashtable<String, report_element_base>();
+	if(_styleLibrary==null) _styleLibrary = new Hashtable<String, report_element_base>();
 	element_current = null;
 
 	bean _sysIncluded = new bean();
@@ -238,32 +238,27 @@ public void reimposta() {
 		_syssaveAs.setContent(saveAs);
 		_syssaveAs.setName("SYSTEM");
 		_syssaveAs.setID(iConst.iHORT_SYSTEM_saveAs);
-		_beanLibrary.put(_syssaveAs.getName()+":"+_syssaveAs.getID(),_syssaveAs);
-	
-
-
-
+		_beanLibrary.put(_syssaveAs.getName()+":"+_syssaveAs.getID(),_syssaveAs);	
 
 	bean _sysCanvas = new bean();
-		_sysCanvas.setContent(new java.util.Vector());
+		_sysCanvas.setContent(new Vector<Object>());
 		_sysCanvas.setName("SYSTEM");
 		_sysCanvas.setID(iConst.iHORT_SYSTEM_Canvas);
 		_beanLibrary.put(_sysCanvas.getName()+":"+_sysCanvas.getID(),_sysCanvas);	
 
 	bean _sysParagraph = new bean();
-		_sysParagraph.setContent(new java.util.Vector());
+		_sysParagraph.setContent(new Vector<Object>());
 		_sysParagraph.setName("SYSTEM");
 		_sysParagraph.setID(iConst.iHORT_SYSTEM_Paragraph);
 		_beanLibrary.put(_sysParagraph.getName()+":"+_sysParagraph.getID(),_sysParagraph);	
 
 	bean _sysPageBreak = new bean();
-		_sysPageBreak.setContent(new java.util.Vector());
+		_sysPageBreak.setContent(new Vector<Object>());
 		_sysPageBreak.setName("SYSTEM");
 		_sysPageBreak.setID(iConst.iHORT_SYSTEM_PageBreak);
-		_beanLibrary.put(_sysPageBreak.getName()+":"+_sysPageBreak.getID(),_sysPageBreak);
-	
+		_beanLibrary.put(_sysPageBreak.getName()+":"+_sysPageBreak.getID(),_sysPageBreak);	
 
-		bean _sysISBlank = new bean();
+	bean _sysISBlank = new bean();
 		_sysISBlank.setContent(new Boolean(false));
 		_sysISBlank.setName("SYSTEM");
 		_sysISBlank.setID(iConst.iHORT_SYSTEM_NOGENERATE);
@@ -277,7 +272,7 @@ public void setError(Exception e,String level) {
 	setError(e,"",level);
 }
 public void setError(Exception e, String des, String level) {
-	if(info_warning_error==null) info_warning_error=new Vector();
+	if(info_warning_error==null) info_warning_error=new Vector<Object[]>();
 	info_warning_error.add(new Object[]{e,des,level});
 	exception_managerService.exception_to_log(LOG_INTERCEPTOR, e,des,level);
 
@@ -409,7 +404,7 @@ private void usebeanFactory(Node node, report_element_base element_parent) {
 	}	
 }
 
-public Hashtable get_tagLibrery(){
+public Hashtable<String, report_element_base> get_tagLibrery(){
 	return this._tagLibrary;
 }
 
@@ -424,13 +419,13 @@ public void initXML(String fname) {
 	// TODO Auto-generated method stub
 	
 }
-public Vector getInfo_warning_error() {
+public Vector<Object[]> getInfo_warning_error() {
 	return info_warning_error;
 }
 
-public Vector getInfo_warning_error(String type) {
-	Vector result = new Vector();
-	if(info_warning_error==null) info_warning_error=new Vector();
+public Vector<Object[]> getInfo_warning_error(String type) {
+	Vector<Object[]> result = new Vector<Object[]>();
+	if(info_warning_error==null) info_warning_error=new Vector<Object[]>();
 	for(int i=0;i<info_warning_error.size();i++){
 		Object[] current = (Object[])info_warning_error.get(i);
 		if(current[2].equals(type)) result.add(current);

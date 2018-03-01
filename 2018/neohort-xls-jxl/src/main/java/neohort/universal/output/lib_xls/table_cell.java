@@ -35,20 +35,20 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
 public class table_cell extends element{
-	private static final long serialVersionUID = 3432594478768250734L;
+	private static final long serialVersionUID = -1L;
 public table_cell() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		bean _sysPdfCC = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentCELL);
-		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW); 
-		
+		bean _sysPdfCR = (bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_CurrentROW);
+
 		int X = 0;
 		int Y = 0;
 		try{
@@ -59,13 +59,13 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			Y = ((Integer)_sysPdfCR.getContent()).intValue();
 		}catch(Exception e){
 		}
-		
-		
+
+
 		WritableSheet document = (WritableSheet)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
-		
+
 
 		bean _defDatetimeformat = (bean)_beanLibrary.get("SYSTEM:DEFDATETIMEFORMAT");
-		
+
 		if(_defDatetimeformat!=null && _defDatetimeformat.getContent()!=null) setDefDATETIMEFORMAT((WritableCellFormat)_defDatetimeformat.getContent());
 		else{
 			_defDatetimeformat = new bean();
@@ -74,7 +74,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			_beanLibrary.put("SYSTEM:DEFDATETIMEFORMAT",_defDatetimeformat);
 			setDefDATETIMEFORMAT((WritableCellFormat)_defDatetimeformat.getContent());
 		}
-		
+
 		bean _defDateformat = (bean)_beanLibrary.get("SYSTEM:DEFDATEFORMAT");
 		if(_defDateformat!=null && _defDateformat.getContent()!=null) setDefDATEFORMAT((WritableCellFormat)_defDateformat.getContent());
 		else{
@@ -84,35 +84,35 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			_beanLibrary.put("SYSTEM:DEFDATEFORMAT",_defDateformat);
 			setDefDATEFORMAT((WritableCellFormat)_defDateformat.getContent());
 		}
-		
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(this.getCellC(document.getWritableCell(X,Y),X,Y,_tagLibrary,_beanLibrary));
-		
-		
+
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this.getCellC(document.getWritableCell(X,Y),X,Y,_tagLibrary,_beanLibrary));
+
+
 
 		try{
-			if(!internal_style.getWIDTH().equals("")) 
+			if(!internal_style.getWIDTH().equals(""))
 				document.setColumnView(X,new Integer(internal_style.getWIDTH()).intValue());
-		}catch(Exception e){	
+		}catch(Exception e){
 		}
 		if(!internal_style.getHEIGHT().equals("") && parent!=null && parent instanceof table_row)
 			((table_row)parent).setHEIGHT(internal_style.getHEIGHT());
-		
+
 		table parentTable = null;
 		try{
 			parentTable = (table)((table_row)this.getParent()).getParent();
 		}catch(Exception e){
 		}
-			
-		if(	parentTable!=null && 
+
+		if(	parentTable!=null &&
 			parentTable.getParentTable_Block()!=null &&
 			parentTable.getParentTable_Block().getDeltaCol()==0)
 			parentTable.getParentTable_Block().setDeltaCol(parentTable.getParentTable_Block().getDeltaCol()+1);
-			
+
 		X++;
-		
+
 
 		_sysPdfCR.setContent(new Integer(Y));
-		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR); 
+		_beanLibrary.put(_sysPdfCR.getName()+":"+_sysPdfCR.getID(),_sysPdfCR);
 
 		_sysPdfCC.setContent(new Integer(X));
 		_beanLibrary.put(_sysPdfCC.getName()+":"+_sysPdfCC.getID(),_sysPdfCC);

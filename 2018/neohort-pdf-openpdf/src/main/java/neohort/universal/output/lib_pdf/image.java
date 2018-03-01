@@ -47,7 +47,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
 
 public class image extends element{
-	private static final long serialVersionUID = -667432326013798264L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
@@ -55,12 +55,12 @@ public class image extends element{
 public image() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 
@@ -194,7 +194,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			if(chartIm!=null && !internal_style.getABSOLUTE_X().equals("") && !internal_style.getABSOLUTE_Y().equals("")){
 				try{
 					chartIm.setAbsolutePosition(new Float(internal_style.getABSOLUTE_X()).floatValue(),new Float(internal_style.getABSOLUTE_Y()).floatValue());
-					((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(chartIm);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(chartIm);
 					if(_tagLibrary.get(getName()+":"+getID())==null)
 						_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 					else _tagLibrary.remove(getName()+":"+getID());
@@ -290,7 +290,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 			}
 
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)

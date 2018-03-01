@@ -32,7 +32,7 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.report_element_base;
 
 public class pagebreak extends element{
-	private static final long serialVersionUID = -5187428462148694902L;
+	private static final long serialVersionUID = -1L;
 
 	private java.lang.String STYLE_ID;
 
@@ -40,7 +40,7 @@ public class pagebreak extends element{
 public pagebreak() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		this._header = "<TR STYLE='page-break-before:always'>"+_separator();
 		this._footer = "</TR>"+_separator();
@@ -57,7 +57,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			pagebreak_row = table.getCurrentRow();
 			table.nextCurrentRow();
 		}
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageBreak)).getContent())).add(this);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageBreak).add2content(this);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
@@ -67,7 +67,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(this._content+this._comment+this._footer);
 	}catch(Exception e){

@@ -29,7 +29,8 @@ import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
+
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -41,9 +42,9 @@ import neohort.universal.output.util.OutputRunTime;
 import neohort.universal.output.util.OutputRunTimeService;
 
 public class general extends element{
-	private static final long serialVersionUID = 4150104211154836519L;
+	private static final long serialVersionUID = -1L;
 	public Object writer;
-	public Hashtable _beanLibrary;
+	public Hashtable<String, report_element_base> _beanLibrary;
 
 	public document document;
 	private java.lang.String TYPE_DOCUMENT;
@@ -64,13 +65,13 @@ public String _meta() {
 		"<meta name=ProgId content=Excel.Sheet>"+_separator()+
 		"<meta name=Generator content=\"Microsoft Excel 9\">";
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeFirst(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
@@ -89,40 +90,40 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}
 				}
 
-	
+
 				if (getTYPE_DOCUMENT()!=null && getTYPE_DOCUMENT().trim().equalsIgnoreCase("FIXED") && getSOURCE_DOCUMENT()!=null){
 					writer = new java.io.DataOutputStream(new BufferedOutputStream(new FileOutputStream(getSOURCE_DOCUMENT(),false)));
 				}
 				if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)!=null)
 					if(!noGenerate.booleanValue()) writer = new java.io.DataOutputStream((OutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_INPUT_$external_output_stream)).getContent()));
-	
-	
-		
+
+
+
 				if(writer!=null){
 					this._beanLibrary = _beanLibrary;
 				}
-		
-		
+
+
 				bean _sysPdfWriter = new bean();
 					_sysPdfWriter.setContent(writer);
 					_sysPdfWriter.setName("SYSTEM");
 					_sysPdfWriter.setID(iConst.iHORT_SYSTEM_Writer);
 					_beanLibrary.put(_sysPdfWriter.getName()+":"+_sysPdfWriter.getID(),_sysPdfWriter);
-		
+
 				bean _sysDocument = new bean();
 					_sysDocument.setContent(document);
 					_sysDocument.setName("SYSTEM");
 					_sysDocument.setID(iConst.iHORT_SYSTEM_Document);
 					_beanLibrary.put(_sysDocument.getName()+":"+_sysDocument.getID(),_sysDocument);
-		
+
 				this._header = "<HTML xmlns:o=\"urn:schemas-microsoft-com:office:office\""+_separator()+
 								"xmlns:x=\"urn:schemas-microsoft-com:office:excel\""+_separator()+
 								"xmlns=\"http://www.w3.org/TR/REC-html40\">"+_separator();
 				this._header+="<HEAD>"+_separator();
 				this._header+=_meta();
 				this._header+="</HEAD>"+_separator()+"<BODY>"+_separator();
-		
-				if(iStreamWrapper==null)		
+
+				if(iStreamWrapper==null)
 					((DataOutputStream)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())).writeBytes(this._header);
 				else{
 					iStreamWrapper.createOutputStream(_header.getBytes(), _tagLibrary, _beanLibrary);
@@ -131,29 +132,29 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					_sysSW.setContent(iStreamWrapper);
 					_sysSW.setName("SYSTEM");
 					_sysSW.setID(iConst.iHORT_SYSTEM_STREAM_WRITER);
-					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);				
+					_beanLibrary.put(_sysSW.getName()+":"+_sysSW.getID(),_sysSW);
 				}
-	
+
 			}
 		}catch(Exception e){
 			setError(e);
 		}
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if(motore instanceof OutputRunTime){
 		general_j2ee.executeLast(this, _tagLibrary, _beanLibrary);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			Boolean noGenerate = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_NOGENERATE)).getContent());
 
 			if(included!=null && included.booleanValue()==true){}
 			else{
-				
+
 				I_StreamWrapper iStreamWrapper = null;
 
 				if(getCLASS_STREAM_WRAPPER()!=null && !getCLASS_STREAM_WRAPPER().equals("")){
@@ -164,7 +165,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					}
 				}
 
-				
+
 				this._footer = "</BODY>"+_separator()+"</HTML>"+_separator();
 				document = (document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
 				prepareComment(_tagLibrary,_beanLibrary);
@@ -184,11 +185,11 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						}catch(Exception e){}
 					}
 				}
-	
-			_tagLibrary = new Hashtable();
-			_beanLibrary = new Hashtable();
+
+			_tagLibrary = new Hashtable<String, report_element_base>();
+			_beanLibrary = new Hashtable<String, report_element_base>();
 			}
-	
+
 		}catch(Exception e){
 			setError(e);
 		}
@@ -215,7 +216,7 @@ public java.lang.String getTYPE_DOCUMENT() {
 public java.lang.String getTYPE_RESPONSE() {
 	return TYPE_RESPONSE;
 }
-public void prepareComment(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void prepareComment(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 
 	this._comment+="<style>"+_separator();
 	this._comment+="<!--table"+_separator();
@@ -269,17 +270,17 @@ public void prepareComment(Hashtable _tagLibrary, Hashtable _beanLibrary) {
 	this._comment+="				<x:ProtectScenarios>False</x:ProtectScenarios>"+_separator();
 	this._comment+="			</x:WorksheetOptions>"+_separator();
 
-	Vector pb =null;
+	List<Object> pb =null;
 	try{
-		pb= ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageBreak)).getContent()));
-	}catch(Exception e){}	
-	
+		pb= _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageBreak).getContentAsList();
+	}catch(Exception e){}
+
 	if(pb==null || pb.size()==0){
 	}else{
 		this._comment+="	    	<x:PageBreaks>"+_separator();
 		this._comment+="	    		<x:RowBreaks>"+_separator();
 		for(int i=0;i<pb.size();i++){
-			pagebreak ph = (pagebreak)pb.elementAt(i);
+			pagebreak ph = (pagebreak)pb.get(i);
 			this._comment+="	    			<x:RowBreak>"+_separator();
 			this._comment+="	    				<x:Row>"+ph.getPagebreak_row()+"</x:Row>"+_separator();
 			this._comment+="	    			</x:RowBreak>"+_separator();
@@ -331,8 +332,8 @@ public void setError(Exception e) {
 		general_j2ee.setError(this, e);
 	}
 
-	
-	if(motore instanceof OutputRunTimeService){		
+
+	if(motore instanceof OutputRunTimeService){
 		try {
 			isError = true;
 			if(e.toString().indexOf("java.io.IOException")>-1){
@@ -349,7 +350,7 @@ public void setError(Exception e) {
 						}catch(Exception ex){}
 					}
 				}
-	
+
 			}else{
 				motore.setError(e,this.getName(),iStub.log_ERROR);
 			}

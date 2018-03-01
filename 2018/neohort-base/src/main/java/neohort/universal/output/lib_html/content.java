@@ -32,23 +32,23 @@ import neohort.universal.output.iConst;
 import neohort.universal.output.lib.*;
 
 public class content extends element{
-	private static final long serialVersionUID = -5316205938706024455L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String FORMAT;
 public content() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	this._header=	"";
 	this._footer=	"";
 	this._comment=	"";
 	this._content=	"";
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(this.getContent()!=null){
 			this._content+=(String)this.getContent();
-			((report_element_base)((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement()).add(this);
-		}			
+			((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement()).add(this);
+		}
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
@@ -69,7 +69,7 @@ public void reimposta() {
 	setName("CONTENT");
 	STYLE_ID = "";
 }
-public void reStyle(style style_new) {	
+public void reStyle(style style_new) {
 	if(internal_style==null) return;
 	internal_style.reStyle(style_new);
 }

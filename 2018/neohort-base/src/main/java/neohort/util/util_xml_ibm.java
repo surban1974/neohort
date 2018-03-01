@@ -240,7 +240,7 @@ public static void indent(Writer writer, int i)	throws IOException{
 	writer.write("\n");
 	printSpace(writer, i);
 }
-public static Vector sortStringVector(Vector vector){
+public static Vector<String> sortStringVector(Vector<String> vector){
 	String as[] = new String[vector.size()];
 	vector.copyInto(as);
 	heapSort(as, as.length);

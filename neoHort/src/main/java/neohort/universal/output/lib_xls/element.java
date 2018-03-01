@@ -108,7 +108,7 @@ public Cell getCellC(Cell old,int X,int Y) {
 
 public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _beanLibrary) {
 
-	
+
 	Hashtable wcfCash = null;
 	if(_beanLibrary!=null){
 		bean _sysWcfCash = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
@@ -126,7 +126,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 		}
 	}else
 		wcfCash = new Hashtable();
-	
+
 
 
 	boolean isFormat=false;
@@ -134,7 +134,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 	if(getContent()!=null) frase = (String)getContent();
 
 	WritableCellFormat format = null;
-	
+
 
 	if(internal_style!=null && wcfCash.get(internal_style.getCashKey()+"")!=null){
 		try{
@@ -148,26 +148,26 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 		}
 	}
 	if(format==null){
-	
+
 		if(old!=null && old.getCellFormat()!=null){
 			if(	internal_style.getFORMAT()!=null &&
 					(
 							internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)==-1 &&
 							internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)==-1
-					)		
+					)
 				)
 			format = new WritableCellFormat (old.getCellFormat());
-		
+
 		}else{
-	
-			
-			
+
+
+
 			if(	internal_style.getFORMAT()!=null &&
 				(
 						internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1 ||
 						internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1 ||
 						internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1
-				)		
+				)
 			){
 				if(internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
 					String formatNumber = getFormat(format_NUMBER, internal_style.getFORMAT());
@@ -175,7 +175,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 						format = new WritableCellFormat(new NumberFormat(formatNumber));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat();				
+						format =  new WritableCellFormat();
 				}
 				boolean isDatatime = false;
 				if(!isFormat && internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
@@ -184,7 +184,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy HH:mm"));					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy HH:mm"));
 					isDatatime=true;
 				}
 				if(!isFormat && !isDatatime && internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
@@ -193,15 +193,15 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 						format = new WritableCellFormat(new DateFormat(formatDate));
 						isFormat=true;
 					}else
-						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy"));					
+						format =  new WritableCellFormat(new DateFormat("dd/MM/yyyy"));
 				}
-				
+
 			}else
 				format =  new WritableCellFormat();
 		}
 		if(format==null)
 			format =  new WritableCellFormat();
-	
+
 		WritableFont font = null;
 		try{
 			if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
@@ -210,7 +210,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}else font=new WritableFont(format.getFont());
 		}catch(Exception e){
 		}
-	
+
 		if(internal_style.getFONT_SIZE()!=null && !internal_style.getFONT_SIZE().equals("")){
 			int font_size = 10;
 			try{
@@ -249,19 +249,19 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}catch(Exception e){
 			}
 		}
-	
+
 		if(internal_style.getFONT_COLOR()!=null && !internal_style.getFONT_COLOR().equals("")){
 			try{
-	
-	
-				font.setColour(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black)));
+
+
+				font.setColour(getNearestColour(getField_Color(internal_style.getFONT_COLOR(),Color.black)));
 				isFormat=true;
 			}catch(Exception e){
 			}
 		}
-	
+
 		format.setFont(font);
-	
+
 		Vector[] borders_colours = analiseBorder_Colour(internal_style);
 		Vector borders = borders_colours[0];
 		Vector colours = borders_colours[1];
@@ -272,10 +272,10 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}catch(Exception e){
 			}
 		}
-	
+
 		if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
 			try{
-				format.setBackground(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white)));
+				format.setBackground(getNearestColour(getField_Color(internal_style.getBACK_COLOR(),Color.white)));
 				isFormat=true;
 			}catch(Exception e){
 			}
@@ -301,13 +301,13 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}catch(Exception e){
 			}
 		}
-	
+
 		float rotation = 0;
 		try{
 			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 		}catch(Exception e){
 		}
-	
+
 		if(rotation!=0){
 			try{
 				format.setOrientation(analiseOrientation(rotation));
@@ -315,7 +315,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}catch(Exception e){
 			}
 		}
-		
+
 		if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
 			try{
 				format.setWrap(true);
@@ -325,9 +325,9 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			try{
 				format.setWrap(false);
 			}catch(Exception e){
-			}			
+			}
 		}
-		
+
 		if(isFormat)
 			wcfCash.put(internal_style.getCashKey()+"",format);
 
@@ -340,13 +340,13 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			}catch(Exception e){
 				try{
 					dvalue = new Double(frase.trim().replace(',', '.'));
-				}catch(Exception ex){					
+				}catch(Exception ex){
 				}
 			}
 			if(dvalue!=null){
-				if (isFormat) 
+				if (isFormat)
 					return new Number(X,Y,dvalue.doubleValue(),format);
-				else 
+				else
 					return new Number(X,Y,dvalue.doubleValue());
 			}
 		}
@@ -365,7 +365,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
 			Date ret = getCallDate(frase,format_DATETIME,formatDate);
 			if(ret!=null){
-				if (isFormat) 
+				if (isFormat)
 					return new DateTime(X,Y,ret,format);
 				else{
 					if(defDATETIMEFORMAT==null) defDATETIMEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy hh:mm"));
@@ -381,7 +381,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable _tagLibrary, Hashtable _bea
 			String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
 			Date ret = getCallDate(frase,format_DATE,formatDate);
 			if(ret!=null){
-				if (isFormat) 
+				if (isFormat)
 					return new DateTime(X,Y,ret,format);
 				else{
 					if(defDATEFORMAT==null) defDATEFORMAT = new WritableCellFormat (new DateFormat("dd/MM/yyyy"));
@@ -666,22 +666,22 @@ public Vector[] analiseBorder_Colour(style internal_style){
 		Border local = (Border)borders.get(i);
 		Colour local_colour = getNearestColour(Color.black);
 		if(!internal_style.getBORDER_COLOR().equals(""))
-			local_colour = getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black));
+			local_colour = getNearestColour(getField_Color(internal_style.getBORDER_COLOR(),Color.black));
 		if(local.equals(Border.TOP)){
 			if(!internal_style.getBORDER_COLOR_TOP().equals(""))
-				local_colour = getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black));
+				local_colour = getNearestColour(getField_Color(internal_style.getBORDER_COLOR_TOP(),Color.black));
 		}
 		if(local.equals(Border.BOTTOM)){
 			if(!internal_style.getBORDER_COLOR_BOTTOM().equals(""))
-				local_colour = getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black));
+				local_colour = getNearestColour(getField_Color(internal_style.getBORDER_COLOR_BOTTOM(),Color.black));
 		}
 		if(local.equals(Border.LEFT)){
 			if(!internal_style.getBORDER_COLOR_LEFT().equals(""))
-				local_colour = getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black));
+				local_colour = getNearestColour(getField_Color(internal_style.getBORDER_COLOR_LEFT(),Color.black));
 		}
 		if(local.equals(Border.RIGHT)){
 			if(!internal_style.getBORDER_COLOR_RIGHT().equals(""))
-				local_colour = getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black));
+				local_colour = getNearestColour(getField_Color(internal_style.getBORDER_COLOR_RIGHT(),Color.black));
 
 		}
 		colours.add(local_colour);
@@ -711,7 +711,7 @@ public java.util.Date getCallDate(String content, String format_id, String forma
 			try{
 				return new java.util.Date(util_format.stringToData(content,format).getTime());
 			}catch(Exception e){
-				
+
 			}
 		}
 		try{
@@ -733,7 +733,7 @@ public java.util.Date getCallDate(String content, String format_id, String forma
 			try{
 				return new java.util.Date(util_format.stringToData(content,format).getTime());
 			}catch(Exception e){
-				
+
 			}
 		}
 		try{
@@ -798,7 +798,7 @@ public static String getFormat(String format_id, String format_string){
 			firstpart = mixed.substring(0,sep);
 			secondpart = mixed.substring(sep+1);
 		}
-			
+
 
 		if(!firstpart.equals("") && firstpart.equalsIgnoreCase(format_id))
 			return secondpart;

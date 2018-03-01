@@ -43,7 +43,7 @@ public class stub_websession_log {
 		super();
 	}
 
-public void write(HashMap hm){
+public void write(HashMap<String,Object> hm){
 	try{
 		Object mess = hm.get(iStub.log_stub_mess);
 		Object exc = hm.get(iStub.log_stub_exception);
@@ -56,9 +56,10 @@ public void write(HashMap hm){
 				(exc==null)?null:(Exception)exc,
 				(request==null)?null:(HttpServletRequest)request,
 				(level==null)?"DEBUG":(String)level);
-			if(request.getSession().getAttribute("log")==null) request.getSession().setAttribute("log",new Vector());	
-			Vector Errori = (Vector)request.getSession().getAttribute("log");
-			Errori.add(ms); 
+			if(request.getSession().getAttribute("log")==null) request.getSession().setAttribute("log",new Vector<String>());	
+			@SuppressWarnings("unchecked")
+			Vector<String> errors = (Vector<String>)request.getSession().getAttribute("log");
+			errors.add(ms); 
 		}
 		new iHortException(
 			(mess==null)?"":(String)mess,

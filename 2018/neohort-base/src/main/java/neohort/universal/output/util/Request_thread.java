@@ -26,6 +26,7 @@ package neohort.universal.output.util;
 
 import java.io.Serializable;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,11 +34,11 @@ import javax.servlet.http.HttpSession;
 
 public class Request_thread implements Serializable{
 
-	private static final long serialVersionUID = -8172395474515196080L;
-	private java.util.Hashtable request_value = new java.util.Hashtable();
-	private java.util.Hashtable session_scope_value = new java.util.Hashtable();
-	private java.util.Hashtable session_request_value = new java.util.Hashtable();
-	private java.util.Hashtable application_scope_value = new java.util.Hashtable();
+	private static final long serialVersionUID = -1L;
+	private Hashtable<String,String> request_value = new Hashtable<String,String>();
+	private Hashtable<String,Object> session_scope_value = new Hashtable<String,Object>();
+	private Hashtable<String,Object> session_request_value = new Hashtable<String,Object>();
+	private Hashtable<String,Object> application_scope_value = new Hashtable<String,Object>();
 	private HttpServletRequest request;
 	private HttpServlet context;
 	private String Path_Loc = "";
@@ -87,7 +88,7 @@ public String getParameterValues(String key) {
 private void prepareDates() {
 	try{
 		if(request!=null){
-				Enumeration e = request.getParameterNames();
+				Enumeration<?> e = request.getParameterNames();
 				while (e.hasMoreElements()) {
 					String name = e.nextElement().toString();
 					try{
@@ -97,7 +98,7 @@ private void prepareDates() {
 					}	
 				}
 			HttpSession tsxSessionHolder = request.getSession(false);
-			Enumeration names = tsxSessionHolder.getAttributeNames();
+			Enumeration<?> names = tsxSessionHolder.getAttributeNames();
 			while(names.hasMoreElements()){
 				String curName = names.nextElement().toString();
 				try{
@@ -106,7 +107,7 @@ private void prepareDates() {
 					System.out.println("prepareDates_getAttributeFromSession: "+ ex.toString());				
 				}
 			}
-			Enumeration names_r = request.getAttributeNames();
+			Enumeration<?> names_r = request.getAttributeNames();
 			while(names_r.hasMoreElements()){
 				String curName = names_r.nextElement().toString();
 				try{
@@ -118,7 +119,7 @@ private void prepareDates() {
 
 		}
 		if(context!=null && context.getServletContext()!=null){
-			Enumeration names = context.getServletContext().getAttributeNames();
+			Enumeration<?> names = context.getServletContext().getAttributeNames();
 			while(names.hasMoreElements()){
 				String curName = names.nextElement().toString();
 				try{

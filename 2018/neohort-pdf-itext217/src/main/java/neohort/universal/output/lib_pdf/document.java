@@ -34,45 +34,45 @@ import com.lowagie.text.Document;
 import com.lowagie.text.pdf.PdfWriter;
 
 public class document extends element{
-	private static final long serialVersionUID = 6673640422528510532L;
+	private static final long serialVersionUID = -1L;
 	Document document;
 	PdfWriter writer;
-	
+
 	private String TITLE;
 	private String AUTHOR;
 	private String SUBJECT;
 	private String KEYWORDS;
 	private String CREATOR;
-	
+
 
 public document() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 			Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 			if(included!=null && included.booleanValue()==true){}
 			else{
 				document = (Document)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Document)).getContent());
-				if(!TITLE.equals("")) 
+				if(!TITLE.equals(""))
 						document.addTitle(TITLE);
-				if(!AUTHOR.equals("")) 
+				if(!AUTHOR.equals(""))
 						document.addAuthor(AUTHOR);
-				if(!SUBJECT.equals("")) 
+				if(!SUBJECT.equals(""))
 						document.addSubject(SUBJECT);
-				if(!KEYWORDS.equals("")) 
+				if(!KEYWORDS.equals(""))
 						document.addKeywords(KEYWORDS);
-				if(!CREATOR.equals("")) 
+				if(!CREATOR.equals(""))
 						document.addCreator(CREATOR);
 
 				document.open();
-				
+
 			}
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
@@ -82,7 +82,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				try{
 					report_element_base PdfPageFooter_ = ((((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_PageFooter_))));
 					if(PdfPageFooter_!=null){
-                    	((java.util.Vector)(((report_element_base) _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(PdfPageFooter_);
+						_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(PdfPageFooter_);
                     	isError=false;
 						initCanvas(null, _beanLibrary);
 						_beanLibrary.remove("SYSTEM:"+iConst.iHORT_SYSTEM_PageFooter_);
@@ -91,7 +91,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				}
 
 
-			
+
 			document.close();
 			if(_tagLibrary.get(getName()+":"+getID())==null)
 				_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -109,15 +109,15 @@ public void reimposta() {
 	AUTHOR = "";
 	SUBJECT = "";
 	KEYWORDS = "";
-	CREATOR = "";	
+	CREATOR = "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
 		Boolean included = (Boolean)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Included)).getContent());
 		if(included!=null && included.booleanValue()==true){}
-		else{
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(document);
-		}
+		else
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(document);
+		
 	}catch(Exception e){}
 }
 public String getTITLE() {

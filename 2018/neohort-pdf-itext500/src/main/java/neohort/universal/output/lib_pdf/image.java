@@ -47,7 +47,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class image extends element{
-	private static final long serialVersionUID = -667432326013798264L;
+	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
@@ -55,12 +55,12 @@ public class image extends element{
 public image() {
 	super();
 }
-public void drawCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	initCanvas(_tagLibrary,_beanLibrary);
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
 
@@ -94,7 +94,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					chartIm = Image.getInstance(imgBytes);
 //					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
 //					chartIm = Image.getInstance(awtImage,null);
-					
+
 				}catch(Exception e){
 					chartIm=null;
 					setError(e,iStub.log_ERROR);
@@ -131,9 +131,9 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						ImageIO.write(input, "PNG", baos);
 						chartIm = Image.getInstance(baos.toByteArray());
-					}					
-					
-/*					
+					}
+
+/*
 					if(pathImg.trim().indexOf("http:")==0 || pathImg.trim().indexOf("https:")==0){
 						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(new java.net.URL(pathImg));
 						chartIm = Image.getInstance(awtImage,null);
@@ -143,7 +143,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 						chartIm = Image.getInstance(awtImage,null);
 
 					}
-*/					
+*/
 				}catch(Exception e){}
 			}
 			int _d_h = 0;
@@ -156,17 +156,17 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 				try{
 					_d_h = Integer.valueOf(internal_style.getWIDTH()).intValue();
 				}catch(Exception e){
-				}			
+				}
 			}
 			try{
 				_d_v = Integer.valueOf(internal_style.getDIMENTION_V()).intValue();
 			}catch(Exception e){
-			}	
+			}
 			if(_d_v==0){
 				try{
 					_d_v = Integer.valueOf(internal_style.getHEIGHT()).intValue();
 				}catch(Exception e){
-				}			
+				}
 			}
 
 			float rotation = 0;
@@ -193,7 +193,7 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			if(chartIm!=null && !internal_style.getABSOLUTE_X().equals("") && !internal_style.getABSOLUTE_Y().equals("")){
 				try{
 					chartIm.setAbsolutePosition(new Float(internal_style.getABSOLUTE_X()).floatValue(),new Float(internal_style.getABSOLUTE_Y()).floatValue());
-					((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(chartIm);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(chartIm);
 					if(_tagLibrary.get(getName()+":"+getID())==null)
 						_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 					else _tagLibrary.remove(getName()+":"+getID());
@@ -204,15 +204,15 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 			}
 
 			if(chartIm==null) cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
-			else 
+			else
 				cell = new PdfPCell(chartIm, false);
-			
+
 			cell.setHorizontalAlignment(_align);
 			cell.setBorder(border);
 
 			if(padding!=0)
 				cell.setPadding(padding);
-			
+
 
 
 			if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
@@ -290,13 +290,13 @@ public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
 					cell.setBorderWidth(localborderWidth);
 				}catch(Exception e){}
 			}
-			
+
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
 				if(cell!=null)
 					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 			}
-			
-			((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).add(cell);
+
+			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)

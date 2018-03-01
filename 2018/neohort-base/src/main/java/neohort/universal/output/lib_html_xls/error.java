@@ -27,19 +27,20 @@ package neohort.universal.output.lib_html_xls;
 import java.util.Hashtable;
 
 import neohort.log.stubs.iStub;
+import neohort.universal.output.lib.report_element_base;
 
 public class error extends element{
-	private static final long serialVersionUID = -8273572029575839037L;
+	private static final long serialVersionUID = -1L;
 public error() {
-	super();	
+	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
-		else _tagLibrary.remove(getName()+":"+getID());		
+		else _tagLibrary.remove(getName()+":"+getID());
 		setError(new Exception("No Such Tag Exception"),iStub.log_WARN);
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);

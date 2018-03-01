@@ -44,7 +44,7 @@ public static void exception_to_log(String _ExternalLogStub,Exception exception,
 	try{
 		Object log_stub = Class.forName(_LogStub).newInstance();
 		Object[] prm = new Object[1];
-		HashMap hm = new HashMap();
+		HashMap<String,Object> hm = new HashMap<String,Object>();
 			hm.put(iStub.log_stub_mess,description);
 			hm.put(iStub.log_stub_exception,exception);
 			hm.put(iStub.log_stub_level,level);
@@ -69,7 +69,7 @@ public static void exception_to_log(String _ExternalLogStub, Throwable throwable
 	try{
 		Object log_stub = Class.forName(_LogStub).newInstance();
 		Object[] prm = new Object[1];
-		HashMap hm = new HashMap();
+		HashMap<String,Object> hm = new HashMap<String,Object>();
 			hm.put(iStub.log_stub_mess,description);
 			hm.put(iStub.log_stub_exception,throwable);
 			hm.put(iStub.log_stub_level,level);

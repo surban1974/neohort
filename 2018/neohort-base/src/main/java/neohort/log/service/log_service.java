@@ -25,12 +25,14 @@
 
 package neohort.log.service;
 
+import java.io.Serializable;
+
 import neohort.log.service.log_init_service;
 
 
 
-public class log_service {
-	private static final long serialVersionUID = 5512145504900891088L;
+public class log_service implements Serializable{
+	private static final long serialVersionUID = -1L;
 	private static log_init_service logInit;
 	private static log_generator_service logG;
 		

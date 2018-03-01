@@ -24,6 +24,7 @@
 
 package neohort.universal.output.lib.chart_pdf;
 
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Vector;
@@ -38,16 +39,16 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
     public float y;
     public float width;
     public float height;
-    public java.awt.Color background = null;
+    public Color background = null;
     public int orientation;
 
     public String label;
     public float label_gr;
     public com.lowagie.text.pdf.BaseFont label_font;
     public int label_fontsize;
-    public Color label_color = java.awt.Color.black;
+    public Color label_color = Color.black;
 
-    public Vector scale = new Vector();
+    public Vector<Object> scale = new Vector<Object>();
     public float scale_gr;
     public com.lowagie.text.pdf.BaseFont scale_font;
     public int scale_fontsize;
@@ -56,7 +57,7 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
     public int scale_max;
 
     
-	public Vector valueXY = new Vector();
+	public Vector<Object> valueXY = new Vector<Object>();
     
     public int or_CENTER = 0;
     public int or_BOTTOM = 1;
@@ -87,15 +88,17 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 	public Color element_color_2 = Color.lightGray;
 	public Color element_color_3 = Color.black;
 
-	public Vector colors = new Vector();
-	public Vector colorsShadow = new Vector();	
+	public Vector<Color> colors = new Vector<Color>();
+	public Vector<Color> colorsShadow = new Vector<Color>();	
 
-	public Vector scaleX = new Vector();
+	public Vector<Object> scaleX = new Vector<Object>();
 	public int scaleX_max = 0;	
 	private String External;
 	
-	private HashMap external_parameters;
+	private HashMap<String,Object> external_parameters;
 	private I_OutputRunTime motore;
+
+
 	private boolean isError=false;
 	public String name = "CHART_ELEMENT_BASE";
 	
@@ -112,55 +115,55 @@ public void setMotore(I_OutputRunTime motore) {
 
 public void setIsError(boolean isError) {
 	this.isError = isError;
-	if(isError) isError=isError;
+	if(isError) this.isError=isError;
 
 }
 
 
 public void setError(Exception e, String level) {
 	try {
-		isError = true;
+		this.isError = true;
 		motore.setError(e,name,level);
 	} catch (Exception ex) {
 	}
 }
 
-public static Vector _createColors(int size) {
-	Vector result = new Vector();
+public static Vector<Color> _createColors(int size) {
+	Vector<Color> result = new Vector<Color>();
 	int cycle = 1+(int)(size/7);
 	int coef = 125/cycle;
 
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					154,
 					154,
 					255
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					154,
 					51,
 					101
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					255,
 					255,
 					204
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					204,
 					255,
 					255
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					101,
 					0,
 					101
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					255,
 					128,
 					128
 					));
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					0,
 					101,
 					204
@@ -169,56 +172,56 @@ public static Vector _createColors(int size) {
 	
 	for(int i=0;i< cycle-1;i++){
 //blue		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					i*coef,
 					230
 					));
 //red		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230,
 					i*coef,
 					i*coef
 					));
 //yellow		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230,
 					230,
 					i*coef
 					));
 //orange		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230,
 					125,
 					i*coef
 					));
 //green		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					230,
 					i*coef
 					));
 //lightblue		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					230,
 					230
 					));
 //violet		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230,
 					i*coef,
 					230
 					));
 
 	}
-	Vector result_buf = new Vector();
+	Vector<Color> result_buf = new Vector<Color>();
 	for(int i=0;i<size;i++)
 		result_buf.add(result.get(i));
 	return result_buf;
 }
-public static Vector _createColorsShadow(int size) {
-	Vector result = _createColors(size);
+public static Vector<Color> _createColorsShadow(int size) {
+	Vector<Color> result = _createColors(size);
 	for(int i=0;i<result.size();i++){
 		Color curr = (Color)result.get(i);
 		result.set(i,new Color(curr.getRed()/2,curr.getGreen()/2,curr.getBlue()/2));
@@ -228,43 +231,43 @@ public static Vector _createColorsShadow(int size) {
 	int coef = 75/cycle;
 	for(int i=0;i< cycle;i++){
 //blue		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					i*coef,
 					230-50
 					));
 //red		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230-50,
 					i*coef,
 					i*coef
 					));
 //yellow		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230-50,
 					230-50,
 					i*coef
 					));
 //orange		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230-50,
 					125-50,
 					i*coef
 					));
 //green		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					230-50,
 					i*coef
 					));
 //lightblue		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					i*coef,
 					230-50,
 					230-50
 					));
 //violet		
-		result.add(	new java.awt.Color(
+		result.add(	new Color(
 					230-50,
 					i*coef,
 					230-50
@@ -273,7 +276,7 @@ public static Vector _createColorsShadow(int size) {
 	}
 */
 	
-	Vector result_buf = new Vector();
+	Vector<Color> result_buf = new Vector<Color>();
 	for(int i=0;i<size;i++)
 		result_buf.add(result.get(i));
 	return result_buf;
@@ -281,18 +284,18 @@ public static Vector _createColorsShadow(int size) {
 public Color _prepareColor(int k, int size) {
 	if(k>colors.size()-1){ 
 		int coefColor = 254/(size);
-		return new java.awt.Color(255-coefColor*k,coefColor*k,coefColor);
+		return new Color(255-coefColor*k,coefColor*k,coefColor);
 	}
 	else return (Color)colors.elementAt(k);
 }
 public void _prepareColori(int size) {
 		try{
 			if(colors.size()==0 && this.getClass().getName().indexOf("COLUMN_ADVANCED_XY")>-1){
-				colors.add(new java.awt.Color(0,0,0));
+				colors.add(new Color(0,0,0));
 			}
 		}catch(Exception e){}	
 		int count_col = colors.size();
-		Vector col_gen = _createColors(size-count_col);			
+		Vector<Color> col_gen = _createColors(size-count_col);			
 		int i = 0;
 		while(i<size-count_col){
 			colors.add(col_gen.get(i));
@@ -303,11 +306,11 @@ public void _prepareColori(int size) {
 public void _prepareColoriShadow(int size) {
 		try{
 			if(colorsShadow.size()==0 && this.getClass().getName().indexOf("COLUMN_ADVANCED_XY")>-1){
-				colorsShadow.add(new java.awt.Color(0,0,0));
+				colorsShadow.add(new Color(0,0,0));
 			}
 		}catch(Exception e){}	
 		int count_col = colorsShadow.size();
-		Vector col_gen = _createColorsShadow(size-count_col);			
+		Vector<Color> col_gen = _createColorsShadow(size-count_col);			
 		int i = 0;
 		while(i<size-count_col){
 			colorsShadow.add(col_gen.get(i));
@@ -318,7 +321,7 @@ public void _prepareColoriShadow(int size) {
 public Color _prepareColorShadow(int k, int size) {
 	if(k>colorsShadow.size()-1){ 
 		int coefColor = 254/(size);
-		return new java.awt.Color(255-coefColor*k,coefColor*k,coefColor);
+		return new Color(255-coefColor*k,coefColor*k,coefColor);
 	}
 	else return (Color)colorsShadow.elementAt(k);
 }
@@ -360,19 +363,19 @@ public void ActionAfter(PdfContentByte cb, I_chart_content ch_contentT,I_chart_c
 public I_chart_dati ChartDatiFactory(){
 	return null;
 }
-public java.awt.Color getBackground() {
+public Color getBackground() {
 	return background;
 }
 public I_chart_dati getDati() {
 	return dati;
 }
-public java.awt.Color getElement_color_1() {
+public Color getElement_color_1() {
 	return element_color_1;
 }
-public java.awt.Color getElement_color_2() {
+public Color getElement_color_2() {
 	return element_color_2;
 }
-public java.awt.Color getElement_color_3() {
+public Color getElement_color_3() {
 	return element_color_3;
 }
 public java.lang.String getExternal() {
@@ -387,7 +390,7 @@ public java.lang.String getLabel() {
 public java.lang.String getLabel_align() {
 	return label_align;
 }
-public java.awt.Color getLabel_color() {
+public Color getLabel_color() {
 	return label_color;
 }
 public com.lowagie.text.pdf.BaseFont getLabel_font() {
@@ -402,10 +405,10 @@ public float getLabel_gr() {
 public int getOrientation() {
 	return orientation;
 }
-public java.util.Vector getScale() {
+public Vector<Object> getScale() {
 	return scale;
 }
-public java.awt.Color getScale_color() {
+public Color getScale_color() {
 	return scale_color;
 }
 public com.lowagie.text.pdf.BaseFont getScale_font() {
@@ -423,7 +426,7 @@ public float getScale_gr() {
 public int getScale_max() {
 	return scale_max;
 }
-public java.util.Vector getValueXY() {
+public Vector<Object> getValueXY() {
 	return valueXY;
 }
 public float getWidth() {
@@ -441,19 +444,19 @@ public boolean isShow_scale() {
 public abstract PdfContentByte placeBarcode(PdfContentByte cb, boolean paint);
 public abstract void positionBody(PdfContentByte cb, I_chart_content ch_contentT,I_chart_content ch_contentB,I_chart_content ch_contentL,I_chart_content ch_contentR,float _h_d,float _w_d);
 public abstract void reimposta();
-public void setBackground(java.awt.Color newBackground) {
+public void setBackground(Color newBackground) {
 	background = newBackground;
 }
 public void setDati(I_chart_dati newDati) {
 	dati = newDati;
 }
-public void setElement_color_1(java.awt.Color newElement_color_1) {
+public void setElement_color_1(Color newElement_color_1) {
 	element_color_1 = newElement_color_1;
 }
-public void setElement_color_2(java.awt.Color newElement_color_2) {
+public void setElement_color_2(Color newElement_color_2) {
 	element_color_2 = newElement_color_2;
 }
-public void setElement_color_3(java.awt.Color newElement_color_3) {
+public void setElement_color_3(Color newElement_color_3) {
 	element_color_3 = newElement_color_3;
 }
 public void setExternal(java.lang.String newExternal) {
@@ -468,7 +471,7 @@ public void setLabel(java.lang.String newLabel) {
 public void setLabel_align(java.lang.String newLabel_align) {
 	label_align = newLabel_align;
 }
-public void setLabel_color(java.awt.Color newLabel_color) {
+public void setLabel_color(Color newLabel_color) {
 	label_color = newLabel_color;
 }
 public void setLabel_font(com.lowagie.text.pdf.BaseFont newLabel_font) {
@@ -483,10 +486,10 @@ public void setLabel_gr(float newLabel_gr) {
 public void setOrientation(int newOrientation) {
 	orientation = newOrientation;
 }
-public void setScale(java.util.Vector newScale) {
+public void setScale(Vector<Object> newScale) {
 	scale = newScale;
 }
-public void setScale_color(java.awt.Color newScale_color) {
+public void setScale_color(Color newScale_color) {
 	scale_color = newScale_color;
 }
 public void setScale_font(com.lowagie.text.pdf.BaseFont newScale_font) {
@@ -507,7 +510,7 @@ public void setScale_max(int newScale_max) {
 public void setShow_scale(boolean newShow_scale) {
 	show_scale = newShow_scale;
 }
-public void setValueXY(java.util.Vector newValueXY) {
+public void setValueXY(Vector<Object> newValueXY) {
 	valueXY = newValueXY;
 }
 public void setWidth(float newWidth) {
@@ -519,12 +522,13 @@ public void setX(float newX) {
 public void setY(float newY) {
 	y = newY;
 }
-public HashMap getExternal_parameters() {
+public HashMap<String,Object> getExternal_parameters() {
 	return external_parameters;
 }
-
-public void setExternal_parameters(HashMap map) {
+public void setExternal_parameters(HashMap<String,Object> map) {
 	external_parameters = map;
 }
-
+public boolean isError() {
+	return isError;
+}
 }

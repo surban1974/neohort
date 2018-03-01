@@ -29,14 +29,14 @@ import java.util.Hashtable;
 import neohort.log.stubs.iStub;
 
 public class cycle extends report_element_base{
-	private static final long serialVersionUID = 6383305123356231225L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String CONDITION_ID;
 	private report_element_base condition;
 	private java.lang.String CONDITION_TYPE;
 public cycle() {
 	super();	
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if (condition==null)
 			condition = (report_element_base)_tagLibrary.get(getCONDITION_TYPE()+":"+getCONDITION_ID()+"_ids_"+motore.hashCode());
@@ -44,7 +44,7 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	if (condition!=null) condition.executeLast(_tagLibrary, _beanLibrary);
 	if(_tagLibrary.get(getName()+":"+getID())==null)
 		_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());

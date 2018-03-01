@@ -36,20 +36,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+
 import neohort.universal.output.lib.report_element;
+import neohort.universal.output.lib.report_element_base;
 
 
 public abstract class OutputRunTime implements I_OutputRunTime,Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1L;
 	public Document documentXML;
 	public String pathXML;
 	public String LIB;
 	public String LOG_INTERCEPTOR;
 
-	public Hashtable _tagLibrary = new Hashtable();
-	public Hashtable _beanLibrary = new Hashtable();
-	public Hashtable _styleLibrary = new Hashtable();
+	public Hashtable<String, report_element_base> _tagLibrary = new Hashtable<String, report_element_base>();
+	public Hashtable<String, report_element_base> _beanLibrary = new Hashtable<String, report_element_base>();
+	public Hashtable<String, report_element_base> _styleLibrary = new Hashtable<String, report_element_base>();
 	public String namePac = "";
 	public String getNamePac() {
 		return namePac;
@@ -86,7 +88,7 @@ public void _wait() {
 	_wait = true;
 }
 
-public Hashtable get_beanLibrary() {
+public Hashtable<String, report_element_base> get_beanLibrary() {
 	return _beanLibrary;
 }
 public ServletConfig getAnotherServletConfig(){
@@ -95,11 +97,11 @@ public ServletConfig getAnotherServletConfig(){
 public String getID(){
 	return ID;
 }
-public static Vector[] getParamiters(HttpServletRequest req) {
-	Vector retVal[] = new Vector[2];
-	Vector parameterNames = new Vector();
-	Vector parameterValues = new Vector();
-	Enumeration e = req.getParameterNames();
+public static Vector<?>[] getParamiters(HttpServletRequest req) {
+	Vector<?>[] retVal = new Vector[2];
+	Vector<String> parameterNames = new Vector<String>();
+	Vector<String[]> parameterValues = new Vector<String[]>();
+	Enumeration<?> e = req.getParameterNames();
 	int index = 0;
 	parameterNames.removeAllElements();
 	parameterValues.removeAllElements();
@@ -168,7 +170,7 @@ public static String service_adaptPath(String path, String currentPath, HttpServ
 				
 	if(	path.trim().toLowerCase().indexOf("../")==0 && currentPath!=null){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(currentPath, "/");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		String returnR="";
@@ -179,7 +181,7 @@ public static String service_adaptPath(String path, String currentPath, HttpServ
 	}	
 	if(	path.trim().toLowerCase().indexOf("..\\")==0 && currentPath!=null){
 		java.util.StringTokenizer st = new java.util.StringTokenizer(currentPath, "\\");
-		Vector parts = new Vector();
+		Vector<String> parts = new Vector<String>();
 		while (st.hasMoreTokens())
 			parts.add(st.nextToken());
 		String returnR="";

@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class log extends HttpServlet {
-	private static final long serialVersionUID = 5512145504900891088L;
+	private static final long serialVersionUID = -1L;
 	private static log_init logInit;
 	private static log_generator logG;
 		

@@ -26,6 +26,7 @@ package neohort.universal.output.lib_html_xls;
 
 import java.io.DataOutputStream;
 import java.util.Hashtable;
+import java.util.List;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -33,12 +34,12 @@ import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
 public class paragraph extends element{
-	private static final long serialVersionUID = -4965246532153249320L;
+	private static final long serialVersionUID = -1L;
 	private java.lang.String STYLE_ID;
 public paragraph() {
 	super();
 }
-public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		this._header = "<TABLE><TR>"+_separator();
 		this._footer = "</TR></TABLE><br>"+_separator();
@@ -47,12 +48,13 @@ public void executeFirst(Hashtable _tagLibrary, Hashtable _beanLibrary){
 		setError(e,iStub.log_WARN);
 	}
 }
-public void executeLast(Hashtable _tagLibrary, Hashtable _beanLibrary){
+public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
-		java.util.Vector vector = ((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent()));
-		vector.remove(vector.lastElement());
+		List<Object> vector = _beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentAsList();
+		if(!vector.isEmpty())
+			vector.remove(vector.size()-1);
 
-		((report_element_base)((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).lastElement()).add(this);
+		((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).getContentLastElement()).add(this);
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
 		else _tagLibrary.remove(getName()+":"+getID());
@@ -70,9 +72,9 @@ public void reimposta() {
 	getParameters().addElement("STYLE_ID");
 	STYLE_ID= "";
 }
-public void setCanvas(Hashtable _tagLibrary, Hashtable _beanLibrary) {
+public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	try{
-		((java.util.Vector)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas)).getContent())).addElement(this);
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);
 	}
