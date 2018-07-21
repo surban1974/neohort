@@ -43,6 +43,7 @@ Maven dependencies (war):<br>
 &lt;dependency&gt;<br>
 &lt;groupId&gt;com.github.surban1974.neohort&lt;/groupId&gt;<br>
 
+<br>
 &lt;!-- WEB examples --&gt;<br>
 &lt;artifactId&gt;neohort-web&lt;/artifactId&gt;<br>
 
