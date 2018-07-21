@@ -18,23 +18,34 @@ Maven dependencies (jar):<br>
 &lt;dependency&gt;<br>
 &lt;groupId&gt;com.github.surban1974.neohort&lt;/groupId&gt;<br>
 
-&lt;!-- PDF/RTF OpenPdf<br>
+&lt;!-- PDF/RTF OpenPdf --&gt;<br>
 &lt;artifactId&gt;neohort-pdf-openpdf&lt;/artifactId&gt;<br>
 &lt;artifactId&gt;neohort-rtf&lt;/artifactId&gt;<br>
 
-&lt;!-- PDF/RTF iText 2.1.7<br>
+&lt;!-- PDF/RTF iText 2.1.7 --&gt;<br>
 &lt;artifactId&gt;neohort-pdf-itext217&lt;/artifactId&gt;<br>
 &lt;artifactId&gt;neohort-rtf-itext217&lt;/artifactId&gt;<br>
 
-&lt;!-- PDF iText 5.*<br>
+&lt;!-- PDF iText 5.*.* --&gt;<br>
 &lt;artifactId&gt;neohort-pdf-itext500&lt;/artifactId&gt;<br>
 
-&lt;!-- Excel XLS JXL<br>
+&lt;!-- Excel XLS JXL --&gt;<br>
 &lt;artifactId&gt;neohort-xls-jxl&lt;/artifactId&gt;<br>
 
-&lt;!-- Excel XLSX Poi<br>
-&lt;artifactId&gt;neohort-xlsx-poi&lt;/artifactId&gt;<br>
+&lt;!-- Excel XLSX Poi --&gt;<br>
+&lt;artifactId&gt;neohort---&gt;lsx-poi&lt;/artifactId&gt;<br>
 
---&gt;<br>
+<br>
 &lt;version&gt;1.4.1&lt;/version&gt;<br>
 &lt;/dependency&gt;<br>
+
+Maven dependencies (war):<br>
+&lt;dependency&gt;<br>
+&lt;groupId&gt;com.github.surban1974.neohort&lt;/groupId&gt;<br>
+
+&lt;!-- WEB examples --&gt;<br>
+&lt;artifactId&gt;neohort-web&lt;/artifactId&gt;<br>
+<br>
+&lt;version&gt;1.4.1&lt;/version&gt;<br>
+&lt;/dependency&gt;<br>
+
