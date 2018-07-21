@@ -1,7 +1,7 @@
 neohort
 =======
  
-<<<<<<< HEAD
+
 Java PDF&amp;XLS runtime builder-based OpenPdf &amp; iText &amp; JExcelAPI &amp; Apache POI library.As input use xml-based source with integrated WebJava environment objects (beans e.c.)Include dynamical tag's structures: cycle,condition,e.c. Compatibility with iText 5.*. http://demo-neohort.7e14.starter-us-west-2.openshiftapps.com
 
 <br>
@@ -116,4 +116,4 @@ Maven dependencies (war):<br>
 &lt;version&gt;1.4.1&lt;/version&gt;<br>
 &lt;/dependency&gt;<br>
 
->>>>>>> refs/remotes/origin/master
+
