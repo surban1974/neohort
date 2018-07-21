@@ -5,7 +5,7 @@ Java PDF&amp;XLS runtime builder-based iText &amp; JExcelAPI &amp; Apache POI li
 
 Maven repository:<br>
 &lt;repositories&gt;<br>
-&lt;id&gt;classhidra-mvn-repo&lt;/id&gt;<br>
+&lt;id&gt;neohort-mvn-repo&lt;/id&gt;<br>
 &lt;url&gt;https://github.com/surban1974/neohort/raw/mvn-repo/ &lt;/url&gt;<br>
 &lt;snapshots&gt;<br>
 &lt;enabled&gt;true&lt;/enabled&gt;<br>
