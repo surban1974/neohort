@@ -33,19 +33,19 @@ Maven dependencies (jar):<br>
 &lt;artifactId&gt;neohort-xls-jxl&lt;/artifactId&gt;<br>
 
 &lt;!-- Excel XLSX Poi --&gt;<br>
-&lt;artifactId&gt;neohort---&gt;lsx-poi&lt;/artifactId&gt;<br>
+&lt;artifactId&gt;neohort-xlsx-poi&lt;/artifactId&gt;<br>
 
-<br>
 &lt;version&gt;1.4.1&lt;/version&gt;<br>
 &lt;/dependency&gt;<br>
 
+<br>
 Maven dependencies (war):<br>
 &lt;dependency&gt;<br>
 &lt;groupId&gt;com.github.surban1974.neohort&lt;/groupId&gt;<br>
 
 &lt;!-- WEB examples --&gt;<br>
 &lt;artifactId&gt;neohort-web&lt;/artifactId&gt;<br>
-<br>
+
 &lt;version&gt;1.4.1&lt;/version&gt;<br>
 &lt;/dependency&gt;<br>
 
