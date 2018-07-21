@@ -44,6 +44,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import neohort.log.stubs.iStub;
@@ -86,7 +87,22 @@ public iHort() {
 	initXML(fname);
 }
 
-public iHort(String fname, Hashtable<String, report_element_base> _beanLibrary, report_element parentForINCLUDE) {
+ public iHort(String fname, Map<String, bean> extBeanLibrary, report_element parentForINCLUDE) {
+		super();
+		Hashtable<String, report_element_base> _extBeanLibrary = new Hashtable<String, report_element_base>();
+		if(extBeanLibrary!=null){
+			for(Map.Entry<String, bean> entity : extBeanLibrary.entrySet())
+				_extBeanLibrary.put(entity.getKey(), (report_element_base)entity.getValue());			
+		}
+		initToInclude(fname, _extBeanLibrary, parentForINCLUDE);	
+	}
+
+public iHort(String fname, Hashtable<String, report_element_base> _extBeanLibrary, report_element parentForINCLUDE) {
+	super();
+	initToInclude(fname, _extBeanLibrary, parentForINCLUDE);	
+}
+public void initToInclude(String fname, Hashtable<String, report_element_base> _beanLibrary, report_element parentForINCLUDE) {
+
 	String XML_name="";
 	String parameters="";
 	if(fname==null || _beanLibrary==null) return;

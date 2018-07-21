@@ -29,6 +29,7 @@ package neohort.universal.output;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import neohort.exception.service.exception_managerService;
@@ -60,6 +61,17 @@ public iHortService(Hashtable<String, report_element_base> extBeanLibrary) {
 	super();
 	if(extBeanLibrary!=null) _beanLibrary = extBeanLibrary;
 }
+
+public iHortService(Map<String, bean> extBeanLibrary) {
+	super();
+	if(extBeanLibrary!=null){
+		if(_beanLibrary==null)
+			_beanLibrary = new Hashtable<String, report_element_base>();
+		for(Map.Entry<String, bean> entity : extBeanLibrary.entrySet())
+			_beanLibrary.put(entity.getKey(), (report_element_base)entity.getValue());
+	}
+}
+
  iHortService(String fname) {
 	super();
 	initXML(fname);
