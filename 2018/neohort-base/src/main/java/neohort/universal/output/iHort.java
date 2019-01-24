@@ -286,7 +286,7 @@ public void initXML(String fname) {
 								path = "/"+contextPath+"/"+path;
 						}
 					}
-					path = "http"+((request.isSecure())?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+					path = "http"+((request.isSecure() || request.getServerPort()==443)?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
 				}
 				if(!path.equals(pathXML))
 					documentXML = util_xml.readXML(path,false);
@@ -875,7 +875,7 @@ private String analisePath(String path) {
 					}
 				}
 				
-				return "http"+((request.isSecure())?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
+				return "http"+((request.isSecure() || request.getServerPort()==443)?"s":"")+"://"+request.getServerName()+":"+request.getServerPort()+path.trim();
 			}
 			else return path;
 		}
