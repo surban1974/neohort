@@ -195,9 +195,14 @@ public boolean isActive(Hashtable<String, report_element_base> _tagLibrary,Hasht
 public boolean isPreActive(Hashtable<String, report_element_base> _tagLibrary,Hashtable<String, report_element_base> _beanLibrary,Hashtable<String, report_element_base> _styleLibrary) {
 	try{
 		next = resultSet.next();
-		if(next && resultSet.getString("row_style_id")!=null){
+		String row_style_id = null;
+		try{
+			row_style_id = resultSet.getString("row_style_id");
+		}catch(Exception e){				
+		}
+		if(next && row_style_id!=null){
 			try{
-				row_style = (style)_styleLibrary.get("STYLE:"+resultSet.getString("row_style_id")+"_ids_"+motore.hashCode());
+				row_style = (style)_styleLibrary.get("STYLE:"+row_style_id+"_ids_"+motore.hashCode());
 			}catch(Exception e){
 				setError(e,iStub.log_WARN);
 			}
