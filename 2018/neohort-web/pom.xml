@@ -173,12 +173,19 @@
 			<version>2.2</version>
 		</dependency>
 
-
+<!-- 
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-pdf-itext500</artifactId>
 			<version>1.4.1</version>
-		</dependency>	
+		</dependency>
+ -->			
+		<dependency>
+			<groupId>com.github.surban1974.neohort</groupId>
+			<artifactId>neohort-pdf-openpdf</artifactId>
+			<version>1.4.1</version>
+		</dependency>			
+		
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xls-jxl</artifactId>
