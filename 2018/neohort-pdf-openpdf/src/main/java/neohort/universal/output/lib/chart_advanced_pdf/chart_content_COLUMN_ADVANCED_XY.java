@@ -98,6 +98,8 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	colors = new Vector<Color>();
 	colorsShadow = new Vector<Color>();
 	float prof = 7;
+	if(deep!=-1)
+		prof = deep;
 	boolean positionV = false;
 	
     try {

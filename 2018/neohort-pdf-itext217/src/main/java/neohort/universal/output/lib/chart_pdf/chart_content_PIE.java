@@ -171,6 +171,8 @@ public boolean isShow_scale() {
 	return show_scale;
 }
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
+	if(deep!=-1)
+		prof = deep;
 float coefStr = 1/(float)(Math.sin(Math.PI/6));
 float coef_h_pie = 16;
 Vector<Object> dZ = dati.getDati(2,0);

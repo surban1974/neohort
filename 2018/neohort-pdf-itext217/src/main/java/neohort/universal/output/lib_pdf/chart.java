@@ -74,6 +74,7 @@ public class chart extends element{
 	private java.lang.String FONT_LABEL_COLOR_TOP;
 	private java.lang.String FORMAT_CHART_INPUT_DATA;
 	private java.lang.String EXTERNAL;
+	private java.lang.String DEEP;
 	private PdfPCell cell;
 
 
@@ -472,7 +473,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			_w_d = 0;
 		}
 
-
+		int deep =-1;
+		try {
+			deep = Integer.valueOf(getDEEP()).intValue();
+		}catch(Exception e) {
+			
+		}
 
 		if(color_background!=null){
 			cb.setColorFill(color_background);
@@ -503,6 +509,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentT.setScale_gr(gr_scale_X);
 			ch_contentT.setScale_max(max_scale_X);
 			ch_contentT.setShow_scale(show_scale_X);
+			ch_contentT.setDeep(deep);
 
 			ch_contentT.setExternal_parameters(this.external_parameters);
 
@@ -531,6 +538,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentL.setScale_gr(gr_scale_Y);
 			ch_contentL.setScale_max(max_scale_Y);
 			ch_contentL.setShow_scale(show_scale_Y);
+			ch_contentL.setDeep(deep);
 
 			ch_contentL.setExternal_parameters(this.external_parameters);
 
@@ -559,6 +567,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentR.setScale_gr(gr_scale_Y);
 			ch_contentR.setScale_max(max_scale_Y);
 			ch_contentR.setShow_scale(show_scale_Y);
+			ch_contentR.setDeep(deep);
 
 			ch_contentR.setExternal_parameters(this.external_parameters);
 
@@ -588,6 +597,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentB.setScale_gr(gr_scale_X);
 			ch_contentB.setScale_max(max_scale_X);
 			ch_contentB.setShow_scale(show_scale_X);
+			ch_contentB.setDeep(deep);
 
 			ch_contentB.setExternal_parameters(this.external_parameters);
 
@@ -603,6 +613,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentC.setElement_color_1(element_color_2d_bar);
 			ch_contentC.setElement_color_2(element_color_2d_right);
 			ch_contentC.setElement_color_3(element_color_2d_top);
+			ch_contentC.setDeep(deep);
 
 			ch_contentC.setExternal_parameters(this.external_parameters);
 
@@ -728,5 +739,11 @@ public void setMAXELEMENT_LABEL_XYZ(java.lang.String newMAXELEMENT_LABEL_XYZ) {
 }
 public void setSHOW_SCALE_XYZ(java.lang.String newSHOW_SCALE_XYZ) {
 	SHOW_SCALE_XYZ = newSHOW_SCALE_XYZ;
+}
+public java.lang.String getDEEP() {
+	return DEEP;
+}
+public void setDEEP(java.lang.String dEEP) {
+	DEEP = dEEP;
 }
 }

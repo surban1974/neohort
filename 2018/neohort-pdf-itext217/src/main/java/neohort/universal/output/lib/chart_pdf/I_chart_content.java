@@ -103,6 +103,7 @@ public HashMap<String,Object> getExternal_parameters();
 public void setMotore(I_OutputRunTime motore);
 public void setIsError(boolean isError);
 public void setError(Exception e, String level);
+public void setDeep(float deep);
 
 
 }

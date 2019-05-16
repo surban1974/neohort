@@ -174,6 +174,8 @@ public boolean isShow_scale() {
 }
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	float prof = 7;
+	if(deep!=-1)
+		prof = deep;
     try {
 Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == or_TOP) {

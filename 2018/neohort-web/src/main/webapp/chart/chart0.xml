@@ -24,7 +24,7 @@
 						<TABLE_ROW>			
 						<CHART ID="First_Chart" 
 							CHART_TYPE="CLASS:neohort.universal.output.lib.chart_advanced_pdf.chart_content_LINE_ADVANCED_XY" 
-							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;;" 
+							FORMAT_CHART_INPUT_DATA="DATE:yyyy-MM-dd;NUMBER;NUMBER;" 
 							CHART_DATA_X="	-;-;
 									2003-01-10;2003-01-21;2003-03-05;2003-03-05;2003-04-31;|;
 									2003-01-10;2003-02-01;2003-03-01;2003-04-01;2003-04-31;|;
@@ -45,20 +45,20 @@
 									12;5;17;12;|;
 									15;11;19;12;|;
 									21;14;21;15;|;" 
-							CHART_DATA_Z="	1;0;" 
-							FORMAT_SCALE_XYZ="DATE:MM/yy;NUMBER:###,###.0;;" 
+							CHART_DATA_Z="1;1;1;1;1;1;1;1;1;" 
+							FORMAT_SCALE_XYZ="DATE:dd/MM/yyyy;NUMBER:###,###.0;;" 
 							SHOW_SCALE_XYZ="true;true;;" 
-							GR_SCALE_XYZ="90;0;;" 
+							GR_SCALE_XYZ="45;0;;" 
 							FONT_SCALE_XYZ="Helvetica;;;" 
 							FONT_SCALE_COLOR_XYZ="blue;black;;" 
 							FONT_SCALE_SIZE_XYZ="7;7;;" 
 							MAXELEMENT_LABEL_XYZ="7;7;;" 
-							GR_LABEL_XYZ="0;0;;" 
+							GR_LABEL_XYZ="0;90;;" 
 							ALIGN_LABEL_XYZ="CENTER;;;" 
-							FONT_LABEL_XYZ="Helvetica;;;" 
-							FONT_LABEL_COLOR_XYZ="RED;;;" 
-							FONT_LABEL_SIZE_XYZ="10;;;" 
-							LABEL_X="" 
+							FONT_LABEL_XYZ="Helvetica;Helvetica;;" 
+							FONT_LABEL_COLOR_XYZ="black;black;;" 
+							FONT_LABEL_SIZE_XYZ="10;10;;" 
+							LABEL_X="LABEL X" 
 							LABEL_TOP="	Rating SP;
 									E-TELECOM-E20;
 									E-TELECOM-E30;
@@ -72,12 +72,13 @@
 							FONT_LABEL_COLOR_TOP="blue" 
 							FONT_LABEL_SIZE_TOP="8" 
 							ALIGN_LABEL_TOP="LEFT" 
-							ELEMENT_COLOR_3D="red;blue;black;" 
+							ELEMENT_COLOR_3D="gray;blue;black;" 
 							DIMENTION_V="350" 
 							DIMENTION_H="400" 
 							BORDER="0" 
 							ALIGN="CENTER" 
-							LABEL_Y=""/>
+							LABEL_Y="LABEL Y"
+							DEEP="0"/>
 						</TABLE_ROW>
 					</TABLE>
 				</TABLE_BLOCK>

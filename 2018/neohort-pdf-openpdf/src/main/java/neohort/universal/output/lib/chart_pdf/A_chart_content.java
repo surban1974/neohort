@@ -81,6 +81,7 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 
     public float x_Line = 0;
     public float y_Line = 0;
+    public float deep=-1;
 
 	public I_chart_dati dati;
 	
@@ -530,5 +531,9 @@ public void setExternal_parameters(HashMap<String,Object> map) {
 }
 public boolean isError() {
 	return isError;
+}
+public void setDeep(float deep) {
+	this.deep=deep;
+	
 }
 }

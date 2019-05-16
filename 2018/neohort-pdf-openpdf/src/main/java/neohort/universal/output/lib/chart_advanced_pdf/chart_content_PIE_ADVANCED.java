@@ -68,7 +68,8 @@ public I_chart_dati ChartDatiFactory() {
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 float coefStr = 1/(float)(Math.sin(Math.PI/6));
 float coef_h_pie = 16;
-
+if(deep!=-1)
+	prof = deep;
 
 
 Vector<Object> dZ = dati.getDati(2,0);

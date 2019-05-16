@@ -152,6 +152,8 @@ Color getField_Color(Class<?> cl, String name, Color d_value) {
 public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	colors = new Vector<Color>();
 	float prof = 7;
+	if(deep!=-1)
+		prof = deep;
 	boolean positionV = false;
     try {
 Vector<Object> scale_buf = new Vector<Object>();
@@ -294,18 +296,17 @@ Vector<Object> scale_buf = new Vector<Object>();
 	   			if(scale.size()==descr_label_X.size()) isLABEL=false;    		
 				
 				if(isLABEL){	 
-	                y_Label = y;
- 	               width_Label = label_font.getWidthPoint(label, label_fontsize);
-  	              if(label_gr==0){
-	  	              if (width_Label > width-x)
- 	  	                 width_Label = width-x;
-     	           }       
-      	          height_Label =
-       	             label_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, label_fontsize);
+					y_Label = y;
+ 	               	width_Label = label_font.getWidthPoint(label, label_fontsize);
+ 	               	if(label_gr==0){
+ 	               		if (width_Label > width-x)
+ 	               			width_Label = width-x;
+ 	               	}       
+ 	               	height_Label = label_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, label_fontsize);
         	        x_Label = x + (width - width_Label) / 2;
-         	       if(label_align.equalsIgnoreCase("CENTER")) x_Label = x + (width - width_Label) / 2;
-          	      if(label_align.equalsIgnoreCase("RIGHT")) x_Label = (width +x - width_Label);    
-	          	  if(label_align.equalsIgnoreCase("LEFT")) x_Label = x;    
+         	       	if(label_align.equalsIgnoreCase("CENTER")) x_Label = x + (width - width_Label) / 2;
+         	       	if(label_align.equalsIgnoreCase("RIGHT")) x_Label = (width +x - width_Label);    
+         	       	if(label_align.equalsIgnoreCase("LEFT")) x_Label = x;    
                 
             	    y_Label = y+2*space_0;
 					if(paint){	        
@@ -325,6 +326,7 @@ Vector<Object> scale_buf = new Vector<Object>();
             	if(label_gr==0) y_Scale = y+height_Label+space_0;
             	else y_Scale = y+width_Label+space_0;
                 x_Scale = x;
+                y_Scale-=2;
                 for (int i = 0; i < scale.size(); i++) {
                  	String value = (String) scale.elementAt(i);
                     float sc_width_buf = scale_font.getWidthPoint(value, scale_fontsize);
@@ -377,23 +379,33 @@ Vector<Object> scale_buf = new Vector<Object>();
  				else y_Line = y+width_Label+5*space_0+width_Scale*coefAlfaD;
  			}	
 			if(paint){
-				cb.setColorFill(java.awt.Color.lightGray);
+				if(prof>0) {
+					cb.setColorFill(java.awt.Color.lightGray);
+						cb.moveTo(x+0.1f,y_Line+0.1f);
+						cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
+						cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
+						cb.moveTo(width+x-prof+0.1f+prof,y_Line+0.1f+prof);
+						cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
+						cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
+					cb.fill();
+				}else {
+					cb.setColorFill(java.awt.Color.black);
 					cb.moveTo(x+0.1f,y_Line+0.1f);
-					cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
-					cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
-					cb.moveTo(width+x-prof+0.1f+prof,y_Line+0.1f+prof);
-					cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
-					cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
-				cb.fill();
-				
-				cb.setColorFill(java.awt.Color.black);				
-				cb.moveTo(x, y_Line);
-				cb.lineTo(width+x-prof,y_Line);
-				for(int i=1;i<scale_buf.size();i++){
-					cb.moveTo(x+i*delta_Scale, y_Line-2);cb.lineTo(x+i*delta_Scale, y_Line);cb.fill();
+					cb.lineTo(width+x+0.1f,y_Line+0.1f);
+					cb.fill();					
 				}
-				cb.moveTo(x,y_Line);cb.lineTo(x+prof,y_Line+prof);				
-				cb.fill();
+
+				
+					cb.setColorFill(java.awt.Color.black);				
+					cb.moveTo(x, y_Line);
+					cb.lineTo(width+x-prof,y_Line);
+					for(int i=1;i<scale_buf.size();i++){
+						cb.moveTo(x+i*delta_Scale, y_Line-2);cb.lineTo(x+i*delta_Scale, y_Line);cb.fill();
+					}
+					cb.moveTo(x,y_Line);
+					cb.lineTo(x+prof,y_Line+prof);				
+					cb.fill();
+				
 			}
 //			if(!paint) height = y+height_Label+space_0+width_Scale+1;
 			if(!paint){
@@ -487,25 +499,34 @@ Vector<Object> scale_buf = new Vector<Object>();
 			}
 			
 			y_Line = y;
-			if(paint){	        			
-				cb.setColorFill(java.awt.Color.lightGray);
-					cb.moveTo(x_Line+0.1f,y+0.1f);
-					cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
-					cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
-					cb.moveTo(x_Line+0.1f+prof,height+y+0.1f);
-					cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
-					cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
-				cb.fill();
+			if(paint){	
+					if(prof>0) {
+						cb.setColorFill(java.awt.Color.lightGray);
+							cb.moveTo(x_Line+0.1f,y+0.1f);
+							cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
+							cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
+							cb.moveTo(x_Line+0.1f+prof,height+y+0.1f);
+							cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
+							cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
+						cb.fill();
+					}else {
+						cb.setColorFill(java.awt.Color.black);
+						cb.moveTo(x_Line+0.1f,y+0.1f);
+						cb.lineTo(x_Line+0.1f,height+y+0.1f);
+						cb.fill();						
+					}
 
-				cb.setColorFill(java.awt.Color.black);				
-				cb.moveTo(x_Line, y);
-				cb.lineTo(x_Line, height+y-prof);
-				for(int i=1;i<scale_buf.size();i++){
-					cb.moveTo(x_Line-2, y+i*delta_Scale);cb.lineTo(x_Line, y+i*delta_Scale);cb.fill();
-					cb.moveTo(x_Line, y+i*delta_Scale);cb.lineTo(x_Line+prof, y+i*delta_Scale+prof);cb.fill();
-				}
-				cb.moveTo(x_Line, y);cb.lineTo(x_Line+prof, y+prof);				
-				cb.fill();
+					cb.setColorFill(java.awt.Color.black);				
+					cb.moveTo(x_Line, y);
+					cb.lineTo(x_Line, height+y-prof);
+					for(int i=1;i<scale_buf.size();i++){
+						cb.moveTo(x_Line-2, y+i*delta_Scale);cb.lineTo(x_Line, y+i*delta_Scale);cb.fill();
+						cb.moveTo(x_Line, y+i*delta_Scale);cb.lineTo(x_Line+prof, y+i*delta_Scale+prof);cb.fill();
+					}
+					cb.moveTo(x_Line, y);
+					cb.lineTo(x_Line+prof, y+prof);				
+					cb.fill();
+			
 					
 			}
 
@@ -520,9 +541,11 @@ Vector<Object> scale_buf = new Vector<Object>();
 	                delta_Scale = (height-prof)/(scale_max-1);
 	                cb.setColorFill(Color.black);
 	                for(int i=0;i<scale.size();i++){
-						cb.moveTo(x+prof, y+i*delta_Scale+prof);
-						cb.lineTo(x+prof+width, y+i*delta_Scale+prof);
-						cb.fill();
+	                	if(prof>0) {
+							cb.moveTo(x+prof, y+i*delta_Scale+prof);
+							cb.lineTo(x+prof+width, y+i*delta_Scale+prof);
+							cb.fill();
+	                	}
 						_prepareline(cb,x,y+i*delta_Scale,x+width-prof,y+i*delta_Scale,5,Color.black);
 					}	
             	}  
@@ -550,16 +573,6 @@ Vector<Object> scale_buf = new Vector<Object>();
 			float delta_minusX = Float.valueOf((String)deltaXYZ.elementAt(0)).floatValue();
 			float delta_minusY = Float.valueOf((String)deltaXYZ.elementAt(1)).floatValue();
 			
-/*			
-				for (int i = 1; i < datiX.size(); i++) {						
-					if(Float.valueOf((String)datiX.elementAt(i)).floatValue()<delta_minusX)
-						delta_minusX = Float.valueOf((String)datiX.elementAt(i)).floatValue();
-				}
-				for (int i = 1; i < datiY.size(); i++) {						
-					if(Float.valueOf((String)datiY.elementAt(i)).floatValue()<delta_minusY)
-						delta_minusY = Float.valueOf((String)datiY.elementAt(i)).floatValue();
-				}
-*/			
 
 
 				if(delta_minusY<=0){
@@ -568,12 +581,14 @@ Vector<Object> scale_buf = new Vector<Object>();
 						cb.lineTo(x-3,y-delta_minusY+1);
 						cb.lineTo(x-3,y-delta_minusY-1);
 					cb.fill();
+
 						cb.moveTo(x, y-delta_minusY);
 						cb.lineTo(x+prof, y-delta_minusY+prof);
-					cb.fill();	
+						cb.fill();	
 						cb.moveTo(x+prof, y-delta_minusY+prof);
 						cb.lineTo(x+prof+width, y-delta_minusY+prof);
-					cb.fill();
+						cb.fill();
+
 				}						
 			
 	        int k=0;
