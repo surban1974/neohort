@@ -176,20 +176,23 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 		}catch(Exception e){
 		}
+		
+		float width = 0;
+		try{
+			width = new Float(getStyle().getWIDTH()).floatValue();
+		}catch(Exception e){
+		}
+		float height = 0;
+		try{
+			height = new Float(getStyle().getHEIGHT()).floatValue();
+		}catch(Exception e){
+		}		
 
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 		PdfContentByte cb = pdfWriter.getDirectContent();
+		
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
-			float width = 0;
-			try{
-				width = new Float(getStyle().getWIDTH()).floatValue();
-			}catch(Exception e){
-			}
-			float height = 0;
-			try{
-				height = new Float(getStyle().getHEIGHT()).floatValue();
-			}catch(Exception e){
-			}
+
 			if(!isCreated || template==null) {	
 				if(width>0 && height>0)
 					template = cb.createTemplate(width, height);
@@ -230,6 +233,7 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 			if(_f_leading==-1) phrase = new Phrase(content,font);
 			else phrase = new Phrase(_f_leading,content,font);
 			int align_h = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
+
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL"))
 				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation,PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
 			else

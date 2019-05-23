@@ -24,7 +24,7 @@
 
 package neohort.universal.output.lib_pdf;
 
-
+import java.awt.Color;
 import java.util.Hashtable;
 
 import neohort.log.stubs.iStub;
@@ -33,15 +33,18 @@ import neohort.universal.output.lib.bean;
 import neohort.universal.output.lib.report_element_base;
 import neohort.universal.output.lib.style;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfTemplate;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.ExceptionConverter;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfTemplate;
+import com.lowagie.text.pdf.PdfWriter;
 
 /*
  	"Courier";
@@ -66,7 +69,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
  */
 
-public class text extends element{
+public class text_paragraph extends text{
 
 	private static final long serialVersionUID = -1L;
 	private String ISTEMPLATE;
@@ -75,13 +78,13 @@ public class text extends element{
 	private boolean isCreated=false;
 
 
-public text() {
+public text_paragraph() {
 	super();
 }
 public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 		if(getISTEMPLATE().equalsIgnoreCase("TRUE") && _beanLibrary.get(getName()+":"+getID())!=null)
-			this.setTemplate(((text)_beanLibrary.get(getName()+":"+getID())).getTemplate());
+			this.setTemplate(((text_paragraph)_beanLibrary.get(getName()+":"+getID())).getTemplate());
 	}catch(Exception e){
 	}
 
@@ -91,8 +94,9 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 	if(getISTEMPLATE().equalsIgnoreCase("TRUE")){
 		_beanLibrary.put(getName()+":"+getID(),this);
 		if(_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)==null) _beanLibrary.put("SYSTEM:"+iConst.iHORT_SYSTEM_Templates,new bean());
-		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) ((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable<String,Object>());
-		((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContentAsMap().put(getName()+":"+getID(),getName()+":"+getID());
+		if(((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).getContent()==null) 
+			((bean)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates)).setContent(new Hashtable<String,Object>());
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Templates).getContentAsMap().put(getName()+":"+getID(),getName()+":"+getID());
 	}else{
 		if(_tagLibrary.get(getName()+":"+getID())==null)
 			_tagLibrary.remove(getName()+":"+getID()+"_ids_"+this.motore.hashCode());
@@ -114,7 +118,6 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 		BaseFont bs = null;
 		String bs_name="Helvetica";
 
-
 		if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
 			bs_name = adaptAttrName(internal_style.getFONT());
 			if(internal_style.getFONT_TYPE()!=null && !internal_style.getFONT_TYPE().equals(""))
@@ -123,6 +126,7 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 				if(bs_name.indexOf("_")==-1) bs_name+="-"+adaptAttrName(internal_style.getFONT_STYLE());
 				else bs_name+=adaptAttrName(internal_style.getFONT_STYLE());
 			}
+
 			String bs_code = "Cp1252";
 			if(internal_style.getFONT_ENCODED()!=null && !internal_style.getFONT_ENCODED().equals("")){
 				bs_code = internal_style.getFONT_ENCODED();
@@ -176,6 +180,7 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 		}catch(Exception e){
 		}
+		
 		float width = 0;
 		try{
 			width = new Float(getStyle().getWIDTH()).floatValue();
@@ -185,60 +190,132 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 		try{
 			height = new Float(getStyle().getHEIGHT()).floatValue();
 		}catch(Exception e){
-		}
-		
+		}		
+
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
-
-
-
 		PdfContentByte cb = pdfWriter.getDirectContent();
+		
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
+
 			if(!isCreated || template==null) {	
 				if(width>0 && height>0)
 					template = cb.createTemplate(width, height);
 				else
 					template = cb.createTemplate(absolute_y, absolute_x);
 			}
-//			template.setBoundingBox(new com.itextpdf.text.Rectangle(-20, -20, width, height));
-			if(!drawTextInTemplate) cb.addTemplate(template, absolute_x, absolute_y);
-
-			if(	drawTextInTemplate){
+//			template.setBoundingBox(new com.lowagie.text.Rectangle(-20, -20, width, height));
+			if(!drawTextInTemplate) 
+				cb.addTemplate(template, absolute_x, absolute_y);
+			else{
 				template.beginText();
 				template.setFontAndSize(bs, _f_size);
-				template.setColorFill(getField_Color(internal_style.getFONT_COLOR(),BaseColor.BLACK));
+				template.setColorFill(getField_Color(internal_style.getFONT_COLOR(),Color.black));
 				template.setTextMatrix(0, 0);
 				if(rotation==0)	template.showText(content);
 				else template.showTextAligned(PdfContentByte.ALIGN_LEFT, content, 0, 0, rotation);
-
 				template.endText();
 			}
 		}else{
-
 			Font font = getFont();
-			Phrase phrase = null;
+			Paragraph paragraph = null;
 			int _f_leading = -1;
 			try{
 				_f_leading = Integer.valueOf(internal_style.getLEADING()).intValue();
 			}catch(Exception e){}
-			if(_f_leading==-1) phrase = new Phrase(content,font);
-			else phrase = new Phrase(_f_leading,content,font);
+			if(_f_leading==-1) paragraph = new Paragraph(content,font);
+			else paragraph = new Paragraph(_f_leading,content,font);
 			int align_h = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
+
 			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL"))
-				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation,PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
+				showTextAligned(cb, align_h, paragraph, absolute_x, absolute_y, rotation, width, height, PdfWriter.RUN_DIRECTION_RTL, ColumnText.AR_NOVOWEL);
 			else
-				ColumnText.showTextAligned(cb, align_h, phrase, absolute_x, absolute_y, rotation);
+				showTextAligned(cb, align_h, paragraph, absolute_x, absolute_y, rotation, width, height);
+				
 		}
+
+
 //		cb.saveState();
 
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}
 }
+public static void showTextAligned(PdfContentByte canvas, int alignment, Paragraph paragraph, float x, float y, float rotation, float width, float height) {
+    showTextAligned(canvas, alignment, paragraph, x, y, rotation, width, height, PdfWriter.RUN_DIRECTION_NO_BIDI, 0);
+}
+public static void showTextAligned(PdfContentByte canvas, int alignment, Paragraph paragraph, float x, float y, float rotation, float width, float height, int runDirection, int arabicOptions) {
+    if (alignment != Element.ALIGN_LEFT && alignment != Element.ALIGN_CENTER
+        && alignment != Element.ALIGN_RIGHT)
+        alignment = Element.ALIGN_LEFT;
+    canvas.saveState();
+    ColumnText ct = new ColumnText(canvas);
+    float lly = -1;
+    float ury = 2;
+    if(height>0)
+    	ury+=height;
+    float llx;
+    float urx;
+    switch (alignment) {
+        case Element.ALIGN_LEFT:
+            llx = 0;
+            if(width>0)
+            	urx = width;
+            else
+            	urx = 20000;
+            break;
+        case Element.ALIGN_RIGHT:
+            if(width>0)
+            	llx = (-1)*width;
+            else
+            	llx = -20000;
+            urx = 0;
+            break;
+        default:
+        	if(width>0) {
+	            llx = (-1)*width; 
+	            urx = width;      		
+        	}else {
+	            llx = -20000;
+	            urx = 20000;
+        	}
+            break;
+    }
+    if (rotation == 0) {
+        llx += x;
+        lly += y;
+        urx += x;
+        ury += y;
+    }
+    else {
+        double alpha = rotation * Math.PI / 180.0;
+        float cos = (float)Math.cos(alpha);
+        float sin = (float)Math.sin(alpha);
+        canvas.concatCTM(cos, sin, -sin, cos, x, y);
+    }
+    ct.setSimpleColumn(llx, lly, urx, ury, 2, alignment);
+    ct.addElement(paragraph);
+    if (runDirection == PdfWriter.RUN_DIRECTION_RTL) {
+        if (alignment == Element.ALIGN_LEFT)
+            alignment = Element.ALIGN_RIGHT;
+        else if (alignment == Element.ALIGN_RIGHT)
+            alignment = Element.ALIGN_LEFT;
+    }
+    ct.setAlignment(alignment);
+    ct.setArabicOptions(arabicOptions);
+    ct.setRunDirection(runDirection);
+    try {
+        ct.go();
+    }
+    catch (DocumentException e) {
+        throw new ExceptionConverter(e);
+    }
+    canvas.restoreState();
+}
 public boolean refreshText() {
 	return true;
 }
 public void reimposta() {
-	setName("TEXT");
+	setName("TEXT_PARAGRAPH");
 	STYLE_ID = "";
 	ISTEMPLATE="FALSE";
 

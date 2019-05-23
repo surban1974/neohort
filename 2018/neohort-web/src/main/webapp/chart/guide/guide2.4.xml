@@ -14,19 +14,19 @@
   				<PHRASE FONT="HELVETICA" FONT_SIZE="15" FONT_TYPE="BOLD" FONT_COLOR_RGB="200,200,150" ALIGN="LEFT">header 1</PHRASE> 
   			</PARAGRAPH>
 			<IMAGE IMAGE_SOURCE="/images/logo_small.gif" WIDTH="200" ABSOLUTE_X="50" ABSOLUTE_Y="20"/>
-			<TEXT 
-				ABSOLUTE_X="150" 
-				ABSOLUTE_Y="200"
-				WIDTH="300"
-				HEIGHT="200"
-				ISTEMPLATE="true"
+			<TEXT_PARAGRAPH
+				ABSOLUTE_X="50" 
+				ABSOLUTE_Y="50"
+				WIDTH_="300"
+				HEIGHT="50"
+				ISTEMPLATE="false"
 				FONT = "Times"
 				FONT_TYPE = "BoldItalic"
 				TEXT_ROTATION_DEGREE = "0"
 				>neoHort:)
 ...
 svyatoslav.urbanovych
-...</TEXT>	
+...</TEXT_PARAGRAPH>	
 			
   		</PAGE_HEADER_>
   	
