@@ -183,8 +183,22 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 
 		PdfContentByte cb = pdfWriter.getDirectContent();
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
-
-			if(!isCreated || template==null)	template = cb.createTemplate(absolute_y, absolute_x);
+			float width = 0;
+			try{
+				width = new Float(getStyle().getWIDTH()).floatValue();
+			}catch(Exception e){
+			}
+			float height = 0;
+			try{
+				height = new Float(getStyle().getHEIGHT()).floatValue();
+			}catch(Exception e){
+			}
+			if(!isCreated || template==null) {	
+				if(width>0 && height>0)
+					template = cb.createTemplate(width, height);
+				else
+					template = cb.createTemplate(absolute_y, absolute_x);
+			}
 //			template.setBoundingBox(new com.itextpdf.text.Rectangle(-20, -20, width, height));
 			if(!drawTextInTemplate) cb.addTemplate(template, absolute_x, absolute_y);
 

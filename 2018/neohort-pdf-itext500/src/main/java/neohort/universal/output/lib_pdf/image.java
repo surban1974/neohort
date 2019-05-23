@@ -90,6 +90,10 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				try{
 					loader = Class.forName(IMAGE_LOADER).newInstance();
 					util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
+					try {
+						util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE,pathImg,internal_style});
+					}catch(Exception e) {						
+					}					
 					byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
 					chartIm = Image.getInstance(imgBytes);
 //					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
@@ -133,21 +137,10 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 						chartIm = Image.getInstance(baos.toByteArray());
 					}
 
-/*
-					if(pathImg.trim().indexOf("http:")==0 || pathImg.trim().indexOf("https:")==0){
-						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(new java.net.URL(pathImg));
-						chartIm = Image.getInstance(awtImage,null);
-					}
-					else{
-						java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(pathImg);
-						chartIm = Image.getInstance(awtImage,null);
-
-					}
-*/
 				}catch(Exception e){}
 			}
-			int _d_h = 0;
-			int _d_v = 0;
+			float _d_h = 0;
+			float _d_v = 0;
 			try{
 				_d_h = Integer.valueOf(internal_style.getDIMENTION_H()).intValue();
 			}catch(Exception e){
@@ -181,6 +174,20 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 					chartIm.scaleAbsolute(_d_h,_d_v);
 				}catch(Exception e){
 				}
+			}else{
+				float origHeight = chartIm.getHeight();
+				float origWidth = chartIm.getWidth();
+				if(_d_h>0) {
+					float delta = origHeight/_d_h;
+					_d_v = origWidth/delta;
+				}else {
+					float delta = origWidth/_d_v;
+					_d_h = origHeight/delta;
+				}
+				try{
+					chartIm.scaleAbsolute(_d_h,_d_v);
+				}catch(Exception e){
+				}				
 			}
 
 			if(rotation!=0){

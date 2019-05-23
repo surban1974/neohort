@@ -180,12 +180,26 @@ public void drawDirect(Hashtable<String, report_element_base> _beanLibrary){
 		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 		PdfContentByte cb = pdfWriter.getDirectContent();
 		if(ISTEMPLATE.equalsIgnoreCase("TRUE")){
-
-			if(!isCreated || template==null)	template = cb.createTemplate(absolute_y, absolute_x);
+			float width = 0;
+			try{
+				width = new Float(getStyle().getWIDTH()).floatValue();
+			}catch(Exception e){
+			}
+			float height = 0;
+			try{
+				height = new Float(getStyle().getHEIGHT()).floatValue();
+			}catch(Exception e){
+			}
+			if(!isCreated || template==null) {	
+				if(width>0 && height>0)
+					template = cb.createTemplate(width, height);
+				else
+					template = cb.createTemplate(absolute_y, absolute_x);
+			}
 //			template.setBoundingBox(new com.lowagie.text.Rectangle(-20, -20, width, height));
-			if(!drawTextInTemplate) cb.addTemplate(template, absolute_x, absolute_y);
-
-			if(	drawTextInTemplate){
+			if(!drawTextInTemplate) 
+				cb.addTemplate(template, absolute_x, absolute_y);
+			else{
 				template.beginText();
 				template.setFontAndSize(bs, _f_size);
 				template.setColorFill(getField_Color(internal_style.getFONT_COLOR(),Color.black));
