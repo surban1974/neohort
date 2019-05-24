@@ -51,6 +51,7 @@ public class image extends element{
 	private PdfPCell cell;
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
+	private String IMAGE_ERROR;
 
 public image() {
 	super();
@@ -177,11 +178,11 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				float origHeight = chartIm.getHeight();
 				float origWidth = chartIm.getWidth();
 				if(_d_h>0) {
-					float delta = origHeight/_d_h;
-					_d_v = origWidth/delta;
+					float delta = origWidth/_d_h;
+					_d_v = origHeight/delta;
 				}else {
-					float delta = origWidth/_d_v;
-					_d_h = origHeight/delta;
+					float delta = origHeight/_d_v;
+					_d_h = origWidth/delta;
 				}
 				try{
 					chartIm.scaleAbsolute(_d_h,_d_v);
@@ -209,7 +210,12 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				}
 			}
 
-			if(chartIm==null) cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
+			if(chartIm==null) {
+				if(getIMAGE_ERROR()!=null)
+					cell = new PdfPCell(new Phrase(getIMAGE_ERROR()));
+				else
+					cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
+			}
 			else cell = new PdfPCell(chartIm);
 				cell.setHorizontalAlignment(_align);
 				cell.setBorder(border);
@@ -310,6 +316,7 @@ public void reimposta() {
 	setName("IMAGE");
 	IMAGE_SOURCE = "";
 	IMAGE_LOADER = "";
+//	IMAGE_ERROR = "";
 	STYLE_ID = "";
 }
 public void reStyle(style style_new) {
@@ -327,6 +334,12 @@ public String getIMAGE_LOADER() {
 }
 public void setIMAGE_LOADER(String image_loader) {
 	IMAGE_LOADER = image_loader;
+}
+public String getIMAGE_ERROR() {
+	return IMAGE_ERROR;
+}
+public void setIMAGE_ERROR(String iMAGE_ERROR) {
+	IMAGE_ERROR = iMAGE_ERROR;
 }
 
 }

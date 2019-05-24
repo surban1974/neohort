@@ -73,8 +73,8 @@ public void setCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashta
 		else pr = new Paragraph(_f_leading);
 
 
-			int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
-			pr.setAlignment(_align);
+		int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
+		pr.setAlignment(_align);
 		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(pr);
 	}catch(Exception e){
 		setError(e,iStub.log_ERROR);

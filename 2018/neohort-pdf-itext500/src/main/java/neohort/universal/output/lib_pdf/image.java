@@ -178,11 +178,11 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				float origHeight = chartIm.getHeight();
 				float origWidth = chartIm.getWidth();
 				if(_d_h>0) {
-					float delta = origHeight/_d_h;
-					_d_v = origWidth/delta;
+					float delta = origWidth/_d_h;
+					_d_v = origHeight/delta;
 				}else {
-					float delta = origWidth/_d_v;
-					_d_h = origHeight/delta;
+					float delta = origHeight/_d_v;
+					_d_h = origWidth/delta;
 				}
 				try{
 					chartIm.scaleAbsolute(_d_h,_d_v);
