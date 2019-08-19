@@ -52,6 +52,8 @@ public class image extends element{
 	private String IMAGE_SOURCE;
 	private String IMAGE_LOADER;
 	private String IMAGE_ERROR;
+	private String STR_ERROR;
+	private String FIT;
 
 public image() {
 	super();
@@ -168,32 +170,33 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 			}catch(Exception e){
 			}
 
-
-			if(_d_h>0 && _d_v>0){
-				try{
-					chartIm.scaleAbsolute(_d_h,_d_v);
-				}catch(Exception e){
+			if(chartIm!=null) {
+				if(_d_h>0 && _d_v>0){
+					try{
+						chartIm.scaleAbsolute(_d_h,_d_v);
+					}catch(Exception e){
+					}
+				}else{
+					float origHeight = chartIm.getHeight();
+					float origWidth = chartIm.getWidth();
+					if(_d_h>0) {
+						float delta = origWidth/_d_h;
+						_d_v = origHeight/delta;
+					}else {
+						float delta = origHeight/_d_v;
+						_d_h = origWidth/delta;
+					}
+					try{
+						chartIm.scaleAbsolute(_d_h,_d_v);
+					}catch(Exception e){
+					}				
 				}
-			}else{
-				float origHeight = chartIm.getHeight();
-				float origWidth = chartIm.getWidth();
-				if(_d_h>0) {
-					float delta = origWidth/_d_h;
-					_d_v = origHeight/delta;
-				}else {
-					float delta = origHeight/_d_v;
-					_d_h = origWidth/delta;
-				}
-				try{
-					chartIm.scaleAbsolute(_d_h,_d_v);
-				}catch(Exception e){
-				}				
-			}
-
-			if(rotation!=0){
-				try{
-					chartIm.setRotationDegrees(rotation);
-				}catch(Exception e){
+	
+				if(rotation!=0){
+					try{
+						chartIm.setRotationDegrees(rotation);
+					}catch(Exception e){
+					}
 				}
 			}
 
@@ -213,13 +216,23 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 			if(chartIm==null) {
 				if(getIMAGE_ERROR()!=null)
 					cell = new PdfPCell(new Phrase(getIMAGE_ERROR()));
-				else
+				else if(getSTR_ERROR()!=null)
+					cell = new PdfPCell(new Phrase(getSTR_ERROR()));
+				else	
 					cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
 			}
-			else cell = new PdfPCell(chartIm);
-				cell.setHorizontalAlignment(_align);
-				cell.setBorder(border);
-			if(padding!=0) cell.setPadding(padding);
+			else {
+				if(getFIT()!=null && getFIT().equalsIgnoreCase("true"))
+					cell = new PdfPCell(chartIm,true);
+				else
+					cell = new PdfPCell(chartIm);
+			}
+			
+			cell.setHorizontalAlignment(_align);
+			cell.setBorder(border);
+			
+			if(padding!=0)
+				cell.setPadding(padding);
 			if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
 				try{
 					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_TOP()).floatValue();
@@ -318,6 +331,7 @@ public void reimposta() {
 	IMAGE_LOADER = "";
 //	IMAGE_ERROR = "";
 	STYLE_ID = "";
+	FIT = "false";
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;
@@ -341,5 +355,16 @@ public String getIMAGE_ERROR() {
 public void setIMAGE_ERROR(String iMAGE_ERROR) {
 	IMAGE_ERROR = iMAGE_ERROR;
 }
-
+public String getSTR_ERROR() {
+	return STR_ERROR;
+}
+public void setSTR_ERROR(String sTR_ERROR) {
+	STR_ERROR = sTR_ERROR;
+}
+public String getFIT() {
+	return FIT;
+}
+public void setFIT(String fIT) {
+	FIT = fIT;
+}
 }
