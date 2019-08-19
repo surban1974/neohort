@@ -20,6 +20,7 @@
 				WIDTH_="300"
 				HEIGHT="50"
 				ISTEMPLATE="false"
+				LEADING="5"
 				FONT = "Times"
 				FONT_TYPE = "BoldItalic"
 				TEXT_ROTATION_DEGREE = "0"
