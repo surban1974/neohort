@@ -512,6 +512,8 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentT.setDeep(deep);
 
 			ch_contentT.setExternal_parameters(this.external_parameters);
+			ch_contentT.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentT.setInternal_style(internal_style);
 
 			cb = ch_contentT.placeBarcode(cb,false);
 
@@ -541,6 +543,8 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentL.setDeep(deep);
 
 			ch_contentL.setExternal_parameters(this.external_parameters);
+			ch_contentL.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentL.setInternal_style(internal_style);
 
 			cb = ch_contentL.placeBarcode(cb,false);
 
@@ -570,6 +574,8 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentR.setDeep(deep);
 
 			ch_contentR.setExternal_parameters(this.external_parameters);
+			ch_contentR.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentR.setInternal_style(internal_style);
 
 			cb = ch_contentR.placeBarcode(cb,false);
 
@@ -600,6 +606,8 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentB.setDeep(deep);
 
 			ch_contentB.setExternal_parameters(this.external_parameters);
+			ch_contentB.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentB.setInternal_style(internal_style);
 
 			cb = ch_contentB.placeBarcode(cb, false);
 
@@ -616,6 +624,8 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentC.setDeep(deep);
 
 			ch_contentC.setExternal_parameters(this.external_parameters);
+			ch_contentC.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentC.setInternal_style(internal_style);
 
 			cb = ch_contentC.placeBarcode(cb,true);
 			ch_contentC.ActionAfter(cb,ch_contentT, ch_contentB, ch_contentL, ch_contentR,_h_d,_w_d);

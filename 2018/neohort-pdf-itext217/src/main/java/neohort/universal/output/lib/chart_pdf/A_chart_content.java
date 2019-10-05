@@ -29,6 +29,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Vector;
 
+import neohort.universal.output.lib.style;
 import neohort.universal.output.util.I_OutputRunTime;
 
 import com.lowagie.text.pdf.PdfContentByte;
@@ -97,6 +98,8 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 	private String External;
 	
 	private HashMap<String,Object> external_parameters;
+	private HashMap<String,String> unsupported_attributes = new HashMap<String, String>();
+	public style internal_style;
 	private I_OutputRunTime motore;
 
 
@@ -127,6 +130,10 @@ public void setError(Exception e, String level) {
 		motore.setError(e,name,level);
 	} catch (Exception ex) {
 	}
+}
+
+public Vector<Color> _createChartColors(int size) {
+	return _createColors(size);
 }
 
 public static Vector<Color> _createColors(int size) {
@@ -221,66 +228,21 @@ public static Vector<Color> _createColors(int size) {
 		result_buf.add(result.get(i));
 	return result_buf;
 }
+
 public static Vector<Color> _createColorsShadow(int size) {
 	Vector<Color> result = _createColors(size);
 	for(int i=0;i<result.size();i++){
 		Color curr = (Color)result.get(i);
 		result.set(i,new Color(curr.getRed()/2,curr.getGreen()/2,curr.getBlue()/2));
 	}
-/*	
-	int cycle = 1+(int)(size/7);
-	int coef = 75/cycle;
-	for(int i=0;i< cycle;i++){
-//blue		
-		result.add(	new Color(
-					i*coef,
-					i*coef,
-					230-50
-					));
-//red		
-		result.add(	new Color(
-					230-50,
-					i*coef,
-					i*coef
-					));
-//yellow		
-		result.add(	new Color(
-					230-50,
-					230-50,
-					i*coef
-					));
-//orange		
-		result.add(	new Color(
-					230-50,
-					125-50,
-					i*coef
-					));
-//green		
-		result.add(	new Color(
-					i*coef,
-					230-50,
-					i*coef
-					));
-//lightblue		
-		result.add(	new Color(
-					i*coef,
-					230-50,
-					230-50
-					));
-//violet		
-		result.add(	new Color(
-					230-50,
-					i*coef,
-					230-50
-					));
-
-	}
-*/
-	
-	Vector<Color> result_buf = new Vector<Color>();
-	for(int i=0;i<size;i++)
-		result_buf.add(result.get(i));
-	return result_buf;
+	return result;
+//	Vector<Color> result_buf = new Vector<Color>();
+//	for(int i=0;i<size;i++)
+//		result_buf.add(result.get(i));
+//	return result_buf;
+}
+public Vector<Color> _createChartColorsShadow(int size) {
+	return _createColorsShadow(size);
 }
 public Color _prepareColor(int k, int size) {
 	if(k>colors.size()-1){ 
@@ -296,7 +258,7 @@ public void _prepareColori(int size) {
 			}
 		}catch(Exception e){}	
 		int count_col = colors.size();
-		Vector<Color> col_gen = _createColors(size-count_col);			
+		Vector<Color> col_gen = _createChartColors(size-count_col);			
 		int i = 0;
 		while(i<size-count_col){
 			colors.add(col_gen.get(i));
@@ -311,7 +273,7 @@ public void _prepareColoriShadow(int size) {
 			}
 		}catch(Exception e){}	
 		int count_col = colorsShadow.size();
-		Vector<Color> col_gen = _createColorsShadow(size-count_col);			
+		Vector<Color> col_gen = _createChartColorsShadow(size-count_col);			
 		int i = 0;
 		while(i<size-count_col){
 			colorsShadow.add(col_gen.get(i));
@@ -536,4 +498,22 @@ public void setDeep(float deep) {
 	this.deep=deep;
 	
 }
+public void setUnsupported_attributes(HashMap<String,String> unsupported_attributes) {
+	this.unsupported_attributes = unsupported_attributes;
+}
+
+
+public HashMap<String, String> getUnsupported_attributes() {
+	return unsupported_attributes;
+}
+
+
+public style getInternal_style() {
+	return internal_style;
+}
+
+
+public void setInternal_style(style internal_style) {
+	this.internal_style = internal_style;
+};
 }

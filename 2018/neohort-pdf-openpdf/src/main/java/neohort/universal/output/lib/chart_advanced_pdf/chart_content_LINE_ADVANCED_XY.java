@@ -155,8 +155,19 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	if(deep!=-1)
 		prof = deep;
 	boolean positionV = false;
+	Color fill_color = null;
+	try {
+		if(fill_color==null)
+			fill_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("FILL_COLOR"), null);
+		if(fill_color==null)
+			fill_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("FILL_COLOR_RGB"), java.awt.Color.lightGray);
+	}catch (Exception e) {
+	}
+	if(fill_color==null)
+		fill_color =  java.awt.Color.lightGray;
+	
     try {
-Vector<Object> scale_buf = new Vector<Object>();
+    	Vector<Object> scale_buf = new Vector<Object>();
 
         if (orientation == super.or_TOP) {
 			if(paint){	        
@@ -380,7 +391,7 @@ Vector<Object> scale_buf = new Vector<Object>();
  			}	
 			if(paint){
 				if(prof>0) {
-					cb.setColorFill(java.awt.Color.lightGray);
+					cb.setColorFill(fill_color);
 						cb.moveTo(x+0.1f,y_Line+0.1f);
 						cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
 						cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
@@ -389,14 +400,14 @@ Vector<Object> scale_buf = new Vector<Object>();
 						cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
 					cb.fill();
 				}else {
-					cb.setColorFill(java.awt.Color.black);
+					cb.setColorFill(java.awt.Color.gray);
 					cb.moveTo(x+0.1f,y_Line+0.1f);
 					cb.lineTo(width+x+0.1f,y_Line+0.1f);
 					cb.fill();					
 				}
 
 				
-					cb.setColorFill(java.awt.Color.black);				
+					cb.setColorFill(java.awt.Color.gray);				
 					cb.moveTo(x, y_Line);
 					cb.lineTo(width+x-prof,y_Line);
 					for(int i=1;i<scale_buf.size();i++){
@@ -501,7 +512,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 			y_Line = y;
 			if(paint){	
 					if(prof>0) {
-						cb.setColorFill(java.awt.Color.lightGray);
+						cb.setColorFill(fill_color);
 							cb.moveTo(x_Line+0.1f,y+0.1f);
 							cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
 							cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
@@ -510,13 +521,13 @@ Vector<Object> scale_buf = new Vector<Object>();
 							cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
 						cb.fill();
 					}else {
-						cb.setColorFill(java.awt.Color.black);
+						cb.setColorFill(java.awt.Color.gray);
 						cb.moveTo(x_Line+0.1f,y+0.1f);
 						cb.lineTo(x_Line+0.1f,height+y+0.1f);
 						cb.fill();						
 					}
 
-					cb.setColorFill(java.awt.Color.black);				
+					cb.setColorFill(java.awt.Color.gray);				
 					cb.moveTo(x_Line, y);
 					cb.lineTo(x_Line, height+y-prof);
 					for(int i=1;i<scale_buf.size();i++){
@@ -539,14 +550,14 @@ Vector<Object> scale_buf = new Vector<Object>();
 			if(paint){	        
             	if (scale.size() > 0 ) {
 	                delta_Scale = (height-prof)/(scale_max-1);
-	                cb.setColorFill(Color.black);
+	                cb.setColorFill(Color.gray);
 	                for(int i=0;i<scale.size();i++){
 	                	if(prof>0) {
 							cb.moveTo(x+prof, y+i*delta_Scale+prof);
 							cb.lineTo(x+prof+width, y+i*delta_Scale+prof);
 							cb.fill();
 	                	}
-						_prepareline(cb,x,y+i*delta_Scale,x+width-prof,y+i*delta_Scale,5,Color.black);
+						_prepareline(cb,x,y+i*delta_Scale,x+width-prof,y+i*delta_Scale,5,Color.gray);
 					}	
             	}  
 			}

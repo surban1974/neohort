@@ -76,6 +76,7 @@ public class chart extends element{
 	private java.lang.String FONT_LABEL_COLOR_TOP;
 	private java.lang.String FORMAT_CHART_INPUT_DATA;
 	private java.lang.String EXTERNAL;
+	private java.lang.String DEEP;
 	private PdfPCell cell;
 
 
@@ -441,6 +442,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			_w_d = 0;
 		}
 
+		int deep =-1;
+		try {
+			deep = Integer.valueOf(getDEEP()).intValue();
+		}catch(Exception e) {
+			
+		}
 
 
 		if(color_background!=null){
@@ -473,7 +480,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentT.setScale_max(max_scale_X);
 			ch_contentT.setShow_scale(show_scale_X);
 
+			ch_contentT.setDeep(deep);
+
 			ch_contentT.setExternal_parameters(this.external_parameters);
+			ch_contentT.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentT.setInternal_style(internal_style);
+
 
 			cb = ch_contentT.placeBarcode(cb,false);
 
@@ -501,7 +513,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentL.setScale_max(max_scale_Y);
 			ch_contentL.setShow_scale(show_scale_Y);
 
+			ch_contentL.setDeep(deep);
+
 			ch_contentL.setExternal_parameters(this.external_parameters);
+			ch_contentL.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentL.setInternal_style(internal_style);
+
 
 			cb = ch_contentL.placeBarcode(cb,false);
 
@@ -529,7 +546,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentR.setScale_max(max_scale_Y);
 			ch_contentR.setShow_scale(show_scale_Y);
 
+			ch_contentR.setDeep(deep);
+
 			ch_contentR.setExternal_parameters(this.external_parameters);
+			ch_contentR.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentR.setInternal_style(internal_style);
+
 
 			cb = ch_contentR.placeBarcode(cb,false);
 
@@ -558,7 +580,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentB.setScale_max(max_scale_X);
 			ch_contentB.setShow_scale(show_scale_X);
 
+			ch_contentB.setDeep(deep);
+
 			ch_contentB.setExternal_parameters(this.external_parameters);
+			ch_contentB.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentB.setInternal_style(internal_style);
+
 
 			cb = ch_contentB.placeBarcode(cb, false);
 
@@ -574,7 +601,12 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentC.setElement_color_2(element_color_2d_right);
 			ch_contentC.setElement_color_3(element_color_2d_top);
 
+			ch_contentC.setDeep(deep);
+
 			ch_contentC.setExternal_parameters(this.external_parameters);
+			ch_contentC.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentC.setInternal_style(internal_style);
+
 
 			cb = ch_contentC.placeBarcode(cb,true);
 			ch_contentC.ActionAfter(cb,ch_contentT, ch_contentB, ch_contentL, ch_contentR,_h_d,_w_d);
@@ -699,4 +731,11 @@ public void setMAXELEMENT_LABEL_XYZ(java.lang.String newMAXELEMENT_LABEL_XYZ) {
 public void setSHOW_SCALE_XYZ(java.lang.String newSHOW_SCALE_XYZ) {
 	SHOW_SCALE_XYZ = newSHOW_SCALE_XYZ;
 }
+public java.lang.String getDEEP() {
+	return DEEP;
+}
+public void setDEEP(java.lang.String dEEP) {
+	DEEP = dEEP;
+}
+
 }

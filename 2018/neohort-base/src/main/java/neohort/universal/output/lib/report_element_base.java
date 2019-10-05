@@ -61,6 +61,7 @@ public abstract class report_element_base implements report_element {
 	public String PARSER_JAVA = "true";
 	public style internal_style;	
 	public HashMap<String,Object> external_parameters;
+	public HashMap<String,String> unsupported_attributes = new HashMap<String, String>();
 	
 		
 public report_element_base() {
@@ -362,15 +363,16 @@ public void setSYSATTR(java.lang.String newSYSATTR) {
 	SYSATTR = newSYSATTR;
 }
 
-public void setValue(String nome, Object[] value){
-	if (nome == null || nome.trim().length()==0 || value == null) return;
+public boolean setValue(String nome, Object[] value){
+	if (nome == null || nome.trim().length()==0 || value == null) return false;
 	try{
-		util_reflect.setValue(this,nome,value);
+		return util_reflect.setValue(this,nome,value);
 	}catch(Exception e){
 		setError(e,iStub.log_WARN);
 	}catch(Throwable t){
 		setError(new Exception(t.toString()),iStub.log_WARN);
 	}
+	return false;
 /*
 	try{
 		java.lang.reflect.Method mtd = null;
@@ -500,14 +502,26 @@ public Object init_element(Node node, report_element_base element_parent,
 				if (node_nnm!=null){
 					Object prm[] = new Object[1];
 					prm[0] = new Parser_Java(this.name,this.motore).checkAttribute(node_nnm.getNodeValue(), _tagLibrary, _beanLibrary);
-					if(isStyled) internal_style.setValue("set"+paramName.toUpperCase(),prm);
-					else setValue("set"+paramName.toUpperCase(),prm); 
+					if(isStyled) {
+						if(!internal_style.setValue("set"+paramName.toUpperCase(),prm))
+							unsupported_attributes.put(paramName.toUpperCase(),(prm[0]==null)?null:prm[0].toString());
+					}
+					else {
+						if(!setValue("set"+paramName.toUpperCase(),prm))
+							unsupported_attributes.put(paramName.toUpperCase(),(prm[0]==null)?null:prm[0].toString());
+					}
 				}
 				else {
 					Object prm[] = new Object[1];
 					prm[0] = "";					
-					if(isStyled) internal_style.setValue("set"+paramName.toUpperCase(),prm);
-					else setValue("set"+paramName.toUpperCase(),prm);
+					if(isStyled) {
+						if(!internal_style.setValue("set"+paramName.toUpperCase(),prm))
+							unsupported_attributes.put(paramName.toUpperCase(),"");
+					}
+					else {
+						if(!setValue("set"+paramName.toUpperCase(),prm))
+							unsupported_attributes.put(paramName.toUpperCase(),"");
+					}
 				}
 				if(paramName.equalsIgnoreCase("STYLE_ID")){
 					Node node_nnm0 =	nnm.getNamedItem(paramName);
@@ -579,5 +593,8 @@ public String getPARSER_JAVA() {
 }
 public void setPARSER_JAVA(String pARSERJAVA) {
 	PARSER_JAVA = pARSERJAVA;
+}
+public HashMap<String, String> getUnsupported_attributes() {
+	return unsupported_attributes;
 }
 }

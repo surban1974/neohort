@@ -20,6 +20,9 @@ public class chart_content_COLUMN_ADVANCED_XY extends A_chart_content implements
 	public float space_0 = 2;
 	public Double max_scale_fixed_Y;
 	public Boolean show_under_columns;
+	
+    
+
 public chart_content_COLUMN_ADVANCED_XY() {
 	super();
 	reimposta();
@@ -65,6 +68,8 @@ public I_chart_dati ChartDatiFactory() {
 }
 Color getField_Color(Class<?> cl, String name, Color d_value) {
 	Color result = d_value;
+	if(name==null)
+		return d_value;
 	if(name.indexOf(",")>-1){
 		try{
 			int _r = -1;
@@ -101,9 +106,19 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	if(deep!=-1)
 		prof = deep;
 	boolean positionV = false;
+	Color fill_color = null;
+	try {
+		if(fill_color==null)
+			fill_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("FILL_COLOR"), null);
+		if(fill_color==null)
+			fill_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("FILL_COLOR_RGB"), java.awt.Color.lightGray);
+	}catch (Exception e) {
+	}
+	if(fill_color==null)
+		fill_color =  java.awt.Color.lightGray;
 	
     try {
-Vector<Object> scale_buf = new Vector<Object>();
+    	Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == super.or_TOP) {
 			if(paint){	        
 				if(background!=null){	        
@@ -248,8 +263,11 @@ Vector<Object> scale_buf = new Vector<Object>();
             	if(label_gr==0) y_Scale = y+height_Label+space_0;
             	else y_Scale = y+width_Label+space_0;
                 x_Scale = x;
-                for (int i = 0; i < scale.size(); i++) {
-                 	String value = (String) scale.elementAt(i);
+
+                final Vector<String> bar_section_titles = prepareBar_section_titles(scale);
+                
+                for (int i = 0; i < bar_section_titles.size(); i++) {
+                 	String value = bar_section_titles.elementAt(i);
                     float sc_width_buf = scale_font.getWidthPoint(value, scale_fontsize);
                     if (width_Scale < sc_width_buf)
                       	width_Scale = sc_width_buf;
@@ -301,7 +319,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 	 			}
 	 		}	
 			if(paint){
-				cb.setColorFill(java.awt.Color.lightGray);
+				cb.setColorFill(fill_color);
 					cb.moveTo(x+0.1f,y_Line+0.1f);
 					cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
 					cb.lineTo(width+x-prof+0.1f,y_Line+0.1f);
@@ -310,7 +328,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 					cb.lineTo(x+0.1f+prof,y_Line+0.1f+prof);
 				cb.fill();
 				
-				cb.setColorFill(java.awt.Color.black);				
+				cb.setColorFill(java.awt.Color.gray);				
 				cb.moveTo(x, y_Line);
 				cb.lineTo(width+x-prof,y_Line);
 				for(int i=0;i<scale_buf.size();i++){
@@ -416,7 +434,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 			
 			y_Line = y;
 			if(paint){	        			
-				cb.setColorFill(java.awt.Color.lightGray);
+				cb.setColorFill(fill_color);
 					cb.moveTo(x_Line+0.1f,y+0.1f);
 					cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
 					cb.lineTo(x_Line+0.1f,height+y-prof+0.1f);
@@ -425,7 +443,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 					cb.lineTo(x_Line+0.1f+prof,y+0.1f+prof);
 				cb.fill();
 
-				cb.setColorFill(java.awt.Color.black);				
+				cb.setColorFill(java.awt.Color.gray);				
 				cb.moveTo(x_Line, y);
 				cb.lineTo(x_Line, height+y-prof);
 				for(int i=1;i<scale_buf.size();i++){
@@ -450,7 +468,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 	        }   
 	         
 			if(paint){
-				cb.setColorFill(Color.lightGray);
+				cb.setColorFill(fill_color);
 					cb.rectangle(x+0.2f+prof,y+0.2f,width,height);
 				cb.fill();
 	           	if (scale.size() > 0 ) {
@@ -458,7 +476,7 @@ Vector<Object> scale_buf = new Vector<Object>();
 				        delta_Scale = (float)((chart_dati_COLUMN_ADVANCED_XY)dati).getDeltaScaleY(max_scale_fixed_Y,height-prof);
 				        if(delta_Scale==-1) delta_Scale = (height-prof)/(scale_max-1);  
 	  			    }else delta_Scale = (height-prof)/(scale_max-1);    
-	                cb.setColorFill(Color.black);
+	                cb.setColorFill(Color.gray);
 	                for(int i=0;i<scale.size();i++){
 						cb.moveTo(x+prof, y+i*delta_Scale+prof);
 						cb.lineTo(x+prof+width, y+i*delta_Scale+prof);
@@ -711,5 +729,138 @@ public void reimposta() {
 		label_font = BaseFont.createFont("Helvetica", "winansi", false);
 		scale_font = BaseFont.createFont("Helvetica", "winansi", false);
 	}catch(Exception e){}
+}
+
+private Vector<String> prepareBar_section_titles(Vector<Object> scale){
+	if(scale==null)
+		return null;
+	Vector<String> result=new Vector<String>();    
+    for (int i = 0; i < scale.size(); i++) 
+    	result.add((String) scale.elementAt(i));
+    
+    String bar_section_title = getUnsupported_attributes().get("BAR_SECTION_TITLE");
+    if(bar_section_title!=null && !bar_section_title.trim().equals("")) {
+    	String[] splitted = bar_section_title.split(";");
+    	for(int i=0; i< ((splitted.length>result.size())?result.size():splitted.length);i++)
+    		result.set(i, splitted[i]);
+    }
+    return result;
+}
+public Vector<Color> _createChartColors(int size) {
+	Vector<Color> result = new Vector<Color>();
+	
+	int cycle = 1+(int)(size/7);
+	int coef = 125/cycle;
+
+		result.add(	new Color(
+					154,
+					154,
+					255
+					));
+		result.add(	new Color(
+					154,
+					51,
+					101
+					));
+		result.add(	new Color(
+					255,
+					255,
+					204
+					));
+		result.add(	new Color(
+					204,
+					255,
+					255
+					));
+		result.add(	new Color(
+					101,
+					0,
+					101
+					));
+		result.add(	new Color(
+					255,
+					128,
+					128
+					));
+		result.add(	new Color(
+					0,
+					101,
+					204
+					));
+		
+	
+	for(int i=0;i< cycle-1;i++){
+//blue		
+		result.add(	new Color(
+					i*coef,
+					i*coef,
+					230
+					));
+//red		
+		result.add(	new Color(
+					230,
+					i*coef,
+					i*coef
+					));
+//yellow		
+		result.add(	new Color(
+					230,
+					230,
+					i*coef
+					));
+//orange		
+		result.add(	new Color(
+					230,
+					125,
+					i*coef
+					));
+//green		
+		result.add(	new Color(
+					i*coef,
+					230,
+					i*coef
+					));
+//lightblue		
+		result.add(	new Color(
+					i*coef,
+					230,
+					230
+					));
+//violet		
+		result.add(	new Color(
+					230,
+					i*coef,
+					230
+					));
+
+	}
+	
+	if(internal_style!=null) {
+		String ext_colors = internal_style.getBAR_COLOR();
+		if(ext_colors==null || ext_colors.trim().equals(""))
+			ext_colors = internal_style.getBAR_COLOR_RGB();
+		
+		if(ext_colors!=null && !ext_colors.trim().equals("")) {
+	    	String[] splitted = ext_colors.split(";");
+	    	for(int i=0; i< ((splitted.length>result.size())?result.size():splitted.length);i++)
+	    		result.set(
+	    				i, 
+	    				getField_Color(java.awt.Color.class,splitted[i], result.get(i))
+	    		);
+		}
+	}
+	
+	Vector<Color> result_buf = new Vector<Color>();
+	for(int i=0;i<size;i++)
+		result_buf.add(result.get(i));
+	return result_buf;
+}
+public Vector<Color> _createChartColorsShadow(int size) {
+	Vector<Color> result = _createChartColors(size);
+	for(int i=0;i<result.size();i++){
+		Color curr = (Color)result.get(i);
+		result.set(i,new Color(curr.getRed()/2,curr.getGreen()/2,curr.getBlue()/2));
+	}
+	return result;
 }
 }

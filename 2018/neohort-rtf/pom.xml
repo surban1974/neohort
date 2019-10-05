@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-rtf</artifactId> 
-  <version>1.4.2</version>
+  <version>1.4.3</version>
   <name>neohort rtf besed OpenPdf/iText-rtf 2.1.7</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. OpenPdf/iText-rtf 2.1.7 RTF implementation.</description>
   <url>https://github.com/surban1974/neohort</url>
@@ -85,7 +85,7 @@
    		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-base</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>
 		
  

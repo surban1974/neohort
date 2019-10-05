@@ -27,6 +27,7 @@ package neohort.universal.output.lib.chart_pdf;
 import java.util.HashMap;
 import java.util.Vector;
 
+import neohort.universal.output.lib.style;
 import neohort.universal.output.util.I_OutputRunTime;
 
 import com.itextpdf.text.BaseColor;
@@ -104,6 +105,9 @@ public HashMap<String,Object> getExternal_parameters();
 public void setMotore(I_OutputRunTime motore);
 public void setIsError(boolean isError);
 public void setError(Exception e, String level);
+public void setDeep(float deep);
+public void setUnsupported_attributes(HashMap<String,String> unsupported_attributes);
+public void setInternal_style(style internal_style);
 
 
 }

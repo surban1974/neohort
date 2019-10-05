@@ -28,6 +28,7 @@ package neohort.universal.output.lib.chart_pdf;
 import java.util.HashMap;
 import java.util.Vector;
 
+import neohort.universal.output.lib.style;
 import neohort.universal.output.util.I_OutputRunTime;
 
 import com.itextpdf.text.BaseColor;
@@ -81,6 +82,8 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 
     public float x_Line = 0;
     public float y_Line = 0;
+    public float deep=-1;
+
 
 	public I_chart_dati dati;
 
@@ -96,6 +99,9 @@ public abstract class A_chart_content implements I_chart_content, java.io.Serial
 	private String External;
 
 	private HashMap<String,Object> external_parameters;
+	private HashMap<String,String> unsupported_attributes = new HashMap<String, String>();
+	public style internal_style;
+
 	private I_OutputRunTime motore;
 	private boolean isError=false;
 	public String name = "CHART_ELEMENT_BASE";
@@ -125,6 +131,11 @@ public void setError(Exception e, String level) {
 	} catch (Exception ex) {
 	}
 }
+
+public Vector<BaseColor> _createChartColors(int size) {
+	return _createColors(size);
+}
+
 
 public static Vector<BaseColor> _createColors(int size) {
 	Vector<BaseColor> result = new Vector<BaseColor>();
@@ -225,11 +236,16 @@ public static Vector<BaseColor> _createColorsShadow(int size) {
 		result.set(i,new BaseColor(curr.getRed()/2,curr.getGreen()/2,curr.getBlue()/2));
 	}
 
-	Vector<BaseColor> result_buf = new Vector<BaseColor>();
-	for(int i=0;i<size;i++)
-		result_buf.add(result.get(i));
-	return result_buf;
+//	Vector<BaseColor> result_buf = new Vector<BaseColor>();
+//	for(int i=0;i<size;i++)
+//		result_buf.add(result.get(i));
+//	return result_buf;
+	return result;
 }
+public Vector<BaseColor> _createChartColorsShadow(int size) {
+	return _createColorsShadow(size);
+}
+
 public BaseColor _prepareColor(int k, int size) {
 	if(k>colors.size()-1){
 		int coefColor = 254/(size);
@@ -483,5 +499,28 @@ public void setExternal_parameters(HashMap<String,Object> map) {
 public boolean isError() {
 	return isError;
 }
+
+public void setDeep(float deep) {
+	this.deep=deep;
+	
+}
+public void setUnsupported_attributes(HashMap<String,String> unsupported_attributes) {
+	this.unsupported_attributes = unsupported_attributes;
+}
+
+
+public HashMap<String, String> getUnsupported_attributes() {
+	return unsupported_attributes;
+}
+
+
+public style getInternal_style() {
+	return internal_style;
+}
+
+
+public void setInternal_style(style internal_style) {
+	this.internal_style = internal_style;
+};
 
 }

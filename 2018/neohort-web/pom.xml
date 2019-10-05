@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-web</artifactId>
-  <version>1.4.2</version>
+  <version>1.4.3</version>
   <packaging>war</packaging>
   <name>neohort web demo frontend</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Demo web frontend.</description>
@@ -177,29 +177,29 @@
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-pdf-itext500</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>
  -->			
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-pdf-openpdf</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>			
 		
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xls-jxl</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>	
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xlsx-poi</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-rtf</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3</version>
 		</dependency>						
   </dependencies>   
 </project>
