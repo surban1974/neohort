@@ -31,6 +31,7 @@ public interface I_chart_dati {
 public Vector<Object> getDati(int type, float length);
 public Vector<Object> getDati(int type, float lengthX, float lengthY, float lengthZ);
 public Vector<Object> getScale(int type, int max_scale);
+public Vector<Object> getScale(int type, int max_scale, Float Max, Float Min);
 public void setDati(int type, Object D);
 public void setDati(int type,String format, String value);
 public void setFormat(int type, String format);

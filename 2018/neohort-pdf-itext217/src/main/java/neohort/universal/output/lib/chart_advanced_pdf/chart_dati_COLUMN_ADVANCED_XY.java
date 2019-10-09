@@ -21,7 +21,9 @@ public class chart_dati_COLUMN_ADVANCED_XY extends A_chart_dati implements I_cha
 
 
 	private float minY = 0;
+	private float deltaMinY = 0;
     private float maxY = 0;
+    private float deltaMaxY = 0;
     private float deltaY = 0;
 
     private int max_min_inputX=0;
@@ -85,6 +87,13 @@ public Vector<Object> getDati(int type, float length, float count, float lengthZ
 	    	return getDatiY_St();		    
 	    case 12:
 	    	return getDatiZ_St();
+	    case 20:
+	    	if(deltaMinY!=0) {
+	    		Vector<Object> res = new Vector<Object>();
+	    		res.add(deltaMinY*deltaY);
+	    		return res;
+	    	}
+	    	return null;	
 	    	
 	    default:
 	    	return result; 
@@ -250,7 +259,20 @@ public Vector<Object> getScale(int type, int max_scale) {
 	    case 0:
 	    	return getScaleX(max_scale);
 	    case 1:
-	    	return getScaleY(max_scale);		    
+	    	return getScaleY(max_scale,null,null);		    
+	    case 2:
+	    	return getScaleZ(max_scale);
+	    default:
+	    	return result; 
+    }
+}
+public Vector<Object> getScale(int type, int max_scale, Float Max, Float Min) {
+    Vector<Object> result = new Vector<Object>();
+    switch(type){
+	    case 0:
+	    	return getScaleX(max_scale);
+	    case 1:
+	    	return getScaleY(max_scale,Max,Min);		    
 	    case 2:
 	    	return getScaleZ(max_scale);
 	    default:
@@ -280,7 +302,7 @@ private Vector<Object> getScaleX(int max_scale) {
     } catch (Exception e) {}
     return result;
 }
-private Vector<Object> getScaleY(int max_scale) {
+private Vector<Object> getScaleY(int max_scale, Float MaxY, Float MinY) {
     Vector<Object> result = new Vector<Object>();
     if(datiY_General.size()==0){
 	    for(int i=0;i<datiY_st.size();i++){
@@ -305,8 +327,19 @@ private Vector<Object> getScaleY(int max_scale) {
 	            	if(maxY>0) minY = 0;
 	            	else maxY = 0;
             	}
+            	
+            	if(MinY!=null && MinY<minY) {
+            		deltaMinY=minY-MinY;
+            		minY=MinY;            		
+            	}
+            	if(MaxY!=null && MaxY>maxY) {
+            		deltaMaxY=MaxY-maxY;
+            		maxY=MaxY;            		
+            	}
+            	
             	deltaY = (maxY - minY) / (max_scale-1);
-            	maxY = minY + max_scale * deltaY;
+//           	maxY = minY + max_scale * deltaY;
+            	maxY = minY + (max_scale-1) * deltaY;
             	deltaY = (maxY - minY) / (max_scale-1);
 	        }else deltaY = (maxY - minY) / (max_scale-1);
 
@@ -332,7 +365,8 @@ private Vector<Object> getScaleY(int max_scale) {
             	if(maxY==minY) minY = new java.sql.Date((long)maxY - delta_day).getTime();
 
             	deltaY = (maxY - minY) / (max_scale-1);
-				maxY = (long)(minY + max_scale * deltaY);            	
+//				maxY = (long)(minY + max_scale * deltaY); 
+				maxY = (long)(minY + (max_scale-1) * deltaY);
             	deltaY = (maxY - minY) / (max_scale-1);
 	        }else deltaY = (maxY - minY) / (max_scale-1);
 	        

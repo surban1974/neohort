@@ -518,6 +518,14 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 			Vector<Object> datiX = dati.getDati(0,width-prof,-1,0);
 			Vector<Object> datiY = dati.getDati(1,height-prof,-1,0);
 			
+			Vector<Object> minShift = dati.getDati(20,height-prof,-1,0);
+			if(minShift!=null && minShift.size()==1) {
+				try {
+					y=y+(Float)minShift.get(0);
+				}catch (Exception e) {
+				}
+			}
+			
 float deltaGen = (width-prof)/datiY.size();
  
 			float delta_minusX = Float.valueOf((String)datiX.elementAt(0)).floatValue();

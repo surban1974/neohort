@@ -56,7 +56,7 @@ public class chart extends element{
 	private java.lang.String FONT_SCALE_XYZ;
 	private java.lang.String FONT_SCALE_SIZE_XYZ;
 	private java.lang.String FONT_SCALE_COLOR_XYZ;
-		private java.lang.String FONT_SCALE_COLOR_XYZ_RGB;
+	private java.lang.String FONT_SCALE_COLOR_XYZ_RGB;
 	private java.lang.String LABEL_X;
 	private java.lang.String LABEL_Y;
 	private java.lang.String LABEL_Z;
@@ -67,19 +67,21 @@ public class chart extends element{
 	private java.lang.String FONT_LABEL_XYZ;
 	private java.lang.String FONT_LABEL_SIZE_XYZ;
 	private java.lang.String FONT_LABEL_COLOR_XYZ;
-		private java.lang.String FONT_LABEL_COLOR_XYZ_RGB;
+	private java.lang.String FONT_LABEL_COLOR_XYZ_RGB;
 	private java.lang.String ELEMENT_COLOR_3D;
-		private java.lang.String ELEMENT_COLOR_3D_RGB;
+	private java.lang.String ELEMENT_COLOR_3D_RGB;
 	private java.lang.String LABEL_TOP;
 	private java.lang.String ALIGN_LABEL_TOP;
 	private java.lang.String FONT_LABEL_TOP;
 	private java.lang.String FONT_LABEL_SIZE_TOP;
 	private java.lang.String FONT_LABEL_COLOR_TOP;
-		private java.lang.String FONT_LABEL_COLOR_TOP_RGB;
+	private java.lang.String FONT_LABEL_COLOR_TOP_RGB;
 	private java.lang.String FORMAT_CHART_INPUT_DATA;
 	private java.lang.String EXTERNAL;
 	private java.lang.String DEEP;
 	private PdfPCell cell;
+	private java.lang.String MAXELEMENT_VALUE_XYZ;
+	private java.lang.String MINELEMENT_VALUE_XYZ;
 
 
 public chart() {
@@ -297,51 +299,7 @@ private I_chart_dati getDatiXY(String chart_type) {
 		return null;
 	}
 }
-public java.lang.String getELEMENT_COLOR_3D() {
-	return ELEMENT_COLOR_3D;
-}
-public java.lang.String getEXTERNAL() {
-	return EXTERNAL;
-}
-public java.lang.String getFONT_LABEL_COLOR_TOP() {
-	return FONT_LABEL_COLOR_TOP;
-}
-public java.lang.String getFONT_LABEL_COLOR_XYZ() {
-	return FONT_LABEL_COLOR_XYZ;
-}
-public java.lang.String getFONT_LABEL_SIZE_TOP() {
-	return FONT_LABEL_SIZE_TOP;
-}
-public java.lang.String getFONT_LABEL_SIZE_XYZ() {
-	return FONT_LABEL_SIZE_XYZ;
-}
-public java.lang.String getFONT_LABEL_TOP() {
-	return FONT_LABEL_TOP;
-}
-public java.lang.String getFONT_LABEL_XYZ() {
-	return FONT_LABEL_XYZ;
-}
-public java.lang.String getFONT_SCALE_COLOR_XYZ() {
-	return FONT_SCALE_COLOR_XYZ;
-}
-public java.lang.String getFONT_SCALE_SIZE_XYZ() {
-	return FONT_SCALE_SIZE_XYZ;
-}
-public java.lang.String getFONT_SCALE_XYZ() {
-	return FONT_SCALE_XYZ;
-}
-public java.lang.String getFORMAT_CHART_INPUT_DATA() {
-	return FORMAT_CHART_INPUT_DATA;
-}
-public java.lang.String getFORMAT_SCALE_XYZ() {
-	return FORMAT_SCALE_XYZ;
-}
-public java.lang.String getGR_LABEL_XYZ() {
-	return GR_LABEL_XYZ;
-}
-public java.lang.String getGR_SCALE_XYZ() {
-	return GR_SCALE_XYZ;
-}
+
 private int getInt(String name, int d_value) {
 	int result = d_value;
 	try{
@@ -350,24 +308,16 @@ private int getInt(String name, int d_value) {
 	}
 	return result;
 }
-public java.lang.String getLABEL_TOP() {
-	return LABEL_TOP;
+
+private Float getFloat(String name, Float d_value) {
+	Float result = d_value;
+	try{
+		result = Float.valueOf(name);
+	}catch(Exception e){
+	}
+	return result;
 }
-public java.lang.String getLABEL_X() {
-	return LABEL_X;
-}
-public java.lang.String getLABEL_Y() {
-	return LABEL_Y;
-}
-public java.lang.String getLABEL_Z() {
-	return LABEL_Z;
-}
-public java.lang.String getMAXELEMENT_LABEL_XYZ() {
-	return MAXELEMENT_LABEL_XYZ;
-}
-public java.lang.String getSHOW_SCALE_XYZ() {
-	return SHOW_SCALE_XYZ;
-}
+
 private Rectangle placeBarcode(PdfContentByte cb) {
 	try{
 		String chart_type = getCHART_TYPE();
@@ -468,6 +418,22 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		java.util.StringTokenizer st_max_scale = new java.util.StringTokenizer(getMAXELEMENT_LABEL_XYZ(), ";");
 		if(st_max_scale.hasMoreTokens()) max_scale_X = getInt(st_max_scale.nextToken(),10);
 		if(st_max_scale.hasMoreTokens()) max_scale_Y = getInt(st_max_scale.nextToken(),10);
+		
+	Float MaxX = null;	
+	Float MaxY = null;
+		java.util.StringTokenizer st_max_elem = new java.util.StringTokenizer(getMAXELEMENT_VALUE_XYZ(), ";");
+		if(st_max_elem.hasMoreTokens()) 
+			MaxX = getFloat(st_max_elem.nextToken(),null);
+		if(st_max_elem.hasMoreTokens()) 
+			MaxY = getFloat(st_max_elem.nextToken(),null);	
+		
+	Float MinX = null;	
+	Float MinY = null;
+		java.util.StringTokenizer st_min_elem = new java.util.StringTokenizer(getMINELEMENT_VALUE_XYZ(), ";");
+		if(st_min_elem.hasMoreTokens()) 
+			MinX = getFloat(st_min_elem.nextToken(),null);
+		if(st_min_elem.hasMoreTokens()) 
+			MinY = getFloat(st_min_elem.nextToken(),null);			
 
 	String align_label_top = getALIGN_LABEL_TOP();
 	String align_label_X = "CENTER";
@@ -520,7 +486,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentT.setLabel_gr(0);
 			ch_contentT.setLabel_align(align_label_top);
 
-			ch_contentT.setScale(dXY.getScale(0,max_scale_X));
+			ch_contentT.setScale(dXY.getScale(0,max_scale_X, MaxX, MinX));
 			ch_contentT.setScale_font(font_scale_X);
 			ch_contentT.setScale_fontsize(font_scale_size_X);
 			ch_contentT.setScale_color(font_color_scale_X);
@@ -551,7 +517,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentL.setLabel_gr(gr_label_Y);
 			ch_contentL.setLabel_align(align_label_Y);
 
-			ch_contentL.setScale(dXY.getScale(1,max_scale_Y));
+			ch_contentL.setScale(dXY.getScale(1,max_scale_Y, MaxY, MinY));
 			ch_contentL.setScale_font(font_scale_Y);
 			ch_contentL.setScale_fontsize(font_scale_size_Y);
 			ch_contentL.setScale_color(font_color_scale_Y);
@@ -582,7 +548,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentR.setLabel_gr(gr_label_Y);
 			ch_contentR.setLabel_align(align_label_Y);
 
-			ch_contentR.setScale(dXY.getScale(1,max_scale_Y));
+			ch_contentR.setScale(dXY.getScale(1,max_scale_Y, MaxY, MinY));
 			ch_contentR.setScale_font(font_scale_Y);
 			ch_contentR.setScale_fontsize(font_scale_size_Y);
 			ch_contentR.setScale_color(font_color_scale_Y);
@@ -614,7 +580,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentB.setLabel_gr(gr_label_X);
 			ch_contentB.setLabel_align(align_label_X);
 
-			ch_contentB.setScale(dXY.getScale(0,max_scale_X));
+			ch_contentB.setScale(dXY.getScale(0,max_scale_X, MaxX, MinX));
 			ch_contentB.setScale_font(font_scale_X);
 			ch_contentB.setScale_fontsize(font_scale_size_X);
 			ch_contentB.setScale_color(font_color_scale_X);
@@ -686,6 +652,8 @@ public void reimposta() {
 	GR_LABEL_XYZ = "";
 	FORMAT_CHART_INPUT_DATA = "";
 	EXTERNAL = "";
+	MAXELEMENT_VALUE_XYZ = "";
+	MINELEMENT_VALUE_XYZ = "";
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;
@@ -801,5 +769,80 @@ public java.lang.String getFONT_LABEL_COLOR_TOP_RGB() {
 }
 public void setFONT_LABEL_COLOR_TOP_RGB(java.lang.String fONT_LABEL_COLOR_TOP_RGB) {
 	FONT_LABEL_COLOR_TOP_RGB = fONT_LABEL_COLOR_TOP_RGB;
+}
+public java.lang.String getMAXELEMENT_VALUE_XYZ() {
+	return MAXELEMENT_VALUE_XYZ;
+}
+public void setMAXELEMENT_VALUE_XYZ(java.lang.String mAXELEMENT_VALUE_XYZ) {
+	MAXELEMENT_VALUE_XYZ = mAXELEMENT_VALUE_XYZ;
+}
+public java.lang.String getMINELEMENT_VALUE_XYZ() {
+	return MINELEMENT_VALUE_XYZ;
+}
+public void setMINELEMENT_VALUE_XYZ(java.lang.String mINELEMENT_VALUE_XYZ) {
+	MINELEMENT_VALUE_XYZ = mINELEMENT_VALUE_XYZ;
+}
+public java.lang.String getLABEL_TOP() {
+	return LABEL_TOP;
+}
+public java.lang.String getLABEL_X() {
+	return LABEL_X;
+}
+public java.lang.String getLABEL_Y() {
+	return LABEL_Y;
+}
+public java.lang.String getLABEL_Z() {
+	return LABEL_Z;
+}
+public java.lang.String getMAXELEMENT_LABEL_XYZ() {
+	return MAXELEMENT_LABEL_XYZ;
+}
+public java.lang.String getSHOW_SCALE_XYZ() {
+	return SHOW_SCALE_XYZ;
+}
+public java.lang.String getELEMENT_COLOR_3D() {
+	return ELEMENT_COLOR_3D;
+}
+public java.lang.String getEXTERNAL() {
+	return EXTERNAL;
+}
+public java.lang.String getFONT_LABEL_COLOR_TOP() {
+	return FONT_LABEL_COLOR_TOP;
+}
+public java.lang.String getFONT_LABEL_COLOR_XYZ() {
+	return FONT_LABEL_COLOR_XYZ;
+}
+public java.lang.String getFONT_LABEL_SIZE_TOP() {
+	return FONT_LABEL_SIZE_TOP;
+}
+public java.lang.String getFONT_LABEL_SIZE_XYZ() {
+	return FONT_LABEL_SIZE_XYZ;
+}
+public java.lang.String getFONT_LABEL_TOP() {
+	return FONT_LABEL_TOP;
+}
+public java.lang.String getFONT_LABEL_XYZ() {
+	return FONT_LABEL_XYZ;
+}
+public java.lang.String getFONT_SCALE_COLOR_XYZ() {
+	return FONT_SCALE_COLOR_XYZ;
+}
+public java.lang.String getFONT_SCALE_SIZE_XYZ() {
+	return FONT_SCALE_SIZE_XYZ;
+}
+public java.lang.String getFONT_SCALE_XYZ() {
+	return FONT_SCALE_XYZ;
+}
+public java.lang.String getFORMAT_CHART_INPUT_DATA() {
+	return FORMAT_CHART_INPUT_DATA;
+}
+public java.lang.String getFORMAT_SCALE_XYZ() {
+	return FORMAT_SCALE_XYZ;
+}
+public java.lang.String getGR_LABEL_XYZ() {
+	return GR_LABEL_XYZ;
+}
+public java.lang.String getGR_SCALE_XYZ() {
+	return GR_SCALE_XYZ;
 }
 }

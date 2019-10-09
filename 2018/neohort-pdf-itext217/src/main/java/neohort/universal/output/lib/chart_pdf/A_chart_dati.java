@@ -62,6 +62,9 @@ public Vector<Object> getDatiZ(float length){
 	return null;
 }
 public abstract Vector<Object> getScale(int type, int max_scale);
+public Vector<Object> getScale(int type, int max_scale, Float Max, Float Min){
+	return getScale(type, max_scale);
+}
 public abstract String prepareContentString(String formatSG, String value);
 public abstract Object prepareDataValue(String formatSG, String value);
 public void reimposta() {
