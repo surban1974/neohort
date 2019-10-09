@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.surban1974.neohort</groupId>
+  <artifactId>neohort-pdf-openpdf</artifactId> 
+  <version>1.4.1</version>
+  <name>neohort pdf besed OpenPdf</name>
+  <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. OpenPdf PDF implementation.</description>
+  <url>https://github.com/surban1974/neohort</url>
+ 
+ 
+	<issueManagement>
+		<url>https://github.com/surban1974/neohort/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>  
+	
+	<licenses>
+		<license>
+			<name>GNU General Public License version 2.0 (GPLv2)</name>
+			<url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>	
+  <build>
+     <resources>
+        <resource>
+            <directory>src/main/java</directory>
+			<includes>
+				<include>neohort/**/*.ttf</include>
+				<include>neohort/**/*.dtd</include>
+				<include>neohort/**/*.properties</include>
+			</includes> 
+        </resource>
+    </resources>
+    <plugins>
+
+    
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      
+		<plugin>
+		  	<groupId>org.apache.maven.plugins</groupId>
+		  	<artifactId>maven-source-plugin</artifactId>
+		  	<executions>
+		    	<execution>
+		      		<id>attach-sources</id>
+		      		<goals>
+		        		<goal>jar</goal>
+		      		</goals>
+		    	</execution>
+		  	</executions>
+ 			<configuration>
+				<includes>
+					<include>neohort/**/*.java</include>
+					<include>neohort/**/*.ttf</include>
+					<include>neohort/**/*.dtd</include>
+					<include>neohort/**/*.properties</include>
+				</includes>        
+			</configuration>		  	
+		</plugin>	      
+      
+
+	   
+    </plugins>
+  </build>
+  
+  	<repositories>
+    	<repository>
+        	<id>neohort-mvn-repo</id>
+        	<url>https://github.com/surban1974/neohort/raw/mvn-repo/</url>
+        	<snapshots>
+            	<enabled>true</enabled>
+            	<updatePolicy>always</updatePolicy>
+        	</snapshots>
+    	</repository>
+  	</repositories> 
+  	
+   <dependencies>
+
+   		<dependency>
+			<groupId>com.github.surban1974.neohort</groupId>
+			<artifactId>neohort-base</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+ 		
+ 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+	        <groupId>com.github.librepdf</groupId>
+	        <artifactId>openpdf</artifactId>
+	        <version>1.3.3</version>
+    	</dependency>
+		
+  </dependencies>
+   <organization>
+   	<name>Svyatoslav Urbanovych</name>
+   	<url>https://it.linkedin.com/pub/svyatoslav-urbanovych/2/241/754</url>
+   </organization>
+   <properties>
+   	<github.global.server>github</github.global.server>
+   </properties>
+</project>

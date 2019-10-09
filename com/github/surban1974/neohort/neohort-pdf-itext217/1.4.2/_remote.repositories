@@ -1,5 +1,5 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Sun Sep 01 23:28:33 CEST 2019
-neohort-pdf-itext217-1.4.2-sources.jar>neohort-mvn-repo=
-neohort-pdf-itext217-1.4.2.jar>neohort-mvn-repo=
-neohort-pdf-itext217-1.4.2.pom>neohort-mvn-repo=
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Tue Aug 20 20:37:03 CEST 2019
+neohort-pdf-itext217-1.4.2.pom>=
+neohort-pdf-itext217-1.4.2-sources.jar>=
+neohort-pdf-itext217-1.4.2.jar>=
