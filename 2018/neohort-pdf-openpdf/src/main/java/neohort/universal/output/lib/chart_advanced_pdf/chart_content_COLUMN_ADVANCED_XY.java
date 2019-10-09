@@ -117,6 +117,18 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	if(fill_color==null)
 		fill_color =  java.awt.Color.lightGray;
 	
+	Color zero_level_color = null;
+	try {
+		if(zero_level_color==null)
+			zero_level_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("ZERO_LEVEL_COLOR"), null);
+		if(zero_level_color==null)
+			zero_level_color = getField_Color(java.awt.Color.class,getUnsupported_attributes().get("ZERO_LEVEL_COLOR_RGB"), java.awt.Color.red);
+	}catch (Exception e) {
+	}
+	if(zero_level_color==null)
+		zero_level_color =  java.awt.Color.red;
+	
+	
     try {
     	Vector<Object> scale_buf = new Vector<Object>();
         if (orientation == super.or_TOP) {
@@ -519,7 +531,7 @@ float deltaGen = (width-prof)/datiY.size();
 
 
 					if(delta_minusY<=0){
-						cb.setColorFill(java.awt.Color.red);
+						cb.setColorFill(zero_level_color);
 							cb.moveTo(x,y-delta_minusY);
 							cb.lineTo(x-3,y-delta_minusY+1);
 							cb.lineTo(x-3,y-delta_minusY-1);
@@ -653,7 +665,7 @@ if(show_under_columns!=null && show_under_columns.booleanValue()){
                	}
 				if(delta_minusY<=0){
 					float delta_ScaleX = (width-prof)/scaleX_max;
-					cb.setColorFill(Color.red);
+					cb.setColorFill(zero_level_color);
 						cb.moveTo(x, y-delta_minusY);
 						cb.lineTo(x+width-prof, y-delta_minusY);
 					cb.fill();					

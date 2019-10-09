@@ -56,6 +56,7 @@ public class chart extends element{
 	private java.lang.String FONT_SCALE_XYZ;
 	private java.lang.String FONT_SCALE_SIZE_XYZ;
 	private java.lang.String FONT_SCALE_COLOR_XYZ;
+		private java.lang.String FONT_SCALE_COLOR_XYZ_RGB;
 	private java.lang.String LABEL_X;
 	private java.lang.String LABEL_Y;
 	private java.lang.String LABEL_Z;
@@ -66,12 +67,15 @@ public class chart extends element{
 	private java.lang.String FONT_LABEL_XYZ;
 	private java.lang.String FONT_LABEL_SIZE_XYZ;
 	private java.lang.String FONT_LABEL_COLOR_XYZ;
+		private java.lang.String FONT_LABEL_COLOR_XYZ_RGB;
 	private java.lang.String ELEMENT_COLOR_3D;
+		private java.lang.String ELEMENT_COLOR_3D_RGB;
 	private java.lang.String LABEL_TOP;
 	private java.lang.String ALIGN_LABEL_TOP;
 	private java.lang.String FONT_LABEL_TOP;
 	private java.lang.String FONT_LABEL_SIZE_TOP;
 	private java.lang.String FONT_LABEL_COLOR_TOP;
+		private java.lang.String FONT_LABEL_COLOR_TOP_RGB;
 	private java.lang.String FORMAT_CHART_INPUT_DATA;
 	private java.lang.String EXTERNAL;
 	private java.lang.String DEEP;
@@ -376,6 +380,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		if(dXY==null) return new Rectangle(0,0);
 
 		Color font_label_color_top = getField_Color(getFONT_LABEL_COLOR_TOP(),Color.black);
+			font_label_color_top = getField_Color(getFONT_LABEL_COLOR_TOP_RGB(),font_label_color_top);
 		BaseFont font_label_top = getBaseFont(getFONT_LABEL_TOP(),BaseFont.createFont("Courier", "winansi", false));
 		int font_label_size_top = getInt(getFONT_LABEL_SIZE_TOP(),10);
 
@@ -385,12 +390,20 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		java.util.StringTokenizer st_font_color_scale = new java.util.StringTokenizer(getFONT_SCALE_COLOR_XYZ(), ";");
 		if(st_font_color_scale.hasMoreTokens()) font_color_scale_X = getField_Color(st_font_color_scale.nextToken(),Color.black);
 		if(st_font_color_scale.hasMoreTokens()) font_color_scale_Y = getField_Color(st_font_color_scale.nextToken(),Color.black);
+		
+		st_font_color_scale = new java.util.StringTokenizer(getFONT_SCALE_COLOR_XYZ_RGB(), ";");
+		if(st_font_color_scale.hasMoreTokens()) font_color_scale_X = getField_Color(st_font_color_scale.nextToken(),font_color_scale_X);
+		if(st_font_color_scale.hasMoreTokens()) font_color_scale_Y = getField_Color(st_font_color_scale.nextToken(),font_color_scale_Y);
 
 	Color font_color_label_X = Color.black;
 	Color font_color_label_Y = Color.black;
 		java.util.StringTokenizer st_font_color_label = new java.util.StringTokenizer(getFONT_LABEL_COLOR_XYZ(), ";");
 		if(st_font_color_label.hasMoreTokens()) font_color_label_X = getField_Color(st_font_color_label.nextToken(),Color.black);
 		if(st_font_color_label.hasMoreTokens()) font_color_label_Y = getField_Color(st_font_color_label.nextToken(),Color.black);
+		
+		st_font_color_label = new java.util.StringTokenizer(getFONT_LABEL_COLOR_XYZ_RGB(), ";");
+		if(st_font_color_label.hasMoreTokens()) font_color_label_X = getField_Color(st_font_color_label.nextToken(),font_color_label_X);
+		if(st_font_color_label.hasMoreTokens()) font_color_label_Y = getField_Color(st_font_color_label.nextToken(),font_color_label_Y);
 
 	Color color_background = getField_Color(internal_style.getBACK_COLOR(),null);
 
@@ -401,6 +414,11 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		if(st_element_color_2d.hasMoreTokens()) element_color_2d_bar = getField_Color(st_element_color_2d.nextToken(),Color.blue);
 		if(st_element_color_2d.hasMoreTokens()) element_color_2d_right = getField_Color(st_element_color_2d.nextToken(),Color.lightGray);
 		if(st_element_color_2d.hasMoreTokens()) element_color_2d_top = getField_Color(st_element_color_2d.nextToken(),Color.black);
+
+		st_element_color_2d = new java.util.StringTokenizer(getELEMENT_COLOR_3D_RGB(), ";");
+		if(st_element_color_2d.hasMoreTokens()) element_color_2d_bar = getField_Color(st_element_color_2d.nextToken(),element_color_2d_bar);
+		if(st_element_color_2d.hasMoreTokens()) element_color_2d_right = getField_Color(st_element_color_2d.nextToken(),element_color_2d_right);
+		if(st_element_color_2d.hasMoreTokens()) element_color_2d_top = getField_Color(st_element_color_2d.nextToken(),element_color_2d_top);
 
 
 	BaseFont font_scale_X = BaseFont.createFont("Courier", "winansi", false);
@@ -647,6 +665,7 @@ public void reimposta() {
 	FONT_SCALE_XYZ = "";
 	FONT_SCALE_SIZE_XYZ = "";
 	FONT_SCALE_COLOR_XYZ = "";
+	FONT_SCALE_COLOR_XYZ_RGB = "";
 	LABEL_X = "";
 	LABEL_Y = "";
 	LABEL_Z = "";
@@ -654,12 +673,15 @@ public void reimposta() {
 	FONT_LABEL_XYZ = "";
 	FONT_LABEL_SIZE_XYZ = "";
 	FONT_LABEL_COLOR_XYZ = "";
+	FONT_LABEL_COLOR_XYZ_RGB = "";
 	ELEMENT_COLOR_3D = "";
+	ELEMENT_COLOR_3D_RGB = "";
 	LABEL_TOP = "";
 	ALIGN_LABEL_TOP = "";
 	FONT_LABEL_TOP = "";
 	FONT_LABEL_SIZE_TOP = "";
 	FONT_LABEL_COLOR_TOP = "";
+	FONT_LABEL_COLOR_TOP_RGB = "";
 	GR_SCALE_XYZ = "";
 	GR_LABEL_XYZ = "";
 	FORMAT_CHART_INPUT_DATA = "";
@@ -755,5 +777,29 @@ public java.lang.String getDEEP() {
 }
 public void setDEEP(java.lang.String dEEP) {
 	DEEP = dEEP;
+}
+public java.lang.String getFONT_SCALE_COLOR_XYZ_RGB() {
+	return FONT_SCALE_COLOR_XYZ_RGB;
+}
+public void setFONT_SCALE_COLOR_XYZ_RGB(java.lang.String fONT_SCALE_COLOR_XYZ_RGB) {
+	FONT_SCALE_COLOR_XYZ_RGB = fONT_SCALE_COLOR_XYZ_RGB;
+}
+public java.lang.String getFONT_LABEL_COLOR_XYZ_RGB() {
+	return FONT_LABEL_COLOR_XYZ_RGB;
+}
+public void setFONT_LABEL_COLOR_XYZ_RGB(java.lang.String fONT_LABEL_COLOR_XYZ_RGB) {
+	FONT_LABEL_COLOR_XYZ_RGB = fONT_LABEL_COLOR_XYZ_RGB;
+}
+public java.lang.String getELEMENT_COLOR_3D_RGB() {
+	return ELEMENT_COLOR_3D_RGB;
+}
+public void setELEMENT_COLOR_3D_RGB(java.lang.String eLEMENT_COLOR_3D_RGB) {
+	ELEMENT_COLOR_3D_RGB = eLEMENT_COLOR_3D_RGB;
+}
+public java.lang.String getFONT_LABEL_COLOR_TOP_RGB() {
+	return FONT_LABEL_COLOR_TOP_RGB;
+}
+public void setFONT_LABEL_COLOR_TOP_RGB(java.lang.String fONT_LABEL_COLOR_TOP_RGB) {
+	FONT_LABEL_COLOR_TOP_RGB = fONT_LABEL_COLOR_TOP_RGB;
 }
 }

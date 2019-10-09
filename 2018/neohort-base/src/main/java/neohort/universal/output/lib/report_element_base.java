@@ -126,6 +126,8 @@ public Color getField_Color(Class<?> cl, String name, Color d_value) {
 }
 public Color getField_Color( String name, Color d_value) {
 	Color result = d_value;
+	if(name==null || name.equals(""))
+		return result;
 	if(name.indexOf(",")>-1){
 		try{
 			int _r = -1;
@@ -157,6 +159,8 @@ public Color getField_Color( String name, Color d_value) {
 }
 public int getField_Int(Class<?> cl, String name, int d_value) {
 	int result = d_value;
+	if(name==null || name.equals("") || cl==null)
+		return result;
 	try{
 		result = cl.getField(name).getInt(cl);
 	}catch(Exception e){
