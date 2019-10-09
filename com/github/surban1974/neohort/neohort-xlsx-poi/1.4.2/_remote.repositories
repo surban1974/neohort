@@ -1,5 +1,5 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Tue Aug 20 20:36:28 CEST 2019
-neohort-xlsx-poi-1.4.2.pom>=
-neohort-xlsx-poi-1.4.2-sources.jar>=
-neohort-xlsx-poi-1.4.2.jar>=
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Sep 30 14:33:53 CEST 2019
+neohort-xlsx-poi-1.4.2.pom>neohort-mvn-repo=
+neohort-xlsx-poi-1.4.2-sources.jar>neohort-mvn-repo=
+neohort-xlsx-poi-1.4.2.jar>neohort-mvn-repo=

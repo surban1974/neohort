@@ -1,5 +1,5 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Tue Aug 20 20:36:33 CEST 2019
-neohort-pdf-openpdf-1.4.2.pom>=
-neohort-pdf-openpdf-1.4.2-sources.jar>=
-neohort-pdf-openpdf-1.4.2.jar>=
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Sep 30 01:10:13 CEST 2019
+neohort-pdf-openpdf-1.4.2-sources.jar>neohort-mvn-repo=
+neohort-pdf-openpdf-1.4.2.jar>neohort-mvn-repo=
+neohort-pdf-openpdf-1.4.2.pom>neohort-mvn-repo=

@@ -1,5 +1,5 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Mon Aug 19 20:10:30 CEST 2019
-neohort-base-1.4.1.jar>=
-neohort-base-1.4.1.pom>=
-neohort-base-1.4.1-sources.jar>=
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Sep 01 23:27:56 CEST 2019
+neohort-base-1.4.1.pom>neohort-mvn-repo=
+neohort-base-1.4.1-sources.jar>neohort-mvn-repo=
+neohort-base-1.4.1.jar>neohort-mvn-repo=
