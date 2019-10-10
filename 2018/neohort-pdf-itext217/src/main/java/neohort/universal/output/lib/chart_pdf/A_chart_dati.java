@@ -62,7 +62,7 @@ public Vector<Object> getDatiZ(float length){
 	return null;
 }
 public abstract Vector<Object> getScale(int type, int max_scale);
-public Vector<Object> getScale(int type, int max_scale, Float Max, Float Min){
+public Vector<Object> getScale(int type, int max_scale, Float ScaleStep, Float Max, Float Min){
 	return getScale(type, max_scale);
 }
 public abstract String prepareContentString(String formatSG, String value);

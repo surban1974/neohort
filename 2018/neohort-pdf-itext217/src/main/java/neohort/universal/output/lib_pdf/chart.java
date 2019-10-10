@@ -78,10 +78,13 @@ public class chart extends element{
 	private java.lang.String FONT_LABEL_COLOR_TOP_RGB;
 	private java.lang.String FORMAT_CHART_INPUT_DATA;
 	private java.lang.String EXTERNAL;
-	private java.lang.String DEEP;
-	private PdfPCell cell;
+	private java.lang.String DEEP;	
 	private java.lang.String MAXELEMENT_VALUE_XYZ;
 	private java.lang.String MINELEMENT_VALUE_XYZ;
+	private java.lang.String SCALE_STEP_XYZ;
+	private PdfPCell cell;
+
+
 
 
 public chart() {
@@ -427,6 +430,14 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 		if(st_max_elem.hasMoreTokens()) 
 			MaxY = getFloat(st_max_elem.nextToken(),null);	
 		
+	Float ScaleStepX = null;	
+	Float ScaleStepY = null;
+		java.util.StringTokenizer st_scale_step = new java.util.StringTokenizer(getSCALE_STEP_XYZ(), ";");
+		if(st_scale_step.hasMoreTokens()) 
+			ScaleStepX = getFloat(st_scale_step.nextToken(),null);
+		if(st_scale_step.hasMoreTokens()) 
+			ScaleStepY = getFloat(st_scale_step.nextToken(),null);			
+		
 	Float MinX = null;	
 	Float MinY = null;
 		java.util.StringTokenizer st_min_elem = new java.util.StringTokenizer(getMINELEMENT_VALUE_XYZ(), ";");
@@ -486,7 +497,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentT.setLabel_gr(0);
 			ch_contentT.setLabel_align(align_label_top);
 
-			ch_contentT.setScale(dXY.getScale(0,max_scale_X, MaxX, MinX));
+			ch_contentT.setScale(dXY.getScale(0,max_scale_X, ScaleStepX, MaxX, MinX));
 			ch_contentT.setScale_font(font_scale_X);
 			ch_contentT.setScale_fontsize(font_scale_size_X);
 			ch_contentT.setScale_color(font_color_scale_X);
@@ -517,7 +528,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentL.setLabel_gr(gr_label_Y);
 			ch_contentL.setLabel_align(align_label_Y);
 
-			ch_contentL.setScale(dXY.getScale(1,max_scale_Y, MaxY, MinY));
+			ch_contentL.setScale(dXY.getScale(1,max_scale_Y, ScaleStepY, MaxY, MinY));
 			ch_contentL.setScale_font(font_scale_Y);
 			ch_contentL.setScale_fontsize(font_scale_size_Y);
 			ch_contentL.setScale_color(font_color_scale_Y);
@@ -548,7 +559,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentR.setLabel_gr(gr_label_Y);
 			ch_contentR.setLabel_align(align_label_Y);
 
-			ch_contentR.setScale(dXY.getScale(1,max_scale_Y, MaxY, MinY));
+			ch_contentR.setScale(dXY.getScale(1,max_scale_Y, ScaleStepY, MaxY, MinY));
 			ch_contentR.setScale_font(font_scale_Y);
 			ch_contentR.setScale_fontsize(font_scale_size_Y);
 			ch_contentR.setScale_color(font_color_scale_Y);
@@ -580,7 +591,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentB.setLabel_gr(gr_label_X);
 			ch_contentB.setLabel_align(align_label_X);
 
-			ch_contentB.setScale(dXY.getScale(0,max_scale_X, MaxX, MinX));
+			ch_contentB.setScale(dXY.getScale(0,max_scale_X, ScaleStepX, MaxX, MinX));
 			ch_contentB.setScale_font(font_scale_X);
 			ch_contentB.setScale_fontsize(font_scale_size_X);
 			ch_contentB.setScale_color(font_color_scale_X);
@@ -599,6 +610,10 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 	//Draw
 		I_chart_content ch_contentC = new chart_elementFactory().chartFactory(chart_type,motore,isError);
 			ch_contentC.setExternal(EXTERNAL);
+			ch_contentC.setExternal_parameters(this.external_parameters);
+			ch_contentC.setUnsupported_attributes(this.unsupported_attributes);
+			ch_contentC.setInternal_style(internal_style);
+			
 			ch_contentC.positionBody(cb,ch_contentT, ch_contentB, ch_contentL, ch_contentR,_h_d,_w_d);
 			ch_contentC.setOrientation(I_chart_content.or_CENTER);
 			ch_contentC.setDati(dXY);
@@ -607,9 +622,7 @@ private Rectangle placeBarcode(PdfContentByte cb) {
 			ch_contentC.setElement_color_3(element_color_2d_top);
 			ch_contentC.setDeep(deep);
 
-			ch_contentC.setExternal_parameters(this.external_parameters);
-			ch_contentC.setUnsupported_attributes(this.unsupported_attributes);
-			ch_contentC.setInternal_style(internal_style);
+
 
 			cb = ch_contentC.placeBarcode(cb,true);
 			ch_contentC.ActionAfter(cb,ch_contentT, ch_contentB, ch_contentL, ch_contentR,_h_d,_w_d);
@@ -654,6 +667,8 @@ public void reimposta() {
 	EXTERNAL = "";
 	MAXELEMENT_VALUE_XYZ = "";
 	MINELEMENT_VALUE_XYZ = "";
+	SCALE_STEP_XYZ = "";
+
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;
@@ -845,4 +860,11 @@ public java.lang.String getGR_LABEL_XYZ() {
 public java.lang.String getGR_SCALE_XYZ() {
 	return GR_SCALE_XYZ;
 }
+public java.lang.String getSCALE_STEP_XYZ() {
+	return SCALE_STEP_XYZ;
+}
+public void setSCALE_STEP_XYZ(java.lang.String sCALE_STEP_XYZ) {
+	SCALE_STEP_XYZ = sCALE_STEP_XYZ;
+}
+
 }

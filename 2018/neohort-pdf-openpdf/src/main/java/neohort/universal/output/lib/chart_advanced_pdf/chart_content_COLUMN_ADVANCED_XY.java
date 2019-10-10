@@ -128,6 +128,18 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	if(zero_level_color==null)
 		zero_level_color =  java.awt.Color.red;
 	
+//	Float height_top=null;
+//	try {
+//		height_top = Float.valueOf(getUnsupported_attributes().get("HEIGHT_TOP"));
+//	}catch (Exception e) {
+//	}
+
+	Float height_bottom=null;
+	try {
+		height_bottom = Float.valueOf(getUnsupported_attributes().get("HEIGHT_BOTTOM"));
+	}catch (Exception e) {
+	}	
+
 	
     try {
     	Vector<Object> scale_buf = new Vector<Object>();
@@ -280,14 +292,16 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
                 
                 for (int i = 0; i < bar_section_titles.size(); i++) {
                  	String value = bar_section_titles.elementAt(i);
+                 	if(value.indexOf("\\n")>-1)
+                 		value = value.replace("\\n", "\n");
                     float sc_width_buf = scale_font.getWidthPoint(value, scale_fontsize);
+                    
                     if (width_Scale < sc_width_buf)
                       	width_Scale = sc_width_buf;
                     scale_buf.addElement(value);
                 }
-	                height_Scale =
- 	                   scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
-                    
+	            height_Scale = scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
+                   
                 
                 delta_Scale = (width-prof)/(scale_max);
 				if(paint && isShow_scale()){
@@ -297,19 +311,47 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
  
 					cb.setColorFill(scale_color);                    
                     for(int i=0;i<scale_buf.size();i++){
-						cb.beginText();
-						cb.setFontAndSize(scale_font, scale_fontsize);
-						if(label_gr==0){
-							if(scale_gr==0)
-								cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, (String)scale_buf.elementAt(i), x+i*delta_Scale+delta_Scale/2+4*space_0,y_Scale+height_Scale+2*space_0, scale_gr);
-							else cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, (String)scale_buf.elementAt(i), x+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize),y_Scale+width_Scale*coefAlfaD+2*space_0, scale_gr);
+                    	String label = (String)scale_buf.elementAt(i);
+
+   						float tX=0;
+						float tY=0;
+						float tR=0;
+   						if(label_gr==0){
+							if(scale_gr==0) {
+								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0;
+								tY=y_Scale+height_Scale+2*space_0;
+								tR=scale_gr;
+							}else {
+								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
+								tY=y_Scale+width_Scale*coefAlfaD+2*space_0;
+								tR=scale_gr;
+							}
 						}else{
-							if(scale_gr==0)
-								cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, (String)scale_buf.elementAt(i), x+i*delta_Scale+delta_Scale/2+4*space_0,y_Scale+height_Scale+2*space_0, scale_gr);
-							else cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, (String)scale_buf.elementAt(i), x+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize),y_Scale+width_Scale*coefAlfaD+2*space_0, scale_gr);
+							if(scale_gr==0) {
+								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0;
+								tY=y_Scale+height_Scale+2*space_0;
+								tR=scale_gr;
+							}else {
+								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
+								tY=y_Scale+width_Scale*coefAlfaD+2*space_0;
+								tR=scale_gr;
+							} 							
 						}	
-						cb.endText();
-	                }
+   						if(height_bottom!=null)
+   							tY = height_bottom-2*space_0;
+   						
+                    	if(label.indexOf('\n')==-1) {
+    						cb.beginText();
+    						cb.setFontAndSize(scale_font, scale_fontsize);
+    						cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, label,tX,tY,tR);
+    						cb.endText();
+                    	}else {
+    						cb.beginText();
+    						cb.setFontAndSize(scale_font, scale_fontsize);
+    						cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, label,tX,tY,tR);
+    						cb.endText();						
+                    	}
+  	                }
 					cb.fill();
 				}	
             }
@@ -330,6 +372,8 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
  					else y_Line = y+width_Label+5*space_0+width_Scale*coefAlfaD;
 	 			}
 	 		}	
+ 			if(height_bottom!=null)
+ 				y_Line=height_bottom;
 			if(paint){
 				cb.setColorFill(fill_color);
 					cb.moveTo(x+0.1f,y_Line+0.1f);
@@ -407,7 +451,7 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 		        if(max_scale_fixed_Y!=null){
 			        delta_Scale = (float)((chart_dati_COLUMN_ADVANCED_XY)dati).getDeltaScaleY(max_scale_fixed_Y,height-prof);
 			        if(delta_Scale==-1) delta_Scale = (height-prof)/(scale_max-1);  
-	  		    }else delta_Scale = (height-prof)/(scale_max-1);    
+	  		    }else delta_Scale = (height-prof)/(scale.size()-1);    
                 
 				if(paint && isShow_scale()){	  
   					double coefAlfa = 1; 				
@@ -477,7 +521,8 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 	        if(max_scale_fixed_Y!=null){
 		        scale = ((chart_dati_COLUMN_ADVANCED_XY)dati).getScaleY(max_scale_fixed_Y);
 		        scale_max = scale.size();
-	        }   
+	        }else
+	        	scale_max = scale.size();
 	         
 			if(paint){
 				cb.setColorFill(fill_color);
@@ -692,7 +737,13 @@ if(show_under_columns!=null && show_under_columns.booleanValue()){
     return cb;
 }
 public void positionBody(PdfContentByte cb, I_chart_content ch_contentT,I_chart_content ch_contentB,I_chart_content ch_contentL,I_chart_content ch_contentR,float _h_d,float _w_d){
-
+//ch_contentB.setHeight(50);
+	Float height_content=null;
+	try {
+		height_content = Float.valueOf(getUnsupported_attributes().get("HEIGHT_CONTENT"));
+	}catch (Exception e) {
+	}
+	
 	float h_t = ch_contentT.getHeight();
 	float w_l = ch_contentL.getWidth();
 	float h_l = ch_contentL.getHeight();
@@ -702,8 +753,12 @@ public void positionBody(PdfContentByte cb, I_chart_content ch_contentT,I_chart_
 	
 	ch_contentL.setX(0);
 	ch_contentL.setY(0+h_b);
-	ch_contentL.setHeight(_h_d-h_t-h_b);
-		h_l = _h_d-h_t-h_b;
+	if(height_content!=null)
+		ch_contentL.setHeight(height_content);
+	else
+		ch_contentL.setHeight(_h_d-h_t-h_b);
+		
+	h_l = ch_contentL.getHeight();
 
 	((chart_content_COLUMN_ADVANCED_XY)ch_contentL).max_scale_fixed_Y =
 		((chart_content_COLUMN_ADVANCED_XY)ch_contentT).max_scale_fixed_Y;
@@ -728,7 +783,7 @@ public void positionBody(PdfContentByte cb, I_chart_content ch_contentT,I_chart_
 	this.setX(w_l);
 	this.setY(h_b);
 	this.setWidth(_w_d-w_l);
-	this.setHeight(_h_d-h_t-h_b);
+	this.setHeight(ch_contentL.getHeight());
 		this.setScale(ch_contentL.getScale());
 		this.setScale_max(ch_contentL.getScale_max());
 	
@@ -883,4 +938,7 @@ public Vector<Color> _createChartColorsShadow(int size) {
 	}
 	return result;
 }
+
+
+
 }

@@ -259,20 +259,20 @@ public Vector<Object> getScale(int type, int max_scale) {
 	    case 0:
 	    	return getScaleX(max_scale);
 	    case 1:
-	    	return getScaleY(max_scale,null,null);		    
+	    	return getScaleY(max_scale,null,null,null);		    
 	    case 2:
 	    	return getScaleZ(max_scale);
 	    default:
 	    	return result; 
     }
 }
-public Vector<Object> getScale(int type, int max_scale, Float Max, Float Min) {
+public Vector<Object> getScale(int type, int max_scale, Float ScaleStep, Float Max, Float Min) {
     Vector<Object> result = new Vector<Object>();
     switch(type){
 	    case 0:
 	    	return getScaleX(max_scale);
 	    case 1:
-	    	return getScaleY(max_scale,Max,Min);		    
+	    	return getScaleY(max_scale,ScaleStep,Max,Min);		    
 	    case 2:
 	    	return getScaleZ(max_scale);
 	    default:
@@ -302,7 +302,7 @@ private Vector<Object> getScaleX(int max_scale) {
     } catch (Exception e) {}
     return result;
 }
-private Vector<Object> getScaleY(int max_scale, Float MaxY, Float MinY) {
+private Vector<Object> getScaleY(int max_scale, Float ScaleStep, Float MaxY, Float MinY) {
     Vector<Object> result = new Vector<Object>();
     if(datiY_General.size()==0){
 	    for(int i=0;i<datiY_st.size();i++){
@@ -329,19 +329,42 @@ private Vector<Object> getScaleY(int max_scale, Float MaxY, Float MinY) {
             	}
             	
             	if(MinY!=null && MinY<minY) {
-            		deltaMinY=minY-MinY;
+            		deltaMinY=Math.abs(minY-MinY);
             		minY=MinY;            		
             	}
             	if(MaxY!=null && MaxY>maxY) {
-            		deltaMaxY=MaxY-maxY;
+            		deltaMaxY=Math.abs(MaxY-maxY);
             		maxY=MaxY;            		
             	}
-            	
-            	deltaY = (maxY - minY) / (max_scale-1);
-//           	maxY = minY + max_scale * deltaY;
-            	maxY = minY + (max_scale-1) * deltaY;
-            	deltaY = (maxY - minY) / (max_scale-1);
-	        }else deltaY = (maxY - minY) / (max_scale-1);
+            	if(ScaleStep!=null) {
+                	deltaY = ScaleStep;
+                	float remainder = minY % deltaY;   
+                	if(remainder!=0) {
+                		float nminY=minY-remainder-deltaY;
+                		deltaMinY=Math.abs(nminY-minY);
+                		minY=nminY;
+                	}
+                	remainder = maxY % deltaY;
+                	if(remainder!=0) {
+                		float nmaxY=maxY-remainder+deltaY;
+                		deltaMaxY=Math.abs(nmaxY-maxY);
+                		maxY=nmaxY;
+                	}
+                	
+                	max_scale = (int)((maxY - minY) / deltaY)+1;           		
+            	}else {
+                	deltaY = (maxY - minY) / (max_scale-1);
+//               	maxY = minY + max_scale * deltaY;
+                	maxY = minY + (max_scale-1) * deltaY;
+                	deltaY = (maxY - minY) / (max_scale-1);           		
+            	}
+
+	        }else { 
+	        	if(ScaleStep!=null)
+	        		deltaY = ScaleStep;
+	        	else
+	        		deltaY = (maxY - minY) / (max_scale-1);
+	        }
 
 	            
             for (int i = 0; i < max_scale; i++)
