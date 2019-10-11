@@ -292,12 +292,20 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
                 
                 for (int i = 0; i < bar_section_titles.size(); i++) {
                  	String value = bar_section_titles.elementAt(i);
-                 	if(value.indexOf("\\n")>-1)
+                 	if(value.indexOf("\\n")>-1 || value.indexOf("\\r")>-1) {
                  		value = value.replace("\\n", "\n");
-                    float sc_width_buf = scale_font.getWidthPoint(value, scale_fontsize);
-                    
-                    if (width_Scale < sc_width_buf)
-                      	width_Scale = sc_width_buf;
+                 		value = value.replace("\\r", "\r");
+                 		String[] lines = value.split("\\r?\\n");
+                 		for(String line:lines) {
+    	                    final float sc_width_buf = scale_font.getWidthPoint(line, scale_fontsize);	                    
+    	                    if (width_Scale < sc_width_buf)
+    	                      	width_Scale = sc_width_buf;                			
+                 		}
+                 	}else {
+	                    final float sc_width_buf = scale_font.getWidthPoint(value, scale_fontsize);	                    
+	                    if (width_Scale < sc_width_buf)
+	                      	width_Scale = sc_width_buf;
+                 	}
                     scale_buf.addElement(value);
                 }
 	            height_Scale = scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
@@ -312,45 +320,55 @@ public PdfContentByte placeBarcode(PdfContentByte cb, boolean paint) {
 					cb.setColorFill(scale_color);                    
                     for(int i=0;i<scale_buf.size();i++){
                     	String label = (String)scale_buf.elementAt(i);
+                    	String[] lines = label.split("\\r?\\n");
+                    	float x_Scale_line = x_Scale;
+                    	float y_Scale_line = y_Scale;
+                    	
+                 		for(int k=0;k<lines.length;k++) {
+      						float tX=0;
+    						float tY=0;
+    						float tR=0;
+    						String line = lines[k];
+       						if(label_gr==0){
+    							if(scale_gr==0) {
+    								tX=x_Scale_line+i*delta_Scale+delta_Scale/2+4*space_0;
+    								tY=y_Scale_line+height_Scale+2*space_0;
+    								tR=scale_gr;
+    							}else {
+    								tX=x_Scale_line+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
+    								tY=y_Scale_line+width_Scale*coefAlfaD+2*space_0;
+    								tR=scale_gr;
+    							}
+    						}else{
+    							if(scale_gr==0) {
+    								tX=x_Scale_line+i*delta_Scale+delta_Scale/2+4*space_0;
+    								tY=y_Scale_line+height_Scale+2*space_0;
+    								tR=scale_gr;
+    							}else {
+    								tX=x_Scale_line+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
+    								tY=y_Scale_line+width_Scale*coefAlfaD+2*space_0;
+    								tR=scale_gr;
+    							} 							
+    						}
+       						
+       						if(height_bottom!=null)
+       							tY = height_bottom-4*space_0;
+       						
+    						cb.beginText();
+    						cb.setFontAndSize(scale_font, scale_fontsize);
+    						cb.showTextAligned(
+    								PdfContentByte.ALIGN_RIGHT,
+    								line,
+    								(float)(tX + k*height_Scale*Math.sin(Math.toRadians(tR))),
+    								(float)(tY - k*height_Scale*Math.cos(Math.toRadians(tR))),   								
+//    								(float)(tX + k*height_Scale*Math.sin(tR)),
+//    								(float)(tY - k*height_Scale*Math.cos(tR)),
+    								tR);
 
-   						float tX=0;
-						float tY=0;
-						float tR=0;
-   						if(label_gr==0){
-							if(scale_gr==0) {
-								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0;
-								tY=y_Scale+height_Scale+2*space_0;
-								tR=scale_gr;
-							}else {
-								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
-								tY=y_Scale+width_Scale*coefAlfaD+2*space_0;
-								tR=scale_gr;
-							}
-						}else{
-							if(scale_gr==0) {
-								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0;
-								tY=y_Scale+height_Scale+2*space_0;
-								tR=scale_gr;
-							}else {
-								tX=x_Scale+i*delta_Scale+delta_Scale/2+4*space_0 - scale_font.getFontDescriptor(BaseFont.AWT_MAXADVANCE, scale_fontsize);
-								tY=y_Scale+width_Scale*coefAlfaD+2*space_0;
-								tR=scale_gr;
-							} 							
-						}	
-   						if(height_bottom!=null)
-   							tY = height_bottom-2*space_0;
-   						
-                    	if(label.indexOf('\n')==-1) {
-    						cb.beginText();
-    						cb.setFontAndSize(scale_font, scale_fontsize);
-    						cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, label,tX,tY,tR);
     						cb.endText();
-                    	}else {
-    						cb.beginText();
-    						cb.setFontAndSize(scale_font, scale_fontsize);
-    						cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, label,tX,tY,tR);
-    						cb.endText();						
-                    	}
+
+                 		}
+
   	                }
 					cb.fill();
 				}	

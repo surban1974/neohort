@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-web</artifactId>
-  <version>1.4.3</version>
+  <version>1.4.3.1</version>
   <packaging>war</packaging>
   <name>neohort web demo frontend</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Demo web frontend.</description>
@@ -183,7 +183,7 @@
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-pdf-openpdf</artifactId>
-			<version>1.4.3</version>
+			<version>1.4.3.1</version>
 		</dependency>			
 		
 		<dependency>
