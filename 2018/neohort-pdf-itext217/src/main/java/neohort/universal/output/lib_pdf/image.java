@@ -97,8 +97,14 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 						util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE,pathImg,internal_style});
 					}catch(Exception e) {						
 					}
-					byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
-					chartIm = Image.getInstance(imgBytes);
+					try {
+						chartIm = (Image)util_reflect.getValue(loader,"getImage",new Object[] {(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())});
+					}catch(Exception e) {						
+					}
+					if(chartIm==null) {
+						byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
+						chartIm = Image.getInstance(imgBytes);
+					}
 //					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
 //					chartIm = Image.getInstance(awtImage,null);
 
