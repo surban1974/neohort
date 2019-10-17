@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
-  <artifactId>neohort-pdf-itext217</artifactId> 
+  <artifactId>neohort-pdf-itext217-svg</artifactId> 
   <version>1.4.3.2</version>
-  <name>neohort pdf besed iText 2.1.7</name>
-  <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. iText 2.1.7 PDF implementation.</description>
+  <name>neohort pdf besed iText 2.1.7 SVG implementation</name>
+  <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. iText 2.1.7 SVG implementation.</description>
   <url>https://github.com/surban1974/neohort</url>
  
  
@@ -81,11 +81,11 @@
   	</repositories> 
   	
    <dependencies>
-   
+
    		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
-			<artifactId>neohort-base</artifactId>
-			<version>1.4.3</version>
+			<artifactId>neohort-pdf-itext217</artifactId>
+			<version>1.4.3.2</version>
 		</dependency>
  		
  
@@ -98,8 +98,12 @@
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
-		</dependency>	
-		
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-gvt</artifactId>
+			<version>1.7</version>
+		</dependency>    	
 		
   </dependencies>
    <organization>

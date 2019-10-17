@@ -50,6 +50,7 @@ public class image extends element{
 	private static final long serialVersionUID = -1L;
 	private PdfPCell cell;
 	private String IMAGE_SOURCE;
+	private String IMAGE_CREATOR;
 	private String IMAGE_LOADER;
 	private String IMAGE_ERROR;
 	private String STR_ERROR;
@@ -87,8 +88,28 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				pathImg=null;
 			}
 			if(pathImg==null) pathImg = getIMAGE_SOURCE();
+			
+			if(!IMAGE_CREATOR.equals("") || chartIm==null){
+				Object loader = null;
+				try{
+					loader = Class.forName(IMAGE_CREATOR).newInstance();
+					util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
+					try {
+						util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE, pathImg, internal_style});
+					}catch(Exception e) {						
+					}
+					try {
+						chartIm = (Image)util_reflect.getValue(loader,"getImage",new Object[] {(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())});
+					}catch(Exception e) {						
+					}
 
-			if(!IMAGE_LOADER.equals("")){
+				}catch(Exception e){
+					chartIm=null;
+					setError(e,iStub.log_ERROR);
+				}
+			}
+
+			if(!IMAGE_LOADER.equals("") || chartIm==null){
 				Object loader = null;
 				try{
 					loader = Class.forName(IMAGE_LOADER).newInstance();
@@ -182,7 +203,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 						chartIm.scaleAbsolute(_d_h,_d_v);
 					}catch(Exception e){
 					}
-				}else{
+				}else if(_d_h>0 || _d_v>0){
 					float origHeight = chartIm.getHeight();
 					float origWidth = chartIm.getWidth();
 					if(_d_h>0) {
@@ -334,6 +355,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 public void reimposta() {
 	setName("IMAGE");
 	IMAGE_SOURCE = "";
+	IMAGE_CREATOR = "";
 	IMAGE_LOADER = "";
 //	IMAGE_ERROR = "";
 	STYLE_ID = "";
@@ -372,5 +394,11 @@ public String getFIT() {
 }
 public void setFIT(String fIT) {
 	FIT = fIT;
+}
+public String getIMAGE_CREATOR() {
+	return IMAGE_CREATOR;
+}
+public void setIMAGE_CREATOR(String iMAGE_CREATOR) {
+	IMAGE_CREATOR = iMAGE_CREATOR;
 }
 }

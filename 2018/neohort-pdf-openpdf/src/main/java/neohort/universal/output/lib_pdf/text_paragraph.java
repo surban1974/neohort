@@ -46,28 +46,6 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 
-/*
- 	"Courier";
-	"Courier-Bold";
-	"Courier-Oblique";
-	"Courier-BoldOblique";
-	"Helvetica";
-	"Helvetica-Bold";
-	"Helvetica-Oblique";
-	"Helvetica-BoldOblique";
-	"Symbol";
-	"Times-Roman";
-	"Times-Bold";
-	"Times-Italic";
-	"Times-BoldItalic";
-	"ZapfDingbats";
-
-	CP1250 = "Cp1250";
-    CP1252 = "Cp1252";
-	CP1257 = "Cp1257";
-	WINANSI = "Cp1252";
-
- */
 
 public class text_paragraph extends text{
 

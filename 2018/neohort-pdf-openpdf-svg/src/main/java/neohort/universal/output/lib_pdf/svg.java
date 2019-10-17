@@ -24,14 +24,26 @@
 
 package neohort.universal.output.lib_pdf;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.awt.Graphics2D;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Hashtable;
 
-import javax.imageio.ImageIO;
+import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.UserAgentAdapter;
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.gvt.GraphicsNode;
+import org.w3c.dom.svg.SVGDocument;
+
+import com.lowagie.text.Image;
+import com.lowagie.text.ImgTemplate;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfGraphics2D;
+import com.lowagie.text.pdf.PdfTemplate;
+import com.lowagie.text.pdf.PdfWriter;
 
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
@@ -40,15 +52,8 @@ import neohort.universal.output.lib.style;
 import neohort.util.util_reflect;
 import neohort.util.util_web;
 
-
-import com.lowagie.text.Image;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfWriter;
-
-public class image extends element{
+public class svg extends element{
 	private static final long serialVersionUID = -1L;
-	private PdfPCell cell;
 	private String IMAGE_SOURCE;
 	private String IMAGE_CREATOR;
 	private String IMAGE_LOADER;
@@ -56,7 +61,7 @@ public class image extends element{
 	private String STR_ERROR;
 	private String FIT;
 
-public image() {
+public svg() {
 	super();
 }
 public void drawCanvas(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
@@ -67,16 +72,8 @@ public void executeFirst(Hashtable<String, report_element_base> _tagLibrary, Has
 public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary){
 	try{
 
+		PdfWriter pdfWriter = (PdfWriter)(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent());
 
-			int _align = getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getALIGN(),0);
-			int border = 0;
-			try{
-				border = Integer.valueOf(internal_style.getBORDER()).intValue();
-			}catch(Exception e){}
-			float padding = 0;
-			try{
-				padding = Float.valueOf(internal_style.getPADDING()).floatValue();
-			}catch(Exception e){}
 
 			Image chartIm = null;
 			String pathImg = "";
@@ -88,7 +85,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				pathImg=null;
 			}
 			if(pathImg==null) pathImg = getIMAGE_SOURCE();
-			
+
 			if(!IMAGE_CREATOR.equals("") || chartIm==null){
 				Object loader = null;
 				try{
@@ -107,64 +104,79 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 					chartIm=null;
 					setError(e,iStub.log_ERROR);
 				}
-			}
+			}			
+			
 
-			if(!IMAGE_LOADER.equals("") || chartIm==null){
-				Object loader = null;
+			if(chartIm==null){
+				InputStream input = null;
 				try{
-					loader = Class.forName(IMAGE_LOADER).newInstance();
-					util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
-					try {
-						util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE,pathImg,internal_style});
-					}catch(Exception e) {						
-					}
-					try {
-						chartIm = (Image)util_reflect.getValue(loader,"getImage",new Object[] {(((report_element_base)_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Writer)).getContent())});
-					}catch(Exception e) {						
-					}
-					if(chartIm==null) {
-						byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
-						chartIm = Image.getInstance(imgBytes);
-					}
-//					java.awt.Image awtImage = Toolkit.getDefaultToolkit().createImage(imgBytes);
-//					chartIm = Image.getInstance(awtImage,null);
+					if(!IMAGE_LOADER.equals("")){
+						Object loader = null;
+						try{
+							loader = Class.forName(IMAGE_LOADER).newInstance();
+							util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE});
+							try {
+								util_reflect.setValue(loader, "setProperty", new Object[]{IMAGE_SOURCE,pathImg,internal_style});
+							}catch(Exception e) {						
+							}
+							byte[] imgBytes = (byte[])util_reflect.getValue(loader,"getBytes",null);
+							input = new ByteArrayInputStream(imgBytes);
 
-				}catch(Exception e){
-					chartIm=null;
-					setError(e,iStub.log_ERROR);
-				}
-			}
-			if(IMAGE_LOADER.equals("") || chartIm==null){
-				try{
-					BufferedImage input = null;
+						}catch(Exception e){
+							input = null;
+							setError(e,iStub.log_ERROR);
+						}
+					}
+
 					Exception ex=null;
-					try{
-						input = ImageIO.read(new File(getIMAGE_SOURCE()));
-					}catch(Exception e){
-						ex=e;
-					}
 					if(input==null){
 						try{
-							input = ImageIO.read(getClass().getResource(getIMAGE_SOURCE()));
+							input = new FileInputStream(getIMAGE_SOURCE());
 						}catch(Exception e){
 							ex=e;
 						}
 					}
 					if(input==null){
 						try{
-							input = ImageIO.read(new URL(pathImg));
+							input = getClass().getResource(getIMAGE_SOURCE()).openStream();
+						}catch(Exception e){
+							ex=e;
+						}
+					}
+					if(input==null){
+						try{
+							input = new URL(pathImg).openStream();
 						}catch(Exception e){
 							ex=e;
 						}
 					}
 					if(input==null && ex!=null)
 						setError(ex,iStub.log_ERROR);
-					if(input!=null){
-						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						ImageIO.write(input, "PNG", baos);
-						chartIm = Image.getInstance(baos.toByteArray());
+					else {
+						SVGDocument svgDoc = new SAXSVGDocumentFactory(null).createSVGDocument(null, input);
+	
+					    // Try to read embedded height and width
+					    float svgWidth = Float.parseFloat(svgDoc.getDocumentElement().getAttribute("width").replaceAll("[^0-9.,]",""));
+					    float svgHeight = Float.parseFloat(svgDoc.getDocumentElement().getAttribute("height").replaceAll("[^0-9.,]",""));
+	
+					    PdfTemplate svgTempl = PdfTemplate.createTemplate(pdfWriter, svgWidth, svgHeight);
+					    Graphics2D g2d = new PdfGraphics2D(svgTempl, svgTempl.getWidth(), svgTempl.getHeight());
+					    GraphicsNode chartGfx = (new GVTBuilder()).build(new BridgeContext(new UserAgentAdapter()), svgDoc);
+					    chartGfx.paint(g2d);
+					    g2d.dispose();
+	
+					    chartIm = new ImgTemplate(svgTempl);
 					}
-				}catch(Exception e){}
+				}catch(Exception e){
+					
+				}finally {
+					if(input!=null) {
+						try {
+							input.close();
+						}catch (Exception e) {
+						}
+					}
+				}
 			}
 
 			float _d_h = 0;
@@ -242,106 +254,18 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 
 			if(chartIm==null) {
 				if(getIMAGE_ERROR()!=null)
-					cell = new PdfPCell(new Phrase(getIMAGE_ERROR()));
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(new Phrase(getIMAGE_ERROR()));
 				else if(getSTR_ERROR()!=null)
-					cell = new PdfPCell(new Phrase(getSTR_ERROR()));
-				else	
-					cell = new PdfPCell(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
-			}
-			else {
-				if(getFIT()!=null && getFIT().equalsIgnoreCase("true"))
-					cell = new PdfPCell(chartIm,true);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(new Phrase(getSTR_ERROR()));
 				else
-					cell = new PdfPCell(chartIm);
+					_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(new Phrase("ERRORE: Path "+pathImg+" isn't correct."));
 			}
+			else 
+				_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(chartIm);
 			
-			cell.setHorizontalAlignment(_align);
-			cell.setBorder(border);
 			
-			if(padding!=0)
-				cell.setPadding(padding);
-			if(!internal_style.getBORDER_WIDTH_TOP().equals("")){
-				try{
-					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_TOP()).floatValue();
-					cell.setUseVariableBorders(true);
-					cell.setBorderWidthTop(localborderWidth);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_WIDTH_BOTTOM().equals("")){
-				try{
-					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_BOTTOM()).floatValue();
-					cell.setUseVariableBorders(true);
-					cell.setBorderWidthBottom(localborderWidth);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_WIDTH_LEFT().equals("")){
-				try{
-					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_LEFT()).floatValue();
-					cell.setBorderWidthLeft(localborderWidth);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_WIDTH_RIGHT().equals("")){
-				try{
-					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH_RIGHT()).floatValue();
-					cell.setUseVariableBorders(true);
-					cell.setBorderWidthRight(localborderWidth);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_COLOR().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBORDER_COLOR(),Color.black);
-					cell.setBorderColor(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_COLOR_TOP().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBORDER_COLOR_TOP(),Color.BLACK);
-					cell.setUseVariableBorders(true);
-					cell.setBorderColorTop(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_COLOR_BOTTOM().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBORDER_COLOR_BOTTOM(),Color.BLACK);
-					cell.setUseVariableBorders(true);
-					cell.setBorderColorBottom(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_COLOR_LEFT().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBORDER_COLOR_LEFT(),Color.BLACK);
-					cell.setUseVariableBorders(true);
-					cell.setBorderColorLeft(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_COLOR_RIGHT().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBORDER_COLOR_RIGHT(),Color.BLACK);
-					cell.setUseVariableBorders(true);
-					cell.setBorderColorRight(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBACK_COLOR().equals("")){
-				try{
-					Color color = getField_Color(internal_style.getBACK_COLOR(),Color.BLACK);
-					cell.setUseVariableBorders(false);
-					cell.setBackgroundColor(color);
-				}catch(Exception e){}
-			}
-			if(!internal_style.getBORDER_WIDTH().equals("")){
-				try{
-					float localborderWidth = Float.valueOf(internal_style.getBORDER_WIDTH()).floatValue();
 
-					cell.setBorderWidth(localborderWidth);
-				}catch(Exception e){}
-			}
-
-			if(!internal_style.getDIRECTION().equals("") && internal_style.getDIRECTION().equalsIgnoreCase("RTL")){
-				if(cell!=null)
-					cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-			}
-
-			_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(cell);
+			
 
 
 		if(_tagLibrary.get(getName()+":"+getID())==null)
@@ -353,7 +277,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 	}
 }
 public void reimposta() {
-	setName("IMAGE");
+	setName("SVG");
 	IMAGE_SOURCE = "";
 	IMAGE_CREATOR = "";
 	IMAGE_LOADER = "";
