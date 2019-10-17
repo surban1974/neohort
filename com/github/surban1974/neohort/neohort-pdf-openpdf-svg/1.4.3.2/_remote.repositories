@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Oct 18 00:13:48 CEST 2019
+neohort-pdf-openpdf-svg-1.4.3.2.jar>=
+neohort-pdf-openpdf-svg-1.4.3.2.pom>=
+neohort-pdf-openpdf-svg-1.4.3.2-sources.jar>=
