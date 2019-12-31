@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-pdf-itext217</artifactId> 
-  <version>1.4.3.2</version>
+  <version>1.4.3.3</version>
   <name>neohort pdf besed iText 2.1.7</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. iText 2.1.7 PDF implementation.</description>
   <url>https://github.com/surban1974/neohort</url>

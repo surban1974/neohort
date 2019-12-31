@@ -89,7 +89,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 			}
 			if(pathImg==null) pathImg = getIMAGE_SOURCE();
 			
-			if(!IMAGE_CREATOR.equals("") || chartIm==null){
+			if(!IMAGE_CREATOR.equals("")){
 				Object loader = null;
 				try{
 					loader = Class.forName(IMAGE_CREATOR).newInstance();
@@ -109,7 +109,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				}
 			}
 
-			if(!IMAGE_LOADER.equals("") || chartIm==null){
+			if(!IMAGE_LOADER.equals("") && chartIm==null){
 				Object loader = null;
 				try{
 					loader = Class.forName(IMAGE_LOADER).newInstance();
@@ -134,7 +134,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 					setError(e,iStub.log_ERROR);
 				}
 			}
-			if(IMAGE_LOADER.equals("") || chartIm==null){
+			if((IMAGE_CREATOR.equals("") && IMAGE_LOADER.equals("")) || chartIm==null){
 				try{
 					BufferedImage input = null;
 					Exception ex=null;
