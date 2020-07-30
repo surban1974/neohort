@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.surban1974.neohort</groupId>
+  <artifactId>build</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <description>Neohort Base multi module build project</description>
+  <name>build</name>
+  <!-- BUILD PROFILES -->
+  <profiles>
+
+    <profile>
+    	<id>NEOHORT-CORE</id>
+        <modules>
+		  	<module>../neohort-base</module>
+		  	<module>../neohort-pdf-itext217</module>
+		  	<module>../neohort-pdf-itext217-svg</module>
+		  	<module>../neohort-pdf-itext500</module>
+		  	<module>../neohort-pdf-openpdf</module>
+		  	<module>../neohort-pdf-openpdf-svg</module>
+		  	<module>../neohort-rtf</module>
+		  	<module>../neohort-rtf-itext217</module>
+		  	<module>../neohort-web</module>
+		  	<module>../neohort-xls-jxl</module>
+		  	<module>../neohort-xlsx-poi</module>
+  		</modules>
+    </profile>
+ 
+  </profiles>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <build>
+	<pluginManagement>
+		<plugins>
+		<!-- Call plugin and create report with: license:aggregate-third-party-report -PALL -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.16</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-core</artifactId>
+						<version>1.6</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-site-renderer</artifactId>
+						<version>1.6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</pluginManagement>
+</build>
+
+</project>
