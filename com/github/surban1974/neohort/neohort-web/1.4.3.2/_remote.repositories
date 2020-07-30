@@ -1,4 +1,4 @@
-#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Mon Oct 28 18:08:17 CET 2019
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 30 11:59:54 CEST 2020
 neohort-web-1.4.3.2.pom>=
 neohort-web-1.4.3.2.war>=
