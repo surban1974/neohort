@@ -1,5 +1,5 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon Aug 19 20:19:36 CEST 2019
-neohort-xlsx-poi-1.4.1.pom>=
-neohort-xlsx-poi-1.4.1-sources.jar>=
-neohort-xlsx-poi-1.4.1.jar>=
+#Sat Apr 04 18:14:29 CEST 2020
+neohort-xlsx-poi-1.4.1-sources.jar>neohort-mvn-repo=
+neohort-xlsx-poi-1.4.1.jar>neohort-mvn-repo=
+neohort-xlsx-poi-1.4.1.pom>neohort-mvn-repo=
