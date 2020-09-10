@@ -88,7 +88,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 		}
 
 
-		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this.getCellC(X,Y, workbook, document));
+		_beanLibrary.get("SYSTEM:"+iConst.iHORT_SYSTEM_Canvas).add2content(this.getCellC(X,Y, workbook, document,_tagLibrary,_beanLibrary));
 
 
 

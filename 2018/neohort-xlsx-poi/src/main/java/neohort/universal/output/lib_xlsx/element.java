@@ -53,7 +53,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
-
 import neohort.log.stubs.iStub;
 import neohort.universal.output.iConst;
 import neohort.universal.output.lib.bean;
@@ -101,7 +100,26 @@ public void reimposta(){
 	name = "ELEMENT";
 }
 
-public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
+public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
+	
+	Hashtable<String,CellStyle> wcfCash = null;
+	if(_beanLibrary!=null){
+		bean _sysWcfCash = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
+		if(_sysWcfCash!=null){
+			wcfCash = (Hashtable<String,CellStyle>)_sysWcfCash.getContent();
+			
+			if(wcfCash==null)
+				wcfCash = new Hashtable<String,CellStyle>();
+		}else{
+			wcfCash = new Hashtable<String,CellStyle>();
+			_sysWcfCash = new bean();
+			_sysWcfCash.setContent(wcfCash);
+			_sysWcfCash.setName("SYSTEM");
+			_sysWcfCash.setID("WritableCellFormatCash");
+			_beanLibrary.put(_sysWcfCash.getName()+":"+_sysWcfCash.getID(),_sysWcfCash);
+		}
+	}else
+		wcfCash = new Hashtable<String,CellStyle>();
 
 	Cell cell = null;
 
@@ -130,8 +148,19 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 			)
 		format = (XSSFCellStyle)old.getCellStyle();
 	}
-	else
-		format =  workbook.createCellStyle();
+	else {
+		if(internal_style!=null && wcfCash.get(internal_style.getCashKey()+"")!=null){
+			try{
+				String key = internal_style.getCashKey().replace("|", "");
+				if(!key.equals(""))
+					format = (CellStyle)wcfCash.get(internal_style.getCashKey()+"");
+				if(format!=null)
+					isFormat=true;
+			}catch(Exception e){
+				setError(e, iStub.log_ERROR);
+			}
+		}
+	}
 
 	if(format==null)
 		format =  workbook.createCellStyle();
@@ -256,6 +285,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 		}catch(Exception e){
 		}
 	}
+	
+
 
 
 	try{
@@ -367,12 +398,14 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document) {
 	}catch(Exception e){
 	}
 
+	if(isFormat)
+		wcfCash.put(internal_style.getCashKey()+"",format);
 
 	frase = prepareContentString(internal_style.getFORMAT());
 
 
 
-	if(frase==null || frase.equals("")){
+	if(frase==null || frase.equals("")){ 
 		if (isFormat)
 			cell.setCellStyle(format);
 		cell.setCellValue("");
