@@ -287,7 +287,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 	}
 	
 
-
+	if(isFormat)
+		wcfCash.put(internal_style.getCashKey()+"",format);
 
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
@@ -398,8 +399,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 	}catch(Exception e){
 	}
 
-	if(isFormat)
-		wcfCash.put(internal_style.getCashKey()+"",format);
+
 
 	frase = prepareContentString(internal_style.getFORMAT());
 
