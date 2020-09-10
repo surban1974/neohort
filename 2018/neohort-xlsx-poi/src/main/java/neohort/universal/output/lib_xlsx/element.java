@@ -102,24 +102,24 @@ public void reimposta(){
 
 public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<String, report_element_base> _tagLibrary, Hashtable<String, report_element_base> _beanLibrary) {
 	
-	Hashtable<String,CellStyle> wcfCash = null;
+	Hashtable<String,CellStyle> wcfCache = null;
 	if(_beanLibrary!=null){
-		bean _sysWcfCash = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
-		if(_sysWcfCash!=null){
-			wcfCash = (Hashtable<String,CellStyle>)_sysWcfCash.getContent();
+		bean _sysWcfCache = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
+		if(_sysWcfCache!=null){
+			wcfCache = (Hashtable<String,CellStyle>)_sysWcfCache.getContent();
 			
-			if(wcfCash==null)
-				wcfCash = new Hashtable<String,CellStyle>();
+			if(wcfCache==null)
+				wcfCache = new Hashtable<String,CellStyle>();
 		}else{
-			wcfCash = new Hashtable<String,CellStyle>();
-			_sysWcfCash = new bean();
-			_sysWcfCash.setContent(wcfCash);
-			_sysWcfCash.setName("SYSTEM");
-			_sysWcfCash.setID("WritableCellFormatCash");
-			_beanLibrary.put(_sysWcfCash.getName()+":"+_sysWcfCash.getID(),_sysWcfCash);
+			wcfCache = new Hashtable<String,CellStyle>();
+			_sysWcfCache = new bean();
+			_sysWcfCache.setContent(wcfCache);
+			_sysWcfCache.setName("SYSTEM");
+			_sysWcfCache.setID("WritableCellFormatCash");
+			_beanLibrary.put(_sysWcfCache.getName()+":"+_sysWcfCache.getID(),_sysWcfCache);
 		}
 	}else
-		wcfCash = new Hashtable<String,CellStyle>();
+		wcfCache = new Hashtable<String,CellStyle>();
 
 	Cell cell = null;
 
@@ -134,6 +134,7 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 		cell = row.createCell(cr.getCol());
 
 	boolean isFormat=false;
+	boolean isFormatCache=false;
 	String frase = "";
 	if(getContent()!=null)
 		frase = (String)getContent();
@@ -147,15 +148,18 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 				)
 			)
 		format = (XSSFCellStyle)old.getCellStyle();
+		isFormatCache=true;
 	}
 	else {
-		if(internal_style!=null && wcfCash.get(internal_style.getCashKey()+"")!=null){
+		if(internal_style!=null && wcfCache.get(internal_style.getCashKey()+"")!=null){
 			try{
 				String key = internal_style.getCashKey().replace("|", "");
 				if(!key.equals(""))
-					format = (CellStyle)wcfCash.get(internal_style.getCashKey()+"");
-				if(format!=null)
+					format = (CellStyle)wcfCache.get(internal_style.getCashKey()+"");
+				if(format!=null) {
 					isFormat=true;
+					isFormatCache=true;
+				}
 			}catch(Exception e){
 				setError(e, iStub.log_ERROR);
 			}
@@ -165,139 +169,143 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 	if(format==null)
 		format =  workbook.createCellStyle();
 
-	Font font = null;
-	try{
-		if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
-			font=workbook.createFont();
-			font.setFontName(analizeFontName(internal_style.getFONT()));
-			isFormat=true;
-		}else{
-			font=workbook.createFont();
-		}
-	}catch(Exception e){
-	}
-
-	if(internal_style.getFONT_SIZE()!=null && !internal_style.getFONT_SIZE().equals("")){
-		int font_size = 10;
+	if(!isFormatCache) {
+		Font font = null;
 		try{
-			font_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-			font.setFontHeightInPoints((short)font_size);
-			isFormat=true;
-		}catch(Exception e){}
-	}
-	if(	internal_style.getFONT_TYPE()!=null &&
-		(internal_style.getFONT_TYPE().equalsIgnoreCase("ITALIC") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
-		try{
-			font.setItalic(true);
-			isFormat=true;
+			if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
+				font=workbook.createFont();
+				font.setFontName(analizeFontName(internal_style.getFONT()));
+				isFormat=true;
+			}else{
+				font=workbook.createFont();
+			}
 		}catch(Exception e){
 		}
-	}
-	if(	internal_style.getFONT_TYPE()!=null &&
-		(internal_style.getFONT_TYPE().equalsIgnoreCase("BOLD") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
-		try{
-			font.setBold(true);
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-	if(	internal_style.getFONT_TYPE()!=null && internal_style.getFONT_TYPE().equalsIgnoreCase("UNDERLINE")){
-		try{
-			((XSSFFont)font).setUnderline(FontUnderline.SINGLE);
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-	if(	internal_style.getFONT_STYLE()!=null && internal_style.getFONT_STYLE().equalsIgnoreCase("STRIKE")){
-		try{
-			font.setStrikeout(true);
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-
-	if(internal_style.getFONT_COLOR()!=null && !internal_style.getFONT_COLOR().equals("")){
-		try{
-
-
-			((XSSFFont)font).setColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black)));
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-
-	format.setFont(font);
-
-	analiseBorder_Colour((XSSFCellStyle)format,internal_style);
-
-	if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
-		try{
-			((XSSFCellStyle)format).setFillForegroundColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white)));
-			format.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-	if(internal_style.getALIGN()!=null && !internal_style.getALIGN().equals("")){
-		try{
-			format.setAlignment(analiseHAlign(internal_style.getALIGN()));
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-	if(internal_style.getTEXT_ALIGN_H()!=null && !internal_style.getTEXT_ALIGN_H().equals("")){
-		try{
-			format.setAlignment(analiseHAlign(internal_style.getTEXT_ALIGN_H()));
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-	if(internal_style.getTEXT_ALIGN_V()!=null && !internal_style.getTEXT_ALIGN_V().equals("")){
-		try{
-			format.setVerticalAlignment(analiseVAlign(internal_style.getTEXT_ALIGN_V()));
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-
-	float rotation = 0;
-	try{
-		rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
-	}catch(Exception e){
-	}
-
-	if(rotation!=0){
-		try{
-			format.setRotation((short)rotation);
-			isFormat=true;
-		}catch(Exception e){
-		}
-	}
-
-	if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
-		try{
-			format.setWrapText(true);
-		}catch(Exception e){
-		}
-	}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
-		try{
-			format.setWrapText(false);
-		}catch(Exception e){
-		}
-	}
 	
-
-	if(isFormat)
-		wcfCash.put(internal_style.getCashKey()+"",format);
+		if(internal_style.getFONT_SIZE()!=null && !internal_style.getFONT_SIZE().equals("")){
+			int font_size = 10;
+			try{
+				font_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
+				font.setFontHeightInPoints((short)font_size);
+				isFormat=true;
+			}catch(Exception e){}
+		}
+		if(	internal_style.getFONT_TYPE()!=null &&
+			(internal_style.getFONT_TYPE().equalsIgnoreCase("ITALIC") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
+			try{
+				font.setItalic(true);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(	internal_style.getFONT_TYPE()!=null &&
+			(internal_style.getFONT_TYPE().equalsIgnoreCase("BOLD") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
+			try{
+				font.setBold(true);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(	internal_style.getFONT_TYPE()!=null && internal_style.getFONT_TYPE().equalsIgnoreCase("UNDERLINE")){
+			try{
+				((XSSFFont)font).setUnderline(FontUnderline.SINGLE);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(	internal_style.getFONT_STYLE()!=null && internal_style.getFONT_STYLE().equalsIgnoreCase("STRIKE")){
+			try{
+				font.setStrikeout(true);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+	
+		if(internal_style.getFONT_COLOR()!=null && !internal_style.getFONT_COLOR().equals("")){
+			try{
+	
+	
+				((XSSFFont)font).setColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getFONT_COLOR(),Color.black)));
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+	
+		format.setFont(font);
+	
+		analiseBorder_Colour((XSSFCellStyle)format,internal_style);
+	
+		if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
+			try{
+				((XSSFCellStyle)format).setFillForegroundColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBACK_COLOR(),Color.white)));
+				format.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(internal_style.getALIGN()!=null && !internal_style.getALIGN().equals("")){
+			try{
+				format.setAlignment(analiseHAlign(internal_style.getALIGN()));
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(internal_style.getTEXT_ALIGN_H()!=null && !internal_style.getTEXT_ALIGN_H().equals("")){
+			try{
+				format.setAlignment(analiseHAlign(internal_style.getTEXT_ALIGN_H()));
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+		if(internal_style.getTEXT_ALIGN_V()!=null && !internal_style.getTEXT_ALIGN_V().equals("")){
+			try{
+				format.setVerticalAlignment(analiseVAlign(internal_style.getTEXT_ALIGN_V()));
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+	
+		float rotation = 0;
+		try{
+			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
+		}catch(Exception e){
+		}
+	
+		if(rotation!=0){
+			try{
+				format.setRotation((short)rotation);
+				isFormat=true;
+			}catch(Exception e){
+			}
+		}
+	
+		if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
+			try{
+				format.setWrapText(true);
+			}catch(Exception e){
+			}
+		}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
+			try{
+				format.setWrapText(false);
+			}catch(Exception e){
+			}
+		}
+		
+	
+		if(isFormat)
+			wcfCache.put(internal_style.getCashKey()+"",format);
+	}
 
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
-			String formatNumber = getFormat(format_NUMBER, internal_style.getFORMAT());
-			if(!formatNumber.equals("")){
-				if(!isFormat)
-					format =  workbook.createCellStyle();
-				format.setDataFormat(workbook.createDataFormat().getFormat(formatNumber));
-				isFormat=true;
+			if(!isFormatCache) {
+				String formatNumber = getFormat(format_NUMBER, internal_style.getFORMAT());
+				if(!formatNumber.equals("")){
+					if(!isFormat)
+						format =  workbook.createCellStyle();
+					format.setDataFormat(workbook.createDataFormat().getFormat(formatNumber));
+					isFormat=true;
+				}
 			}
 
 			if (isFormat)
@@ -338,22 +346,23 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATETIME)>-1){
-
 			String formatDate = getFormat(format_DATETIME, internal_style.getFORMAT());
-			if(!formatDate.equals("")){
-				if(!isFormat)
-					format =  workbook.createCellStyle();
-				format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
-				isFormat=true;
-			}else{
-				if(defDATETIMEFORMAT==0){
-					CreationHelper createHelper = workbook.getCreationHelper();
-					defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
+			if(!isFormatCache) {				
+				if(!formatDate.equals("")){
+					if(!isFormat)
+						format =  workbook.createCellStyle();
+					format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
+					isFormat=true;
+				}else{
+					if(defDATETIMEFORMAT==0){
+						CreationHelper createHelper = workbook.getCreationHelper();
+						defDATETIMEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy hh:mm");
+					}
+					if(!isFormat)
+						format =  workbook.createCellStyle();
+					format.setDataFormat(defDATETIMEFORMAT);
+					isFormat=true;
 				}
-				if(!isFormat)
-					format =  workbook.createCellStyle();
-				format.setDataFormat(defDATETIMEFORMAT);
-				isFormat=true;
 			}
 			Date ret = getCallDate(frase,format_DATETIME,formatDate);
 			cell.setCellStyle(format);
@@ -371,20 +380,22 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_DATE)>-1){
 
 			String formatDate = getFormat(format_DATE, internal_style.getFORMAT());
-			if(!formatDate.equals("")){
-				if(!isFormat)
-					format =  workbook.createCellStyle();
-				format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
-				isFormat=true;
-			}else{
-				if(defDATEFORMAT==0){
-					CreationHelper createHelper = workbook.getCreationHelper();
-					defDATEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy");
+			if(!isFormatCache) {
+				if(!formatDate.equals("")){
+					if(!isFormat)
+						format =  workbook.createCellStyle();
+					format.setDataFormat(workbook.createDataFormat().getFormat(formatDate));
+					isFormat=true;
+				}else{
+					if(defDATEFORMAT==0){
+						CreationHelper createHelper = workbook.getCreationHelper();
+						defDATEFORMAT = createHelper.createDataFormat().getFormat("dd/MM/yyyy");
+					}
+					if(!isFormat)
+						format =  workbook.createCellStyle();
+					format.setDataFormat(defDATEFORMAT);
+					isFormat=true;
 				}
-				if(!isFormat)
-					format =  workbook.createCellStyle();
-				format.setDataFormat(defDATEFORMAT);
-				isFormat=true;
 			}
 			Date ret = getCallDate(frase,format_DATE,formatDate);
 			cell.setCellStyle(format);
