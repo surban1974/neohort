@@ -132,6 +132,7 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable<String, report_element_base
 
 
 	boolean isFormat=false;
+	boolean isFormatCache=false;
 	String frase = "";
 	if(getContent()!=null) frase = (String)getContent();
 
@@ -143,8 +144,10 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable<String, report_element_base
 			String key = internal_style.getCashKey().replace("|", "");
 			if(!key.equals(""))
 				format = (WritableCellFormat)wcfCash.get(internal_style.getCashKey()+"");
-			if(format!=null)
+			if(format!=null) {
 				isFormat=true;
+				isFormatCache=true;
+			}
 		}catch(Exception e){
 			setError(e, iStub.log_ERROR);
 		}
@@ -204,135 +207,136 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable<String, report_element_base
 		if(format==null)
 			format =  new WritableCellFormat();
 
-		WritableFont font = null;
-		try{
-			if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
-				font = new WritableFont(analizeFontName(internal_style.getFONT()));
-				isFormat=true;
-			}else font=new WritableFont(format.getFont());
-		}catch(Exception e){
-		}
-
-		if(internal_style.getFONT_SIZE()!=null && !internal_style.getFONT_SIZE().equals("")){
-			int font_size = 10;
+		if(!isFormatCache) {
+			WritableFont font = null;
 			try{
-				font_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-				font.setPointSize(font_size);
-				isFormat=true;
-			}catch(Exception e){}
-		}
-		if(	internal_style.getFONT_TYPE()!=null &&
-			(internal_style.getFONT_TYPE().equalsIgnoreCase("ITALIC") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
-			try{
-				font.setItalic(true);
-				isFormat=true;
+				if(internal_style.getFONT()!=null && !internal_style.getFONT().equals("")){
+					font = new WritableFont(analizeFontName(internal_style.getFONT()));
+					isFormat=true;
+				}else font=new WritableFont(format.getFont());
 			}catch(Exception e){
 			}
-		}
-		if(	internal_style.getFONT_TYPE()!=null &&
-			(internal_style.getFONT_TYPE().equalsIgnoreCase("BOLD") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
+	
+			if(internal_style.getFONT_SIZE()!=null && !internal_style.getFONT_SIZE().equals("")){
+				int font_size = 10;
+				try{
+					font_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
+					font.setPointSize(font_size);
+					isFormat=true;
+				}catch(Exception e){}
+			}
+			if(	internal_style.getFONT_TYPE()!=null &&
+				(internal_style.getFONT_TYPE().equalsIgnoreCase("ITALIC") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
+				try{
+					font.setItalic(true);
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(	internal_style.getFONT_TYPE()!=null &&
+				(internal_style.getFONT_TYPE().equalsIgnoreCase("BOLD") || internal_style.getFONT_TYPE().equalsIgnoreCase("BOLDITALIC"))){
+				try{
+					font.setBoldStyle(WritableFont.BOLD);
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(	internal_style.getFONT_TYPE()!=null && internal_style.getFONT_TYPE().equalsIgnoreCase("UNDERLINE")){
+				try{
+					font.setUnderlineStyle(UnderlineStyle.SINGLE);
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(	internal_style.getFONT_STYLE()!=null && internal_style.getFONT_STYLE().equalsIgnoreCase("STRIKE")){
+				try{
+					font.setStruckout(true);
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+	
+			if(internal_style.getFONT_COLOR()!=null && !internal_style.getFONT_COLOR().equals("")){
+				try{
+	
+	
+					font.setColour(getNearestColour(getField_Color(internal_style.getFONT_COLOR(),Color.black)));
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+	
+			format.setFont(font);
+	
+			Vector<?>[] borders_colours = analiseBorder_Colour(internal_style);
+			Vector<?> borders = borders_colours[0];
+			Vector<?> colours = borders_colours[1];
+			if (borders.size() >0) isFormat=true;
+			for(int i=0;i<borders.size();i++){
+				try{
+					format.setBorder((Border)borders.get(i),BorderLineStyle.THIN,(Colour)colours.get(i));
+				}catch(Exception e){
+				}
+			}
+	
+			if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
+				try{
+					format.setBackground(getNearestColour(getField_Color(internal_style.getBACK_COLOR(),Color.white)));
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(internal_style.getALIGN()!=null && !internal_style.getALIGN().equals("")){
+				try{
+					format.setAlignment(analiseAlign(internal_style.getALIGN()));
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(internal_style.getTEXT_ALIGN_H()!=null && !internal_style.getTEXT_ALIGN_H().equals("")){
+				try{
+					format.setAlignment(analiseAlign(internal_style.getTEXT_ALIGN_H()));
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+			if(internal_style.getTEXT_ALIGN_V()!=null && !internal_style.getTEXT_ALIGN_V().equals("")){
+				try{
+					format.setVerticalAlignment(analiseVAlign(internal_style.getTEXT_ALIGN_V()));
+					isFormat=true;
+				}catch(Exception e){
+				}
+			}
+	
+			float rotation = 0;
 			try{
-				font.setBoldStyle(WritableFont.BOLD);
-				isFormat=true;
+				rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
 			}catch(Exception e){
 			}
-		}
-		if(	internal_style.getFONT_TYPE()!=null && internal_style.getFONT_TYPE().equalsIgnoreCase("UNDERLINE")){
-			try{
-				font.setUnderlineStyle(UnderlineStyle.SINGLE);
-				isFormat=true;
-			}catch(Exception e){
+	
+			if(rotation!=0){
+				try{
+					format.setOrientation(analiseOrientation(rotation));
+					isFormat=true;
+				}catch(Exception e){
+				}
 			}
-		}
-		if(	internal_style.getFONT_STYLE()!=null && internal_style.getFONT_STYLE().equalsIgnoreCase("STRIKE")){
-			try{
-				font.setStruckout(true);
-				isFormat=true;
-			}catch(Exception e){
+	
+			if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
+				try{
+					format.setWrap(true);
+				}catch(Exception e){
+				}
+			}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
+				try{
+					format.setWrap(false);
+				}catch(Exception e){
+				}
 			}
+	
+			if(isFormat)
+				wcfCash.put(internal_style.getCashKey()+"",format);
 		}
-
-		if(internal_style.getFONT_COLOR()!=null && !internal_style.getFONT_COLOR().equals("")){
-			try{
-
-
-				font.setColour(getNearestColour(getField_Color(internal_style.getFONT_COLOR(),Color.black)));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-
-		format.setFont(font);
-
-		Vector<?>[] borders_colours = analiseBorder_Colour(internal_style);
-		Vector borders = borders_colours[0];
-		Vector colours = borders_colours[1];
-		if (borders.size() >0) isFormat=true;
-		for(int i=0;i<borders.size();i++){
-			try{
-				format.setBorder((Border)borders.get(i),BorderLineStyle.THIN,(Colour)colours.get(i));
-			}catch(Exception e){
-			}
-		}
-
-		if(internal_style.getBACK_COLOR()!=null && !internal_style.getBACK_COLOR().equals("")){
-			try{
-				format.setBackground(getNearestColour(getField_Color(internal_style.getBACK_COLOR(),Color.white)));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-		if(internal_style.getALIGN()!=null && !internal_style.getALIGN().equals("")){
-			try{
-				format.setAlignment(analiseAlign(internal_style.getALIGN()));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-		if(internal_style.getTEXT_ALIGN_H()!=null && !internal_style.getTEXT_ALIGN_H().equals("")){
-			try{
-				format.setAlignment(analiseAlign(internal_style.getTEXT_ALIGN_H()));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-		if(internal_style.getTEXT_ALIGN_V()!=null && !internal_style.getTEXT_ALIGN_V().equals("")){
-			try{
-				format.setVerticalAlignment(analiseVAlign(internal_style.getTEXT_ALIGN_V()));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-
-		float rotation = 0;
-		try{
-			rotation = new Float(getStyle().getTEXT_ROTATION_DEGREE()).floatValue();
-		}catch(Exception e){
-		}
-
-		if(rotation!=0){
-			try{
-				format.setOrientation(analiseOrientation(rotation));
-				isFormat=true;
-			}catch(Exception e){
-			}
-		}
-
-		if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("true")){
-			try{
-				format.setWrap(true);
-			}catch(Exception e){
-			}
-		}else if(internal_style.getWRAP()!=null && internal_style.getWRAP().equalsIgnoreCase("false")){
-			try{
-				format.setWrap(false);
-			}catch(Exception e){
-			}
-		}
-
-		if(isFormat)
-			wcfCash.put(internal_style.getCashKey()+"",format);
-
 	}
 	try{
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_NUMBER)>-1){
