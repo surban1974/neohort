@@ -106,7 +106,13 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 	if(_beanLibrary!=null){
 		bean _sysWcfCache = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
 		if(_sysWcfCache!=null){
-			wcfCache = (Hashtable<String,CellStyle>)_sysWcfCache.getContent();
+//			wcfCache = (Hashtable<String,CellStyle>)_sysWcfCache.getContent();
+			if(_sysWcfCache!=null){
+				@SuppressWarnings("unchecked")
+				Hashtable<String,CellStyle> content2 = 
+				 (Hashtable<String,CellStyle>)_sysWcfCache.getContent();
+				wcfCache = content2;
+			}
 			
 			if(wcfCache==null)
 				wcfCache = new Hashtable<String,CellStyle>();
@@ -322,6 +328,9 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 			}
 			if(dvalue!=null)
 				cell.setCellValue(dvalue.doubleValue());
+			else if(frase!=null)
+				cell.setCellValue(frase);
+				
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -334,8 +343,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 		if(internal_style.getFORMAT()!=null & internal_style.getFORMAT().toUpperCase().indexOf(format_FORMULA)>-1){
 			if (isFormat)
 				cell.setCellStyle(format);
-
-			cell.setCellFormula(frase);
+			if(frase!=null)
+				cell.setCellFormula(frase);
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -369,6 +378,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 
 			if(ret!=null)
 				cell.setCellValue(ret);
+			else if(frase!=null)
+				cell.setCellValue(frase);
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -402,6 +413,8 @@ public Cell getCellC(int X,int Y, Workbook workbook, Sheet document, Hashtable<S
 
 			if(ret!=null)
 				cell.setCellValue(ret);
+			else if(frase!=null)
+				cell.setCellValue(frase);
 			if(getHyperlink()!=null)
 				cell.setHyperlink(getHyperlink());
 			cell=null;
@@ -590,107 +603,259 @@ public void analiseBorder_Colour(XSSFCellStyle format, style internal_style){
 	}catch(Exception e){
 	}
 //	if(border==0) borders.add(Border.NONE);
+	final XSSFColor borderColor = (internal_style.getBORDER_COLOR()!=null && !internal_style.getBORDER_COLOR().isEmpty())?getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR(),Color.black)):null;
 	if(border>0){
 			if(border==1){
 				format.setBorderTop(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
 
 			}
 			if(border==2){
 				format.setBorderBottom(BorderStyle.THIN);
-
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
+				
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);
 
 			}
 			if(border==3){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);				
+				
 
 			}
 			if(border==4){
 				format.setBorderLeft(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);
 
 			}
 			if(border==5){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
+				
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);				
 
 			}
 			if(border==6){
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
+				
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);				
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);					
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
 
 			}
 			if(border==7){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
-
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
+				
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);					
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);
 
 			}
 			if(border==8){
 				format.setBorderRight(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
 
 			}
 			if(border==9){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
-
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
+				
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
 
 			}
 			if(border==10){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);	
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);	
+				
 			}
 			if(border==11){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);				
 			}
 			if(border==12){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);	
  			}
 			if(border==13){
 				format.setBorderRight(BorderStyle.THIN);
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderTop(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);	
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);
 
 			}
 			if(border==14){
@@ -698,10 +863,27 @@ public void analiseBorder_Colour(XSSFCellStyle format, style internal_style){
 				format.setBorderLeft(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
-
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);	
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);
 			}
 			if(border==15){
 				format.setBorderRight(BorderStyle.THIN);
@@ -709,10 +891,34 @@ public void analiseBorder_Colour(XSSFCellStyle format, style internal_style){
 				format.setBorderTop(BorderStyle.THIN);
 				format.setBorderBottom(BorderStyle.THIN);
 
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black)));
-				format.setBottomBorderColor(getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black)));
+				format.setRightBorderColor(
+						((internal_style.getBORDER_COLOR_RIGHT()==null || internal_style.getBORDER_COLOR_RIGHT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_RIGHT(),Color.black))
+					);				
+				format.setLeftBorderColor(
+						((internal_style.getBORDER_COLOR_LEFT()==null || internal_style.getBORDER_COLOR_LEFT().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_LEFT(),Color.black))
+					);	
+				format.setTopBorderColor(
+						((internal_style.getBORDER_COLOR_TOP()==null || internal_style.getBORDER_COLOR_TOP().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_TOP(),Color.black))
+					);				
+				format.setBottomBorderColor(
+						((internal_style.getBORDER_COLOR_BOTTOM()==null || internal_style.getBORDER_COLOR_BOTTOM().isEmpty()) && borderColor!=null)
+						?
+							borderColor
+						:
+							getNearestColour(getField_Color(new Color(0).getClass(),internal_style.getBORDER_COLOR_BOTTOM(),Color.black))
+					);
 			}
 	}
 

@@ -114,7 +114,13 @@ public Cell getCellC(Cell old,int X,int Y, Hashtable<String, report_element_base
 	if(_beanLibrary!=null){
 		bean _sysWcfCash = (bean)_beanLibrary.get("SYSTEM:WritableCellFormatCash");
 		if(_sysWcfCash!=null){
-			wcfCash = (Hashtable<String,WritableCellFormat>)_sysWcfCash.getContent();
+//			wcfCash = (Hashtable<String,WritableCellFormat>)_sysWcfCash.getContent();
+			if(_sysWcfCash!=null){
+				@SuppressWarnings("unchecked")
+				Hashtable<String,WritableCellFormat> content2 = 
+				 (Hashtable<String,WritableCellFormat>)_sysWcfCash.getContent();
+				wcfCash = content2;
+			}
 			
 			if(wcfCash==null)
 				wcfCash = new Hashtable<String,WritableCellFormat>();
