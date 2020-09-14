@@ -194,12 +194,12 @@
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xls-jxl</artifactId>
-			<version>1.4.3</version>
+			<version>1.4.3.1</version>
 		</dependency>	
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xlsx-poi</artifactId>
-			<version>1.4.3</version>
+			<version>1.4.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
