@@ -36,6 +36,24 @@
 			ALIGN = "LEFT">Step 1.1 - paragraph-frase</PHRASE>	
 		</PARAGRAPH>
 		
+		<PHRASE>
+		SVG converted to PNG
+		</PHRASE>
+		<IMAGE IMAGE_SOURCE="/images/batman.svg" />
+		
+
+		<PHRASE>
+		SVG converted to PNG
+		</PHRASE>
+		<IMAGE IMAGE_SOURCE="/images/ford.svg" width="400"/>
+		
+		<PHRASE>
+		SVG original
+		</PHRASE>
+		<SVG IMAGE_SOURCE="/images/ford.svg" width="400"/>
+		
+
+		
 		<IMAGE IMAGE_SOURCE="/images/logo_small.gif" ABSOLUTE_X="20" ABSOLUTE_Y="20"/>		
 	</DOCUMENT>
 </GENERAL>

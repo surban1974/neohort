@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-pdf-itext217</artifactId> 
-  <version>1.4.3.3</version>
+  <version>1.4.3.4</version>
   <name>neohort pdf besed iText 2.1.7</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. iText 2.1.7 PDF implementation.</description>
   <url>https://github.com/surban1974/neohort</url>
@@ -99,7 +99,29 @@
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>	
-		
+
+ <!--    	
+    	<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-gvt</artifactId>
+			<version>1.7</version>
+		</dependency>  
+-->
+	    <dependency>
+	        <groupId>com.twelvemonkeys.imageio</groupId>
+	        <artifactId>imageio-batik</artifactId> <!-- svg -->
+	        <version>3.6</version>
+	    </dependency>
+		<dependency>
+		    <groupId>org.apache.xmlgraphics</groupId>
+		    <artifactId>batik-transcoder</artifactId>
+		    <version>1.13</version>
+		</dependency>
+    	<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-gvt</artifactId>
+			<version>1.13</version>
+		</dependency> 		
 		
   </dependencies>
    <organization>

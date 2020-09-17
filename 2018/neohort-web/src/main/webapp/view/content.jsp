@@ -159,7 +159,7 @@
 	      	</div>    
 	      	
 	     	<div class="panel panel-default" style="padding: 4px;" id="example.1.5">
-	  			<div class="panel-body"><h4>Text formatting</h4>
+	  			<div class="panel-body"><h4>Text formatting and SVG</h4>
 			      	<ul class="nav nav-tabs">
 			  			<li role="template" class="active"><a href="#">Xml template</a></li>
 					    <li class="pull-right">
@@ -567,7 +567,7 @@
 							<li><a href="#example.1.1">&nbsp;&nbsp;simple text block</a></li>
 							<li><a href="#example.1.2">&nbsp;&nbsp;page layout</a></li>
 							<li><a href="#example.1.4">&nbsp;&nbsp;margins of document</a></li>
-							<li><a href="#example.1.5">&nbsp;&nbsp;text formatting</a></li>
+							<li><a href="#example.1.5">&nbsp;&nbsp;text formatting and svg</a></li>
 							<li><a href="#example.2.1">&nbsp;&nbsp;header of document #1</a></li>
 							<li><a href="#example.2.2">&nbsp;&nbsp;footer of document #1</a></li>
 							<li><a href="#example.2.3">&nbsp;&nbsp;header of document #2</a></li>
