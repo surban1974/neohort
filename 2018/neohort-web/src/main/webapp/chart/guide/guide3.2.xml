@@ -87,11 +87,27 @@ type_document="%EXECUTEBEAN.SYSTEM:Request.getParameter(java.lang.String:'$type'
 			<TABLE_ROW>
 				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
 				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
-			</TABLE_ROW>
+			</TABLE_ROW>			
 			<TABLE_ROW>
 				<BARCODE BARCODE_TYPE="POSTNET" CODE="12345"/>
 				<TABLE_CELL BORDER="0" FONT_SIZE="12" FONT="HELVETICA">Tipo "POSTNET"  </TABLE_CELL>
+			</TABLE_ROW>	
+			<TABLE_ROW>
+				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
+				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
+			</TABLE_ROW>					
+			<TABLE_ROW>
+				<QRCODE CODE="La terra è stata creata come un bene comune per tutti, per i ricchi e per i poveri: perché, o ricchi, vi arrogate un diritto esclusivo sul suolo?" CODE_SIZE="100"/>
+				<TABLE_CELL BORDER="0" FONT_SIZE="12" FONT="HELVETICA">Tipo "QRCODE"  </TABLE_CELL>
 			</TABLE_ROW>
+			<TABLE_ROW>
+				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
+				<TABLE_CELL BORDER="0" FONT_SIZE="40" FONT="HELVETICA">   </TABLE_CELL>
+			</TABLE_ROW>			
+			<TABLE_ROW>
+				<BARCODE BARCODE_TYPE="DATAMATRIX" CODE="La terra è stata creata come un bene comune per tutti, per i ricchi e per i poveri: perché, o ricchi, vi arrogate un diritto esclusivo sul suolo?" WIDTH="100"/>
+				<TABLE_CELL BORDER="0" FONT_SIZE="12" FONT="HELVETICA">Tipo "DATAMATRIX"  </TABLE_CELL>
+			</TABLE_ROW>						
 		</TABLE>
 	</DOCUMENT>
 </GENERAL>
