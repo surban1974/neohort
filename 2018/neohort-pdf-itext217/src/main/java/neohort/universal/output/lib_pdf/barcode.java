@@ -36,6 +36,7 @@ import com.lowagie.text.pdf.Barcode;
 import com.lowagie.text.pdf.Barcode128;
 import com.lowagie.text.pdf.Barcode39;
 import com.lowagie.text.pdf.BarcodeCodabar;
+import com.lowagie.text.pdf.BarcodeDatamatrix;
 import com.lowagie.text.pdf.BarcodeEAN;
 import com.lowagie.text.pdf.BarcodeInter25;
 import com.lowagie.text.pdf.BarcodePostnet;
@@ -49,6 +50,7 @@ public class barcode extends element{
 	private String BARCODE_TYPE;
 	private String CODE;
 	private String BARCODE_HEIGHT;
+	private String BARCODE_WIDTH;
 
 public barcode() {
 	super();
@@ -75,9 +77,10 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 				padding = Float.valueOf(internal_style.getPADDING()).floatValue();
 			}catch(Exception e){}
 
-			com.lowagie.text.Image chartIm;
+			com.lowagie.text.Image chartIm = null;
 
 			Barcode b_Code = null;
+			BarcodeDatamatrix b_CodeDatamatrix = null;
 
 			if(getBARCODE_TYPE().trim().equalsIgnoreCase("CODABAR")){
             	b_Code = new BarcodeCodabar();
@@ -123,27 +126,49 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
            		b_Code = new BarcodePostnet();
             	b_Code.setCodeType(Barcode.PLANET);
 			}
-			if(b_Code==null) return;
-			b_Code.setCode(getCODE());
+			if(getBARCODE_TYPE().trim().equalsIgnoreCase("DATAMATRIX")){
+           		b_CodeDatamatrix = new BarcodeDatamatrix();
+			}			
+			
+			if(b_Code==null && b_CodeDatamatrix==null) return;
+			if(b_Code!=null) {
+				b_Code.setCode(getCODE());
+	
+				try{
+					int _f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
+					b_Code.setSize(_f_size);
+				}catch(Exception e){}
+				try{
+					int _f_height = Integer.valueOf(getBARCODE_HEIGHT()).intValue();
+					b_Code.setBarHeight(_f_height);
+				}catch(Exception e){}
+	
+				if(!internal_style.getTEXT_ALIGN_H().equals(""))
+					b_Code.setTextAlignment(getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getTEXT_ALIGN_H(),0));
+				try{
+					int _t_align_v = Integer.valueOf(internal_style.getTEXT_ALIGN_V()).intValue();
+					b_Code.setBaseline(_t_align_v);
+				}catch(Exception e){}
+	
+				chartIm = b_Code.createImageWithBarcode(cb, getField_Color(internal_style.getBAR_COLOR(),null), getField_Color(internal_style.getFONT_COLOR(),null));
+			}
+			
+			if(b_CodeDatamatrix!=null) {
+	
 
-			try{
-				int _f_size = Integer.valueOf(internal_style.getFONT_SIZE()).intValue();
-				b_Code.setSize(_f_size);
-			}catch(Exception e){}
-			try{
-				int _f_height = Integer.valueOf(getBARCODE_HEIGHT()).intValue();
-				b_Code.setBarHeight(_f_height);
-			}catch(Exception e){}
+				try{
+					int _f_height = Integer.valueOf(internal_style.getHEIGHT()).intValue();
+					b_CodeDatamatrix.setHeight(_f_height);
+				}catch(Exception e){}
+				
+				try{
+					int _f_width = Integer.valueOf(internal_style.getWIDTH()).intValue();
+					b_CodeDatamatrix.setWidth(_f_width);
+				}catch(Exception e){}
 
-			if(!internal_style.getTEXT_ALIGN_H().equals(""))
-				b_Code.setTextAlignment(getField_Int(new PdfPCell(new Phrase("")).getClass(),"ALIGN_"+internal_style.getTEXT_ALIGN_H(),0));
-			try{
-				int _t_align_v = Integer.valueOf(internal_style.getTEXT_ALIGN_V()).intValue();
-				b_Code.setBaseline(_t_align_v);
-			}catch(Exception e){}
-
-			chartIm = b_Code.createImageWithBarcode(cb, getField_Color(internal_style.getBAR_COLOR(),null), getField_Color(internal_style.getFONT_COLOR(),null));
-
+				b_CodeDatamatrix.generate(getCODE());
+				chartIm = b_CodeDatamatrix.createImage();
+			}
 
 
 			if(chartIm==null) return;
@@ -202,6 +227,7 @@ public void reimposta() {
 	CODE = "";
 	STYLE_ID = "";
 	BARCODE_HEIGHT = "";
+	BARCODE_WIDTH = "";
 }
 public void reStyle(style style_new) {
 	if(internal_style==null) return;
@@ -224,5 +250,11 @@ public String getBARCODE_HEIGHT() {
 }
 public void setBARCODE_HEIGHT(String string) {
 	BARCODE_HEIGHT = string;
+}
+public String getBARCODE_WIDTH() {
+	return BARCODE_WIDTH;
+}
+public void setBARCODE_WIDTH(String bARCODE_WIDTH) {
+	BARCODE_WIDTH = bARCODE_WIDTH;
 }
 }

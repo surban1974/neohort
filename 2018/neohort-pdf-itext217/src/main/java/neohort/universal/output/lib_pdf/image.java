@@ -352,6 +352,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 		setError(e,iStub.log_WARN);
 	}
 }
+
 public void reimposta() {
 	setName("IMAGE");
 	IMAGE_SOURCE = "";
