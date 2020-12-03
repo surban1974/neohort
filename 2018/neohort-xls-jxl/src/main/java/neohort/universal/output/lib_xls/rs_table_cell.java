@@ -79,12 +79,14 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 			try{
 				rs_content = parentR.getResultSet().getObject(Integer.valueOf(getRS_COLUMN()));
 				rs_last_content = parentR.getLastRow().get(getRS_COLUMN());
-				parentR.getLastRow().put(getRS_COLUMN(),rs_content);
+				if(rs_content!=null)
+					parentR.getLastRow().put(getRS_COLUMN(),rs_content);
 			}catch(Exception e){
 				try{
 					rs_content = parentR.getResultSet().getObject(getRS_COLUMN());
 					rs_last_content = parentR.getLastRow().get(getRS_COLUMN());
-					parentR.getLastRow().put(getRS_COLUMN(),rs_content);
+					if(rs_content!=null)
+						parentR.getLastRow().put(getRS_COLUMN(),rs_content);
 
 				}catch(Exception ex){
 					setError(e,iStub.log_WARN);
