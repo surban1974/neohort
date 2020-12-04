@@ -1,5 +1,8 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Sun Jan 19 20:36:57 CET 2020
-https\://github.com/surban1974/neohort/raw/mvn-repo/.lastUpdated=1579462617841
-https\://github.com/surban1974/classhidra/raw/mvn-repo/.error=
-https\://github.com/surban1974/classhidra/raw/mvn-repo/.lastUpdated=1579462616635
+#Sat Oct 05 19:14:02 CEST 2019
+https\://github.com/surban1974/neohort/raw/mvn-repo/.error=
+https\://github.com/surban1974/neohort/raw/mvn-repo/.lastUpdated=1570295642181
+http\://repo.spring.io/libs-release/.error=
+http\://repo.spring.io/libs-release/.lastUpdated=1570295641292
+https\://repo.maven.apache.org/maven2/.lastUpdated=1570295642880
+https\://repo.maven.apache.org/maven2/.error=

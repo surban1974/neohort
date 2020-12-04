@@ -182,20 +182,24 @@
  -->			
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
-			<artifactId>neohort-pdf-itext217</artifactId>
-			<version>1.4.3.4</version>
+			<artifactId>neohort-pdf-openpdf</artifactId>
+			<version>1.4.3.2</version>
 		</dependency>	
-	
+		<dependency>
+			<groupId>com.github.surban1974.neohort</groupId>
+			<artifactId>neohort-pdf-openpdf-svg</artifactId>
+			<version>1.4.3.2</version>
+		</dependency>				
 		
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xls-jxl</artifactId>
-			<version>1.4.3.1</version>
+			<version>1.4.3</version>
 		</dependency>	
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xlsx-poi</artifactId>
-			<version>1.4.3.1</version>
+			<version>1.4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>

@@ -1,4 +1,5 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Tue Oct 20 19:38:56 CEST 2020
-neohort-xls-jxl-1.4.2.jar>neohort-mvn-repo=
-neohort-xls-jxl-1.4.2.pom>neohort-mvn-repo=
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Tue Aug 20 20:36:12 CEST 2019
+neohort-xls-jxl-1.4.2.jar>=
+neohort-xls-jxl-1.4.2-sources.jar>=
+neohort-xls-jxl-1.4.2.pom>=

@@ -1,0 +1,8 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri Dec 04 18:51:21 CET 2020
+https\://github.com/surban1974/neohort/raw/mvn-repo/.error=Could not transfer artifact com.github.surban1974.neohort\:neohort-pdf-itext217\:pom\:1.4.3.5 from/to neohort-mvn-repo (https\://github.com/surban1974/neohort/raw/mvn-repo/)\: Received fatal alert\: protocol_version
+http\://repo.spring.io/libs-release/.error=Could not transfer artifact com.github.surban1974.neohort\:neohort-pdf-itext217\:pom\:1.4.3.5 from/to spring-releases (http\://repo.spring.io/libs-release)\: Access denied to\: http\://repo.spring.io/libs-release/com/github/surban1974/neohort/neohort-pdf-itext217/1.4.3.5/neohort-pdf-itext217-1.4.3.5.pom , ReasonPhrase\:Forbidden.
+@default-spring-releases-http\://repo.spring.io/libs-release/.lastUpdated=1607104279380
+@default-neohort-mvn-repo-https\://github.com/surban1974/neohort/raw/mvn-repo/.lastUpdated=1607104280648
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact com.github.surban1974.neohort\:neohort-pdf-itext217\:pom\:1.4.3.5 from/to central (https\://repo.maven.apache.org/maven2)\: Received fatal alert\: protocol_version
+4ae30ec20afa3174d281ee21aa54a4da2012f776@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1607104281101

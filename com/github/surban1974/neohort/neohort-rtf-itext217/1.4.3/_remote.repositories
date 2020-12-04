@@ -1,5 +1,5 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri Sep 11 01:50:59 CEST 2020
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Fri Dec 04 18:50:12 CET 2020
 neohort-rtf-itext217-1.4.3-sources.jar>=
 neohort-rtf-itext217-1.4.3.pom>=
 neohort-rtf-itext217-1.4.3.jar>=
