@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Dec 03 15:51:12 CET 2020
+neohort-pdf-itext217-1.4.3.5.jar>=
+neohort-pdf-itext217-1.4.3.5.pom>=
+neohort-pdf-itext217-1.4.3.5-sources.jar>=
