@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
-  <artifactId>neohort-base</artifactId>
-  <version>1.4.3</version>
-  <name>neohort base</name>
-  <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Support functionality</description>
+  <artifactId>neohort-xls-jxl</artifactId>
+  <version>1.4.3.1</version>
+  <name>neohort Jexsel api</name>
+  <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Jexcel Excel implementation.</description>
   <url>https://github.com/surban1974/neohort</url>
  
  
@@ -68,30 +68,35 @@
 	   
     </plugins>
   </build>
+  
+  	<repositories>
+    	<repository>
+        	<id>neohort-mvn-repo</id>
+        	<url>https://github.com/surban1974/neohort/raw/mvn-repo/</url>
+        	<snapshots>
+            	<enabled>true</enabled>
+            	<updatePolicy>always</updatePolicy>
+        	</snapshots>
+    	</repository>
+  	</repositories> 
+  	
    <dependencies>
-
-		
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.5.0-b01</version>
+  
+   		<dependency>
+			<groupId>com.github.surban1974.neohort</groupId>
+			<artifactId>neohort-base</artifactId>
+			<version>1.4.3</version>
 		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
--->		
-		 <dependency> 
-		    <groupId>org.apache.logging.log4j</groupId> 
-		    <artifactId>log4j-api</artifactId> 
-		    <version>2.15.0</version> 
-		</dependency> 		
+ 		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId> 
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
 		</dependency>
 		
   </dependencies>
