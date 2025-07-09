@@ -49,6 +49,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -541,7 +542,7 @@ public static XSSFColor getNearestColour(Color awtColor){
 	XSSFColor userColor = colorsCache.get(awtColor);
 
     if (userColor == null){
-    	userColor = new XSSFColor(awtColor);
+    	userColor = new XSSFColor(awtColor, new DefaultIndexedColorMap());
         colorsCache.put(awtColor, userColor);
     }
 

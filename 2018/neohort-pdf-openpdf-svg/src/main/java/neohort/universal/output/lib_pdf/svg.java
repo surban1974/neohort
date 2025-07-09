@@ -31,11 +31,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Hashtable;
 
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgentAdapter;
-import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+//import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
 import com.lowagie.text.Image;
@@ -153,7 +155,7 @@ public void executeLast(Hashtable<String, report_element_base> _tagLibrary, Hash
 					if(input==null && ex!=null)
 						setError(ex,iStub.log_ERROR);
 					else {
-						SVGDocument svgDoc = new SAXSVGDocumentFactory(null).createSVGDocument(null, input);
+						SVGDocument svgDoc = new SAXSVGDocumentFactory(XMLResourceDescriptor.getXMLParserClassName()).createSVGDocument(null, input);
 	
 					    // Try to read embedded height and width
 					    float svgWidth = Float.parseFloat(svgDoc.getDocumentElement().getAttribute("width").replaceAll("[^0-9.,]",""));

@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.surban1974.neohort</groupId>
   <artifactId>neohort-web</artifactId>
-  <version>1.4.3.5</version>
+  <version>1.5.0</version>
   <packaging>war</packaging>
   <name>neohort web demo frontend</name>
   <description>Java PDF &amp; Excel &amp; RTF runtime builder-based. Demo web frontend.</description>
   <url>https://github.com/surban1974/neohort</url>
  
- 
+    
 	<issueManagement>
 		<url>https://github.com/surban1974/neohort/issues</url>
 		<system>GitHub Issues</system>
@@ -22,7 +22,9 @@
 		</license>
 	</licenses>	
   <properties>
-      <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+      	<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>       
   </properties>
   
   
@@ -139,8 +141,8 @@
 					<include>neohort/**/*.properties</include>
 	     
 				</includes>        
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
 		      
@@ -179,13 +181,19 @@
 			<artifactId>neohort-pdf-itext500</artifactId>
 			<version>1.4.3</version>
 		</dependency>
- -->			
+ -->	
+ <!--		
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-pdf-itext217</artifactId>
 			<version>1.4.3.5</version>
 		</dependency>	
-	
+-->
+		<dependency>
+		  	<groupId>com.github.surban1974.neohort</groupId>
+		  	<artifactId>neohort-pdf-openpdf</artifactId> 
+		  	<version>1.5.0</version>		
+		</dependency>	
 		
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
@@ -195,12 +203,14 @@
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-xlsx-poi</artifactId>
-			<version>1.4.3.1</version>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.surban1974.neohort</groupId>
 			<artifactId>neohort-rtf</artifactId>
 			<version>1.4.3</version>
 		</dependency>						
-  </dependencies>   
+  </dependencies>  
+  
+  
 </project>

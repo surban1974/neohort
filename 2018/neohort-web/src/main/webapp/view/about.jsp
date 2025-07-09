@@ -46,7 +46,7 @@
 		       		<li><h4><img src="../images/logo_small.gif" height="25px"/>&nbsp;<b>NeoHort</b> is WEB integrated service (based on servlet's architecture) compatible with:</h4>
 		       			<ul>
 		       				<li><h4>OpenPdf library</h4></li>
-		       				<li><h4>iText 2.1.7 RTF library (by Bruno Lowagie and Paulo Soares)</h4></li>
+		       				<li><h4>OpenPdf RTF library</h4></li>
 		       				<li><h4>JexcelApi library (by andyk@andykhan.freeserve.co.uk )</h4></li>
 		       				<li><h4>Apache POI library </h4></li>
 		       			</ul>
