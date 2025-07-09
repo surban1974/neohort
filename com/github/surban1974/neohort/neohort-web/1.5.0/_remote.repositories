@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Jul 09 22:00:09 CEST 2025
+neohort-web-1.5.0.pom>=
+neohort-web-1.5.0.war>=
